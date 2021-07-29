@@ -46,6 +46,7 @@ const ResetPasswordScreen: React.FC<props> = ({
     return (
         <MainContainer
             absoluteModalLoading={resetPasswordLoading}
+            style={{ backgroundColor: "#246e87" }}
         >
             <ScrollView contentContainerStyle={{ paddingBottom: 100 }} >
                 <Formik
@@ -64,23 +65,12 @@ const ResetPasswordScreen: React.FC<props> = ({
                 >
                     {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
                         <>
-                            <HeaderBtn />
-                            <Img
-                                imgSrc={AuthImages.background_logo}
-                                width={90}
-                                height={90}
-                                imgStyle={{
-                                    alignSelf: "flex-end",
-                                    top: 20,
-                                    right: 10,
-                                    position: "absolute"
-                                }}
-                            />
                             <Label
                                 labelSize={30}
-                                mpLabel={{ pl: 20, mt: 10 }}
+                                mpLabel={{ pl: 20 }}
                                 style={{
                                     fontFamily: semiBold,
+                                    color:"white"
                                 }}
                             >Reset password</Label>
                             <InputBox
@@ -94,8 +84,8 @@ const ResetPasswordScreen: React.FC<props> = ({
                                 placeholder="Password"
                                 containerStyle={{
                                     backgroundColor: "white",
-                                    borderColor: LightGrayColor,
-                                    borderRadius: 10
+                                    borderRadius: 4,
+                                    borderWidth:0
                                 }}
                                 inputStyle={{
                                     width: "70%",
@@ -133,13 +123,13 @@ const ResetPasswordScreen: React.FC<props> = ({
                                 onBlur={() => setFieldTouched('confirmpassword')}
                                 // touched={touched.confirmpassword}
                                 // errors={errors.confirmpassword}
-                                mpContainer={{ mt: 20, mh: 20 }}
+                                mpContainer={{ mt: 10, mh: 20 }}
                                 inputHeight={50}
                                 placeholder="Confirm password"
                                 containerStyle={{
                                     backgroundColor: "white",
-                                    borderColor: LightGrayColor,
-                                    borderRadius: 10
+                                    borderRadius: 4,
+                                    borderWidth:0
                                 }}
                                 inputStyle={{
                                     width: "70%",
@@ -172,16 +162,16 @@ const ResetPasswordScreen: React.FC<props> = ({
                             // placeholderTextColor={LightGrayColor}
                             />
                             <Btn
-                                title="Reset"
-                                mpBtn={{ mh: 20, mt: 40, pt: 4 }}
+                                title="RESET"
+                                mpBtn={{ mh: 20, mt: 30}}
                                 btnStyle={{
-                                    borderRadius: 30,
-                                    backgroundColor: DarkBlueColor,
+                                    backgroundColor: OrangeColor,
                                     justifyContent: "center"
                                 }}
+                                radius={4}
                                 btnHeight={50}
-                                labelSize={15}
-                                labelStyle={{ fontFamily: medium,color:"white" }}
+                                labelSize={18}
+                                labelStyle={{ fontFamily: medium, color: "white" }}
                                 onPress={handleSubmit}
                             />
                         </>

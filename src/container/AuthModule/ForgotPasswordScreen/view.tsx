@@ -11,7 +11,7 @@ import { AuthImages } from '../../../assets/images/map';
 import Label from '../../../components/Label';
 import { medium, regular, semiBold } from '../../../assets/fonts/fonts';
 import InputBox from '../../../components/InputBox';
-import { DarkBlueColor, LightGrayColor } from '../../../assets/colors';
+import { DarkBlueColor, LightGrayColor, OrangeColor } from '../../../assets/colors';
 import Btn from '../../../components/Btn';
 import Octicons from 'react-native-vector-icons/Octicons'
 
@@ -26,12 +26,16 @@ const ForgotPasswordScreen: React.FC<props> = ({
 }) => {
     return (
         <MainContainer
+            absoluteModalLoading={forgotPasswordLoading}
+            style={{ backgroundColor: "#246e87" }}
 
-            absoluteModalLoading={forgotPasswordLoading} >
+        >
             <ScrollView contentContainerStyle={{ paddingBottom: 100 }} >
                 <Formik
                     initialValues={{ email: '' }}
-                    onSubmit={values => { }}
+                    onSubmit={values => { 
+                        navigation.navigate("EmailSent")
+                    }}
                     validationSchema={yup.object().shape({
                         email: yup
                             .string()
@@ -41,23 +45,12 @@ const ForgotPasswordScreen: React.FC<props> = ({
                 >
                     {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
                         <>
-                            <HeaderBtn />
-                            <Img
-                                imgSrc={AuthImages.background_logo}
-                                width={90}
-                                height={90}
-                                imgStyle={{
-                                    alignSelf: "flex-end",
-                                    top: 20,
-                                    right: 10,
-                                    position: "absolute"
-                                }}
-                            />
                             <Label
                                 labelSize={30}
-                                mpLabel={{ ml: 20, mt: 10 }}
+                                mpLabel={{ ml: 20 }}
                                 style={{
                                     fontFamily: semiBold,
+                                    color:"white"
                                 }}
                             >Forgot password</Label>
                             <Label
@@ -65,6 +58,7 @@ const ForgotPasswordScreen: React.FC<props> = ({
                                 mpLabel={{ mt: 10, mh: 20 }}
                                 style={{
                                     fontFamily: regular,
+                                    color:"white"
                                 }}
                             >Enter your email address below and we will send you a reset link</Label>
                             <InputBox
@@ -80,8 +74,8 @@ const ForgotPasswordScreen: React.FC<props> = ({
                                 placeholder="E-mail"
                                 containerStyle={{
                                     backgroundColor: "white",
-                                    borderColor: LightGrayColor,
-                                    borderRadius: 10,
+                                    borderRadius: 4,
+                                    borderWidth:0
                                 }}
                                 leftIcon={() => {
                                     return (
@@ -100,15 +94,15 @@ const ForgotPasswordScreen: React.FC<props> = ({
                             // placeholderTextColor={LightGrayColor}
                             />
                             <Btn
-                                title="Send"
-                                mpBtn={{ mh: 20, mt: 60, pt: 4 }}
+                                title="SEND"
+                                mpBtn={{ mh: 20, mt: 20}}
                                 btnStyle={{
-                                    borderRadius: 30,
-                                    backgroundColor: DarkBlueColor,
+                                    backgroundColor: OrangeColor,
                                     justifyContent: "center"
                                 }}
+                                radius={4}
                                 btnHeight={50}
-                                labelSize={15}
+                                labelSize={18}
                                 labelStyle={{ fontFamily: medium, color: "white" }}
                                 onPress={handleSubmit}
                             />

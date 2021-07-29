@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { } from 'react';
-import { Text, StyleProp, TextStyle } from 'react-native';
+import { Text, StyleProp, TextStyle, TextProps } from 'react-native';
 import { mpStyle, normalize } from '../types/sizes';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
     textColor?: string
 }
 
-const Label: React.FC<Props> = ({
+const Label: React.FC<Props & TextProps> = ({
     style,
     children,
     labelSize,

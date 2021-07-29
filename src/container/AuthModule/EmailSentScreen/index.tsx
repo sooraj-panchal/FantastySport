@@ -1,5 +1,5 @@
 import React from 'react'
-import { DarkBlueColor } from '../../../assets/colors'
+import { DarkBlueColor, OrangeColor } from '../../../assets/colors'
 import { medium, regular } from '../../../assets/fonts/fonts'
 import { AuthImages } from '../../../assets/images/map'
 import Btn from '../../../components/Btn'
@@ -7,6 +7,7 @@ import Label from '../../../components/Label'
 import MainContainer from '../../../components/MainContainer'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { navigationProps } from '../../../types/nav'
+import Container from '../../../components/Container'
 interface props extends navigationProps {
     forgotPasswordLoading: boolean
 }
@@ -19,47 +20,59 @@ const EmailSentScreen: React.FC<props> = ({
     return (
         <MainContainer style={{
             justifyContent: 'center',
-            alignItems: "center"
+            alignItems: "center",
+            backgroundColor: "#246e87"
         }}
         >
-            <Ionicons
-                name="md-checkmark-circle"
-                size={150}
-                color="green"
-            />
+            <Container containerStyle={{
+                backgroundColor: '#39cc58',
+                borderRadius: 150,
+                justifyContent: "center",
+                alignItems: "center",
+                elevation: 2
+            }} width={120} height={120} >
+                <Ionicons
+                    name="md-checkmark"
+                    size={100}
+                    color="white"
+                />
+            </Container>
             <Label
-                labelSize={35}
+                labelSize={30}
                 mpLabel={{ mt: 10 }}
                 style={{
                     fontFamily: medium,
-                    textAlign: "center"
+                    textAlign: "center",
+                    color: "white"
                 }}
             >Email sent</Label>
             <Label
-                labelSize={20}
+                labelSize={18}
                 mpLabel={{ mt: 10 }}
                 style={{
                     fontFamily: regular,
                     textAlign: "center",
-                    width: "80%"
+                    width: "80%",
+                    color: "white"
                 }}
             >Check your inbox to reset the password.</Label>
             <Btn
-                title="Continue"
-                mpBtn={{ mh: 20, mt: 25, pt: 4 }}
+                title="CONTINUE"
+                mpBtn={{ mh: 20, mt: 25 }}
                 btnStyle={{
-                    borderRadius: 30,
-                    backgroundColor: DarkBlueColor,
+                    backgroundColor: OrangeColor,
                     width: "80%",
                     justifyContent: "center"
                 }}
-                btnHeight={50}
-                labelSize={15}
+                radius={4}
+                btnHeight={45}
+                labelSize={16}
                 labelStyle={{ fontFamily: medium, color: "white" }}
                 onPress={() => {
-                    navigation.navigate("Verification", {
-                        email: route.params.email,
-                    })
+                    navigation.navigate("ResetPassword")
+                    // navigation.navigate("Verification", {
+                    //     email: route.params.email,
+                    // })
                 }}
             />
         </MainContainer>

@@ -17,6 +17,8 @@ export type FilterParamsList = {
 
 export type RootStackParamList = {
   Splash: undefined;
+  AppIntro: undefined;
+  Auth:undefined;
   Login: undefined;
   Register: undefined;
   ForgotPassword: undefined;
@@ -26,7 +28,6 @@ export type RootStackParamList = {
   EmailSent: undefined;
   ResetPassword: undefined;
   SelectLocation: undefined;
-  AppIntro: undefined;
   InviteFriend: undefined;
   ReachMoreBuyers: undefined;
   SkipLiveBlog: undefined;
@@ -59,6 +60,10 @@ export type unAuthParamList = {
   BrokersProfile: undefined;
   SellerPostList: undefined;
   SettingStack: NavigatorScreenParams<settingParamList>;
+  Notification:undefined;
+  CreateOrJoin:undefined;
+  CreateLeague:undefined;
+  AddLiveMatches:undefined;
 };
 
 export type tabParamList = {

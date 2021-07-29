@@ -21,50 +21,14 @@ import ChangePasswordScreen from '../container/AppModule/ChangePasswordScreen';
 import TermsAndConditionScreen from '../container/AppModule/TermsConditionScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { unAuthParamList, chatParamList, settingParamList } from '../types/nav';
+import NotificationScreen from '../container/AppModule/NotificationScreen';
+import CreateOrJoin from '../container/AppModule/CreateOrJoinScreen';
+import CreateLeagueScreen from '../container/AppModule/CreateLeagueScreen/view';
+import AddLiveMatchesTabs from '../container/AppModule/AddLiveMatchesTabs/view';
 
 const StackScreen = createNativeStackNavigator<unAuthParamList>()
 const ChatStackScreen = createStackNavigator<chatParamList>()
 const SettingStackScreen = createStackNavigator<settingParamList>()
-
-
-const ChatStack = () => {
-    return (
-        <ChatStackScreen.Navigator
-            screenOptions={{
-                headerTintColor: "white",
-                headerBackTitleVisible: false,
-                headerStatusBarHeight: getStatusBarHeight(),
-                headerStyle: {
-                    backgroundColor: DarkBlueColor
-                },
-                headerMode:"float",
-                headerTitleAlign: "left",
-                ...TransitionPresets.SlideFromRightIOS
-            }}
-        >
-            <ChatStackScreen.Screen
-                name="Chat"
-                component={ChatScreen}
-                // options={({ route, navigation }) => ({
-                //     headerLeft: (props) => (
-                //         <HeaderBackButton
-                //             {...props}
-                //             onPress={() => navigation.goBack()}
-                //             style={{ marginLeft: 20 }}
-                //         />
-                //     ),
-                // })}
-            />
-            <ChatStackScreen.Screen
-                name="ChatDetail"
-                component={ChatDetailScreen}
-                options={({ route, navigation }) => ({
-                    headerTitle: route.params.name,
-                })}
-            />
-        </ChatStackScreen.Navigator>
-    )
-}
 
 const SettingStack = ({ }) => {
     return (
@@ -73,7 +37,7 @@ const SettingStack = ({ }) => {
                 // headerStatusBarHeight: getStatusBarHeight(),
                 ...TransitionPresets.SlideFromRightIOS,
                 headerShown: true,
-                headerMode:"float"
+                headerMode: "float"
             }}
         >
             <SettingStackScreen.Screen
@@ -151,23 +115,17 @@ const SettingStack = ({ }) => {
 }
 
 
-const AppStackScreen = () => {
+const AppStackScreen: React.FC = () => {
     return (
         <StackScreen.Navigator
             initialRouteName="tabs"
             screenOptions={{
                 headerStyle: {
-                    backgroundColor: DarkBlueColor
+                    backgroundColor: PrimaryColor
                 },
-                // headerStatusBarHeight: getStatusBarHeight(),
-                // headerLeftContainerStyle: {
-                //     paddingLeft: 10
-                // },
                 presentation: "transparentModal",
                 animation: "fade",
                 headerTintColor: "white"
-                // headerTintColor: "white",
-                // ...TransitionPresets.SlideFromRightIOS,
             }}
         >
             <StackScreen.Screen
@@ -179,34 +137,6 @@ const AppStackScreen = () => {
                     })
                 }}
             />
-            {/* <StackScreen.Screen
-                name="Home"
-                component={HomeScreen}
-                options={({ navigation, route }) => {
-                    return ({
-                        headerStyle: {
-                            backgroundColor: PrimaryColor,
-                        },
-                        headerTintColor: "white"
-                    })
-                }}
-            />
-            <StackScreen.Screen
-                name="Search"
-                component={SearchScreen}
-                options={({ navigation, route }) => {
-                    return ({
-                        headerBackTitle: "Back"
-                    })
-                }}
-            />
-            <StackScreen.Screen
-                name="Profile"
-                component={ProfileScreen}
-                options={{
-                    headerShown: false,
-                }}
-            /> */}
             <StackScreen.Screen
                 name="PropertyList"
                 component={PropertyListScreen}
@@ -220,33 +150,8 @@ const AppStackScreen = () => {
                 component={PropertyDetailScreen}
                 options={{
                     headerShown: false,
-                    // animationEnabled: false,
                 }}
             />
-            <StackScreen.Screen
-                name="ChatStack"
-                component={ChatStack}
-                options={{
-                    headerShown: false,
-                }}
-            />
-            {/* <StackScreen.Screen
-                name="Feedback"
-                component={FeedbackScreen}
-                options={{
-                    // headerTitle:route.params.screen,
-                    headerStyle: {
-                        backgroundColor: DarkBlueColor,
-                        // height:110
-                    },
-                    headerBackTitleVisible: false,
-                    headerLeftContainerStyle: {
-                        paddingLeft: 10
-                    },
-                    headerTitleAlign: "left",
-                    headerTintColor: "white"
-                }}
-            /> */}
             <StackScreen.Screen
                 name="LiveBlog"
                 component={LiveBlogScreen}
@@ -275,20 +180,53 @@ const AppStackScreen = () => {
                     headerShadowVisible: false
                 }}
             />
-            {/* <StackScreen.Screen
-                name="ChatDetail"
-                component={ChatDetailScreen}
-                options={({ route, navigation }) => ({
-                    // headerTitle: route.params?.name
-                })}
-            /> */}
             <StackScreen.Screen
                 name="SettingStack"
                 component={SettingStack}
                 options={({ navigation }) => ({
                     headerShown: false,
                 })}
-
+            />
+            <StackScreen.Screen
+                name="Notification"
+                component={NotificationScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                })}
+            />
+            <StackScreen.Screen
+                name="CreateOrJoin"
+                component={CreateOrJoin}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerShadowVisible: false,
+                    headerRight: () => <Ionicons name="ios-close" size={25} color="white"
+                        onPress={() => {
+                            navigation.goBack()
+                        }}
+                    />,
+                    headerTitle: () => null,
+                    headerRightContainerStyle: { paddingRight: 20 },
+                })}
+            />
+            <StackScreen.Screen
+                name="CreateLeague"
+                component={CreateLeagueScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Create Fantasy sniper league",
+                    headerTitleStyle:{
+                        fontSize:16,
+                    }
+                })}
+            />
+             <StackScreen.Screen
+                name="AddLiveMatches"
+                component={AddLiveMatchesTabs}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Add live matches"
+                })}
             />
         </StackScreen.Navigator>
     )

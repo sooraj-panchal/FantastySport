@@ -1,20 +1,18 @@
 import React from 'react';
-import { View } from 'react-native';
+import { FlatList, ListRenderItem, View } from 'react-native';
 import Container from '../../../components/Container';
 import Label from '../../../components/Label';
 
 interface InstructionListProps {
-    index:number
+    index: number | {}
 }
 
 const InstructionList: React.FC<InstructionListProps> = ({
-index
+    index
 }) => {
     return <Container
         containerStyle={{
-            justifyContent: "center",
-            borderBottomWidth: 1,
-            borderBottomColor: "lightgrey"
+            justifyContent: "center"
         }}
         mpContainer={{ pv: 15, mh: 20 }}
     >
@@ -27,9 +25,19 @@ index
     </Container>
 }
 
+
 const SecondPage: React.FC = ({
 
 }) => {
+    // interface renderFacingDataType {
+    //     isSelected: boolean;
+    //     name: string
+    // }
+    const renderInstructionListItem: ListRenderItem<{}> = ({ item, index }) => {
+        return (
+            <InstructionList index={item} />
+        )
+    }
     return (
         <Container
             containerStyle={{
@@ -42,19 +50,16 @@ const SecondPage: React.FC = ({
                     fontWeight: "900"
                 }}
                 mpLabel={{
-                    mt: 40,
                     pl: 20
                 }}
             >Instructions</Label>
-            <InstructionList index={1}/>
-            <InstructionList index={2}/>
-            <InstructionList index={3}/>
-            <InstructionList index={4}/>
-            <InstructionList index={5}/>
-            <InstructionList index={6}/>
-            <InstructionList index={7}/>
-            <InstructionList index={8}/>
-            <InstructionList index={9}/>
+            <FlatList
+                data={[1, 2, 3, 4, 5, 6, 7, 8]}
+                renderItem={renderInstructionListItem}
+                keyExtractor={(item, index) => index.toString()}
+                showsVerticalScrollIndicator={false}
+                ItemSeparatorComponent={() => <Container containerStyle={{ height: 1, backgroundColor: "lightgrey" }} mpContainer={{ mh: 20 }} />}
+            />
         </Container>
     )
 }

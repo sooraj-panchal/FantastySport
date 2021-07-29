@@ -30,9 +30,10 @@ const LoginScreen: React.FC<props> = ({
     return (
         <MainContainer
             absoluteModalLoading={loginLoading}
-            statusBarHeight
+            // statusBarHeight
+            style={{ backgroundColor: "#246e87" }}
         >
-            <StatusBar backgroundColor="rgba(0, 0, 0,0.3)" barStyle="dark-content" />
+            {/* <StatusBar backgroundColor="rgba(0, 0, 0,0.3)" barStyle="dark-content" /> */}
             <ScrollView>
                 <Formik
                     initialValues={{ email: '', password: "" }}
@@ -50,51 +51,22 @@ const LoginScreen: React.FC<props> = ({
                 >
                     {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
                         <Fragment>
-                            <Img
-                                imgSrc={AuthImages.background_logo}
-                                width={90}
-                                height={90}
-                                mpImage={{ mr: 10 }}
-                                imgStyle={{
-                                    alignSelf: "flex-end",
-                                    top: 30
-                                }}
-                            />
                             <Label
-                                labelSize={30}
-                                mpLabel={{ ml: 20 }}
+                                labelSize={28}
+                                mpLabel={{ ml: 20, }}
                                 style={{
-                                    fontFamily: semiBold
+                                    fontFamily: semiBold,
+                                    color: "white"
                                 }}
-                            >Sign in</Label>
-                            <Container
-                                containerStyle={{
-                                    flexDirection: "row",
-                                    alignItems: "center"
-                                }}
-                                mpContainer={{ ph: 10, ml: 10, mt: 5 }}
-                            >
-                                <Label
-                                    labelSize={15}
-                                    style={{ fontFamily: medium }}
-                                >New user?</Label>
-                                <Label
-                                    mpLabel={{ pl: 5 }}
-                                    labelSize={12}
-                                    style={{ color: OrangeColor, fontFamily: medium }}
-                                    onPress={() => {
-                                        navigation.navigate("Register")
-                                    }}
-                                >Create an account</Label>
-                            </Container>
+                            >Login</Label>
                             <InputBox
                                 mpContainer={{ mt: 10, mh: 20 }}
                                 inputHeight={50}
                                 placeholder="Email address"
                                 containerStyle={{
                                     backgroundColor: "white",
-                                    borderColor: LightGrayColor,
                                     borderRadius: 10,
+                                    borderWidth: 0
                                 }}
                                 textSize={15}
                                 leftIcon={() => {
@@ -109,11 +81,10 @@ const LoginScreen: React.FC<props> = ({
                                         />
                                     )
                                 }}
-                                // placeholderTextColor={LightGrayColor}
                                 value={values.email}
                                 onChangeText={handleChange("email")}
                                 onBlur={() => setFieldTouched('email')}
-                            // keyboardType="email-address"
+                                keyboardType="email-address"
                             // errors={errors.email}
                             // touched={touched.email}
                             />
@@ -126,8 +97,8 @@ const LoginScreen: React.FC<props> = ({
                                 placeholder="Password"
                                 containerStyle={{
                                     backgroundColor: "white",
-                                    borderColor: LightGrayColor,
-                                    borderRadius: 10
+                                    borderRadius: 10,
+                                    borderWidth: 0
                                 }}
                                 inputStyle={{ width: "70%", fontSize: 15 }}
                                 leftIcon={() => {
@@ -161,19 +132,19 @@ const LoginScreen: React.FC<props> = ({
                             <Label
                                 labelSize={14}
                                 mpLabel={{ mr: 20, mt: 5 }}
-                                style={{ textAlign: "right", color: OrangeColor, fontFamily: medium }}
+                                style={{ textAlign: "right", color: 'white', fontFamily: medium }}
                                 onPress={() => {
                                     navigation.navigate("ForgotPassword")
                                 }}
                             >Forgot Password?</Label>
                             <Btn
-                                title="Continue"
+                                title="LOGIN"
                                 mpBtn={{ mh: 20, mt: 20, pt: 4 }}
                                 btnStyle={{
-                                    borderRadius: 40,
-                                    backgroundColor: DarkBlueColor,
+                                    backgroundColor: OrangeColor,
                                     justifyContent: "center"
                                 }}
+                                radius={10}
                                 btnHeight={50}
                                 labelSize={15}
                                 labelStyle={{ color: "white", fontFamily: medium }}
@@ -195,30 +166,31 @@ const LoginScreen: React.FC<props> = ({
                                 <Container containerStyle={{
                                     flex: 0.45,
                                     height: 1,
-                                    backgroundColor: "grey"
+                                    backgroundColor: "white"
                                 }} />
                                 <Label
                                     mpLabel={{ ph: 10 }}
                                     labelSize={15}
+                                    style={{ color: "white" }}
                                 >Or</Label>
                                 <Container containerStyle={{
                                     flex: 0.45,
                                     height: 1,
-                                    backgroundColor: "grey"
+                                    backgroundColor: "white"
                                 }} />
                             </Container>
                             <Btn
                                 title="Continue with Google"
                                 mpBtn={{ mh: 20, mt: 20 }}
                                 btnStyle={{
-                                    borderRadius: 40,
                                     backgroundColor: "white",
                                     justifyContent: "center",
                                     elevation: 1
                                 }}
+                                radius={4}
                                 btnHeight={45}
                                 labelSize={13}
-                                labelStyle={{ fontFamily: medium, color: "black", marginLeft: 15, marginTop: 4 }}
+                                labelStyle={{ fontFamily: medium, color: "black", marginLeft: 15 }}
                                 onPress={handleSubmit}
                                 leftIcon={() => {
                                     return (
@@ -233,46 +205,21 @@ const LoginScreen: React.FC<props> = ({
                             />
                             <Btn
                                 title="Continue with Facebook "
-                                mpBtn={{ mh: 20, mt: 10 }}
+                                mpBtn={{ mh: 20, mt: 15, mb: 20 }}
                                 btnStyle={{
-                                    borderRadius: 40,
                                     backgroundColor: "#4267B2",
                                     justifyContent: "center",
                                     elevation: 1
                                 }}
+                                radius={4}
                                 btnHeight={45}
                                 labelSize={13}
-                                labelStyle={{ fontFamily: medium, color: "white", marginLeft: 15, marginTop: 4 }}
+                                labelStyle={{ fontFamily: medium, color: "white", marginLeft: 15 }}
                                 onPress={handleSubmit}
                                 leftIcon={() => {
                                     return (
                                         <Ionicans
                                             name="md-logo-facebook"
-                                            size={28}
-                                            color="white"
-                                        />
-                                    )
-                                }}
-                            />
-                            <Btn
-                                title="Continue with Apple "
-                                mpBtn={{ mh: 20, mt: 10 }}
-                                btnStyle={{
-                                    borderRadius: 40,
-                                    backgroundColor: "black",
-                                    justifyContent: "center",
-                                    elevation: 1
-                                }}
-                                btnHeight={45}
-                                labelSize={13}
-                                labelStyle={{ fontFamily: medium, color: "white", marginLeft: 15, marginTop: 4 }}
-                                onPress={() => {
-                                    handleSubmit()
-                                }}
-                                leftIcon={() => {
-                                    return (
-                                        <Ionicans
-                                            name="ios-logo-apple"
                                             size={28}
                                             color="white"
                                         />

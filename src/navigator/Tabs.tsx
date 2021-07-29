@@ -34,8 +34,8 @@ const ProfileStack = ({ }) => {
                 // headerStatusBarHeight: getStatusBarHeight(),
                 ...TransitionPresets.SlideFromRightIOS,
                 // animation: 'fade'
+                headerMode: "float"
             }}
-            headerMode="float"
         >
             <ProfileStackScreen.Screen
                 name="Profile"
@@ -112,53 +112,51 @@ const ProfileStack = ({ }) => {
 const Tabs = () => {
     return (
         <Tab.Navigator
-            // scre={{
-            //     style: {
-            //         backgroundColor: "white",
-            //         height: 60,
-            //         borderTopWidth: 0,
-            //     },
-            //     tabStyle: {
-            //         height: 60
-            //     },
-            //     labelStyle: {
-            //         fontSize: 12
-            //     },
-            // }}
             screenOptions={{
                 tabBarActiveTintColor: DarkBlueColor,
                 tabBarInactiveTintColor: "gray",
                 headerShown: false,
                 tabBarStyle: {
                     backgroundColor: "white",
-                    // height: 60,
+                    height: 50,
                     borderTopWidth: 0,
                 },
-                tabBarLabelStyle: {
-                    // fontSize: 12
-                }
+                headerStatusBarHeight: getStatusBarHeight()
             }}
         >
             <Tab.Screen
                 name="Home" component={HomeScreen}
                 options={({ navigation, route }) => {
                     return ({
-                        tabBarIcon: ({ color,size }) => {
+                        tabBarIcon: ({ color, size }) => {
                             return (
                                 <Ionicons name="md-home" size={size} color={color} />
                             )
                         },
+                        headerShown: true,
+                        headerTitle: "FANTASY SNIPER",
+                        headerTintColor: "white",
+                        headerRight: () => <Ionicons name="ios-notifications" size={22} color="white"
+                            onPress={() => {
+                                navigation.navigate("Notification")
+                            }}
+                        />,
+                        headerRightContainerStyle: { paddingRight: 20 },
+                        headerTitleStyle: {
+                            fontSize: 18
+                        },
+                        headerStyle: { height: 80 }
                     })
                 }}
             />
             <Tab.Screen name="Search" component={SearchScreen}
                 options={{
-                    tabBarIcon: ({ color,size }) => {
+                    tabBarIcon: ({ color, size }) => {
                         return (
                             <Ionicons name="ios-search-sharp" size={size} color={color} />
                         )
                     },
-                    tabBarLabel: "Search"
+                    tabBarLabel: "My Leagues"
                 }}
             // listeners={{
             //     tabPress: e => {
@@ -169,14 +167,14 @@ const Tabs = () => {
             />
             <Tab.Screen name="Saved" component={SavedScreen}
                 options={{
-                    tabBarLabel: "My Listings",
-                    tabBarIcon: ({ color,size }) => {
+                    tabBarLabel: "Winners",
+                    tabBarIcon: ({ color, size }) => {
                         return (
                             <Ionicons name="ios-heart" size={size} color={color} />
                         )
                     },
                     headerShown: true,
-                    headerTitle: "My Listing",
+                    headerTitle: "Winners",
                     headerStyle: {
                         backgroundColor: DarkBlueColor
                     },
@@ -184,14 +182,14 @@ const Tabs = () => {
                 }} />
             <Tab.Screen name="LiveBlog" component={FilterScreen}
                 options={{
-                    tabBarLabel: "Live Blog",
-                    tabBarIcon: ({ color,size }) => {
+                    tabBarLabel: "News",
+                    tabBarIcon: ({ color, size }) => {
                         return (
                             <Fontisto name="arrow-swap" size={size} color={color} />
                         )
                     },
                     headerShown: true,
-                    headerTitle: "Live Blog",
+                    headerTitle: "News",
                     headerStyle: {
                         backgroundColor: DarkBlueColor
                     },
@@ -199,10 +197,10 @@ const Tabs = () => {
                 }} />
             <Tab.Screen name="ProfileStack" component={ProfileStack}
                 options={{
-                    tabBarLabel: "More",
-                    tabBarIcon: ({ color,size }) => {
+                    tabBarLabel: "Profile",
+                    tabBarIcon: ({ color, size }) => {
                         return (
-                            <Feather name="more-horizontal" size={size} color={color} />
+                            <Ionicons name="md-person" size={size} color={color} />
                         )
                     },
                 }} />
