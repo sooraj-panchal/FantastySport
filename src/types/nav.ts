@@ -64,6 +64,10 @@ export type unAuthParamList = {
   CreateOrJoin:undefined;
   CreateLeague:undefined;
   AddLiveMatches:undefined;
+  MyTeamTab: NavigatorScreenParams<MyTeamtabParamList>,
+  AddPlayer:undefined;
+  AddSniperPoint:undefined;
+  InviteFriend:undefined;
 };
 
 export type tabParamList = {
@@ -74,6 +78,11 @@ export type tabParamList = {
   ProfileStack: NavigatorScreenParams<ProfileParamList>
 };
 
+export type MyTeamtabParamList = {
+  MyTeam: undefined;
+  LiveMatch: undefined;
+  League: undefined;
+};
 
 
 export type RootRouteProps<RouteName extends keyof RootStackParamList> = RouteProp<

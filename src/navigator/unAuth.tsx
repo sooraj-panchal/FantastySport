@@ -25,6 +25,10 @@ import NotificationScreen from '../container/AppModule/NotificationScreen';
 import CreateOrJoin from '../container/AppModule/CreateOrJoinScreen';
 import CreateLeagueScreen from '../container/AppModule/CreateLeagueScreen/view';
 import AddLiveMatchesTabs from '../container/AppModule/AddLiveMatchesTabs/view';
+import MyTeamBottomTabs from '../container/AppModule/MyTeamBottomTabs';
+import AddPlayerScreen from '../container/AppModule/AddPlayerScreen/view';
+import AddSniperPointScreen from '../container/AppModule/AddLiveMatchesTabs/AddSniperPointScreen/view';
+import InviteFriendScreen from '../container/AppModule/InviteFriendScreen/view';
 
 const StackScreen = createNativeStackNavigator<unAuthParamList>()
 const ChatStackScreen = createStackNavigator<chatParamList>()
@@ -215,17 +219,49 @@ const AppStackScreen: React.FC = () => {
                 options={({ navigation }) => ({
                     headerShown: true,
                     headerTitle: "Create Fantasy sniper league",
-                    headerTitleStyle:{
-                        fontSize:16,
+                    headerTitleStyle: {
+                        fontSize: 16,
                     }
                 })}
             />
-             <StackScreen.Screen
+            <StackScreen.Screen
                 name="AddLiveMatches"
                 component={AddLiveMatchesTabs}
                 options={({ navigation }) => ({
                     headerShown: true,
                     headerTitle: "Add live matches"
+                })}
+            />
+            <StackScreen.Screen
+                name="MyTeamTab"
+                component={MyTeamBottomTabs}
+                options={({ navigation }) => ({
+                    headerShown: false,
+                    headerTitle: "Adam's Team"
+                })}
+            />
+             <StackScreen.Screen
+                name="AddPlayer"
+                component={AddPlayerScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Players"
+                })}
+            />
+                  <StackScreen.Screen
+                name="AddSniperPoint"
+                component={AddSniperPointScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Add sniper point"
+                })}
+            />
+               <StackScreen.Screen
+                name="InviteFriend"
+                component={InviteFriendScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Redbelly's League"
                 })}
             />
         </StackScreen.Navigator>

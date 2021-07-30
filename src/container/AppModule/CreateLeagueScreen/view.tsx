@@ -6,8 +6,10 @@ import MainContainer from '../../../components/MainContainer';
 import { navigationProps } from '../../../types/nav';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Btn from '../../../components/Btn';
-import { ScrollView } from 'react-native-gesture-handler';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { OrangeColor, PrimaryColor } from '../../../assets/colors';
+import { ListRenderItem } from 'react-native';
+import TeamList from './TeamList';
 interface props extends navigationProps {
 
 }
@@ -320,6 +322,7 @@ const CreateLeagueScreen: React.FC<props> = ({
             <Label
                 labelSize={18} style={{ color: "black" }} mpLabel={{ pl: 15, pt: 15 }}
             >Choose your team</Label>
+            {addedTeam()}
             <Btn
                 title="ADD"
                 onPress={() => {
@@ -334,16 +337,38 @@ const CreateLeagueScreen: React.FC<props> = ({
             />
             <Btn
                 title="CREATE"
-                onPress={() => { }}
                 mpBtn={{ mh: 20, mt: 15 }}
                 btnHeight={45}
                 radius={5}
                 btnStyle={{ backgroundColor: OrangeColor }}
                 labelSize={16}
                 labelStyle={{ color: "white" }}
+                onPress={() => {
+                    navigation.navigate("MyTeamTab", {
+                        screen: "MyTeam"
+                    })
+                }}
             />
         </>
     }
+
+    const renderAddedTeamItem: ListRenderItem<{}> = ({ item, index }) => {
+        return <TeamList />
+    }
+
+
+    const addedTeam = () => {
+        return <FlatList
+            data={[1, 2]}
+            renderItem={renderAddedTeamItem}
+            keyExtractor={(item, index) => `renderList ${index.toString()}`}
+            // contentContainerStyle={{paddingBottom:10}}
+            ListHeaderComponent={() => <Container mpContainer={{ mt: 10 }} />}
+            ListFooterComponent={() => <Container mpContainer={{ mb: 10 }} />}
+            ItemSeparatorComponent={() => <Container mpContainer={{ mv: 5 }} />}
+        />
+    }
+
     return (
         <MainContainer>
             <ScrollView contentContainerStyle={{ paddingBottom: 20 }} >
