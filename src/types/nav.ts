@@ -68,6 +68,11 @@ export type unAuthParamList = {
   AddPlayer:undefined;
   AddSniperPoint:undefined;
   InviteFriend:undefined;
+  EditTeamInfo:undefined;
+  EditTeam:undefined;
+  JoinLeague:undefined;
+  JoinLeagueTeamName:undefined;
+  LiveMatchDetail:undefined
 };
 
 export type tabParamList = {
@@ -97,7 +102,7 @@ export type authRouteProp = RouteProp<RootStackParamList, 'Verification'>;
 
 export type authNavigationeProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 
-type homeNavProps = CompositeNavigationProp<
+export type homeNavProps = CompositeNavigationProp<
   BottomTabNavigationProp<tabParamList, 'Home'>,
   CompositeNavigationProp<
     NativeStackNavigationProp<unAuthParamList>,

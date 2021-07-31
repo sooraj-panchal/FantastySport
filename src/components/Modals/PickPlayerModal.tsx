@@ -121,7 +121,9 @@ const PickPlayerModal: React.FC<props> = ({
             </Container>
             <Btn
                 title="CONFIRM PICK"
-                onPress={() => { }}
+                onPress={() => { 
+                    closeModal()
+                }}
                 btnStyle={{
                     position: 'absolute',
                     bottom: 0,

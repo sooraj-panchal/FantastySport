@@ -6,15 +6,14 @@ import Img from '../../../../components/Img';
 import InputBox from '../../../../components/InputBox';
 import Label from '../../../../components/Label';
 import MainContainer from '../../../../components/MainContainer';
-interface props {
-    openModal: boolean,
-    closeModal: () => void
+import { navigationProps } from '../../../../types/nav';
+interface props extends navigationProps {
 }
 
 
 const AddSniperPointScreen: React.FC<props> = ({
-    openModal,
-    closeModal
+    navigation,
+    route
 }) => {
     // console.log(openModal)
     return (
@@ -140,7 +139,9 @@ const AddSniperPointScreen: React.FC<props> = ({
                     radius={5}
                     labelSize={16}
                     labelStyle={{ color: "white" }}
-                    onPress={() => { }}
+                    onPress={() => {
+                        navigation.goBack()
+                    }}
                 />
             </Container>
         </MainContainer>

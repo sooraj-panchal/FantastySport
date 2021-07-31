@@ -8,6 +8,7 @@ import Label from '../../../components/Label';
 import { OrangeColor, PrimaryColor } from '../../../assets/colors';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { ListRenderItem, View } from 'react-native';
+import PlayerList from '../../../components/PlayerList';
 const MyTeamScreen: React.FC<navigationProps> = ({
     navigation
 }) => {
@@ -36,7 +37,7 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                             }}
                             onPress={() => {
                                 navigation.navigate('InviteFriend')
-                             }}
+                            }}
                         />
                         <Ionicons
                             name="ios-settings"
@@ -155,7 +156,8 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                     alignSelf: "flex-end"
                 }}
                 onPress={() => {
-                    navigation.navigate('AddPlayer')
+                    navigation.navigate('EditTeam')
+                    // navigation.navigate('AddPlayer')
                 }}
             />
             {/* <Container
@@ -195,6 +197,8 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                                     <Label labelSize={15} style={{ letterSpacing: 0.5, width: 85, textAlign: 'center' }} >Accuracy</Label>
                                     <Label labelSize={15} style={{ letterSpacing: 0.5, width: 80, textAlign: 'center' }} >S.p.pred</Label>
                                 </Container>
+                            } else if (index == 1) {
+                                return <PlayerList />
                             } else
                                 return <>
                                     <Container

@@ -29,6 +29,11 @@ import MyTeamBottomTabs from '../container/AppModule/MyTeamBottomTabs';
 import AddPlayerScreen from '../container/AppModule/AddPlayerScreen/view';
 import AddSniperPointScreen from '../container/AppModule/AddLiveMatchesTabs/AddSniperPointScreen/view';
 import InviteFriendScreen from '../container/AppModule/InviteFriendScreen/view';
+import EditTeamInfoScreen from '../container/AppModule/EditTeamInfoScreen/view';
+import EditTeamScreen from '../container/AppModule/EditTeamScreen/view';
+import JoinLeagueScreen from '../container/AppModule/JoinLeagueScreen/view';
+import JoinLeagueTeamNameScreen from '../container/AppModule/JoinLeagueTeamNameScreen/view';
+import LiveMatchDetailScreen from '../container/AppModule/LiveMatchDetailScreen/view';
 
 const StackScreen = createNativeStackNavigator<unAuthParamList>()
 const ChatStackScreen = createStackNavigator<chatParamList>()
@@ -240,7 +245,7 @@ const AppStackScreen: React.FC = () => {
                     headerTitle: "Adam's Team"
                 })}
             />
-             <StackScreen.Screen
+            <StackScreen.Screen
                 name="AddPlayer"
                 component={AddPlayerScreen}
                 options={({ navigation }) => ({
@@ -248,7 +253,7 @@ const AppStackScreen: React.FC = () => {
                     headerTitle: "Players"
                 })}
             />
-                  <StackScreen.Screen
+            <StackScreen.Screen
                 name="AddSniperPoint"
                 component={AddSniperPointScreen}
                 options={({ navigation }) => ({
@@ -256,12 +261,52 @@ const AppStackScreen: React.FC = () => {
                     headerTitle: "Add sniper point"
                 })}
             />
-               <StackScreen.Screen
+            <StackScreen.Screen
                 name="InviteFriend"
                 component={InviteFriendScreen}
                 options={({ navigation }) => ({
                     headerShown: true,
                     headerTitle: "Redbelly's League"
+                })}
+            />
+            <StackScreen.Screen
+                name="EditTeamInfo"
+                component={EditTeamInfoScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Edit team info"
+                })}
+            />
+            <StackScreen.Screen
+                name="EditTeam"
+                component={EditTeamScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Edit Team"
+                })}
+            />
+            <StackScreen.Screen
+                name="JoinLeague"
+                component={JoinLeagueScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Join league"
+                })}
+            />
+               <StackScreen.Screen
+                name="JoinLeagueTeamName"
+                component={JoinLeagueTeamNameScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Join league"
+                })}
+            />
+              <StackScreen.Screen
+                name="LiveMatchDetail"
+                component={LiveMatchDetailScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Joshu's team"
                 })}
             />
         </StackScreen.Navigator>

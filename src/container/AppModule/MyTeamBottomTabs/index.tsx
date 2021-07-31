@@ -1,28 +1,34 @@
 import React from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { DarkBlueColor } from "../../../assets/colors";
+import { DarkBlueColor, PrimaryColor } from "../../../assets/colors";
 import { MyTeamtabParamList, tabParamList } from "../../../types/nav";
 import { getStatusBarHeight } from "../../../utils/globals";
 import MyTeamScreen from "./MyTeamScreen";
 import LiveMatchScreen from "./LiveMatchScreen";
 import LeagueScreen from "./LeagueScreen";
 import { HeaderBackButton } from '@react-navigation/elements'
+import Container from "../../../components/Container";
+import Label from "../../../components/Label";
 const Tab = createBottomTabNavigator<MyTeamtabParamList>();
 
 const MyTeamBottomTabs = () => {
     return (
         <Tab.Navigator
             screenOptions={{
-                tabBarActiveTintColor: DarkBlueColor,
+                tabBarActiveTintColor: PrimaryColor,
                 tabBarInactiveTintColor: "gray",
                 headerShown: false,
                 tabBarStyle: {
                     backgroundColor: "white",
-                    height: 50,
-                    borderTopWidth: 0,
+                    height: 60,
+                    borderTopWidth: 0
                 },
-                headerStatusBarHeight: getStatusBarHeight()
+                headerStatusBarHeight: getStatusBarHeight(),
+                tabBarLabelStyle: {
+                    fontSize: 12,
+                    bottom: 5
+                }
             }}
         >
             <Tab.Screen
@@ -50,21 +56,46 @@ const MyTeamBottomTabs = () => {
                 }}
             />
             <Tab.Screen name="LiveMatch" component={LiveMatchScreen}
-                options={{
-                    tabBarIcon: ({ color, size }) => {
+                options={({ navigation }) => ({
+                    tabBarIcon: ({ color, size, focused }) => {
                         return (
-                            <Ionicons name="ios-search-sharp" size={size} color={color} />
+                            <Container
+                                containerStyle={{
+                                    backgroundColor: focused ? 'red' : 'grey',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    borderRadius: 4
+                                }}
+
+                                mpContainer={{ ph: 5, pv: 2 }}
+                            >
+                                <Label
+                                    labelSize={14}
+                                    style={{ color: 'white' }}
+                                >LIVE</Label>
+                            </Container>
                         )
                     },
-                    tabBarLabel: "Live Match"
-                }}
+                    headerShown: true,
+                    headerTitle: "Live Match",
+                    headerTintColor: "white",
+                    tabBarLabel: "Live Match",
+                    headerLeft: () => {
+                        return <HeaderBackButton
+                            tintColor="white"
+                            pressColor="rgba(0,0,0,0.1)"
+                            style={{ left: 2 }}
+                            onPress={() => navigation.goBack()}
+                        />
+                    }
+                })}
             />
             <Tab.Screen name="League" component={LeagueScreen}
                 options={{
                     tabBarLabel: "Leagues",
                     tabBarIcon: ({ color, size }) => {
                         return (
-                            <Ionicons name="ios-heart" size={size} color={color} />
+                            <Ionicons name="md-trophy" size={size} color={color} />
                         )
                     },
                     headerShown: true,

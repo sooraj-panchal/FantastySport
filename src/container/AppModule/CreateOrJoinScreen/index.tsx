@@ -55,7 +55,7 @@ const CreateOrJoin: React.FC<props> = ({
             }}
             mpBtn={{ mh: 20, mt: 15 }}
             onPress={() => {
-                navigation.navigate("Register")
+                navigation.navigate("JoinLeague")
             }}
         />
     </MainContainer>

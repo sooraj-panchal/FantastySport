@@ -4,11 +4,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Label from '../../../components/Label';
 import { navigationProps } from '../../../types/nav';
 interface props {
-    onPress:()=>void,
+    onPress: () => void,
+    index: number
 
 }
 const PlayerList: React.FC<props> = ({
-    onPress
+    onPress,
+    index
 }) => {
 
     return <>
@@ -34,29 +36,53 @@ const PlayerList: React.FC<props> = ({
                     <Label labelSize={14} style={{ letterSpacing: 0.5, color: 'green' }} mpLabel={{ pl: 10 }} >Accuracy 98%</Label>
                 </Container>
             </Container>
-            <Container
-                containerStyle={{
-                    borderWidth: 2,
-                    borderRadius: 30,
-                    borderColor: 'red',
-                    position: 'absolute',
-                    right: 0,
-                    borderStyle: "dashed",
-                    justifyContent: "center",
-                    alignItems: "center"
-                }}
-                width={30} height={30}
-                onPress={onPress}
-            >
-                <Ionicons
-                    name="add-sharp"
-                    size={25}
-                    style={{
+            {
+                index == 1 ?
+                    <Container
+                        containerStyle={{
+                            borderRadius: 30,
+                            position: 'absolute',
+                            right: 0,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            backgroundColor: 'red'
+                        }}
+                        width={30} height={30}
+                        onPress={onPress}
+                    >
+                        <Ionicons
+                            name="md-checkmark"
+                            size={25}
+                            style={{
 
-                    }}
-                    color={'red'}
-                />
-            </Container>
+                            }}
+                            color={'white'}
+                        />
+                    </Container> :
+                    <Container
+                        containerStyle={{
+                            borderWidth: 2,
+                            borderRadius: 30,
+                            borderColor: 'red',
+                            position: 'absolute',
+                            right: 0,
+                            borderStyle: "dashed",
+                            justifyContent: "center",
+                            alignItems: "center"
+                        }}
+                        width={30} height={30}
+                        onPress={onPress}
+                    >
+                        <Ionicons
+                            name="add-sharp"
+                            size={25}
+                            style={{
+
+                            }}
+                            color={'red'}
+                        />
+                    </Container>
+            }
         </Container>
         <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} mpContainer={{ mh: 15 }} />
     </>

@@ -26,6 +26,9 @@ const AddPlayerScreen: React.FC<navigationProps> = ({
                         style={{
                             color: "white"
                         }}
+                        onPress={() => {
+                            navigation.goBack()
+                        }}
                     >ADD</Label>
                 }
             })
@@ -37,6 +40,7 @@ const AddPlayerScreen: React.FC<navigationProps> = ({
             onPress={() => {
                 setOpenModal(true)
             }}
+            index={index}
         />
     }
     return <MainContainer
