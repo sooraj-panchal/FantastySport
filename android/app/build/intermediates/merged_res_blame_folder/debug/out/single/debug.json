@@ -1,42 +1,22 @@
 [
     {
-        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/debug/mipmap-hdpi_fantasy.png.flat",
+        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/res/mipmap-hdpi/fantasy.png"
     },
     {
-        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher_round.png.flat",
-        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png"
+        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi_fantasy.png.flat",
+        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/res/mipmap-xhdpi/fantasy.png"
     },
     {
-        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher_round.png.flat",
-        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"
+        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/debug/mipmap-mdpi_fantasy.png.flat",
+        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/res/mipmap-mdpi/fantasy.png"
     },
     {
-        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher.png.flat",
-        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/res/mipmap-hdpi/ic_launcher.png"
+        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_fantasy.png.flat",
+        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/res/mipmap-xxhdpi/fantasy.png"
     },
     {
-        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
-    },
-    {
-        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
-    },
-    {
-        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher_round.png.flat",
-        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png"
-    },
-    {
-        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher_round.png.flat",
-        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png"
-    },
-    {
-        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher.png.flat",
-        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/res/mipmap-mdpi/ic_launcher.png"
-    },
-    {
-        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher_round.png.flat",
-        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png"
+        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_fantasy.png.flat",
+        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/res/mipmap-xxxhdpi/fantasy.png"
     }
 ]

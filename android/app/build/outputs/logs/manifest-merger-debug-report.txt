@@ -114,13 +114,13 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/p/.g
 	tools:ignore
 		ADDED from /Users/p/react-native/FantastySport/FantastySportApp/android/app/src/debug/AndroidManifest.xml:10:9-48
 	android:roundIcon
-		ADDED from /Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:10:7-52
-		ADDED from /Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:10:7-52
+		ADDED from /Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:10:7-42
+		ADDED from /Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:10:7-42
 	tools:targetApi
 		ADDED from /Users/p/react-native/FantastySport/FantastySportApp/android/app/src/debug/AndroidManifest.xml:9:9-29
 	android:icon
-		ADDED from /Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:9:7-41
-		ADDED from /Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:9:7-41
+		ADDED from /Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:9:7-37
+		ADDED from /Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:9:7-37
 	android:allowBackup
 		ADDED from /Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:11:7-34
 		ADDED from /Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:11:7-34

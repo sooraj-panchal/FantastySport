@@ -1,3 +1,3 @@
-export const medium="Poppins-Medium"
-export const regular="Poppins-Regular"
-export const semiBold="Poppins-SemiBold"
+export const regular="SFProText-Regular"
+export const medium="SFProText_Semibold"
+export const semiBold="SFProText_Bold"
