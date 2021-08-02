@@ -91,7 +91,7 @@ const MyTeamBottomTabs = () => {
                 })}
             />
             <Tab.Screen name="League" component={LeagueScreen}
-                options={{
+                options={({ navigation }) => ({
                     tabBarLabel: "Leagues",
                     tabBarIcon: ({ color, size }) => {
                         return (
@@ -101,10 +101,18 @@ const MyTeamBottomTabs = () => {
                     headerShown: true,
                     headerTitle: "Leagues",
                     headerStyle: {
-                        backgroundColor: DarkBlueColor
+                        backgroundColor: PrimaryColor
                     },
-                    headerTintColor: "white"
-                }} />
+                    headerTintColor: "white",
+                    headerLeft: () => {
+                        return <HeaderBackButton
+                            tintColor="white"
+                            pressColor="rgba(0,0,0,0.1)"
+                            style={{ left: 2 }}
+                            onPress={() => navigation.goBack()}
+                        />
+                    }
+                })} />
         </Tab.Navigator>
     );
 }

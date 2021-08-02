@@ -7,14 +7,10 @@ import MainContainer from "../../../components/MainContainer";
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { OrangeColor } from "../../../assets/colors";
 import styles from "./styles";
-import { medium, semiBold } from "../../../assets/fonts/fonts";
-import { AppImages, AuthImages } from "../../../assets/images/map";
+import { semiBold } from "../../../assets/fonts/fonts";
 import Container from "../../../components/Container";
-import { SearchFor } from "../../../../dummyArray";
 import { navigationProps } from "../../../types/nav";
-import { getStatusBarHeight } from "../../../utils/globals";
 import { screenWidth } from "../../../types/sizes";
-import PagerView from "react-native-pager-view";
 import News from "./News";
 import MyLeague from "./MyLeague";
 import LiveMatch from "./LiveMatch";
@@ -27,48 +23,6 @@ interface props extends navigationProps {
 const HomeScreen: React.FC<props> = ({
     navigation
 }) => {
-
-    const goToPropertyDetais = () => {
-        navigation.navigate("PropertyDetail")
-    }
-
-    const _renderPropertyForYou: ListRenderItem<string | any> = ({ item, index }) => {
-        return (
-            <Container
-                width={160}
-                height={210}
-                containerStyle={styles.propertyTypeContainer}
-                onPress={goToPropertyDetais}
-            >
-                <Img
-                    imgSrc={{ uri: "https://cdn.globalpropertyguide.com/assets/Mexico-2/Mexico-2021.jpg" }}
-                    width={160}
-                    height={110}
-                // imgStyle={styles.propertyTypeImage}
-                // resizeMode="contain"
-                />
-                <View style={{
-                    height: 90,
-                    justifyContent: "center"
-                }} >
-                    <Label labelSize={16} mpLabel={{ pl: 10, pt: 5 }} style={{ fontFamily: semiBold }}  >$ 28,800</Label>
-                    <Label labelSize={12} style={{ maxWidth: "95%" }} mpLabel={{ pl: 10 }}
-                    // numberOfLines={3}
-                    >4.1 acres Lake lure, North Carollina (Ruther ford Country)</Label>
-                </View>
-                <Ionicons
-                    name={index == 0 ? "ios-heart" : "ios-heart-outline"}
-                    size={25}
-                    style={{
-                        position: "absolute",
-                        right: 5,
-                        top: 5
-                    }}
-                    color={index == 0 ? "red" : 'white'}
-                />
-            </Container>
-        )
-    }
 
     const renderLeague: ListRenderItem<{}> = ({ item, index }) => {
         return <Container
@@ -99,7 +53,7 @@ const HomeScreen: React.FC<props> = ({
             >Private game</Label>
             <Btn
                 title="Play Now"
-                onPress={() => { 
+                onPress={() => {
                     navigation.navigate("CreateOrJoin")
                 }}
                 btnHeight={45}
@@ -135,6 +89,7 @@ const HomeScreen: React.FC<props> = ({
                     ListHeaderComponent={() => <Container mpContainer={{ pl: 20 }} />}
                     ItemSeparatorComponent={() => <Container mpContainer={{ pl: 10 }} />}
                     contentContainerStyle={{ marginTop: 20, paddingRight: 20 }}
+                    keyExtractor={(item, index) => `MyLeague ${index.toString()}`}
                 />
                 <MyLeague />
                 <LiveMatch />

@@ -1,26 +1,11 @@
 import React from 'react';
-import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
-import HomeScreen from '../container/AppModule/HomeScreen/view';
-import ProfileScreen from '../container/AppModule/ProfileScreen';
-import { DarkBlueColor, PrimaryColor } from '../assets/colors';
+import { PrimaryColor } from '../assets/colors';
 import Tabs from './Tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { View } from 'react-native';
-import PropertyDetailScreen from '../container/AppModule/PropertyDetailScreen';
-import SearchScreen from '../container/AppModule/SearchScreen';
-import PropertyListScreen from '../container/AppModule/PropertyListScren';
-import FeedbackScreen from '../container/AppModule/FeedbackScreen';
-import ChatScreen from '../container/AppModule/ChatScreen';
-import ChatDetailScreen from '../container/AppModule/ChatDetailScreen';
-import LiveBlogScreen from '../container/AppModule/LiveBlogScreen';
-import { getStatusBarHeight } from '../utils/globals';
-import BrokersProfileScreen from '../container/AppModule/BrokersProfileScreen';
-import SellerPostListScreen from '../container/AppModule/SellerPostListScreen';
-import SettingScreen from '../container/AppModule/SettingScreen';
 import ChangePasswordScreen from '../container/AppModule/ChangePasswordScreen';
 import TermsAndConditionScreen from '../container/AppModule/TermsConditionScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { unAuthParamList, chatParamList, settingParamList } from '../types/nav';
+import { unAuthParamList } from '../types/nav';
 import NotificationScreen from '../container/AppModule/NotificationScreen';
 import CreateOrJoin from '../container/AppModule/CreateOrJoinScreen';
 import CreateLeagueScreen from '../container/AppModule/CreateLeagueScreen/view';
@@ -34,95 +19,13 @@ import EditTeamScreen from '../container/AppModule/EditTeamScreen/view';
 import JoinLeagueScreen from '../container/AppModule/JoinLeagueScreen/view';
 import JoinLeagueTeamNameScreen from '../container/AppModule/JoinLeagueTeamNameScreen/view';
 import LiveMatchDetailScreen from '../container/AppModule/LiveMatchDetailScreen/view';
+import StandingScreen from '../container/AppModule/StandingScreen/view';
+import TeamLevelScreen from '../container/AppModule/TeamLevelScreen/view';
+import WinnerDetailScreen from '../container/AppModule/WinnerDetailScreen/view';
+import GameDetailScreen from '../container/AppModule/GameDetailScreen/view';
+import NewsDetailScreen from '../container/AppModule/NewsDetailScreen/view';
 
 const StackScreen = createNativeStackNavigator<unAuthParamList>()
-const ChatStackScreen = createStackNavigator<chatParamList>()
-const SettingStackScreen = createStackNavigator<settingParamList>()
-
-const SettingStack = ({ }) => {
-    return (
-        <SettingStackScreen.Navigator
-            screenOptions={{
-                // headerStatusBarHeight: getStatusBarHeight(),
-                ...TransitionPresets.SlideFromRightIOS,
-                headerShown: true,
-                headerMode: "float"
-            }}
-        >
-            <SettingStackScreen.Screen
-                name="Setting"
-                component={SettingScreen}
-                options={({ navigation, route }) => {
-                    return ({
-                        headerStyle: {
-                            backgroundColor: DarkBlueColor,
-                            // height:110
-                        },
-                        cardStyle: {
-                            backgroundColor: "red"
-                        },
-                        headerTintColor: "white",
-                        // headerLeft: (props) => (
-                        //     <HeaderBackButton
-                        //         {...props}
-                        //         onPress={() => navigation.goBack()}
-                        //         style={{ marginLeft: 20 }}
-                        //     />
-                        // ),
-                    })
-                }}
-            />
-            <SettingStackScreen.Screen
-                name="ChangePassword"
-                component={ChangePasswordScreen}
-                options={({ navigation, route }) => {
-                    return ({
-                        headerStyle: {
-                            backgroundColor: DarkBlueColor,
-                        },
-                        headerTintColor: "white",
-                        headerTitle: route.params?.title,
-                    })
-                }}
-            />
-            <SettingStackScreen.Screen
-                name="TermsAndCondition"
-                component={TermsAndConditionScreen}
-                options={({ navigation, route }) => {
-                    return ({
-                        headerTitle: route.params?.title,
-                        headerStyle: {
-                            backgroundColor: DarkBlueColor,
-                            // height:110
-                        },
-                        headerBackTitleVisible: false,
-                        headerLeftContainerStyle: {
-                            paddingLeft: 10
-                        },
-                        headerTitleAlign: "left",
-                        headerTintColor: "white",
-                    })
-                }}
-            />
-            <SettingStackScreen.Screen
-                name="Feedback"
-                component={FeedbackScreen}
-                options={({ navigation, route }) => {
-                    return ({
-                        headerTitle: route.params?.title,
-                        headerStyle: {
-                            backgroundColor: DarkBlueColor,
-                            // height:110
-                        },
-                        headerTitleAlign: "left",
-                        headerTintColor: "white"
-                    })
-                }}
-            />
-        </SettingStackScreen.Navigator>
-    )
-}
-
 
 const AppStackScreen: React.FC = () => {
     return (
@@ -145,56 +48,6 @@ const AppStackScreen: React.FC = () => {
                         headerShown: false
                     })
                 }}
-            />
-            <StackScreen.Screen
-                name="PropertyList"
-                component={PropertyListScreen}
-                options={{
-                    headerTitle: "Block List",
-                    headerBackTitle: "Back"
-                }}
-            />
-            <StackScreen.Screen
-                name="PropertyDetail"
-                component={PropertyDetailScreen}
-                options={{
-                    headerShown: false,
-                }}
-            />
-            <StackScreen.Screen
-                name="LiveBlog"
-                component={LiveBlogScreen}
-                options={{
-                    headerTitle: "Live blog",
-                    headerShadowVisible: false,
-                    headerTintColor: "white",
-                    headerShown: true
-                }}
-            />
-            <StackScreen.Screen
-                name="BrokersProfile"
-                component={BrokersProfileScreen}
-                options={{
-                    headerTitle: "",
-                    headerShadowVisible: false,
-                    headerTintColor: "white",
-                    headerShown: true
-                }}
-            />
-            <StackScreen.Screen
-                name="SellerPostList"
-                component={SellerPostListScreen}
-                options={{
-                    headerTitle: "Seller 1",
-                    headerShadowVisible: false
-                }}
-            />
-            <StackScreen.Screen
-                name="SettingStack"
-                component={SettingStack}
-                options={({ navigation }) => ({
-                    headerShown: false,
-                })}
             />
             <StackScreen.Screen
                 name="Notification"
@@ -293,7 +146,7 @@ const AppStackScreen: React.FC = () => {
                     headerTitle: "Join league"
                 })}
             />
-               <StackScreen.Screen
+            <StackScreen.Screen
                 name="JoinLeagueTeamName"
                 component={JoinLeagueTeamNameScreen}
                 options={({ navigation }) => ({
@@ -301,13 +154,95 @@ const AppStackScreen: React.FC = () => {
                     headerTitle: "Join league"
                 })}
             />
-              <StackScreen.Screen
+            <StackScreen.Screen
                 name="LiveMatchDetail"
                 component={LiveMatchDetailScreen}
                 options={({ navigation }) => ({
                     headerShown: true,
                     headerTitle: "Joshu's team"
                 })}
+            />
+            <StackScreen.Screen
+                name="Standing"
+                component={StandingScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Standings"
+                })}
+            />
+            <StackScreen.Screen
+                name="TeamLevel"
+                component={TeamLevelScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Team level"
+                })}
+            />
+            <StackScreen.Screen
+                name="WinnerDetail"
+                component={WinnerDetailScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "John's Official Team"
+                })}
+            />
+            <StackScreen.Screen
+                name="GameDetail"
+                component={GameDetailScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Mini militia"
+                })}
+            />
+            <StackScreen.Screen
+                name="NewsDetail"
+                component={NewsDetailScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "",
+                    headerTranslucent:true,
+                    // headerTintColor:'white',
+                    headerStyle:{backgroundColor:'transparent'},
+                    headerShadowVisible:false
+                })}
+            />
+             <StackScreen.Screen
+                name="TermsAndCondition"
+                component={TermsAndConditionScreen}
+                options={({ navigation, route }) => {
+                    return ({
+                        headerTitle: route.params?.title,
+                        headerStyle: {
+                            backgroundColor: PrimaryColor,
+                            // height:110
+                        },
+                        headerBackTitleVisible: false,
+                        headerLeftContainerStyle: {
+                            paddingLeft: 10
+                        },
+                        headerTitleAlign: "left",
+                        headerTintColor: "white",
+                    })
+                }}
+            />
+             <StackScreen.Screen
+                name="ChangePassword"
+                component={ChangePasswordScreen}
+                options={({ navigation, route }) => {
+                    return ({
+                        headerTitle: "Change Password",
+                        headerStyle: {
+                            backgroundColor: PrimaryColor,
+                            // height:110
+                        },
+                        headerBackTitleVisible: false,
+                        headerLeftContainerStyle: {
+                            paddingLeft: 10
+                        },
+                        headerTitleAlign: "left",
+                        headerTintColor: "white",
+                    })
+                }}
             />
         </StackScreen.Navigator>
     )

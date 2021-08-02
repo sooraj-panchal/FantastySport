@@ -9,7 +9,7 @@ import Label from "../../../components/Label";
 import MainContainer from "../../../components/MainContainer";
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { DarkBlueColor, } from "../../../assets/colors";
+import { DarkBlueColor, PrimaryColor, } from "../../../assets/colors";
 import { AuthStack } from "../../../navigator/navActions";
 import EditProfileModal from "../../../components/Modals/EditProfileModal";
 import { navigationProps } from "../../../types/nav";
@@ -26,10 +26,10 @@ const ImageContainer = ({
                 justifyContent: "center",
                 alignItems: "center",
                 // height: null,
-                backgroundColor: "white",
+                backgroundColor: PrimaryColor,
                 elevation: 1
             }}
-            mpContainer={{ pv: 15 }}
+            mpContainer={{ pv: 20 }}
         >
             <EditProfileModal
                 openModal={openModal}
@@ -38,19 +38,20 @@ const ImageContainer = ({
             <Img
                 width={90}
                 height={90}
-                imgStyle={{ borderRadius: 100 }}
+                imgStyle={{ borderRadius: 100, borderWidth: 4, borderColor: 'white' }}
                 imgSrc={{ uri: AuthImages.profile_image }}
             />
             <Label
-                style={{ color: "black", fontFamily: medium }}
+                style={{ color: "white", fontFamily: medium, letterSpacing: 0.5 }}
                 labelSize={20}
-                mpLabel={{ pt: 5 }}
-            >John Wick</Label>
+                mpLabel={{ pt: 15 }}
+            >Adams depp</Label>
             <Label
-                style={{ color: "black" }}
-                labelSize={15}
+                style={{ color: "white", letterSpacing: 0.5 }}
+                labelSize={16}
+                mpLabel={{ mt: 5 }}
             >Johnwick@gmail.com</Label>
-            <Container containerStyle={{
+            {/* <Container containerStyle={{
                 backgroundColor: DarkBlueColor,
                 borderRadius: 35,
                 position: "absolute",
@@ -68,7 +69,24 @@ const ImageContainer = ({
                     size={20}
                     color="white"
                 />
-            </Container>
+            </Container> */}
+            <Btn
+                title="Edit Profile"
+                onPress={() => {
+                    setOpenModal(true)
+                }}
+                btnStyle={{
+                    borderWidth: 1,
+                    borderRadius: 4,
+                    // paddingVertical:20,
+                    paddingHorizontal: 30,
+                    borderColor: 'white'
+                }}
+                labelSize={14}
+                labelStyle={{ color: 'white' }}
+                mpBtn={{ mt: 15 }}
+                btnHeight={35}
+            />
         </Container>
     )
 }
@@ -122,43 +140,41 @@ const ProfileScreen: React.FC<props> = ({
 
             >
                 <ListContainer
-                    name="My Properties"
+                    name="About us"
                     onPress={() => {
-                        navigation.navigate('ProfileStack', { screen: 'MyProperties' });
-                    }}
-                />
-                <ListContainer
-                    name="My Appointments"
-                    onPress={() => {
-                        navigation.navigate('ProfileStack', { screen: 'ContactedProperies' });
-                    }}
-                />
-                <ListContainer
-                    name="Contacted Properties"
-                    onPress={() => {
-                        navigation.navigate('ProfileStack', { screen: 'ContactedProperies' });
-                    }}
-                />
-                {/* <ListContainer
-                    name="Saved Searches"
-                    onPress={() => {
-                        navigation.navigate('ProfileStack', { screen: 'SavedSearch' });
-                    }}
-                /> */}
-                <ListContainer
-                    name="Seller Chat"
-                    onPress={() => {
-                        navigation.navigate('ChatStack', {
-                            screen: 'Chat'
+                        navigation.navigate("TermsAndCondition",{
+                            title:'About us'
                         })
                     }}
                 />
                 <ListContainer
-                    name="Settings"
+                    name="Change password"
                     onPress={() => {
-                        navigation.navigate('SettingStack', {
-                            screen: "Setting"
-                        });
+                        navigation.navigate("ChangePassword")
+                    }}
+                />
+                <ListContainer
+                    name="Privacy policy"
+                    onPress={() => {
+                        navigation.navigate("TermsAndCondition",{
+                            title:'Privacy policy'
+                        })
+                    }}
+                />
+                <ListContainer
+                    name="Terms & conditions"
+                    onPress={() => {
+                        navigation.navigate("TermsAndCondition",{
+                            title:'Terms & conditions'
+                        })
+                    }}
+                />
+                <ListContainer
+                    name="Contact us"
+                    onPress={() => {
+                        navigation.navigate("TermsAndCondition",{
+                            title:'Contact us'
+                        })
                     }}
                 />
             </Container>
