@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../container/AppModule/HomeScreen/view';
 import ProfileScreen from '../container/AppModule/ProfileScreen';
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { DarkBlueColor } from "../assets/colors";
+import { DarkBlueColor, PrimaryColor } from "../assets/colors";
 
 import { getStatusBarHeight } from "../utils/globals";
 import { tabParamList } from "../types/nav";
@@ -18,7 +18,7 @@ const Tabs = () => {
     return (
         <Tab.Navigator
             screenOptions={({ navigation }) => ({
-                tabBarActiveTintColor: DarkBlueColor,
+                tabBarActiveTintColor: PrimaryColor,
                 tabBarInactiveTintColor: "gray",
                 headerShown: true,
                 tabBarStyle: {
@@ -38,7 +38,7 @@ const Tabs = () => {
                 headerTitleStyle: {
                     fontSize: 18
                 },
-                headerStyle: { height: 80 }
+                headerStyle: { height: 80, backgroundColor: PrimaryColor }
             })}
         >
             <Tab.Screen

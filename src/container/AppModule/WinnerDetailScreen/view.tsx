@@ -5,10 +5,12 @@ import MainContainer from '../../../components/MainContainer';
 import { navigationProps } from '../../../types/nav';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Label from '../../../components/Label';
-import { OrangeColor, PrimaryColor } from '../../../assets/colors';
+import { greenColor, OrangeColor, PrimaryColor } from '../../../assets/colors';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { ListRenderItem, View } from 'react-native';
 import PlayerList from '../../../components/PlayerList';
+import { AppImages } from '../../../assets/images/map';
+import Img from '../../../components/Img';
 const WinnerDetailScreen: React.FC<navigationProps> = ({
     navigation
 }) => {
@@ -33,7 +35,7 @@ const WinnerDetailScreen: React.FC<navigationProps> = ({
                             containerStyle={{
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                backgroundColor: 'red',
+                                backgroundColor: OrangeColor,
                                 borderRadius: 35,
                             }}
                             width={35} height={35}
@@ -63,12 +65,9 @@ const WinnerDetailScreen: React.FC<navigationProps> = ({
                 }}
                 mpContainer={{ mh: 15, mt: 20, mb: 10 }}
             >
-                <Container
-                    containerStyle={{
-                        backgroundColor: "red",
-                        borderRadius: 30
-                    }}
-                    width={30} height={30}
+                <Img
+                    imgSrc={AppImages.green_logo}
+                    width={32} height={35}
                 />
                 <Container
                 >
@@ -83,7 +82,7 @@ const WinnerDetailScreen: React.FC<navigationProps> = ({
                     <Label labelSize={16} style={{ fontWeight: "bold" }}  >Act 0.00</Label>
                     <Label labelSize={14} style={{ letterSpacing: 0.5, color: OrangeColor }} >Fantasy sniper</Label>
                     <Label labelSize={14} style={{ letterSpacing: 0.5, color: OrangeColor }} >Points Prediction. 0.0</Label>
-                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: "green" }} >Proj. 0.0</Label>
+                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: greenColor }} >Proj. 0.0</Label>
                 </Container>
             </Container>
             <View>
@@ -114,20 +113,25 @@ const WinnerDetailScreen: React.FC<navigationProps> = ({
                                         mpContainer={{ mh: 15 }}
                                         height={60}
                                     >
-                                        <Ionicons
+                                        {/* <Ionicons
                                             name="md-person"
                                             size={40}
                                             color={'grey'}
                                             style={{
                                                 marginHorizontal: 10,
                                             }}
+                                        /> */}
+                                        <Img
+                                            imgSrc={AppImages.player_1}
+                                            width={50} height={50}
+                                            mpImage={{ml:10}}
                                         />
                                         <Container containerStyle={{width:120}} mpContainer={{ml:20}} > 
                                             <Label labelSize={15} style={{ letterSpacing: 0.5, color: "black" }} >P. Mahomes</Label>
                                             <Label labelSize={13} style={{ letterSpacing: 0.5, color: "grey" }} >QB</Label>
                                         </Container>
                                         <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
-                                            <Label labelSize={14} style={{ letterSpacing: 0.5, color: "green" }}>36.3</Label>
+                                            <Label labelSize={14} style={{ letterSpacing: 0.5, color: greenColor }}>36.3</Label>
                                         </Container>
                                         <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
                                             <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black" }}>36.3</Label>

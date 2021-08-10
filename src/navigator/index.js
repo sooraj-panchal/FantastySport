@@ -42,7 +42,7 @@ const AppContainer = ({
     return (
         <RootStack.Navigator
             screenOptions={{ headerShown: false, animation: "none" }}
-            initialRouteName={"AppStack"}
+            initialRouteName={"AuthStack"}
         >
             {
                 loading ?
@@ -64,6 +64,7 @@ const AppContainer = ({
         </RootStack.Navigator>
     )
 }
+
 const mapStateToProps = store => {
     return {
         asyncBuyerDataResponse: asyncBuyerDataSelector(store),

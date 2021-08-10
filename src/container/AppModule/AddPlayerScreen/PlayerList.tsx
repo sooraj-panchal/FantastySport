@@ -3,6 +3,9 @@ import Container from '../../../components/Container';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Label from '../../../components/Label';
 import { navigationProps } from '../../../types/nav';
+import Img from '../../../components/Img';
+import { AppImages } from '../../../assets/images/map';
+import { OrangeColor } from '../../../assets/colors';
 interface props {
     onPress: () => void,
     index: number
@@ -22,12 +25,11 @@ const PlayerList: React.FC<props> = ({
             mpContainer={{ mh: 15 }}
             height={65}
         >
-            <Ionicons
-                name="md-person"
-                size={50}
-                color={'grey'}
-                style={{
-                }}
+            <Img
+                imgSrc={AppImages.player_1}
+                width={50} height={50}
+            // style={{
+            // }}
             />
             <Container mpContainer={{ pl: 15 }} >
                 <Label labelSize={16} style={{ letterSpacing: 0.5, color: "black" }} >P. Mahomes</Label>
@@ -45,7 +47,7 @@ const PlayerList: React.FC<props> = ({
                             right: 0,
                             justifyContent: "center",
                             alignItems: "center",
-                            backgroundColor: 'red'
+                            backgroundColor: OrangeColor
                         }}
                         width={30} height={30}
                         onPress={onPress}
@@ -63,7 +65,7 @@ const PlayerList: React.FC<props> = ({
                         containerStyle={{
                             borderWidth: 2,
                             borderRadius: 30,
-                            borderColor: 'red',
+                            borderColor: OrangeColor,
                             position: 'absolute',
                             right: 0,
                             borderStyle: "dashed",
@@ -79,7 +81,7 @@ const PlayerList: React.FC<props> = ({
                             style={{
 
                             }}
-                            color={'red'}
+                            color={OrangeColor}
                         />
                     </Container>
             }

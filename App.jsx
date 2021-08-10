@@ -35,7 +35,7 @@ const App = () => {
             <Provider store={store}>
                 <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
                     <NavigationContainer
-                    theme={{ colors: { background:"#246e87" } }}
+                        theme={{ colors: { background: "#246e87" } }}
                     >
                         {_renderStatusBar()}
                     </NavigationContainer>

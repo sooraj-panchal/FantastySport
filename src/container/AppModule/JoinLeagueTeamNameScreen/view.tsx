@@ -6,6 +6,10 @@ import MainContainer from '../../../components/MainContainer';
 import { navigationProps } from '../../../types/nav';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import InputBox from '../../../components/InputBox';
+import Img from '../../../components/Img';
+import { AppImages, AuthImages } from '../../../assets/images/map';
+import { screenWidth } from '../../../types/sizes';
+import { OrangeColor } from '../../../assets/colors';
 interface props extends navigationProps {
 
 }
@@ -14,15 +18,15 @@ const JoinLeagueTeamNameScreen: React.FC<props> = ({
 }) => {
     return (
         <MainContainer>
-            <Label
-                labelSize={50}
-                style={{
-                    textAlign: 'center',
+            <Img
+                imgSrc={AuthImages.Splash_logo}
+                imgStyle={{
                     alignSelf: "center",
-                    color: 'black'
+                    width: screenWidth * 0.80
                 }}
-                mpLabel={{ mt: 50 }}
-            >Fantasty League</Label>
+                height={100}
+                mpImage={{ mt: 80 }}
+            />
             <Container
                 containerStyle={{
                     backgroundColor: 'white',
@@ -37,12 +41,26 @@ const JoinLeagueTeamNameScreen: React.FC<props> = ({
                         fontWeight: '900'
                     }}
                 >Join fantasy sniper league</Label>
-                <Label labelSize={14}
-                    mpLabel={{ pt: 15, ph: 15 }}
-                    style={{
-                        fontWeight: '900'
-                    }}
-                >Team name</Label>
+                <Container
+                    containerStyle={{flexDirection:'row',alignItems:'center'}}
+                    mpContainer={{mt:15}}
+                >
+                    <Label labelSize={14}
+                        mpLabel={{pl:15}}
+                        style={{
+                            fontWeight: '900'
+                        }}
+                    >Team name</Label>
+                    <Img
+                        imgSrc={AppImages.team}
+                        imgStyle={{
+                            alignSelf: "center",
+                            width:20
+                        }}
+                        height={20}
+                        mpImage={{ ml: 10 }}
+                    />
+                </Container>
                 <InputBox
                     placeholder="Type here"
                     onPress={() => { }}
@@ -64,7 +82,7 @@ const JoinLeagueTeamNameScreen: React.FC<props> = ({
                         })
                     }}
                     btnStyle={{
-                        backgroundColor: "red"
+                        backgroundColor: OrangeColor
                     }}
                     labelStyle={{ color: "white" }}
                     radius={5}

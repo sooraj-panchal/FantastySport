@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Alert, Modal, Text, View } from "react-native";
 import { medium } from "../../../assets/fonts/fonts";
-import { AuthImages } from "../../../assets/images/map";
+import { AppImages, AuthImages } from "../../../assets/images/map";
 import Btn from "../../../components/Btn";
 import Container from "../../../components/Container";
 import Img from "../../../components/Img";
@@ -9,10 +9,11 @@ import Label from "../../../components/Label";
 import MainContainer from "../../../components/MainContainer";
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { DarkBlueColor, PrimaryColor, } from "../../../assets/colors";
+import { DarkBlueColor, OrangeColor, PrimaryColor, } from "../../../assets/colors";
 import { AuthStack } from "../../../navigator/navActions";
 import EditProfileModal from "../../../components/Modals/EditProfileModal";
 import { navigationProps } from "../../../types/nav";
+import { ImageBackground } from "react-native";
 
 
 
@@ -21,73 +22,54 @@ const ImageContainer = ({
 }) => {
     const [openModal, setOpenModal] = useState(false)
     return (
-        <Container
-            containerStyle={{
-                justifyContent: "center",
-                alignItems: "center",
-                // height: null,
-                backgroundColor: PrimaryColor,
-                elevation: 1
-            }}
-            mpContainer={{ pv: 20 }}
-        >
-            <EditProfileModal
-                openModal={openModal}
-                closeModal={() => setOpenModal(false)}
-            />
-            <Img
-                width={90}
-                height={90}
-                imgStyle={{ borderRadius: 100, borderWidth: 4, borderColor: 'white' }}
-                imgSrc={{ uri: AuthImages.profile_image }}
-            />
-            <Label
-                style={{ color: "white", fontFamily: medium, letterSpacing: 0.5 }}
-                labelSize={20}
-                mpLabel={{ pt: 15 }}
-            >Adams depp</Label>
-            <Label
-                style={{ color: "white", letterSpacing: 0.5 }}
-                labelSize={16}
-                mpLabel={{ mt: 5 }}
-            >Johnwick@gmail.com</Label>
-            {/* <Container containerStyle={{
-                backgroundColor: DarkBlueColor,
-                borderRadius: 35,
-                position: "absolute",
-                right: 15,
-                top: 15,
-                justifyContent: "center",
-                alignItems: "center"
-            }} width={35} height={35}
-                onPress={() => {
-                    setOpenModal(true)
+            <ImageBackground
+                style={{
+                    width: "100%",
+                    height: 260,
+                    justifyContent: "center",
+                    alignItems: "center",
                 }}
+                source={AppImages.profile_bg}
             >
-                <MaterialIcons
-                    name="mode-edit"
-                    size={20}
-                    color="white"
+                <EditProfileModal
+                    openModal={openModal}
+                    closeModal={() => setOpenModal(false)}
                 />
-            </Container> */}
-            <Btn
-                title="Edit Profile"
-                onPress={() => {
-                    setOpenModal(true)
-                }}
-                btnStyle={{
-                    borderWidth: 1,
-                    borderRadius: 4,
-                    // paddingVertical:20,
-                    paddingHorizontal: 30,
-                    borderColor: 'white'
-                }}
-                labelSize={14}
-                labelStyle={{ color: 'white' }}
-                mpBtn={{ mt: 15 }}
-                btnHeight={35}
-            />
-        </Container>
+                <Img
+                    width={90}
+                    height={90}
+                    imgStyle={{ borderRadius: 100, borderWidth: 4, borderColor: 'white' }}
+                    imgSrc={{ uri: AuthImages.profile_image }}
+                />
+                <Label
+                    style={{ color: "white", fontFamily: medium, letterSpacing: 0.5 }}
+                    labelSize={20}
+                    mpLabel={{ pt: 15 }}
+                >Adams depp</Label>
+                <Label
+                    style={{ color: "white", letterSpacing: 0.5 }}
+                    labelSize={16}
+                    mpLabel={{ mt: 5 }}
+                >Johnwick@gmail.com</Label>
+                <Btn
+                    title="Edit Profile"
+                    onPress={() => {
+                        setOpenModal(true)
+                    }}
+                    btnStyle={{
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        // paddingVertical:20,
+                        paddingHorizontal: 30,
+                        borderColor: 'white',
+                        backgroundColor:'transparent'
+                    }}
+                    labelSize={14}
+                    labelStyle={{ color: 'white' }}
+                    mpBtn={{ mt: 15 }}
+                    btnHeight={35}
+                />
+            </ImageBackground>
     )
 }
 const ListContainer = ({
@@ -137,13 +119,12 @@ const ProfileScreen: React.FC<props> = ({
                 elevation: 1,
             }}
                 mpContainer={{ mt: 10 }}
-
             >
                 <ListContainer
                     name="About us"
                     onPress={() => {
-                        navigation.navigate("TermsAndCondition",{
-                            title:'About us'
+                        navigation.navigate("TermsAndCondition", {
+                            title: 'About us'
                         })
                     }}
                 />
@@ -156,24 +137,24 @@ const ProfileScreen: React.FC<props> = ({
                 <ListContainer
                     name="Privacy policy"
                     onPress={() => {
-                        navigation.navigate("TermsAndCondition",{
-                            title:'Privacy policy'
+                        navigation.navigate("TermsAndCondition", {
+                            title: 'Privacy policy'
                         })
                     }}
                 />
                 <ListContainer
                     name="Terms & conditions"
                     onPress={() => {
-                        navigation.navigate("TermsAndCondition",{
-                            title:'Terms & conditions'
+                        navigation.navigate("TermsAndCondition", {
+                            title: 'Terms & conditions'
                         })
                     }}
                 />
                 <ListContainer
                     name="Contact us"
                     onPress={() => {
-                        navigation.navigate("TermsAndCondition",{
-                            title:'Contact us'
+                        navigation.navigate("TermsAndCondition", {
+                            title: 'Contact us'
                         })
                     }}
                 />
@@ -197,7 +178,7 @@ const ProfileScreen: React.FC<props> = ({
                     return <MaterialIcons
                         name="logout"
                         size={25}
-                        color="red"
+                        color={OrangeColor}
                         style={{ position: "absolute", right: 15 }}
                     />
                 }}

@@ -5,10 +5,12 @@ import MainContainer from '../../../components/MainContainer';
 import { navigationProps } from '../../../types/nav';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Label from '../../../components/Label';
-import { OrangeColor, PrimaryColor } from '../../../assets/colors';
+import { greenColor, OrangeColor, PrimaryColor } from '../../../assets/colors';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { ListRenderItem, View } from 'react-native';
 import PlayerList from '../../../components/PlayerList';
+import Img from '../../../components/Img';
+import { AppImages } from '../../../assets/images/map';
 const MyTeamScreen: React.FC<navigationProps> = ({
     navigation
 }) => {
@@ -33,7 +35,7 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                             radius={8}
                             mpBtn={{ ph: 10, mr: 10 }}
                             btnStyle={{
-                                backgroundColor: "red"
+                                backgroundColor: OrangeColor
                             }}
                             onPress={() => {
                                 navigation.navigate('InviteFriend')
@@ -118,13 +120,9 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                 }}
                 mpContainer={{ mh: 15 }}
             >
-                <Container
-                    containerStyle={{
-                        backgroundColor: "red",
-                        borderRadius: 30
-                    }}
-                    width={30} height={30}
-                />
+                <Img
+                    imgSrc={AppImages.green_logo}
+                    width={28} height={32} />
                 <Container
                 >
                     <Label labelSize={16} style={{ fontWeight: "bold", letterSpacing: 0.5 }}  >Adam's Team</Label>
@@ -138,7 +136,7 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                     <Label labelSize={16} style={{ fontWeight: "bold" }}  >Act 0.00</Label>
                     <Label labelSize={14} style={{ letterSpacing: 0.5, color: OrangeColor }} >Fantasy sniper</Label>
                     <Label labelSize={14} style={{ letterSpacing: 0.5, color: OrangeColor }} >Points Prediction. 0.0</Label>
-                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: "green" }} >Proj. 0.0</Label>
+                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: greenColor }} >Proj. 0.0</Label>
                 </Container>
             </Container>
             <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} mpContainer={{ mv: 10, mh: 15 }} />
@@ -156,7 +154,7 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                     alignSelf: "flex-end"
                 }}
                 onPress={() => {
-                    navigation.navigate('EditTeam')
+                    navigation.navigate('EditTeamInfo')
                     // navigation.navigate('AddPlayer')
                 }}
             />
@@ -206,40 +204,47 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                                         mpContainer={{ mh: 15 }}
                                         height={60}
                                     >
-                                        <Label labelSize={16} style={{ letterSpacing: 0.5, color: 'red' }} >QB</Label>
-                                        <Ionicons
+                                        <Label labelSize={16} style={{ letterSpacing: 0.5, color: OrangeColor }} >QB</Label>
+                                        {/* <Ionicons
                                             name="md-person"
                                             size={35}
                                             color={'grey'}
                                             style={{
                                                 marginHorizontal: 15,
                                             }}
+                                        /> */}
+                                        <Img
+                                            imgSrc={AppImages.player_1}
+                                            width={40} height={40}
+                                        // style={{
+                                        // }}
+                                        mpImage={{mh:15}}
                                         />
                                         <Container>
-                                            <Label labelSize={15} style={{ letterSpacing: 0.5, color: "black" }} >P. Mahomes</Label>
-                                            <Label labelSize={13} style={{ letterSpacing: 0.5, color: "grey" }} >Sun 4:25PM v SEA</Label>
+                                            <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black" }} >P. Mahomes</Label>
+                                            <Label labelSize={12} style={{ letterSpacing: 0.5, color: "grey" }} >Sun 4:25PM v SEA</Label>
                                         </Container>
                                         <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
-                                            <Label labelSize={14} style={{ letterSpacing: 0.5, color: "green" }}>36.3</Label>
+                                            <Label labelSize={12} style={{ letterSpacing: 0.5, color: "green" }}>36.3</Label>
                                         </Container>
                                         <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
-                                            <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black" }}>36.3</Label>
+                                            <Label labelSize={12} style={{ letterSpacing: 0.5, color: "black" }}>36.3</Label>
                                         </Container>
                                         <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
-                                            <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black" }}>36.3</Label>
+                                            <Label labelSize={12} style={{ letterSpacing: 0.5, color: "black" }}>36.3</Label>
                                         </Container>
                                         <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={70} >
-                                            <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black" }}>80%</Label>
+                                            <Label labelSize={12} style={{ letterSpacing: 0.5, color: "black" }}>80%</Label>
                                         </Container>
                                         {
                                             index == 1 ?
                                                 <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={85} >
-                                                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: "red" }}>36.3</Label>
+                                                    <Label labelSize={12} style={{ letterSpacing: 0.5, color: OrangeColor }}>36.3</Label>
                                                 </Container>
                                                 :
                                                 <Btn
                                                     title="ADD"
-                                                    btnStyle={{ backgroundColor: 'red', justifyContent: 'center', alignItems: 'center' }}
+                                                    btnStyle={{ backgroundColor: OrangeColor, justifyContent: 'center', alignItems: 'center' }}
                                                     labelStyle={{ color: 'white' }}
                                                     mpBtn={{ ml: 35, ph: 25 }}
                                                     radius={5}

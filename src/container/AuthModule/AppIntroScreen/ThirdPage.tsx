@@ -1,8 +1,11 @@
 import React from 'react';
 import { FlatList, ListRenderItem, View } from 'react-native';
+import { bold } from '../../../assets/fonts/fonts';
+import { AuthImages } from '../../../assets/images/map';
 import Container from '../../../components/Container';
+import Img from '../../../components/Img';
 import Label from '../../../components/Label';
-import { screenHeight } from '../../../types/sizes';
+import { screenHeight, screenWidth } from '../../../types/sizes';
 
 interface InstructionListProps {
     index: number | {}
@@ -33,7 +36,7 @@ const ThirdPage: React.FC = () => {
             containerStyle={{
                 flex: 1,
             }} >
-            <Container
+            {/* <Container
                 containerStyle={{
                     // alignItems:"center",
                     flex: 1
@@ -78,12 +81,21 @@ const ThirdPage: React.FC = () => {
                         borderRadius: 10
                     }}
                 />
-            </Container>
-            <Container>
+            </Container> */}
+            <Img
+                imgSrc={AuthImages.slide}
+                imgStyle={{
+                    width: screenWidth,
+                    height: screenHeight * 0.50,
+                    // resizeMode:'contain'
+                }}
+                mpImage={{mt:20}}
+            />
+            <Container mpContainer={{mt:20}} > 
                 <Label labelSize={20} style={{
                     textAlign: "center",
-                    fontWeight: "bold",
-                    color: "black"
+                    color: "black",
+                    fontFamily:bold
                 }}
                 >Live match</Label>
                 <Label labelSize={14} style={{

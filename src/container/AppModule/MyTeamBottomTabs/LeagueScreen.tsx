@@ -3,7 +3,7 @@ import Container from '../../../components/Container';
 import Label from '../../../components/Label';
 import MainContainer from '../../../components/MainContainer';
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { PrimaryColor } from '../../../assets/colors';
+import { OrangeColor, PrimaryColor } from '../../../assets/colors';
 import { FlatList } from 'react-native-gesture-handler';
 import { ListRenderItem } from 'react-native';
 import { navigationProps } from '../../../types/nav';
@@ -36,7 +36,7 @@ const LeagueScreen: React.FC<props> = ({
                             radius={8}
                             mpBtn={{ ph: 10, mr: 10 }}
                             btnStyle={{
-                                backgroundColor: "red"
+                                backgroundColor: OrangeColor
                             }}
                             onPress={() => {
                                 navigation.navigate('InviteFriend')
@@ -133,14 +133,14 @@ const LeagueScreen: React.FC<props> = ({
                         labelSize={16}
                         style={{
                             fontWeight: 'bold',
-                            color: PrimaryColor
+                            color: 'skyblue'
                         }}
                         mpLabel={{ mr: 5 }}
                     >View Details</Label>
                     <Ionicons
                         name="ios-chevron-forward"
                         size={18}
-                        color={PrimaryColor}
+                        color='skyblue'
                     />
                 </Container>
             </Container>
@@ -188,7 +188,7 @@ const LeagueScreen: React.FC<props> = ({
             <FlatList
                 data={[1, 2, 3, 4, 5, 6]}
                 renderItem={renderItem}
-
+                keyExtractor={(item, index) => `league ${index.toString()}`}
             />
         </Container>
         <Container
@@ -215,7 +215,7 @@ const LeagueScreen: React.FC<props> = ({
                 >
                     <Container
                         containerStyle={{
-                            backgroundColor: 'red',
+                            backgroundColor: OrangeColor,
                             justifyContent: 'center',
                             alignItems: 'center',
                             borderRadius: 40
@@ -232,7 +232,7 @@ const LeagueScreen: React.FC<props> = ({
                     <Label
                         labelSize={18}
                         style={{
-                            fontWeight: 'bold'
+                            fontWeight: 'bold',
                         }}
                         mpLabel={{ ml: 10 }}
                     >Standings</Label>
@@ -247,14 +247,14 @@ const LeagueScreen: React.FC<props> = ({
                         labelSize={16}
                         style={{
                             fontWeight: 'bold',
-                            color: PrimaryColor
+                            color: 'skyblue'
                         }}
                         mpLabel={{ mr: 5 }}
                     >Team Levels</Label>
                     <Ionicons
                         name="ios-chevron-forward"
                         size={18}
-                        color={PrimaryColor}
+                        color={'skyblue'}
                     />
                 </Container>
             </Container>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatList, ListRenderItem, View } from 'react-native';
+import { bold } from '../../../assets/fonts/fonts';
 import Container from '../../../components/Container';
 import Label from '../../../components/Label';
 
@@ -14,7 +15,7 @@ const InstructionList: React.FC<InstructionListProps> = ({
         containerStyle={{
             justifyContent: "center"
         }}
-        mpContainer={{ pv: 15, mh: 20 }}
+        mpContainer={{ pv: 10, mh: 20 }}
     >
         <Label
             labelSize={14}
@@ -44,17 +45,17 @@ const SecondPage: React.FC = ({
                 flex: 1,
             }} >
             <Label
-                labelSize={16}
+                labelSize={18}
                 style={{
                     color: "black",
-                    fontWeight: "900"
+                    fontFamily: bold
                 }}
                 mpLabel={{
                     pl: 20
                 }}
             >Instructions</Label>
             <FlatList
-                data={[1, 2, 3, 4, 5, 6, 7, 8]}
+                data={[1, 2, 3, 4, 5, 6, 7]}
                 renderItem={renderInstructionListItem}
                 keyExtractor={(item, index) => index.toString()}
                 showsVerticalScrollIndicator={false}

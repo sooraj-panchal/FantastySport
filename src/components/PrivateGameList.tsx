@@ -1,13 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
+import { AppImages } from '../assets/images/map';
 import { homeNavProps } from '../types/nav';
 import Container from './Container';
+import Img from './Img';
 import Label from './Label';
 
 const PrivateGameList: React.FC = ({
 
 }) => {
-    const navigation=useNavigation<homeNavProps>()
+    const navigation = useNavigation<homeNavProps>()
     return (
         <Container
             containerStyle={{
@@ -16,7 +18,7 @@ const PrivateGameList: React.FC = ({
                 borderRadius: 10
             }}
             mpContainer={{ mh: 15, pv: 10, pl: 10 }}
-            onPress={()=>{
+            onPress={() => {
                 navigation.navigate('GameDetail')
             }}
         >
@@ -30,7 +32,10 @@ const PrivateGameList: React.FC = ({
                 }}
                 mpContainer={{ mt: 5 }}
             >
-                <Container containerStyle={{ backgroundColor: 'red', borderRadius: 30 }} width={30} height={30} />
+                <Img
+                    imgSrc={AppImages.green_logo}
+                    width={25} height={28}
+                />
                 <Label
                     mpLabel={{ ml: 10 }}
                     labelSize={18}
@@ -55,14 +60,15 @@ const PrivateGameList: React.FC = ({
                 mpLabel={{ mt: 5 }}
                 labelSize={15}
             >One match still running</Label>
-            <Container containerStyle={{
-                backgroundColor: 'red',
-                borderRadius: 30,
-                position: 'absolute',
-                right: 10,
-                top: 10
-            }}
-                width={30} height={30} />
+            <Img
+                imgSrc={AppImages.private}
+                width={25} height={28}
+                imgStyle={{
+                    position: 'absolute',
+                    right: 10,
+                    top: 10
+                }}
+            />
         </Container>
     )
 }

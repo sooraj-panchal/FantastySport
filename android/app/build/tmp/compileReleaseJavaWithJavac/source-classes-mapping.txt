@@ -1,0 +1,10 @@
+com/fantastysport/MainActivity.java
+ com.fantastysport.MainActivity
+ com.fantastysport.MainActivity$1
+com/fantastysport/BuildConfig.java
+ com.fantastysport.BuildConfig
+com/fantastysport/MainApplication.java
+ com.fantastysport.MainApplication
+ com.fantastysport.MainApplication$1
+com/facebook/react/PackageList.java
+ com.facebook.react.PackageList

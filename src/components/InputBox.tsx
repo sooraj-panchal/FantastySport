@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextInputProps, TextStyle } from 'react-native';
 import { TextInput, Pressable, StyleProp, ViewStyle } from 'react-native';
+import { regular } from '../assets/fonts/fonts';
 import { mpStyle, normalize, vs } from '../types/sizes';
 
 interface Props {
@@ -51,7 +52,8 @@ const InputBox: React.FC<Props & TextInputProps> = ({
                     width: "85%",
                     padding: 0,
                     ...mpStyle({ ...mpInput }),
-                    fontSize: normalize(textSize || 12)
+                    fontSize: normalize(textSize || 14),
+                    fontFamily:regular
                 }, inputStyle]}
                 // onPress ? false : true
                 {...restProps}

@@ -4,14 +4,16 @@ import { ScrollView, Text, TouchableOpacity, StyleSheet, View } from 'react-nati
 import {
     CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell,
 } from 'react-native-confirmation-code-field'
-import { DarkBlueColor, OrangeColor } from '../../../assets/colors'
+import { DarkBlueColor, OrangeColor, PrimaryColor } from '../../../assets/colors'
 import { medium, semiBold } from '../../../assets/fonts/fonts'
 import { AuthImages } from '../../../assets/images/map'
+import AuthWrapper from '../../../components/AuthWrapper'
 import Btn from '../../../components/Btn'
 import HeaderBtn from '../../../components/HeaderBtn'
 import Img from '../../../components/Img'
 import Label from '../../../components/Label'
 import MainContainer from '../../../components/MainContainer'
+import { AppStack } from '../../../navigator/navActions'
 import { navigationProps } from '../../../types/nav'
 
 interface props extends navigationProps {
@@ -66,102 +68,94 @@ const VerificationScreen: React.FC<props> = ({
     return (
         <MainContainer
             absoluteModalLoading={verifyOtpLoading}
-            statusBarHeight
         >
-            <ScrollView contentContainerStyle={{ paddingBottom: 100 }} >
-                <HeaderBtn />
-                <Img
-                    imgSrc={AuthImages.background_logo}
-                    width={90}
-                    height={90}
-                    imgStyle={{
-                        alignSelf: "flex-end",
-                        top: 20,
-                        right: 10,
-                        position: "absolute"
-                    }}
-                />
-                <Label
-                    labelSize={30}
-                    mpLabel={{ ml: 20, mt: 10 }}
-                    style={{
-                        fontFamily: semiBold,
-                    }}
-                >Verify Email</Label>
-                <Label
-                    labelSize={17}
-                    mpLabel={{ mt: 20 }}
-                    style={{
-                        fontFamily: medium,
-                        maxWidth: "80%",
-                        alignSelf: "center",
-                        textAlign: "center"
-                    }}
-                >We will sent you a code to verify your email address to</Label>
-                <Label
-                    labelSize={16}
-                    mpLabel={{ mt: 20 }}
-                    style={{
-                        fontFamily: medium,
-                        textAlign: "center",
-                        color: 'grey'
-                    }}
-                >{route.params.email}</Label>
-                <CodeField
-                    ref={ref}
-                    {...props}
-                    value={value}
-                    onChangeText={setValue}
-                    cellCount={CELL_COUNT}
-                    rootStyle={styles.codeFieldRoot}
-                    keyboardType="number-pad"
-                    textContentType="oneTimeCode"
-                    renderCell={({ index, symbol, isFocused }) => (
-                        <Text
-                            key={index}
-                            style={[styles.cell, isFocused && styles.focusCell]}
-                            onLayout={getCellOnLayoutHandler(index)}>
-                            {symbol || (isFocused ? <Cursor /> : null)}
-                        </Text>
-                    )}
-                />
-                <Btn
-                    title="Confirm"
-                    mpBtn={{ mh: 20, mt: 60, pt: 4 }}
-                    btnStyle={{
-                        borderRadius: 30,
-                        backgroundColor: DarkBlueColor,
-                        justifyContent: "center"
-                    }}
-                    btnHeight={50}
-                    labelSize={15}
-                    labelStyle={{ fontFamily: medium, color: "white" }}
-                    onPress={() => {
-                        // verifyOtpHandler()
-                        navigation.navigate("InviteFriend")
-                        // navigation.navigate('ResetPassword', {
-                        //     email: route.params?.email
-                        //     // ...route.params
-                        // })
-                    }}
-                />
-                <View style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    alignSelf: "center",
-                    marginTop: 20
-                }} >
-                    <Label labelSize={18}
-                        style={{ alignSelf: "center", fontFamily: medium }}
-                    >I Didn't recieve a code!</Label>
+            <AuthWrapper>
+                <ScrollView contentContainerStyle={{ paddingBottom: 100 }} >
                     <Label
-                        style={{ color: OrangeColor, fontFamily: medium }} mpLabel={{ ml: 10 }}
-                        labelSize={20}
+                        labelSize={30}
+                        mpLabel={{ ml: 20, mt: 10 }}
+                        style={{
+                            fontFamily: semiBold,
+                            color:'white'
+                        }}
+                    >Verify Email</Label>
+                    <Label
+                        labelSize={17}
+                        mpLabel={{ mt: 20 }}
+                        style={{
+                            fontFamily: medium,
+                            maxWidth: "80%",
+                            alignSelf: "center",
+                            textAlign: "center",
+                            color:'white'
+                        }}
+                    >We will sent you a code to verify your email address to</Label>
+                    <Label
+                        labelSize={16}
+                        mpLabel={{ mt: 20 }}
+                        style={{
+                            fontFamily: medium,
+                            textAlign: "center",
+                            color:'white'
+                        }}
+                    >{route.params.email}</Label>
+                    <CodeField
+                        ref={ref}
+                        {...props}
+                        value={value}
+                        onChangeText={setValue}
+                        cellCount={CELL_COUNT}
+                        rootStyle={styles.codeFieldRoot}
+                        keyboardType="number-pad"
+                        textContentType="oneTimeCode"
+                        renderCell={({ index, symbol, isFocused }) => (
+                            <Text
+                                key={index}
+                                style={[styles.cell, isFocused && styles.focusCell]}
+                                onLayout={getCellOnLayoutHandler(index)}>
+                                {symbol || (isFocused ? <Cursor /> : null)}
+                            </Text>
+                        )}
+                    />
+                    <Btn
+                        title="Confirm"
+                        mpBtn={{ mh: 20, mt: 60}}
+                        btnStyle={{
+                            borderRadius: 10,
+                            backgroundColor: OrangeColor,
+                            justifyContent: "center"
+                        }}
+                        btnHeight={50}
+                        labelSize={15}
+                        labelStyle={{ fontFamily: medium, color: "white" }}
                         onPress={() => {
-                            // navigation.navigate("ResetPassword")
-                        }}>Resend</Label>
-                </View>
-            </ScrollView>
+                            // verifyOtpHandler()
+                            // navigation.navigate("InviteFriend")
+                            navigation.dispatch(AppStack)
+                            // navigation.navigate('ResetPassword', {
+                            //     email: route.params?.email
+                            //     // ...route.params
+                            // })
+                        }}
+                    />
+                    <View style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        alignSelf: "center",
+                        marginTop: 20
+                    }} >
+                        <Label labelSize={18}
+                            style={{ alignSelf: "center", fontFamily: medium,color:'white'}}
+                        >I Didn't recieve a code!</Label>
+                        <Label
+                            style={{ color: DarkBlueColor, fontFamily: medium }} mpLabel={{ ml: 10 }}
+                            labelSize={20}
+                            onPress={() => {
+                                // navigation.navigate("ResetPassword")
+                            }}>Resend</Label>
+                    </View>
+                </ScrollView>
+            </AuthWrapper>
         </MainContainer>
     )
 }

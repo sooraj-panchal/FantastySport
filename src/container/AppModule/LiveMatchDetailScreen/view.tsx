@@ -5,12 +5,14 @@ import MainContainer from '../../../components/MainContainer';
 import { navigationProps } from '../../../types/nav';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Label from '../../../components/Label';
-import { OrangeColor, PrimaryColor } from '../../../assets/colors';
+import { greenColor, OrangeColor, PrimaryColor } from '../../../assets/colors';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { ListRenderItem, View } from 'react-native';
 import PlayerList from '../../../components/PlayerList';
 import * as Progress from 'react-native-progress';
 import { screenWidth } from '../../../types/sizes';
+import Img from '../../../components/Img';
+import { AppImages } from '../../../assets/images/map';
 
 const LiveMatchDetailScreen: React.FC<navigationProps> = ({
     navigation
@@ -36,7 +38,7 @@ const LiveMatchDetailScreen: React.FC<navigationProps> = ({
                             radius={8}
                             mpBtn={{ ph: 10, mr: 10 }}
                             btnStyle={{
-                                backgroundColor: "red"
+                                backgroundColor: OrangeColor
                             }}
                             onPress={() => {
                                 navigation.navigate('InviteFriend')
@@ -136,7 +138,11 @@ const LiveMatchDetailScreen: React.FC<navigationProps> = ({
                             alignItems: "center"
                         }}
                     >
-                        <Container containerStyle={{ backgroundColor: "red", borderRadius: 40, left: 5 }} width={40} height={40} mpContainer={{ mt: 15 }} />
+                            <Img
+                            imgStyle={{width:35,height:40}}
+                            imgSrc={AppImages.green_logo}
+                            mpImage={{mt:20}}
+                        />
                         <Container
                             containerStyle={{
                                 alignItems: 'flex-end'
@@ -155,16 +161,16 @@ const LiveMatchDetailScreen: React.FC<navigationProps> = ({
                     <Container mpContainer={{ mr: 10 }} >
                         <Label
                             labelSize={16}
-                            style={{ color: "green" }}
+                            style={{ color:greenColor }}
                         >98.39</Label>
                         <Label
                             labelSize={16}
-                            style={{ color: "green" }}
+                            style={{ color:greenColor }}
                             mpLabel={{ mv: 2 }}
                         >98.39</Label>
                         <Label
                             labelSize={16}
-                            style={{ color: "green" }}
+                            style={{ color:greenColor }}
                         >98.39</Label>
                     </Container>
                 </Container>
@@ -179,21 +185,21 @@ const LiveMatchDetailScreen: React.FC<navigationProps> = ({
                     {renderVS()}
                     <Label
                         style={{
-                            color: "red"
+                            color: OrangeColor
                         }}
                         labelSize={16}
                         mpLabel={{ mt: 8 }}
                     >Proj</Label>
                     <Label
                         style={{
-                            color: "green",
+                            color:greenColor,
                         }}
                         labelSize={13}
                         mpLabel={{ mt: 8 }}
                     >F.S.Pred.Pt</Label>
                     <Label
                         style={{
-                            color: "red"
+                            color: OrangeColor
                         }}
                         labelSize={14}
                         mpLabel={{ mt: 4 }}
@@ -219,23 +225,27 @@ const LiveMatchDetailScreen: React.FC<navigationProps> = ({
                             labelSize={35}
                             style={{ color: "black" }}
                         >0.00</Label>
-                        <Container containerStyle={{ backgroundColor: "red", borderRadius: 40 }} width={40} height={40} mpContainer={{ ml: 10 }} />
+                            <Img
+                            imgStyle={{width:35,height:40}}
+                            imgSrc={AppImages.green_logo}
+                            mpImage={{ml:10}}
+                        />
                     </Container>
                     <Container
                         mpContainer={{ ml: 15 }}
                     >
                         <Label
                             labelSize={16}
-                            style={{ color: "green" }}
+                            style={{ color:greenColor }}
                         >98.39</Label>
                         <Label
                             labelSize={16}
-                            style={{ color: "green" }}
+                            style={{ color:greenColor }}
                             mpLabel={{ mv: 2 }}
                         >98.39</Label>
                         <Label
                             labelSize={16}
-                            style={{ color: "green" }}
+                            style={{ color:greenColor }}
                         >98.39</Label>
                     </Container>
                 </Container>
@@ -274,8 +284,8 @@ const LiveMatchDetailScreen: React.FC<navigationProps> = ({
                     >50%</Label>
                     <Progress.Bar
                         progress={0.3} width={screenWidth * 0.32}
-                        borderColor="red"
-                        color="green"
+                        borderColor={OrangeColor}
+                        color={greenColor}
                         borderWidth={0}
                         unfilledColor="lightgrey"
                         height={8}
@@ -290,13 +300,12 @@ const LiveMatchDetailScreen: React.FC<navigationProps> = ({
                 >
                     <Progress.Bar
                         progress={0.3} width={screenWidth * 0.32}
-                        borderColor="red"
-                        color="green"
+                        borderColor={OrangeColor}
+                        color={greenColor}
                         borderWidth={0}
                         unfilledColor="lightgrey"
                         height={8}
                         useNativeDriver={true}
-
                     />
                     <Label
                         labelSize={16}

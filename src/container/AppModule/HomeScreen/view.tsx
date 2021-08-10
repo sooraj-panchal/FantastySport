@@ -1,19 +1,17 @@
 import React from "react";
-import { View, ScrollView, FlatList, StatusBar, ListRenderItem } from "react-native";
+import { ScrollView, FlatList, StatusBar, ListRenderItem } from "react-native";
 import Btn from "../../../components/Btn";
-import Img from "../../../components/Img";
 import Label from "../../../components/Label";
 import MainContainer from "../../../components/MainContainer";
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import { OrangeColor } from "../../../assets/colors";
-import styles from "./styles";
-import { semiBold } from "../../../assets/fonts/fonts";
 import Container from "../../../components/Container";
 import { navigationProps } from "../../../types/nav";
 import { screenWidth } from "../../../types/sizes";
 import News from "./News";
 import MyLeague from "./MyLeague";
 import LiveMatch from "./LiveMatch";
+import Img from "../../../components/Img";
+import { AppImages } from "../../../assets/images/map";
 
 
 interface props extends navigationProps {
@@ -32,7 +30,8 @@ const HomeScreen: React.FC<props> = ({
                 marginBottom: 5,
                 borderRadius: 10,
                 backgroundColor: "white",
-                elevation: 2
+                elevation: 2,
+                overflow: "hidden"
             }}
         >
             <Label
@@ -67,11 +66,53 @@ const HomeScreen: React.FC<props> = ({
                 radius={10}
                 labelSize={18}
                 labelStyle={{ color: "white" }}
-
             />
+            <Container
+                containerStyle={{
+                    position: "absolute",
+                    right: 30,
+                    top: -20,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    transform: [{
+                        rotate: '15deg'
+                    }]
+                }}
+            >
+                <Container
+                    containerStyle={{
+                        backgroundColor: "#f2d5d7",
+                        width: 10,
+                        height: 220
+                    }}
+                />
+                <Container
+                    containerStyle={{
+                        backgroundColor: "#f2d5d7",
+                        width: 45,
+                        height: 220
+                    }}
+                    mpContainer={{ ml: 10 }}
+                />
+            </Container>
+            <Container
+                containerStyle={{
+                    position: 'absolute',
+                    right: -60,
+                    bottom: -20,
+                }}
+            >
+                <Img
+                    imgStyle={{
+                        height: 170,
+                        width: 170,
+                        resizeMode: 'contain'
+                    }}
+                    imgSrc={AppImages.league_bg_image}
+                />
+            </Container>
         </Container>
     }
-
 
     return (
         <MainContainer style={{ backgroundColor: "#f2f2f2" }} >

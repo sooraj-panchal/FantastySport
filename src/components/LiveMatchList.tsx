@@ -1,10 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View } from 'react-native';
+import { greenColor } from '../assets/colors';
+import { AppImages } from '../assets/images/map';
 import { homeNavProps } from '../types/nav';
 import { screenWidth } from '../types/sizes';
 import Btn from './Btn';
 import Container from './Container';
+import Img from './Img';
 import Label from './Label';
 
 const LiveMatchList: React.FC = ({
@@ -31,7 +34,7 @@ const LiveMatchList: React.FC = ({
                 btnStyle={{
                     elevation: 5,
                     borderRadius: 10,
-                    backgroundColor: "green",
+                    backgroundColor: greenColor,
                     justifyContent: "flex-start"
                 }}
                 mpBtn={{ pl: 10 }}
@@ -62,7 +65,11 @@ const LiveMatchList: React.FC = ({
                             alignItems: "center"
                         }}
                     >
-                        <Container containerStyle={{ backgroundColor: "red", borderRadius: 40 }} width={40} height={40} />
+                        <Img
+                            imgStyle={{width:35,height:40}}
+                            imgSrc={AppImages.green_logo}
+                        />
+                        {/* <Container containerStyle={{ backgroundColor: "red", borderRadius: 40 }} width={40} height={40} /> */}
                         <Label
                             labelSize={35}
                             style={{ color: "black", fontWeight: "bold" }}
@@ -82,7 +89,7 @@ const LiveMatchList: React.FC = ({
                         >Proj</Label>
                         <Label
                             labelSize={16}
-                            style={{ color: "green", fontWeight: "bold" }}
+                            style={{ color: greenColor, fontWeight: "bold" }}
                             mpLabel={{ ml: 5 }}
                         >98.39</Label>
                     </Container>
@@ -99,7 +106,7 @@ const LiveMatchList: React.FC = ({
                         >Pred</Label>
                         <Label
                             labelSize={16}
-                            style={{ color: "green", fontWeight: "bold" }}
+                            style={{ color: greenColor, fontWeight: "bold" }}
                             mpLabel={{ ml: 5 }}
                         >98.39</Label>
                     </Container>
@@ -116,7 +123,7 @@ const LiveMatchList: React.FC = ({
                         >Actual</Label>
                         <Label
                             labelSize={16}
-                            style={{ color: "green", fontWeight: "bold" }}
+                            style={{ color: greenColor, fontWeight: "bold" }}
                             mpLabel={{ ml: 5 }}
                         >98.39</Label>
                     </Container>
@@ -156,7 +163,11 @@ const LiveMatchList: React.FC = ({
                             labelSize={35}
                             style={{ color: "black", fontWeight: "bold" }}
                         >0.00</Label>
-                        <Container containerStyle={{ backgroundColor: "red", borderRadius: 40 }} width={40} height={40} mpContainer={{ ml: 10 }} />
+                           <Img
+                            imgStyle={{width:35,height:40}}
+                            imgSrc={AppImages.green_logo}
+                            mpImage={{ml:15}}
+                        />
                     </Container>
                     <Container containerStyle={{
                         flexDirection: "row",
@@ -166,7 +177,7 @@ const LiveMatchList: React.FC = ({
                     >
                         <Label
                             labelSize={16}
-                            style={{ color: "green", fontWeight: "bold" }}
+                            style={{ color: greenColor, fontWeight: "bold" }}
                         >98.39</Label>
                         <Label
                             labelSize={16}
@@ -182,7 +193,7 @@ const LiveMatchList: React.FC = ({
                     >
                         <Label
                             labelSize={16}
-                            style={{ color: "green", fontWeight: "bold" }}
+                            style={{ color: greenColor, fontWeight: "bold" }}
                         >98.39</Label>
                         <Label
                             labelSize={16}
@@ -198,7 +209,7 @@ const LiveMatchList: React.FC = ({
                     >
                         <Label
                             labelSize={16}
-                            style={{ color: "green", fontWeight: "bold" }}
+                            style={{ color: greenColor, fontWeight: "bold" }}
                         >98.39</Label>
                         <Label
                             labelSize={16}

@@ -5,7 +5,7 @@ import Label from '../Label';
 import Img from '../Img';
 import { Formik } from 'formik';
 import TextInputComp from '../TextInputComp';
-import { BlackColor, DarkBlueColor, LightGrayColor } from '../../assets/colors';
+import { BlackColor, DarkBlueColor, LightGrayColor, OrangeColor } from '../../assets/colors';
 import Btn from '../Btn';
 import { medium } from '../../assets/fonts/fonts';
 import { AuthImages } from '../../assets/images/map';
@@ -17,7 +17,7 @@ import { screenHeight } from '../../utils/styleUtils';
 import { navigationProps } from '../../types/nav';
 import InputBox from '../InputBox';
 
-interface props  {
+interface props {
     openModal: boolean,
     closeModal: () => void
 }
@@ -188,16 +188,16 @@ const EditProfileModal: React.FC<props> = ({
                                 // placeholderTextColor={LightGrayColor}
                                 />
                                 <Btn
-                                    title="Save"
-                                    mpBtn={{ mh: 20, mt: 20, pt: 4 }}
+                                    title="SAVE"
+                                    mpBtn={{ mh: 20, mt: 20 }}
                                     btnStyle={{
-                                        borderRadius: 30,
-                                        backgroundColor: DarkBlueColor,
+                                        borderRadius: 10,
+                                        backgroundColor: OrangeColor,
                                         justifyContent: "center"
                                     }}
                                     btnHeight={50}
-                                    labelSize={15}
-                                    labelStyle={{ fontFamily: medium }}
+                                    labelSize={18}
+                                    labelStyle={{ fontFamily: medium, color: 'white' }}
                                     onPress={handleSubmit}
                                 />
                             </>

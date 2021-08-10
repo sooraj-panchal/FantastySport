@@ -72,7 +72,7 @@ const Video: React.FC<props> = ({
                 }}
             >
                 <Img
-                    imgSrc={{ uri: AppImages.property_image }}
+                    imgSrc={AppImages.newsImg}
                     imgStyle={{
                         width: "100%",
                     }}

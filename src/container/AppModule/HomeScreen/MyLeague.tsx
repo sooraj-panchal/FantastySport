@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native-animatable';
 import PagerView from 'react-native-pager-view';
 import { MyLeagueList } from '../../../../arrayList';
-import { DarkBlueColor, OrangeColor } from '../../../assets/colors';
+import { DarkBlueColor, OrangeColor, redColor } from '../../../assets/colors';
 import { medium } from '../../../assets/fonts/fonts';
 import { AppImages } from '../../../assets/images/map';
 import Container from '../../../components/Container';
@@ -16,7 +16,7 @@ const MyLeague: React.FC = ({
 
 }) => {
     const [page, setPage] = React.useState(0)
-    
+
     return (
         <Container>
             <Container containerStyle={{
@@ -76,10 +76,13 @@ const MyLeague: React.FC = ({
                                     flexDirection: "row",
                                     alignItems: 'center'
                                 }} mpContainer={{ mt: 10 }} >
-                                    <Container containerStyle={{
-                                        backgroundColor: 'green',
-                                        height: 40, width: 40, borderRadius: 40
-                                    }} />
+                                    <Img
+                                        imgSrc={AppImages.green_logo}
+                                        imgStyle={{
+                                            height: 40, width: 40,
+                                            resizeMode: 'contain'
+                                        }}
+                                    />
                                     <Label
                                         labelSize={20}
                                         style={{
@@ -111,14 +114,14 @@ const MyLeague: React.FC = ({
                                         }}
                                     >{item.match_time}</Label>
                                 </Container>
-                                <Container
-                                    containerStyle={{
-                                        backgroundColor: "red",
-                                        width: 40, height: 40,
-                                        borderRadius: 40,
+                                <Img
+                                    imgSrc={AppImages.private}
+                                    imgStyle={{
+                                        width: 45, height: 45,
                                         position: 'absolute',
                                         right: 10,
-                                        top: 10
+                                        top: 10,
+                                        resizeMode: 'contain'
                                     }}
                                 />
                             </Container>

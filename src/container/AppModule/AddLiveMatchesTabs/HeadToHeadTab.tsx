@@ -7,6 +7,8 @@ import { navigationProps } from '../../../types/nav';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { FlatList } from 'react-native-gesture-handler';
 import { ListRenderItem } from 'react-native';
+import Img from '../../../components/Img';
+import { AppImages } from '../../../assets/images/map';
 interface props extends navigationProps {
 
 }
@@ -33,9 +35,10 @@ const HeadToHeadTab: React.FC<props> = ({
                     justifyContent: "center",
                     alignItems: 'center'
                 }} mpContainer={{ ml: 20 }} >
-                    <Container
-                        containerStyle={{ backgroundColor: "red", borderRadius: 30 }}
-                        width={45} height={45} mpContainer={{}} />
+                    <Img
+                        imgSrc={AppImages.green_logo}
+                        imgStyle={{  }}
+                        width={40} height={45} />
                     <Label
                         labelSize={15}
                         style={{}}
@@ -47,9 +50,10 @@ const HeadToHeadTab: React.FC<props> = ({
                     justifyContent: "center",
                     alignItems: 'center'
                 }} >
-                    <Container
-                        containerStyle={{ backgroundColor: "red", borderRadius: 30 }}
-                        width={45} height={45} mpContainer={{}} />
+                    <Img
+                        imgSrc={AppImages.green_logo}
+                        imgStyle={{  }}
+                        width={40} height={45} />
                     <Label
                         labelSize={15}
                         style={{}}

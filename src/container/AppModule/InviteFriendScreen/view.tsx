@@ -5,6 +5,7 @@ import Label from '../../../components/Label';
 import MainContainer from '../../../components/MainContainer';
 import { navigationProps } from '../../../types/nav';
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { OrangeColor } from '../../../assets/colors';
 interface props extends navigationProps {
 
 }
@@ -80,7 +81,7 @@ const InviteFriendScreen: React.FC<props> = ({
                     title="SHARE LEAGUE"
                     onPress={() => { }}
                     btnStyle={{
-                        backgroundColor: "red"
+                        backgroundColor: OrangeColor
                     }}
                     labelStyle={{ color: "white" }}
                     radius={5}

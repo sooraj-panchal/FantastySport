@@ -1,7 +1,10 @@
-export const PrimaryColor = '#246e87' 
-export const StatusBarColor='#07559D'
-export const OrangeColor ="#F79521"
-export const DarkBlueColor ="#002F47"
-export const GrayColor ="#8E8E8E"
-export const BlackColor ="#000"
-export const LightGrayColor="lightgrey"
+export const PrimaryColor = '#01173F'
+export const StatusBarColor = '#07559D'
+export const OrangeColor = "#EC411B"
+export const DarkBlueColor = "#01173F"
+export const GrayColor = "#B2B2B2"
+export const BlackColor = "#000"
+export const LightGrayColor = "lightgrey"
+export const fbBlueColor = '#3B5998'
+export const redColor = '#F20000'
+export const greenColor = '#3AA23A'

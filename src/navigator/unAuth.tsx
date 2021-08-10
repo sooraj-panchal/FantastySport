@@ -69,6 +69,8 @@ const AppStackScreen: React.FC = () => {
                     />,
                     headerTitle: () => null,
                     headerRightContainerStyle: { paddingRight: 20 },
+                    headerTranslucent: true,
+                    headerStyle: { backgroundColor: 'transparent' }
                 })}
             />
             <StackScreen.Screen
@@ -200,13 +202,13 @@ const AppStackScreen: React.FC = () => {
                 options={({ navigation }) => ({
                     headerShown: true,
                     headerTitle: "",
-                    headerTranslucent:true,
+                    headerTranslucent: true,
                     // headerTintColor:'white',
-                    headerStyle:{backgroundColor:'transparent'},
-                    headerShadowVisible:false
+                    headerStyle: { backgroundColor: 'transparent' },
+                    headerShadowVisible: false
                 })}
             />
-             <StackScreen.Screen
+            <StackScreen.Screen
                 name="TermsAndCondition"
                 component={TermsAndConditionScreen}
                 options={({ navigation, route }) => {
@@ -225,23 +227,16 @@ const AppStackScreen: React.FC = () => {
                     })
                 }}
             />
-             <StackScreen.Screen
+            <StackScreen.Screen
                 name="ChangePassword"
                 component={ChangePasswordScreen}
-                options={({ navigation, route }) => {
-                    return ({
-                        headerTitle: "Change Password",
-                        headerStyle: {
-                            backgroundColor: PrimaryColor,
-                            // height:110
-                        },
-                        headerBackTitleVisible: false,
-                        headerLeftContainerStyle: {
-                            paddingLeft: 10
-                        },
-                        headerTitleAlign: "left",
-                        headerTintColor: "white",
-                    })
+                options={{
+                    headerShown: true,
+                    headerStyle: { backgroundColor: 'transparent' },
+                    headerTitle: "",
+                    headerShadowVisible: false,
+                    headerTranslucent: true,
+                    headerTintColor: "white"
                 }}
             />
         </StackScreen.Navigator>

@@ -11,6 +11,8 @@ import { screenWidth } from '../../../types/sizes';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Btn from '../../../components/Btn';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Img from '../../../components/Img';
+import { AppImages } from '../../../assets/images/map';
 interface props extends navigationProps {
 
 }
@@ -87,13 +89,18 @@ const EditTeamScreen: React.FC<props> = ({
                                     mpContainer={{ mh: 15 }}
                                     height={60}
                                 >
-                                    <Ionicons
+                                    {/* <Ionicons
                                         name="md-person"
                                         size={45}
                                         color={'grey'}
                                         style={{
                                             width: 70
                                         }}
+                                    /> */}
+                                    <Img
+                                        imgSrc={AppImages.player_1}
+                                        width={60} height={60}
+                                        mpImage={{mr:15}}
                                     />
                                     <Container width={130} >
                                         <Label labelSize={15} style={{ letterSpacing: 0.5, color: "black" }} >P. Mahomes</Label>
@@ -111,10 +118,10 @@ const EditTeamScreen: React.FC<props> = ({
                                     <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={70} >
                                         <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black" }}>80%</Label>
                                     </Container>
-                                    <FontAwesome
-                                        name="sort"
-                                        style={{ marginLeft: 50 }}
-                                        size={30}
+                                      <Img
+                                        imgSrc={AppImages.change_pos}
+                                        width={20} height={20}
+                                        mpImage={{ml:50}}
                                     />
                                 </Container>
                                 <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />

@@ -8,7 +8,7 @@ import TextInputComp from '../TextInputComp';
 import { BlackColor, DarkBlueColor, LightGrayColor, OrangeColor } from '../../assets/colors';
 import Btn from '../Btn';
 import { medium } from '../../assets/fonts/fonts';
-import { AuthImages } from '../../assets/images/map';
+import { AppImages, AuthImages } from '../../assets/images/map';
 import * as yup from 'yup';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Octicons from 'react-native-vector-icons/Octicons'
@@ -79,10 +79,10 @@ const PickPlayerModal: React.FC<props> = ({
                         >vs SEA</Label>
                     </Container>
                     <Img
-                        width={90}
-                        height={90}
+                        width={100}
+                        height={100}
                         imgStyle={{ alignSelf: 'flex-end' }}
-                        imgSrc={{ uri: AuthImages.profile_image }}
+                        imgSrc={AppImages.player_1}
                     // containerStyle={{backgroundColor:"red"}}
                     />
                 </Container>
@@ -121,14 +121,14 @@ const PickPlayerModal: React.FC<props> = ({
             </Container>
             <Btn
                 title="CONFIRM PICK"
-                onPress={() => { 
+                onPress={() => {
                     closeModal()
                 }}
                 btnStyle={{
                     position: 'absolute',
                     bottom: 0,
                     width: "100%",
-                    backgroundColor: 'red'
+                    backgroundColor: OrangeColor
                 }}
                 labelStyle={{ color: 'white', fontWeight: '900', letterSpacing: 0.5 }}
                 labelSize={16}

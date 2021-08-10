@@ -1,5 +1,5 @@
 import React from 'react';
-import { AuthImages } from '../../../../assets/images/map';
+import { AppImages, AuthImages } from '../../../../assets/images/map';
 import Btn from '../../../../components/Btn';
 import Container from '../../../../components/Container';
 import Img from '../../../../components/Img';
@@ -55,10 +55,10 @@ const AddSniperPointScreen: React.FC<props> = ({
                         >vs SEA</Label>
                     </Container>
                     <Img
-                        width={90}
-                        height={90}
+                        width={100}
+                        height={100}
                         imgStyle={{ alignSelf: 'flex-end' }}
-                        imgSrc={{ uri: AuthImages.profile_image }}
+                        imgSrc={AppImages.player_1}
                     // containerStyle={{backgroundColor:"red"}}
                     />
                 </Container>

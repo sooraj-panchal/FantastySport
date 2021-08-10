@@ -8,6 +8,8 @@ import { FlatList } from 'react-native-gesture-handler';
 import { ListRenderItem } from 'react-native';
 import { navigationProps } from '../../../types/nav';
 import Btn from '../../../components/Btn';
+import Img from '../../../components/Img';
+import { AppImages } from '../../../assets/images/map';
 interface props extends navigationProps {
 
 }
@@ -24,13 +26,10 @@ const TeamLevelScreen: React.FC<props> = ({
                 }}
                 mpContainer={{ mh: 10, mt: 10 }}
             >
-                <Container
-                    containerStyle={{
-                        backgroundColor: 'red',
-                        borderRadius: 30,
-                    }}
-                    width={30} height={30}
-                    mpContainer={{ ml: 10 }}
+                <Img
+                    imgSrc={AppImages.green_logo}
+                    width={25} height={28}
+                    mpImage={{ ml: 10 }}
                 />
                 <Label
                     labelSize={16}
@@ -83,6 +82,8 @@ const TeamLevelScreen: React.FC<props> = ({
             <FlatList
                 data={[1, 2, 3, 4]}
                 renderItem={renderItem}
+                keyExtractor={(item, index) => `teamLevel ${index.toString()}`}
+
             />
         </Container>
     </MainContainer>

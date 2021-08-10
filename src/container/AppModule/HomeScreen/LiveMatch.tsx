@@ -103,7 +103,13 @@ const LiveMatch: React.FC = ({
                                                 alignItems: "center"
                                             }}
                                         >
-                                            <Container containerStyle={{ backgroundColor: "red", borderRadius: 40 }} width={40} height={40} />
+                                            <Img
+                                                imgSrc={AppImages.green_logo}
+                                                imgStyle={{
+                                                    height: 40, width: 40,
+                                                    resizeMode: 'contain'
+                                                }}
+                                            />
                                             <Label
                                                 labelSize={35}
                                                 style={{ color: "black", fontWeight: "bold" }}
@@ -163,7 +169,14 @@ const LiveMatch: React.FC = ({
                                                 labelSize={35}
                                                 style={{ color: "black", fontWeight: "bold" }}
                                             >0.00</Label>
-                                            <Container containerStyle={{ backgroundColor: "red", borderRadius: 40 }} width={40} height={40} mpContainer={{ ml: 10 }} />
+                                            <Img
+                                                imgSrc={AppImages.green_logo}
+                                                imgStyle={{
+                                                    height: 40, width: 40,
+                                                    resizeMode: 'contain'
+                                                }}
+                                                mpImage={{ ml: 15 }}
+                                            />
                                         </Container>
                                         <Container containerStyle={{
                                             flexDirection: "row",

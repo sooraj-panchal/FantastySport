@@ -7,6 +7,7 @@ import { DarkBlueColor } from '../../../assets/colors';
 import Img from '../../../components/Img';
 import { AuthImages } from '../../../assets/images/map';
 import Label from '../../../components/Label';
+import { screenHeight, screenWidth } from '../../../types/sizes';
 
 interface props extends navigationProps {
     loading: boolean
@@ -23,22 +24,33 @@ const SplashScreen: React.FC<props> = ({
             justifyContent: "center",
             alignItems: "center"
         }} >
-            <StatusBar backgroundColor="transparent" translucent />
-            {/* <Img
-                imgSrc={AuthImages.splashLogo_image}
+            <StatusBar backgroundColor="transparent" translucent barStyle="dark-content" />
+            <Img
+                imgSrc={AuthImages.Splash_Bg}
                 imgStyle={{
-                    width: "90%",
-                    height: "30%",
-                    resizeMode: "contain"
+                    width: screenWidth,
+                    height: screenHeight,
+                    // resizeMode: "contain"
+                    justifyContent: 'center',
+                    alignItems: 'center'
                 }}
-            /> */}
-            <Label
+            />
+            <Img
+                imgSrc={AuthImages.Splash_logo}
+                imgStyle={{
+                    width: screenWidth * 0.80,
+                    height: "25%",
+                    resizeMode: "contain",
+                    position: "absolute",
+                }}
+            />
+            {/* <Label
                 labelSize={50}
                 style={{
                     maxWidth:"70%",
                     textAlign:'center'
                 }}
-            >Fantasty Sniper</Label>
+            >Fantasty Sniper</Label> */}
         </MainContainer>
     )
 }

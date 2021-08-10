@@ -39,9 +39,10 @@ const NotificationScreen: React.FC<props> = ({
                     alignItems: "center"
                 }} >
                     <Img
-                        imgSrc={AppImages.boxImage}
-                        height={80}
-                        width={80}
+                        imgSrc={AppImages.notification}
+                        height={50}
+                        width={50}
+                        mpImage={{ml:10}}
                     // imgStyle={{ borderRadius: 2 }}
                     />
                     <Container
@@ -62,7 +63,7 @@ const NotificationScreen: React.FC<props> = ({
     return (
         <MainContainer>
             <FlatList
-                data={PropertyList}
+                data={[1,2,3]}
                 renderItem={_renderProperyListData}
                 keyExtractor={(item, index) => index.toString()}
                 ItemSeparatorComponent={() => <Container mpContainer={{ mv: 5 }} />}

@@ -5,6 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { screenWidth } from '../types/sizes';
 import { useNavigation } from '@react-navigation/native';
 import { homeNavProps, navigationProps, unAuthParamList } from '../types/nav';
+import { OrangeColor } from '../assets/colors';
 
 const PlayerList: React.FC = ({
 
@@ -33,7 +34,7 @@ const PlayerList: React.FC = ({
                 containerStyle={{
                     borderWidth: 2,
                     borderRadius: 30,
-                    borderColor: 'red',
+                    borderColor: OrangeColor,
                     // position: 'absolute',
                     // right: 0,
                     borderStyle: "dashed",
@@ -52,7 +53,7 @@ const PlayerList: React.FC = ({
                     style={{
 
                     }}
-                    color={'red'}
+                    color={OrangeColor}
                 />
             </Container>
         </Container>

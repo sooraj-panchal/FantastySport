@@ -12,14 +12,13 @@ import AuthScreen from '../container/AuthModule/AuthScreen';
 
 const StackScreen = createNativeStackNavigator<RootStackParamList>()
 
-
 const AuthStackScreen = () => {
     return (
         <StackScreen.Navigator
             initialRouteName="AppIntro"
             screenOptions={{
                 headerShown: false,
-                animation: "fade"
+                animation: "slide_from_right"
             }}
         >
             <StackScreen.Screen
@@ -35,9 +34,10 @@ const AuthStackScreen = () => {
                 component={LoginScreen}
                 options={{
                     headerShown: true,
-                    headerStyle: { backgroundColor: '#246e87' },
+                    headerStyle: { backgroundColor: 'transparent' },
                     headerTitle: "",
                     headerShadowVisible: false,
+                    headerTranslucent: true,
                     headerTintColor: "white"
                 }}
             />
@@ -46,9 +46,10 @@ const AuthStackScreen = () => {
                 component={RegisterScreen}
                 options={{
                     headerShown: true,
-                    headerStyle: { backgroundColor: '#246e87' },
+                    headerStyle: { backgroundColor: 'transparent' },
                     headerTitle: "",
                     headerShadowVisible: false,
+                    headerTranslucent: true,
                     headerTintColor: "white"
                 }}
             />
@@ -57,9 +58,10 @@ const AuthStackScreen = () => {
                 component={ForgotPasswordScreen}
                 options={{
                     headerShown: true,
-                    headerStyle: { backgroundColor: '#246e87' },
+                    headerStyle: { backgroundColor: 'transparent' },
                     headerTitle: "",
                     headerShadowVisible: false,
+                    headerTranslucent: true,
                     headerTintColor: "white"
                 }}
             />
@@ -70,15 +72,24 @@ const AuthStackScreen = () => {
             <StackScreen.Screen
                 name="Verification"
                 component={VerificationScreen}
+                options={{
+                    headerShown: true,
+                    headerStyle: { backgroundColor: 'transparent' },
+                    headerTitle: "",
+                    headerShadowVisible: false,
+                    headerTranslucent: true,
+                    headerTintColor: "white"
+                }}
             />
             <StackScreen.Screen
                 name="ResetPassword"
                 component={ResetPasswordScreen}
                 options={{
                     headerShown: true,
-                    headerStyle: { backgroundColor: '#246e87' },
+                    headerStyle: { backgroundColor: 'transparent' },
                     headerTitle: "",
                     headerShadowVisible: false,
+                    headerTranslucent: true,
                     headerTintColor: "white"
                 }}
             />

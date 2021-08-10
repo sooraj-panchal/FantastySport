@@ -6,6 +6,9 @@ import MainContainer from '../../../components/MainContainer';
 import { navigationProps } from '../../../types/nav';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import InputBox from '../../../components/InputBox';
+import Img from '../../../components/Img';
+import { AuthImages } from '../../../assets/images/map';
+import { screenWidth } from '../../../types/sizes';
 interface props extends navigationProps {
 
 }
@@ -13,16 +16,16 @@ const JoinLeagueScreen: React.FC<props> = ({
 navigation
 }) => {
     return (
-        <MainContainer>
-            <Label
-                labelSize={50}
-                style={{
-                    textAlign: 'center',
+        <MainContainer  >
+            <Img
+                imgSrc={AuthImages.Splash_logo}
+                imgStyle={{
                     alignSelf: "center",
-                    color: 'black'
+                    width:screenWidth*0.80
                 }}
-                mpLabel={{ mt: 50 }}
-            >Fantasty League</Label>
+                height={100}
+                mpImage={{mt:80}}
+            />
             <Container
                 containerStyle={{
                     backgroundColor: 'white',

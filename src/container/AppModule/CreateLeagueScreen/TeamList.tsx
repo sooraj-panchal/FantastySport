@@ -2,6 +2,8 @@ import React from 'react';
 import Container from '../../../components/Container';
 import Label from '../../../components/Label';
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import Img from '../../../components/Img';
+import { AppImages } from '../../../assets/images/map';
 
 const TeamList: React.FC = ({
 
@@ -27,9 +29,10 @@ const TeamList: React.FC = ({
                     justifyContent: "center",
                     alignItems: 'center'
                 }} mpContainer={{ ml: 10 }} >
-                    <Container
-                        containerStyle={{ backgroundColor: "red", borderRadius: 30 }}
-                        width={40} height={40} mpContainer={{}} />
+                    <Img
+                        imgSrc={AppImages.green_logo}
+                        imgStyle={{ resizeMode: 'contain' }}
+                        width={40} height={40} />
                     <Label
                         labelSize={12}
                         style={{}}
@@ -41,9 +44,9 @@ const TeamList: React.FC = ({
                     justifyContent: "center",
                     alignItems: 'center'
                 }} >
-                    <Container
-                        containerStyle={{ backgroundColor: "red", borderRadius: 30 }}
-                        width={40} height={40} mpContainer={{}} />
+                    <Img
+                        imgSrc={AppImages.green_logo}
+                        width={35} height={40} />
                     <Label
                         labelSize={12}
                         style={{}}

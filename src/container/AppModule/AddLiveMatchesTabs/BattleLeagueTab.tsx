@@ -7,6 +7,8 @@ import { navigationProps } from '../../../types/nav';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { FlatList } from 'react-native-gesture-handler';
 import { ListRenderItem } from 'react-native';
+import Img from '../../../components/Img';
+import { AppImages } from '../../../assets/images/map';
 interface props extends navigationProps {
 
 }
@@ -30,9 +32,9 @@ const BattleLeagueTab: React.FC<props> = ({
                 alignItems: 'center',
                 flexDirection: "row"
             }} mpContainer={{ ml: 15 }} >
-                <Container
-                    containerStyle={{ backgroundColor: "red", borderRadius: 30 }}
-                    width={40} height={40} mpContainer={{}} />
+                <Img
+                    imgSrc={AppImages.green_logo}
+                    width={30} height={35} />
                 <Label
                     labelSize={18}
                     style={{}}
@@ -41,7 +43,7 @@ const BattleLeagueTab: React.FC<props> = ({
             </Container>
             <Label
                 labelSize={16}
-                style={{}}
+                style={{}}  
                 mpLabel={{ mt: 10, ml: 20 }}
             >21-07-2000   04:00 PM </Label>
             {

@@ -6,7 +6,7 @@ import Container from '../../../components/Container';
 import Img from '../../../components/Img';
 import MainContainer from '../../../components/MainContainer';
 import PagerView from 'react-native-pager-view';
-import { View } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import { useRef } from 'react';
 import Label from '../../../components/Label';
 import FirstPage from './FirstPage';
@@ -28,7 +28,9 @@ const AppIntroScreen: React.FC<props> = ({
     return (
         <MainContainer
             statusBarHeight
+            style={{ backgroundColor: 'white' }}
         >
+            <StatusBar backgroundColor="transparent" translucent barStyle="dark-content" />
             <PagerView style={{
                 flex: 0.95,
                 marginTop: 20
@@ -88,7 +90,7 @@ const AppIntroScreen: React.FC<props> = ({
                     labelStyle={{ color: 'white' }}
                     title="Get Started"
                     onPress={() => {
-                        navigation.navigate('Login')
+                        navigation.navigate('Auth')
                     }}
                 />
                 : <Container height={45} mpContainer={{ mt: 20 }} />

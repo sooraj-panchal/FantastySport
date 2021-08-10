@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, Pressable, StyleProp, ViewStyle, TextStyle } from 'react-native';
 import { PrimaryColor } from '../assets/colors';
+import { regular } from '../assets/fonts/fonts';
 import { mpStyle, normalize, screenWidth, vs } from '../types/sizes';
 
 interface Props {
@@ -55,6 +56,7 @@ const Btn: React.FC<Props> = ({
                     color: textColor,
                     fontSize: normalize(labelSize || 12),
                     ...mpStyle({ ...mpLabel }),
+                    fontFamily:regular
                 }, labelStyle]}
             >{title}</Text>
             {rightIcon ? rightIcon() : null}

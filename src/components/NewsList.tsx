@@ -76,7 +76,7 @@ const NewsList: React.FC<props> = ({
         >
             <Container>
                 <Img
-                    imgSrc={{ uri: AppImages.property_image }}
+                    imgSrc={AppImages.newsImg}
                     imgStyle={{
                         width: "100%",
                     }}

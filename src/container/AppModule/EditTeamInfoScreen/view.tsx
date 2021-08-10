@@ -121,13 +121,16 @@ import { navigationProps } from '../../../types/nav';
 import { screenWidth } from '../../../types/sizes';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Btn from '../../../components/Btn';
+import Img from '../../../components/Img';
+import { AppImages } from '../../../assets/images/map';
+import { OrangeColor } from '../../../assets/colors';
 
 interface props extends navigationProps {
 
 }
 
 const EditTeamInfoScreen: React.FC<props> = ({
-
+navigation
 }) => {
 
     const renderItem: ListRenderItem<{}> = ({ item, index }) => {
@@ -150,10 +153,11 @@ const EditTeamInfoScreen: React.FC<props> = ({
                     width={10} height={10}
                 />
             </Container>
-            <Container
-                containerStyle={{ backgroundColor: 'green', borderRadius: 30 }}
-                width={30} height={30}
-                mpContainer={{ ml: 10 }}
+            <Img
+                imgStyle={{ }}
+                width={26} height={30}
+                mpImage={{ ml: 15 }}
+                imgSrc={AppImages.green_logo}
             />
         </Container>
     }
@@ -203,7 +207,7 @@ const EditTeamInfoScreen: React.FC<props> = ({
             <Btn
                 title="SAVE"
                 btnStyle={{
-                    backgroundColor: 'red',
+                    backgroundColor: OrangeColor,
                     position:"absolute",
                     bottom:10,
                     width:"90%",
@@ -211,7 +215,9 @@ const EditTeamInfoScreen: React.FC<props> = ({
                 }}
                 labelSize={18}
                 labelStyle={{ color: "white" }}
-                onPress={() => { }}
+                onPress={() => {
+                    navigation.navigate('EditTeam')
+                 }}
                 btnHeight={45}
                 mpBtn={{ mt: 20 }}
                 radius={5}
