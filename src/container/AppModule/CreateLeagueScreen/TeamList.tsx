@@ -4,6 +4,8 @@ import Label from '../../../components/Label';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Img from '../../../components/Img';
 import { AppImages } from '../../../assets/images/map';
+import { OrangeColor } from '../../../assets/colors';
+import { medium, regular } from '../../../assets/fonts/fonts';
 
 const TeamList: React.FC = ({
 
@@ -12,10 +14,9 @@ const TeamList: React.FC = ({
         <Container
             containerStyle={{
                 backgroundColor: "white",
-                height: 120,
+                height: 65,
                 elevation: 2,
                 borderRadius: 5,
-                justifyContent: "center",
                 alignItems: "flex-start",
                 // borderWidth: 1,
                 // borderColor: "#f2f2f2"
@@ -29,36 +30,29 @@ const TeamList: React.FC = ({
                     justifyContent: "center",
                     alignItems: 'center'
                 }} mpContainer={{ ml: 10 }} >
-                    <Img
-                        imgSrc={AppImages.green_logo}
-                        imgStyle={{ resizeMode: 'contain' }}
-                        width={40} height={40} />
                     <Label
-                        labelSize={12}
-                        style={{}}
+                        labelSize={14}
+                        style={{ fontFamily: medium }}
                         mpLabel={{ mt: 5 }}
-                    >Team name</Label>
+                    >Giants</Label>
                 </Container>
-                <Label labelSize={16} mpLabel={{ mt: 5, mh: 5 }} style={{ color: "grey", letterSpacing: 0.5 }} >VS</Label>
+                <Label labelSize={14} mpLabel={{ mt: 5, mh: 10 }} style={{ color: OrangeColor, letterSpacing: 0.5, fontFamily: medium }} >VS</Label>
                 <Container containerStyle={{
                     justifyContent: "center",
                     alignItems: 'center'
                 }} >
-                    <Img
-                        imgSrc={AppImages.green_logo}
-                        width={35} height={40} />
                     <Label
-                        labelSize={12}
-                        style={{}}
+                        labelSize={14}
+                        style={{ fontFamily: medium }}
                         mpLabel={{ mt: 5 }}
-                    >Team name</Label>
+                    >Pacers</Label>
                 </Container>
             </Container>
             <Label
                 labelSize={14}
                 style={{}}
-                mpLabel={{ mt: 10, ml: 10 }}
-            >21-07-2000   04:00 PM </Label>
+                mpLabel={{ mt: 5, ml: 10 }}
+            >Mon 08/12  04:00 PM </Label>
             <Container
                 containerStyle={{
                     borderRadius: 35,
@@ -70,11 +64,11 @@ const TeamList: React.FC = ({
                     alignItems: "center",
                     backgroundColor: 'red'
                 }}
-                width={30} height={30}
+                width={20} height={20}
             >
                 <Ionicons
                     name="md-close"
-                    size={20}
+                    size={15}
                     color="white"
                 />
             </Container>

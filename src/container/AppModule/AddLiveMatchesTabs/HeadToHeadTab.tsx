@@ -126,6 +126,7 @@ const HeadToHeadTab: React.FC<props> = ({
                 ListHeaderComponent={() => <Container mpContainer={{ mt: 10 }} />}
                 ListFooterComponent={() => <Container mpContainer={{ mb: 10 }} />}
                 ItemSeparatorComponent={() => <Container mpContainer={{ mv: 5 }} />}
+                showsVerticalScrollIndicator={false}
             />
         </MainContainer>
     )

@@ -15,7 +15,7 @@ import { screenWidth } from '../../../types/sizes';
 const MyLeague: React.FC = ({
 
 }) => {
-    const [page, setPage] = React.useState(0)
+    const [page, setPage] = React.useState<Number>(0)
 
     return (
         <Container>
@@ -31,7 +31,7 @@ const MyLeague: React.FC = ({
                     style={{
                         fontFamily: medium
                     }}
-                >My League</Label>
+                >My Leagues</Label>
                 <Label
                     labelSize={16}
                     style={{

@@ -27,6 +27,9 @@ const EditTeamScreen: React.FC<props> = ({
                 headerRight: () => <Label
                     style={{ color: "white", letterSpacing: 0.5 }}
                     labelSize={18}
+                    onPress={()=>navigation.navigate('MyTeamTab',{
+                        screen:'MyTeam'
+                    })}
                 >Save</Label>
             })
         )
@@ -74,12 +77,11 @@ const EditTeamScreen: React.FC<props> = ({
                                     alignItems: 'center'
                                 }}
                                 mpContainer={{ pv: 10, ph: 15 }}
+                                key={`editList${index.toString()}`}
                             >
                                 <Label labelSize={16} style={{ width: 225 }} >Offense</Label>
                                 <Label labelSize={15} style={{ letterSpacing: 0.5, width: 45, textAlign: 'center' }}  >Proj</Label>
                                 <Label labelSize={15} style={{ letterSpacing: 0.5, width: 75, textAlign: 'center' }} >Pred</Label>
-                                <Label labelSize={15} style={{ letterSpacing: 0.5, width: 50, textAlign: 'center' }} >Actual</Label>
-                                <Label labelSize={15} style={{ letterSpacing: 0.5, width: 95, textAlign: 'center' }} >Accuracy</Label>
                                 <Label labelSize={15} style={{ letterSpacing: 0.5, width: 40, textAlign: 'center' }} >{ }</Label>
                             </Container>
                         } else
@@ -87,7 +89,7 @@ const EditTeamScreen: React.FC<props> = ({
                                 <Container
                                     containerStyle={{ flexDirection: "row", alignItems: "center" }}
                                     mpContainer={{ mh: 15 }}
-                                    height={60}
+                                    height={70}
                                 >
                                     {/* <Ionicons
                                         name="md-person"
@@ -100,11 +102,12 @@ const EditTeamScreen: React.FC<props> = ({
                                     <Img
                                         imgSrc={AppImages.player_1}
                                         width={60} height={60}
-                                        mpImage={{mr:15}}
+                                        mpImage={{ mr: 15 }}
                                     />
                                     <Container width={130} >
                                         <Label labelSize={15} style={{ letterSpacing: 0.5, color: "black" }} >P. Mahomes</Label>
                                         <Label labelSize={13} style={{ letterSpacing: 0.5, color: "grey" }} >Sun 4:25PM v SEA</Label>
+                                        <Label labelSize={13} style={{ letterSpacing: 0.5, color: "grey" }} >QB</Label>
                                     </Container>
                                     <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
                                         <Label labelSize={14} style={{ letterSpacing: 0.5, color: "green" }}>36.3</Label>
@@ -112,16 +115,10 @@ const EditTeamScreen: React.FC<props> = ({
                                     <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
                                         <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black" }}>36.3</Label>
                                     </Container>
-                                    <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
-                                        <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black" }}>36.3</Label>
-                                    </Container>
-                                    <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={70} >
-                                        <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black" }}>80%</Label>
-                                    </Container>
-                                      <Img
+                                    <Img
                                         imgSrc={AppImages.change_pos}
                                         width={20} height={20}
-                                        mpImage={{ml:50}}
+                                        mpImage={{ ml: 30 }}
                                     />
                                 </Container>
                                 <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />

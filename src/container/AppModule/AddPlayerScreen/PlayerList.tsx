@@ -6,6 +6,7 @@ import { navigationProps } from '../../../types/nav';
 import Img from '../../../components/Img';
 import { AppImages } from '../../../assets/images/map';
 import { OrangeColor } from '../../../assets/colors';
+import { medium } from '../../../assets/fonts/fonts';
 interface props {
     onPress: () => void,
     index: number
@@ -23,7 +24,7 @@ const PlayerList: React.FC<props> = ({
                 alignItems: "center"
             }}
             mpContainer={{ mh: 15 }}
-            height={65}
+            height={80}
         >
             <Img
                 imgSrc={AppImages.player_1}
@@ -32,11 +33,13 @@ const PlayerList: React.FC<props> = ({
             // }}
             />
             <Container mpContainer={{ pl: 15 }} >
-                <Label labelSize={16} style={{ letterSpacing: 0.5, color: "black" }} >P. Mahomes</Label>
-                <Container containerStyle={{ flexDirection: "row", alignItems: "center" }} >
-                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: 'grey' }} >QB</Label>
-                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: 'green' }} mpLabel={{ pl: 10 }} >Accuracy 98%</Label>
+                <Label labelSize={14} style={{ color: "black",fontFamily:medium }}  >P. Mahomes</Label>
+                <Container containerStyle={{ flexDirection: "row", alignItems: "center" }} mpContainer={{ mt: 2 }} >
+                    <Label labelSize={14} style={{ color: 'grey' }} >QB</Label>
+                    <Label labelSize={14} style={{}} mpLabel={{ pl: 10 }} >Accuracy 98%</Label>
+                    <Label labelSize={14} style={{}} mpLabel={{ pl: 10 }} >Proj. 18pts</Label>
                 </Container>
+                <Label labelSize={14} style={{ color: "grey" }} mpLabel={{ mt: 2 }} >Sun 4:25PM v SEA</Label>
             </Container>
             {
                 index == 1 ?

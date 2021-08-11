@@ -174,38 +174,35 @@ const MyTeamScreen: React.FC<navigationProps> = ({
         // ItemSeparatorComponent={() => <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} mpContainer={{ mh: 15 }} />}
         /> */}
             <View>
-                <ScrollView horizontal={true} >
-                    <ScrollView>
-                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => {
-                            if (index == 0) {
-                                return <Container
-                                    containerStyle={{
-                                        borderBottomWidth: 1,
-                                        borderTopWidth: 1,
-                                        borderColor: 'lightgrey',
-                                        flexDirection: "row",
-                                        alignItems: 'center'
-                                    }}
-                                    mpContainer={{ pv: 10, ph: 15, mt: 10 }}
-                                >
-                                    <Label labelSize={16} style={{ width: 225 }} >Offense</Label>
-                                    <Label labelSize={15} style={{ letterSpacing: 0.5, width: 45, textAlign: 'center' }}  >Proj</Label>
-                                    <Label labelSize={15} style={{ letterSpacing: 0.5, width: 75, textAlign: 'center' }} >Pred</Label>
-                                    <Label labelSize={15} style={{ letterSpacing: 0.5, width: 50, textAlign: 'center' }} >Actual</Label>
-                                    <Label labelSize={15} style={{ letterSpacing: 0.5, width: 85, textAlign: 'center' }} >Accuracy</Label>
-                                    <Label labelSize={15} style={{ letterSpacing: 0.5, width: 80, textAlign: 'center' }} >S.p.pred</Label>
-                                </Container>
-                            } else if (index == 1) {
-                                return <PlayerList />
-                            } else
-                                return <>
-                                    <Container
-                                        containerStyle={{ flexDirection: "row", alignItems: "center" }}
-                                        mpContainer={{ mh: 15 }}
-                                        height={60}
-                                    >
-                                        <Label labelSize={16} style={{ letterSpacing: 0.5, color: OrangeColor }} >QB</Label>
-                                        {/* <Ionicons
+                <Container
+                    containerStyle={{
+                        borderBottomWidth: 1,
+                        borderTopWidth: 1,
+                        borderColor: 'lightgrey',
+                        flexDirection: "row",
+                        alignItems: 'center'
+                    }}
+                    mpContainer={{ pv: 10, ph: 15, mt: 10 }}
+                >
+                    <Label labelSize={16} style={{ width: 225 }} >Offense</Label>
+                    <Label labelSize={15} style={{ letterSpacing: 0.5, width: 45, textAlign: 'center' }}  >Proj</Label>
+                    <Label labelSize={15} style={{ letterSpacing: 0.5, width: 75, textAlign: 'center' }} >Pred</Label>
+                </Container>
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => {
+                    if (index == 0) {
+                        return <PlayerList
+                            key={`teamheader${index.toString()}`}
+                        />
+                    } else
+                        return <>
+                            <Container
+                                containerStyle={{ flexDirection: "row", alignItems: "center" }}
+                                mpContainer={{ mh: 15 }}
+                                height={60}
+                                key={`teamheader${index.toString()}`}
+                            >
+                                <Label labelSize={16} style={{ letterSpacing: 0.5, color: OrangeColor }} >QB</Label>
+                                {/* <Ionicons
                                             name="md-person"
                                             size={35}
                                             color={'grey'}
@@ -213,52 +210,27 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                                                 marginHorizontal: 15,
                                             }}
                                         /> */}
-                                        <Img
-                                            imgSrc={AppImages.player_1}
-                                            width={40} height={40}
-                                        // style={{
-                                        // }}
-                                        mpImage={{mh:15}}
-                                        />
-                                        <Container>
-                                            <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black" }} >P. Mahomes</Label>
-                                            <Label labelSize={12} style={{ letterSpacing: 0.5, color: "grey" }} >Sun 4:25PM v SEA</Label>
-                                        </Container>
-                                        <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
-                                            <Label labelSize={12} style={{ letterSpacing: 0.5, color: "green" }}>36.3</Label>
-                                        </Container>
-                                        <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
-                                            <Label labelSize={12} style={{ letterSpacing: 0.5, color: "black" }}>36.3</Label>
-                                        </Container>
-                                        <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
-                                            <Label labelSize={12} style={{ letterSpacing: 0.5, color: "black" }}>36.3</Label>
-                                        </Container>
-                                        <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={70} >
-                                            <Label labelSize={12} style={{ letterSpacing: 0.5, color: "black" }}>80%</Label>
-                                        </Container>
-                                        {
-                                            index == 1 ?
-                                                <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={85} >
-                                                    <Label labelSize={12} style={{ letterSpacing: 0.5, color: OrangeColor }}>36.3</Label>
-                                                </Container>
-                                                :
-                                                <Btn
-                                                    title="ADD"
-                                                    btnStyle={{ backgroundColor: OrangeColor, justifyContent: 'center', alignItems: 'center' }}
-                                                    labelStyle={{ color: 'white' }}
-                                                    mpBtn={{ ml: 35, ph: 25 }}
-                                                    radius={5}
-                                                    onPress={() => {
-                                                        navigation.navigate('AddSniperPoint')
-                                                    }}
-                                                />
-                                        }
-                                    </Container>
-                                    <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />
-                                </>
-                        })}
-                    </ScrollView>
-                </ScrollView>
+                                <Img
+                                    imgSrc={AppImages.player_1}
+                                    width={40} height={40}
+                                    // style={{
+                                    // }}
+                                    mpImage={{ mh: 15 }}
+                                />
+                                <Container>
+                                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black" }} >P. Mahomes</Label>
+                                    <Label labelSize={12} style={{ letterSpacing: 0.5, color: "grey" }} >Sun 4:25PM v SEA</Label>
+                                </Container>
+                                <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
+                                    <Label labelSize={12} style={{ letterSpacing: 0.5, color: "green" }}>36.3</Label>
+                                </Container>
+                                <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
+                                    <Label labelSize={12} style={{ letterSpacing: 0.5, color: "black" }}>36.3</Label>
+                                </Container>
+                            </Container>
+                            <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />
+                        </>
+                })}
             </View>
         </ScrollView>
     </MainContainer>

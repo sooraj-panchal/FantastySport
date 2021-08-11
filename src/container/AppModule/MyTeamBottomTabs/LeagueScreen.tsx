@@ -68,7 +68,7 @@ const LeagueScreen: React.FC<props> = ({
                     labelSize={14}
                     style={{
                         // fontWeight: 'bold',
-                        width: "42%"
+                        maxWidth: "40%"
                     }}
                     numberOfLines={1}
                 >John's Official team asdas</Label>
@@ -77,7 +77,7 @@ const LeagueScreen: React.FC<props> = ({
                         flexDirection: 'row',
                         alignItems: 'center'
                     }}
-                    mpContainer={{ ml: 10 }}
+                    mpContainer={{ ml: 20 }}
                 >
                     <Label
                         labelSize={14}
@@ -102,9 +102,8 @@ const LeagueScreen: React.FC<props> = ({
 
     return <MainContainer>
         <Container
-            containerStyle={{ backgroundColor: 'white', borderRadius: 5, elevation: 2 }}
+            containerStyle={{ backgroundColor: 'white', borderRadius: 10, elevation: 2 }}
             mpContainer={{ mh: 20, mt: 10, pv: 10 }}
-        // height={150}
         >
             <Container
                 containerStyle={{
@@ -123,28 +122,7 @@ const LeagueScreen: React.FC<props> = ({
                         fontWeight: 'bold'
                     }}
                 >Standings</Label>
-                <Container
-                    containerStyle={{
-                        flexDirection: 'row',
-                        alignItems: 'center'
-                    }}
-                >
-                    <Label
-                        labelSize={16}
-                        style={{
-                            fontWeight: 'bold',
-                            color: 'skyblue'
-                        }}
-                        mpLabel={{ mr: 5 }}
-                    >View Details</Label>
-                    <Ionicons
-                        name="ios-chevron-forward"
-                        size={18}
-                        color='skyblue'
-                    />
-                </Container>
             </Container>
-
             <Container
                 containerStyle={{
                     flexDirection: 'row',
@@ -157,7 +135,7 @@ const LeagueScreen: React.FC<props> = ({
                     labelSize={16}
                     style={{
                         fontWeight: 'bold',
-                        width: "45%"
+                        width: "38%"
                     }}
                 >Team</Label>
                 <Container
@@ -175,13 +153,13 @@ const LeagueScreen: React.FC<props> = ({
                         labelSize={15}
                         style={{
                         }}
-                        mpLabel={{ mh: 20 }}
+                        mpLabel={{ mh: 15 }}
                     >Accuracy</Label>
                     <Label
                         labelSize={15}
                         style={{
                         }}
-                    >PF</Label>
+                    >All pts</Label>
                 </Container>
             </Container>
             <Container height={1} containerStyle={{ backgroundColor: 'lightgrey' }} mpContainer={{ mt: 10, mh: 10 }} />
@@ -190,74 +168,6 @@ const LeagueScreen: React.FC<props> = ({
                 renderItem={renderItem}
                 keyExtractor={(item, index) => `league ${index.toString()}`}
             />
-        </Container>
-        <Container
-            containerStyle={{ backgroundColor: 'white', borderRadius: 10, elevation: 2 }}
-            mpContainer={{ mh: 20, mt: 10, pv: 15 }}
-            // height={150}
-            onPress={() => {
-                navigation.navigate('TeamLevel')
-            }}
-        >
-            <Container
-                containerStyle={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: "space-between"
-                }}
-                mpContainer={{ mh: 15 }}
-            >
-                <Container
-                    containerStyle={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Container
-                        containerStyle={{
-                            backgroundColor: OrangeColor,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderRadius: 40
-                        }}
-                        width={40}
-                        height={40}
-                    >
-                        <Ionicons
-                            name="ios-trophy"
-                            size={20}
-                            color="white"
-                        />
-                    </Container>
-                    <Label
-                        labelSize={18}
-                        style={{
-                            fontWeight: 'bold',
-                        }}
-                        mpLabel={{ ml: 10 }}
-                    >Standings</Label>
-                </Container>
-                <Container
-                    containerStyle={{
-                        flexDirection: 'row',
-                        alignItems: 'center'
-                    }}
-                >
-                    <Label
-                        labelSize={16}
-                        style={{
-                            fontWeight: 'bold',
-                            color: 'skyblue'
-                        }}
-                        mpLabel={{ mr: 5 }}
-                    >Team Levels</Label>
-                    <Ionicons
-                        name="ios-chevron-forward"
-                        size={18}
-                        color={'skyblue'}
-                    />
-                </Container>
-            </Container>
         </Container>
     </MainContainer>
 }

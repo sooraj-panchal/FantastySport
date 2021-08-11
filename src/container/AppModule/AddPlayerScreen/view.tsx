@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Btn from '../../../components/Btn';
 import Container from '../../../components/Container';
 import MainContainer from '../../../components/MainContainer';
@@ -12,11 +12,14 @@ import InputBox from '../../../components/InputBox';
 import EditProfileModal from "../../../components/Modals/EditProfileModal";
 import PlayerList from './PlayerList';
 import PickPlayerModal from '../../../components/Modals/PickPlayerModal';
+import { Modalize } from 'react-native-modalize';
+import SelectPlayerPositionModal from '../../../components/Modals/SelectPlayerPositionModal';
 
 const AddPlayerScreen: React.FC<navigationProps> = ({
     navigation
 }) => {
     const [openModal, setOpenModal] = React.useState(false)
+    const modalizeRef = useRef<Modalize>(null);
 
     React.useLayoutEffect(() => {
         return (
@@ -27,7 +30,7 @@ const AddPlayerScreen: React.FC<navigationProps> = ({
                             color: "white"
                         }}
                         onPress={() => {
-                            navigation.goBack()
+                            navigation.navigate('AddPlayerPoint')
                         }}
                     >ADD</Label>
                 }
@@ -38,7 +41,7 @@ const AddPlayerScreen: React.FC<navigationProps> = ({
     const renderItem: ListRenderItem<{}> = ({ item, index }) => {
         return <PlayerList
             onPress={() => {
-                setOpenModal(true)
+                // setOpenModal(true)
             }}
             index={index}
         />
@@ -64,7 +67,9 @@ const AddPlayerScreen: React.FC<navigationProps> = ({
             />
             <Btn
                 title="Position"
-                onPress={() => { }}
+                onPress={() => {
+                    modalizeRef.current?.open();
+                }}
                 rightIcon={() => <Ionicons name="ios-chevron-down" size={20} color="white" />}
                 btnStyle={{
                     backgroundColor: PrimaryColor, width: "35%",
@@ -85,10 +90,18 @@ const AddPlayerScreen: React.FC<navigationProps> = ({
         <FlatList
             data={[1, 2, 3, 4, 5]}
             renderItem={renderItem}
+            keyExtractor={(_, index) => `Player${index.toString()}`}
         />
         <PickPlayerModal
             openModal={openModal}
             closeModal={() => setOpenModal(false)}
+        />
+        <SelectPlayerPositionModal
+            modalizeRef={modalizeRef}
+
+            closeModal={() => {
+                modalizeRef.current?.close();
+            }}
         />
     </MainContainer>
 }

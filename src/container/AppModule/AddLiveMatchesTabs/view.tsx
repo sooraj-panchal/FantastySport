@@ -23,7 +23,7 @@ const AddLiveMatchesTabs: React.FC<props> = (props) => {
         first: () => <HeadToHeadTab {...props} />,
         second: () => <BattleLeagueTab {...props} />,
     });
-    
+
 
     const renderTabBar = (props: any) => (
         <TabBar

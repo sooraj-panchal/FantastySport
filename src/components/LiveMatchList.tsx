@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View } from 'react-native';
 import { greenColor } from '../assets/colors';
+import { medium } from '../assets/fonts/fonts';
 import { AppImages } from '../assets/images/map';
 import { homeNavProps } from '../types/nav';
 import { screenWidth } from '../types/sizes';
@@ -9,9 +10,15 @@ import Btn from './Btn';
 import Container from './Container';
 import Img from './Img';
 import Label from './Label';
+import Ionicons from 'react-native-vector-icons/Ionicons'
+interface props {
+    color: string,
+    onChangeTeam: () => void
+}
 
-const LiveMatchList: React.FC = ({
-
+const LiveMatchList: React.FC<props> = ({
+    color,
+    onChangeTeam
 }) => {
     const navigation = useNavigation<homeNavProps>()
     return <View>
@@ -27,14 +34,14 @@ const LiveMatchList: React.FC = ({
             mpContainer={{ pb: 10 }}
         >
             <Btn
-                title="Cats vs Washing Machines"
-                onPress={() => { 
+                title="BBC league"
+                onPress={() => {
                     navigation.navigate('LiveMatchDetail')
                 }}
                 btnStyle={{
                     elevation: 5,
                     borderRadius: 10,
-                    backgroundColor: greenColor,
+                    backgroundColor: color,
                     justifyContent: "flex-start"
                 }}
                 mpBtn={{ pl: 10 }}
@@ -59,14 +66,20 @@ const LiveMatchList: React.FC = ({
                         alignItems: "flex-end",
                     }}
                 >
+                    <Label
+                        labelSize={16}
+                        style={{ color: "black" }}
+                        mpLabel={{ mr: 20 }}
+                    >Joshu's Team</Label>
                     <Container
                         containerStyle={{
                             flexDirection: "row",
                             alignItems: "center"
                         }}
+                        mpContainer={{ mt: 5 }}
                     >
                         <Img
-                            imgStyle={{width:35,height:40}}
+                            imgStyle={{ width: 35, height: 40 }}
                             imgSrc={AppImages.green_logo}
                         />
                         {/* <Container containerStyle={{ backgroundColor: "red", borderRadius: 40 }} width={40} height={40} /> */}
@@ -76,73 +89,12 @@ const LiveMatchList: React.FC = ({
                             mpLabel={{ ml: 20 }}
                         >0.00</Label>
                     </Container>
-                    <Container containerStyle={{
-                        flexDirection: "row",
-                        alignItems: 'center'
-                    }}
-                        mpContainer={{}}
-                    >
-                        <Label
-                            labelSize={16}
-                            style={{ color: "grey" }}
-                            mpLabel={{ ml: 20 }}
-                        >Proj</Label>
-                        <Label
-                            labelSize={16}
-                            style={{ color: greenColor, fontWeight: "bold" }}
-                            mpLabel={{ ml: 5 }}
-                        >98.39</Label>
-                    </Container>
-                    <Container containerStyle={{
-                        flexDirection: "row",
-                        alignItems: 'center'
-                    }}
-                        mpContainer={{}}
-                    >
-                        <Label
-                            labelSize={16}
-                            style={{ color: "grey" }}
-                            mpLabel={{ ml: 20 }}
-                        >Pred</Label>
-                        <Label
-                            labelSize={16}
-                            style={{ color: greenColor, fontWeight: "bold" }}
-                            mpLabel={{ ml: 5 }}
-                        >98.39</Label>
-                    </Container>
-                    <Container containerStyle={{
-                        flexDirection: "row",
-                        alignItems: 'center'
-                    }}
-                        mpContainer={{}}
-                    >
-                        <Label
-                            labelSize={16}
-                            style={{ color: "grey" }}
-                            mpLabel={{ ml: 20 }}
-                        >Actual</Label>
-                        <Label
-                            labelSize={16}
-                            style={{ color: greenColor, fontWeight: "bold" }}
-                            mpLabel={{ ml: 5 }}
-                        >98.39</Label>
-                    </Container>
-                    <Label
-                        labelSize={18}
-                        style={{ color: "black" }}
-                        mpLabel={{ mt: 10 }}
-                    >Adam's Team</Label>
-                    <Label
-                        labelSize={22}
-                        style={{ color: "black" }}
-                        mpLabel={{ ml: 20 }}
-                    >0-0-0</Label>
                 </Container>
                 <Container
                     containerStyle={{
                         width: 1,
                         backgroundColor: "lightgrey",
-                        height: 120,
+                        height: 80,
 
                     }}
                     mpContainer={{ mh: 20 }}
@@ -155,78 +107,101 @@ const LiveMatchList: React.FC = ({
                 >
                     <Container
                         containerStyle={{
+                            flexDirection: 'row',
+                            alignItems: 'center'
+                        }}
+                        onPress={onChangeTeam}
+                    >
+                        <Label
+                            labelSize={16}
+                            style={{ color: "black" }}
+                            mpLabel={{ mr: 2 }}
+                        >Frank the tank</Label>
+                        <Ionicons
+                            name="md-chevron-down"
+                            size={18}
+                            color="black"
+                            style={{ top: 1 }}
+                        />
+                    </Container>
+                    <Container
+                        containerStyle={{
                             flexDirection: "row",
                             alignItems: "center"
                         }}
+                        mpContainer={{ mt: 5 }}
                     >
                         <Label
                             labelSize={35}
                             style={{ color: "black", fontWeight: "bold" }}
                         >0.00</Label>
-                           <Img
-                            imgStyle={{width:35,height:40}}
+                        <Img
+                            imgStyle={{ width: 35, height: 40 }}
                             imgSrc={AppImages.green_logo}
-                            mpImage={{ml:15}}
+                            mpImage={{ ml: 15 }}
                         />
                     </Container>
-                    <Container containerStyle={{
-                        flexDirection: "row",
-                        alignItems: 'center'
-                    }}
-                        mpContainer={{}}
-                    >
-                        <Label
-                            labelSize={16}
-                            style={{ color: greenColor, fontWeight: "bold" }}
-                        >98.39</Label>
-                        <Label
-                            labelSize={16}
-                            style={{ color: "grey" }}
-                            mpLabel={{ ml: 5 }}
-                        >Proj</Label>
-                    </Container>
-                    <Container containerStyle={{
-                        flexDirection: "row",
-                        alignItems: 'center'
-                    }}
-                        mpContainer={{}}
-                    >
-                        <Label
-                            labelSize={16}
-                            style={{ color: greenColor, fontWeight: "bold" }}
-                        >98.39</Label>
-                        <Label
-                            labelSize={16}
-                            style={{ color: "grey" }}
-                            mpLabel={{ ml: 5 }}
-                        >Pred</Label>
-                    </Container>
-                    <Container containerStyle={{
-                        flexDirection: "row",
-                        alignItems: 'center'
-                    }}
-                        mpContainer={{}}
-                    >
-                        <Label
-                            labelSize={16}
-                            style={{ color: greenColor, fontWeight: "bold" }}
-                        >98.39</Label>
-                        <Label
-                            labelSize={16}
-                            style={{ color: "grey" }}
-                            mpLabel={{ ml: 5 }}
-                        >Actual</Label>
-                    </Container>
-                    <Label
-                        labelSize={18}
-                        style={{ color: "black" }}
-                        mpLabel={{ mt: 10 }}
-                    >Adam's Team</Label>
-                    <Label
-                        labelSize={22}
-                        style={{ color: "black" }}
-                    >0-0-0</Label>
                 </Container>
+            </Container>
+            <Container containerStyle={{
+                flexDirection: 'row',
+                alignItems: "center",
+                justifyContent: 'center'
+            }}
+                mpContainer={{ mt: 5 }}
+            >
+                <Label
+                    labelSize={16}
+                    style={{ color: greenColor, fontFamily: medium }}
+                >94.3</Label>
+                <Label
+                    labelSize={16}
+                    style={{ color: 'grey', fontFamily: medium, width: 70, textAlign: 'center' }}
+                >S.Pts</Label>
+                <Label
+                    labelSize={16}
+                    style={{ color: 'grey', fontFamily: medium }}
+                >83.4</Label>
+            </Container>
+            <Container containerStyle={{
+                flexDirection: 'row',
+                alignItems: "center",
+                justifyContent: 'center'
+            }}
+                mpContainer={{ mt: 5 }}
+            >
+                <Label
+                    labelSize={16}
+                    style={{ color: greenColor, fontFamily: medium }}
+                >3</Label>
+                <Label
+                    labelSize={16}
+                    style={{ color: 'grey', fontFamily: medium, width: 70, textAlign: 'center' }}
+                >Pl.Rem</Label>
+                <Label
+                    labelSize={16}
+                    style={{ color: 'grey', fontFamily: medium }}
+                >3</Label>
+            </Container>
+            <Container containerStyle={{
+                flexDirection: 'row',
+                alignItems: "center",
+                justifyContent: 'center'
+            }}
+                mpContainer={{ mt: 5 }}
+            >
+                <Label
+                    labelSize={16}
+                    style={{ color: greenColor, fontFamily: medium }}
+                >3</Label>
+                <Label
+                    labelSize={16}
+                    style={{ color: 'grey', fontFamily: medium, width: 70, textAlign: 'center' }}
+                >Rank</Label>
+                <Label
+                    labelSize={16}
+                    style={{ color: 'grey', fontFamily: medium }}
+                >1</Label>
             </Container>
         </Container>
     </View>

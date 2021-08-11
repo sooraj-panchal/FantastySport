@@ -55,7 +55,7 @@ const News: React.FC = ({
                         return <View key={index}
                         >
                             <Img
-                                imgSrc={{ uri: AppImages.property_image }}
+                                imgSrc={AppImages.newsImg}
                                 imgStyle={{
                                     width: screenWidth * 0.90,
                                     height: 160,

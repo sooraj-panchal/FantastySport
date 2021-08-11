@@ -10,6 +10,8 @@ import AppContainer from './src/navigator';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { configureStore } from './src/store';
+import { Host } from 'react-native-portalize';
+
 const App = () => {
     useEffect(() => {
     }, [])
@@ -37,7 +39,10 @@ const App = () => {
                     <NavigationContainer
                         theme={{ colors: { background: "#246e87" } }}
                     >
-                        {_renderStatusBar()}
+                        <Host>
+                            {_renderStatusBar()}
+
+                        </Host>
                     </NavigationContainer>
                 </PersistGate>
             </Provider>

@@ -39,7 +39,7 @@ const PrivateGameList: React.FC = ({
                 <Label
                     mpLabel={{ ml: 10 }}
                     labelSize={18}
-                >Adam's Team</Label>
+                >Metal Militia</Label>
             </Container>
             <Container
                 containerStyle={{

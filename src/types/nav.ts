@@ -43,6 +43,8 @@ export type unAuthParamList = {
   NewsDetail: undefined;
   TermsAndCondition: { title: string };
   ChangePassword: undefined;
+  AddPlayerPoint:undefined;
+  LiveMatchList:undefined;
 };
 
 export type tabParamList = {

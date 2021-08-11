@@ -40,14 +40,14 @@ const GameDetailScreen: React.FC<props> = ({
                 style={{
                     fontWeight: 'bold'
                 }}
-            >No.</Label>
+            >Rank</Label>
             <Label
                 labelSize={15}
                 mpLabel={{ ml: 35 }}
                 style={{
                     fontWeight: 'bold'
                 }}
-            >Users</Label>
+            >Team</Label>
             <Label
                 labelSize={15}
                 style={{
@@ -55,7 +55,7 @@ const GameDetailScreen: React.FC<props> = ({
                     right: 15,
                     fontWeight: 'bold'
                 }}
-            >FS. pred pt</Label>
+            >SNIPER pts</Label>
         </Container>
         <FlatList
             data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}

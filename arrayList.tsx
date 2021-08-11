@@ -6,22 +6,22 @@ interface LeagueList {
 
 export const MyLeagueList: Array<LeagueList> = [
     {
-        name: "Adam's Team",
+        name: "Redbelly's League",
         league_name: "Metal Militia",
         match_time: "18/06, 2:00 PM"
     },
     {
-        name: "Adam's Team",
+        name: "Redbelly's League",
         league_name: "Metal Militia",
         match_time: "18/06, 2:00 PM"
     },
     {
-        name: "Adam's Team",
+        name: "Redbelly's League",
         league_name: "Metal Militia",
         match_time: "18/06, 2:00 PM"
     },
     {
-        name: "Adam's Team",
+        name: "Redbelly's League",
         league_name: "Metal Militia",
         match_time: "18/06, 2:00 PM"
     }

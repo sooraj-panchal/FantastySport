@@ -31,7 +31,7 @@ const GamePlayerList: React.FC<props> = ({
                 numberOfLines={1}
             >{index + 1}</Label>
             <Container
-                mpContainer={{ ml: 45 }}
+                mpContainer={{ ml: 50 }}
             >
                 <Label
                     labelSize={16}
@@ -44,14 +44,20 @@ const GamePlayerList: React.FC<props> = ({
                     style={{ color: 'red' }}
                 >2 players remaining</Label>
             </Container>
-            <Label
-                labelSize={15}
-                style={{
+            <Container
+                containerStyle={{
                     position: 'absolute',
-                    right: 25,
-                    letterSpacing: 0.5
+                    right: 30,
                 }}
-            >106.1</Label>
+            >
+                <Label
+                    labelSize={14}
+                >106.1</Label>
+                <Label
+                    labelSize={14}
+                    mpLabel={{mt:2}}
+                >(16.5)</Label>
+            </Container>
         </Container>
     )
 }

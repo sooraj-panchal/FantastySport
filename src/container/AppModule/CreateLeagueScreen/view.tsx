@@ -7,7 +7,7 @@ import { navigationProps } from '../../../types/nav';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Btn from '../../../components/Btn';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
-import { OrangeColor, PrimaryColor } from '../../../assets/colors';
+import { greenColor, OrangeColor, PrimaryColor } from '../../../assets/colors';
 import { ListRenderItem } from 'react-native';
 import TeamList from './TeamList';
 interface props extends navigationProps {
@@ -19,7 +19,7 @@ const CreateLeagueScreen: React.FC<props> = ({
     const leagueScope = () => {
         return <>
             <Label
-                labelSize={18} style={{}} mpLabel={{ pl: 15, pt: 15 }}
+                labelSize={18} style={{}} mpLabel={{ pl: 15 }}
             >League scope</Label>
             <Container
                 containerStyle={{
@@ -291,7 +291,7 @@ const CreateLeagueScreen: React.FC<props> = ({
         return <>
             <Label
                 labelSize={18} style={{}} mpLabel={{ pl: 15, mt: 15 }}
-            >Number of participants</Label>
+            >Max Number of participants</Label>
             <InputBox
                 placeholder="Type here.."
                 mpContainer={{ mh: 15, mt: 10, pl: 10 }}
@@ -317,41 +317,6 @@ const CreateLeagueScreen: React.FC<props> = ({
         </>
     }
 
-    const ChooseTeam = () => {
-        return <>
-            <Label
-                labelSize={18} style={{ color: "black" }} mpLabel={{ pl: 15, pt: 15 }}
-            >Choose your team</Label>
-            {addedTeam()}
-            <Btn
-                title="ADD"
-                onPress={() => {
-                    navigation.navigate('AddLiveMatches')
-                }}
-                mpBtn={{ mh: 20, mt: 20 }}
-                btnHeight={45}
-                radius={5}
-                btnStyle={{ backgroundColor: "green" }}
-                labelSize={16}
-                labelStyle={{ color: "white" }}
-            />
-            <Btn
-                title="CREATE"
-                mpBtn={{ mh: 20, mt: 15 }}
-                btnHeight={45}
-                radius={5}
-                btnStyle={{ backgroundColor: OrangeColor }}
-                labelSize={16}
-                labelStyle={{ color: "white" }}
-                onPress={() => {
-                    navigation.navigate("MyTeamTab", {
-                        screen: "MyTeam"
-                    })
-                }}
-            />
-        </>
-    }
-
     const renderAddedTeamItem: ListRenderItem<{}> = ({ item, index }) => {
         return <TeamList />
     }
@@ -363,7 +328,7 @@ const CreateLeagueScreen: React.FC<props> = ({
             renderItem={renderAddedTeamItem}
             keyExtractor={(item, index) => `renderList ${index.toString()}`}
             // contentContainerStyle={{paddingBottom:10}}
-            ListHeaderComponent={() => <Container mpContainer={{ mt: 10 }} />}
+            ListHeaderComponent={() => <Container mpContainer={{ mt: 15 }} />}
             ListFooterComponent={() => <Container mpContainer={{ mb: 10 }} />}
             ItemSeparatorComponent={() => <Container mpContainer={{ mv: 5 }} />}
         />
@@ -377,17 +342,43 @@ const CreateLeagueScreen: React.FC<props> = ({
                     backgroundColor: "white",
                     alignSelf: "center",
                     elevation: 2,
-                    borderRadius: 5
+                    borderRadius: 10
                 }}
                     mpContainer={{ mt: 20, mh: 10, pv: 20 }}
                 >
                     {leagueScope()}
+                    {addedTeam()}
+                    <Btn
+                        title="Choose game"
+                        onPress={() => {
+                            navigation.navigate('AddLiveMatches')
+                        }}
+                        mpBtn={{ mh: 20, mt: 5 }}
+                        btnHeight={30}
+                        radius={5}
+                        btnStyle={{ backgroundColor: greenColor, width: 120, elevation: 2 }}
+                        labelSize={14}
+                        labelStyle={{ color: "white" }}
+                    />
                     {leagueOption()}
                     {leagueName()}
-                    {leagueType()}
+                    {/* {leagueType()} */}
                     {participent()}
                     {pointScoring()}
-                    {ChooseTeam()}
+                    <Btn
+                        title="CREATE"
+                        mpBtn={{ mh: 20, mt: 15 }}
+                        btnHeight={45}
+                        radius={5}
+                        btnStyle={{ backgroundColor: OrangeColor }}
+                        labelSize={16}
+                        labelStyle={{ color: "white" }}
+                        onPress={() => {
+                            navigation.navigate("MyTeamTab", {
+                                screen: "MyTeam"
+                            })
+                        }}
+                    />
                 </Container>
             </ScrollView>
         </MainContainer>

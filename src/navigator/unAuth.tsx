@@ -24,6 +24,8 @@ import TeamLevelScreen from '../container/AppModule/TeamLevelScreen/view';
 import WinnerDetailScreen from '../container/AppModule/WinnerDetailScreen/view';
 import GameDetailScreen from '../container/AppModule/GameDetailScreen/view';
 import NewsDetailScreen from '../container/AppModule/NewsDetailScreen/view';
+import AddPlayerPointScreen from '../container/AppModule/AddPointScreen/view';
+import LiveMatchListScreen from '../container/AppModule/LiveMatchListScreen/view';
 
 const StackScreen = createNativeStackNavigator<unAuthParamList>()
 
@@ -89,7 +91,7 @@ const AppStackScreen: React.FC = () => {
                 component={AddLiveMatchesTabs}
                 options={({ navigation }) => ({
                     headerShown: true,
-                    headerTitle: "Add live matches"
+                    headerTitle: "Add Live Games"
                 })}
             />
             <StackScreen.Screen
@@ -97,7 +99,7 @@ const AppStackScreen: React.FC = () => {
                 component={MyTeamBottomTabs}
                 options={({ navigation }) => ({
                     headerShown: false,
-                    headerTitle: "Adam's Team"
+                    headerTitle: "Redbelly's league"
                 })}
             />
             <StackScreen.Screen
@@ -238,6 +240,22 @@ const AppStackScreen: React.FC = () => {
                     headerTranslucent: true,
                     headerTintColor: "white"
                 }}
+            />
+            <StackScreen.Screen
+                name="AddPlayerPoint"
+                component={AddPlayerPointScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Redbelly's Team",
+                })}
+            />
+              <StackScreen.Screen
+                name='LiveMatchList'
+                component={LiveMatchListScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "My leagues",
+                })}
             />
         </StackScreen.Navigator>
     )

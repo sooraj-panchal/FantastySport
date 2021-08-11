@@ -10,6 +10,7 @@ import LeagueScreen from "./LeagueScreen";
 import { HeaderBackButton } from '@react-navigation/elements'
 import Container from "../../../components/Container";
 import Label from "../../../components/Label";
+import { regular } from "../../../assets/fonts/fonts";
 const Tab = createBottomTabNavigator<MyTeamtabParamList>();
 
 const MyTeamBottomTabs = () => {
@@ -28,6 +29,9 @@ const MyTeamBottomTabs = () => {
                 tabBarLabelStyle: {
                     fontSize: 12,
                     bottom: 5
+                },
+                headerStyle: {
+                    backgroundColor: PrimaryColor
                 }
             }}
         >
@@ -41,7 +45,11 @@ const MyTeamBottomTabs = () => {
                             )
                         },
                         headerShown: true,
-                        headerTitle: "Adam's Team",
+                        headerTitle: "Redbelly's League",
+                        headerTitleStyle: {
+                            fontSize: 16,
+                            fontFamily: regular
+                        },
                         headerTintColor: "white",
                         tabBarLabel: "My Team",
                         headerLeft: () => {
@@ -77,7 +85,7 @@ const MyTeamBottomTabs = () => {
                         )
                     },
                     headerShown: true,
-                    headerTitle: "Live Match",
+                    headerTitle: "Adam's Team",
                     headerTintColor: "white",
                     tabBarLabel: "Live Match",
                     headerLeft: () => {
