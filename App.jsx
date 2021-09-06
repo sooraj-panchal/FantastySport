@@ -49,6 +49,7 @@ const App = () => {
         </SafeAreaProvider>
     );
 };
+
 const styles = StyleSheet.create({
     header: {
         flex: 1,
@@ -56,4 +57,3 @@ const styles = StyleSheet.create({
     },
 });
 export default App;
-

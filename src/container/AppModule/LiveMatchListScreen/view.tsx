@@ -20,7 +20,7 @@ const LiveMatchListScreen: React.FC<props> = ({
         let color = index % 2 ? OrangeColor : greenColor
         return <LiveMatchList
             color={color}
-            onChangeTeam= {()=>{
+            onChangeTeam={() => {
                 modalizeRef.current?.open()
             }}
         />

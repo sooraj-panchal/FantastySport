@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ListRenderItem } from 'react-native';
 import { View } from 'react-native-animatable';
 import { FlatList } from 'react-native-gesture-handler';
@@ -39,7 +39,7 @@ const LiveMatch: React.FC = ({
                     labelSize={14}
                     style={{ color: 'black', fontFamily: medium, flex: 0.35 }}
                     numberOfLines={1}
-                    mpLabel={{mh:20}}
+                    mpLabel={{ mh: 20 }}
                 >BBC</Label>
                 <Label
                     labelSize={14}
@@ -84,7 +84,7 @@ const LiveMatch: React.FC = ({
                     borderRadius: 10,
                     overflow: "hidden"
                 }}
-                mpContainer={{ mt: 10,pb:10 }}
+                mpContainer={{ mt: 10, pb: 10 }}
             >
                 <Container
                     containerStyle={{
@@ -126,4 +126,5 @@ const LiveMatch: React.FC = ({
         </Container>
     )
 }
+
 export default LiveMatch;

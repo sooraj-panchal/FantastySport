@@ -28,6 +28,7 @@ const AppContainer = ({
         setLoading(true)
         // asyncBuyerDataWatcher()
     }, [])
+
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
