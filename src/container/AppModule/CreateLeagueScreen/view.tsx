@@ -198,6 +198,7 @@ const CreateLeagueScreen: React.FC<props> = ({
                 mpContainer={{ mh: 15, mt: 10, pl: 10 }}
                 textSize={14}
                 containerStyle={{ borderColor: "lightgrey" }}
+                inputHeight={45}
             />
         </>
     }
@@ -297,6 +298,7 @@ const CreateLeagueScreen: React.FC<props> = ({
                 mpContainer={{ mh: 15, mt: 10, pl: 10 }}
                 textSize={14}
                 containerStyle={{ borderColor: "lightgrey" }}
+                inputHeight={45}
             />
         </>
     }
@@ -313,6 +315,7 @@ const CreateLeagueScreen: React.FC<props> = ({
                 containerStyle={{ borderColor: "lightgrey" }}
                 editable={false}
                 rightIcon={() => <Ionicons name="ios-chevron-down" size={25} style={{ position: "absolute", right: 10 }} />}
+                inputHeight={45}
             />
         </>
     }

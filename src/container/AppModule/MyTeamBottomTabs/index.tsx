@@ -22,7 +22,7 @@ const MyTeamBottomTabs = () => {
                 headerShown: false,
                 tabBarStyle: {
                     backgroundColor: "white",
-                    height: 60,
+                    // height: 60,
                     borderTopWidth: 0
                 },
                 headerStatusBarHeight: getStatusBarHeight(),
@@ -32,7 +32,8 @@ const MyTeamBottomTabs = () => {
                 },
                 headerStyle: {
                     backgroundColor: PrimaryColor
-                }
+                },
+                headerTitleAlign: 'left'
             }}
         >
             <Tab.Screen

@@ -11,99 +11,102 @@ import MyLeagueScreen from "../container/AppModule/MyLeagueScreen/view";
 import WinnerScreen from "../container/AppModule/WinnerScreen/view";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import NewsScreen from "../container/AppModule/NewsScreen/view";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Tab = createBottomTabNavigator<tabParamList>();
 
 const Tabs = () => {
     return (
-        <Tab.Navigator
-            screenOptions={({ navigation }) => ({
-                tabBarActiveTintColor: PrimaryColor,
-                tabBarInactiveTintColor: "gray",
-                headerShown: true,
-                tabBarStyle: {
-                    backgroundColor: "white",
-                    height: 50,
-                    borderTopWidth: 0,
-                },
-                headerStatusBarHeight: getStatusBarHeight(),
-                headerTitle: "FANTASY SNIPER",
-                headerTintColor: "white",
-                headerRight: () => <Ionicons name="ios-notifications" size={22} color="white"
-                    onPress={() => {
-                        navigation.navigate("Notification")
+            <Tab.Navigator
+                screenOptions={({ navigation }) => ({
+                    tabBarActiveTintColor: PrimaryColor,
+                    tabBarInactiveTintColor: "gray",
+                    headerShown: true,
+                    tabBarStyle: {
+                        backgroundColor: "white",
+                        borderTopWidth: 0,
+                    },
+                    headerStatusBarHeight: getStatusBarHeight(),
+                    headerTitle: "FANTASY SNIPER",
+                    headerTintColor: "white",
+                    headerRight: () => <Ionicons name="ios-notifications" size={22} color="white"
+                        onPress={() => {
+                            navigation.navigate("Notification")
+                        }}
+                    />,
+                    headerRightContainerStyle: { paddingRight: 20 },
+                    headerTitleStyle: {
+                        fontSize: 18
+                    },
+                    headerStyle: {
+                        // height: 80,
+                        backgroundColor: PrimaryColor
+                    },
+                })}
+            >
+                <Tab.Screen
+                    name="Home" component={HomeScreen}
+                    options={({ navigation, route }) => {
+                        return ({
+                            tabBarIcon: ({ color, size }) => {
+                                return (
+                                    <Ionicons name="md-home" size={size} color={color} />
+                                )
+                            }
+                        })
                     }}
-                />,
-                headerRightContainerStyle: { paddingRight: 20 },
-                headerTitleStyle: {
-                    fontSize: 18
-                },
-                headerStyle: { height: 80, backgroundColor: PrimaryColor }
-            })}
-        >
-            <Tab.Screen
-                name="Home" component={HomeScreen}
-                options={({ navigation, route }) => {
-                    return ({
+                />
+                <Tab.Screen name="MyLeague" component={MyLeagueScreen}
+                    options={{
                         tabBarIcon: ({ color, size }) => {
                             return (
-                                <Ionicons name="md-home" size={size} color={color} />
+                                <Ionicons name="ios-trophy" size={size} color={color} />
+                            )
+                        },
+                        tabBarLabel: "My Leagues"
+                    }}
+                // listeners={{
+                //     tabPress: e => {
+                //         e.preventDefault()
+                //         navigation.navigate("Search")
+                //     },
+                // }}
+                />
+                <Tab.Screen name="Winners" component={WinnerScreen}
+                    options={{
+                        tabBarLabel: "Winners",
+                        tabBarIcon: ({ color, size }) => {
+                            return (
+                                <FontAwesome5 name="medal" size={size} color={color}
+                                    style={{
+                                        transform: [{
+                                            rotate: "180deg"
+                                        }]
+                                    }}
+                                />
                             )
                         }
-                    })
-                }}
-            />
-            <Tab.Screen name="MyLeague" component={MyLeagueScreen}
-                options={{
-                    tabBarIcon: ({ color, size }) => {
-                        return (
-                            <Ionicons name="ios-trophy" size={size} color={color} />
-                        )
-                    },
-                    tabBarLabel: "My Leagues"
-                }}
-            // listeners={{
-            //     tabPress: e => {
-            //         e.preventDefault()
-            //         navigation.navigate("Search")
-            //     },
-            // }}
-            />
-            <Tab.Screen name="Winners" component={WinnerScreen}
-                options={{
-                    tabBarLabel: "Winners",
-                    tabBarIcon: ({ color, size }) => {
-                        return (
-                            <FontAwesome5 name="medal" size={size} color={color}
-                                style={{
-                                    transform: [{
-                                        rotate: "180deg"
-                                    }]
-                                }}
-                            />
-                        )
-                    }
-                }} />
-            <Tab.Screen name="News" component={NewsScreen}
-                options={{
-                    tabBarLabel: "News",
-                    tabBarIcon: ({ color, size }) => {
-                        return (
-                            <Ionicons name="md-newspaper" size={size} color={color} />
-                        )
-                    }
-                }} />
-            <Tab.Screen name="ProfileStack" component={ProfileScreen}
-                options={{
-                    tabBarLabel: "Profile",
-                    tabBarIcon: ({ color, size }) => {
-                        return (
-                            <Ionicons name="md-person" size={size} color={color} />
-                        )
-                    },
-                }}
-            />
-        </Tab.Navigator>
+                    }} />
+                <Tab.Screen name="News" component={NewsScreen}
+                    options={{
+                        tabBarLabel: "News",
+                        tabBarIcon: ({ color, size }) => {
+                            return (
+                                <Ionicons name="md-newspaper" size={size} color={color} />
+                            )
+                        }
+                    }} />
+                <Tab.Screen name="ProfileStack" component={ProfileScreen}
+                    options={{
+                        tabBarLabel: "Profile",
+                        tabBarIcon: ({ color, size }) => {
+                            return (
+                                <Ionicons name="md-person" size={size} color={color} />
+                            )
+                        },
+                    }}
+                />
+            </Tab.Navigator>
     );
 }
 export default Tabs;

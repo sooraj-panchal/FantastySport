@@ -3,12 +3,13 @@ import Container from '../../../components/Container';
 import Label from '../../../components/Label';
 import MainContainer from '../../../components/MainContainer';
 import { FlatList } from 'react-native-gesture-handler';
-import { ListRenderItem } from 'react-native';
+import { ListRenderItem, View } from 'react-native';
 import { navigationProps } from '../../../types/nav';
 import WinnerList from '../../../components/WinnerList';
 interface props extends navigationProps {
 
 }
+
 const WinnerScreen: React.FC<props> = ({
     navigation
 }) => {
@@ -56,11 +57,13 @@ const WinnerScreen: React.FC<props> = ({
                 }}
             >Pf</Label>
         </Container>
-        <FlatList
-            data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => `Winners${index.toString()}`}
-        />
+        <View>
+            <FlatList
+                data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
+                renderItem={renderItem}
+                keyExtractor={(item, index) => `Winners${index.toString()}`}
+            />
+        </View>
     </MainContainer>
 }
 export default WinnerScreen;

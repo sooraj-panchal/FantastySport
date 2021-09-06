@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getStatusBarHeight } from '../utils/globals';
 // import * as globals from '../../utils/globals';
 import Loader from './Loader';
@@ -53,31 +53,16 @@ const MainContainer: React.FC<Props> = ({
     }
 
     return (
-        <View
+        <SafeAreaView
             style={[{
                 flex: 1,
                 backgroundColor: "#f2f2f2",
-                paddingRight: insets.right,
-                paddingLeft: insets.left,
-                paddingTop: statusBarHeight ? getStatusBarHeight() : 0
-            }, style]}>
-            {/* {
-                isForm && Platform.OS === "ios" ?
-                    <KeyboardAwareScrollView
-                        showsVerticalScrollIndicator={false}
-                        enableOnAndroid={false}
-                        extraHeight={80}
-                    >
-                        {loadingContainer()}
-                        {absoluteLoadingContainer()}
-                    </KeyboardAwareScrollView>
-                    : */}
-            <>
-                {loadingContainer()}
-                {absoluteLoadingContainer()}
-            </>
-            {/* } */}
-        </View>
+            }, style]}
+            edges={['bottom', 'left', 'right']}
+        >
+            {loadingContainer()}
+            {absoluteLoadingContainer()}
+        </SafeAreaView>
     );
 };
 

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import {
     View, StatusBar, StyleSheet, Platform, ActivityIndicator
 } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { DarkBlueColor, PrimaryColor, StatusBarColor } from './src/assets/colors';
 import AppContainer from './src/navigator';
 
@@ -18,10 +18,10 @@ const App = () => {
 
     const _renderStatusBar = () => {
         if (Platform.OS === "ios") {
-            return <View style={styles.header} >
-                <StatusBar backgroundColor={DarkBlueColor} barStyle="light-content" />
+            return <>
+                <StatusBar barStyle="light-content" />
                 <AppContainer />
-            </View>
+            </>
         } else {
             return <>
                 <StatusBar backgroundColor={DarkBlueColor} barStyle="light-content" translucent />
@@ -33,7 +33,7 @@ const App = () => {
     const { store, persistor } = configureStore()
 
     return (
-        <SafeAreaProvider>
+        <SafeAreaProvider  >
             <Provider store={store}>
                 <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
                     <NavigationContainer

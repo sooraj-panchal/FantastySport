@@ -26,6 +26,7 @@ import GameDetailScreen from '../container/AppModule/GameDetailScreen/view';
 import NewsDetailScreen from '../container/AppModule/NewsDetailScreen/view';
 import AddPlayerPointScreen from '../container/AppModule/AddPointScreen/view';
 import LiveMatchListScreen from '../container/AppModule/LiveMatchListScreen/view';
+import { Platform } from 'react-native';
 
 const StackScreen = createNativeStackNavigator<unAuthParamList>()
 
@@ -37,9 +38,10 @@ const AppStackScreen: React.FC = () => {
                 headerStyle: {
                     backgroundColor: PrimaryColor
                 },
-                presentation: "transparentModal",
-                animation: "fade",
-                headerTintColor: "white"
+                presentation: Platform.OS === 'ios' ? 'card' : 'transparentModal',
+                animation: Platform.OS === 'ios' ? 'slide_from_right' : "fade",
+                headerTintColor: "white",
+                headerBackTitleVisible: false
             }}
         >
             <StackScreen.Screen
@@ -47,7 +49,8 @@ const AppStackScreen: React.FC = () => {
                 component={Tabs}
                 options={({ navigation, route }) => {
                     return ({
-                        headerShown: false
+                        headerShown: false,
+                        
                     })
                 }}
             />
@@ -249,7 +252,7 @@ const AppStackScreen: React.FC = () => {
                     headerTitle: "Redbelly's Team",
                 })}
             />
-              <StackScreen.Screen
+            <StackScreen.Screen
                 name='LiveMatchList'
                 component={LiveMatchListScreen}
                 options={({ navigation }) => ({

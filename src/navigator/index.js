@@ -43,7 +43,7 @@ const AppContainer = ({
     return (
         <RootStack.Navigator
             screenOptions={{ headerShown: false, animation: "none" }}
-            initialRouteName={"AuthStack"}
+            initialRouteName={"AppStack"}
         >
             {
                 loading ?
