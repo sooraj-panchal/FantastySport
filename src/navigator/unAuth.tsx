@@ -94,7 +94,7 @@ const AppStackScreen: React.FC = () => {
                 component={AddLiveMatchesTabs}
                 options={({ navigation }) => ({
                     headerShown: true,
-                    headerTitle: "Add Live Games"
+                    headerTitle: "Add Battle League"
                 })}
             />
             <StackScreen.Screen

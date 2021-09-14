@@ -139,6 +139,7 @@
     <orderEntry type="module" module-name="FantastySport.react-native-gesture-handler" />
     <orderEntry type="module" module-name="FantastySport.react-native-safe-area-context" />
     <orderEntry type="module" module-name="FantastySport.react-native-screens" />
+    <orderEntry type="module" module-name="FantastySport.react-native-svg" />
     <orderEntry type="module" module-name="FantastySport.react-native-vector-icons" />
   </component>
 </module>

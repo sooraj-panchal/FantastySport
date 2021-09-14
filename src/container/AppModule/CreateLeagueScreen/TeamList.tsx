@@ -6,10 +6,18 @@ import Img from '../../../components/Img';
 import { AppImages } from '../../../assets/images/map';
 import { OrangeColor } from '../../../assets/colors';
 import { medium, regular } from '../../../assets/fonts/fonts';
+import { scheduleListTypes } from '../../../types/flatListTypes';
+import { useDate, useTime } from '../../../utils/timeZone';
+import { useDispatch } from 'react-redux';
+import { deleteLeagueWatcher, selectedLeagueWatcher } from '../../../store/slices/selectedLeagueSlice';
 
-const TeamList: React.FC = ({
-
+const TeamList: React.FC<scheduleListTypes> = ({
+    awayTeam,
+    homeTeam,
+    start_time,
+    game_key
 }) => {
+    const dispatch = useDispatch()
     return (
         <Container
             containerStyle={{
@@ -34,7 +42,7 @@ const TeamList: React.FC = ({
                         labelSize={14}
                         style={{ fontFamily: medium }}
                         mpLabel={{ mt: 5 }}
-                    >Giants</Label>
+                    >{awayTeam.full_name}</Label>
                 </Container>
                 <Label labelSize={14} mpLabel={{ mt: 5, mh: 10 }} style={{ color: OrangeColor, letterSpacing: 0.5, fontFamily: medium }} >VS</Label>
                 <Container containerStyle={{
@@ -45,14 +53,25 @@ const TeamList: React.FC = ({
                         labelSize={14}
                         style={{ fontFamily: medium }}
                         mpLabel={{ mt: 5 }}
-                    >Pacers</Label>
+                    >{homeTeam.full_name}</Label>
                 </Container>
             </Container>
-            <Label
-                labelSize={14}
-                style={{}}
-                mpLabel={{ mt: 5, ml: 10 }}
-            >Mon 08/12  04:00 PM </Label>
+            <Container containerStyle={{
+                flexDirection: 'row',
+                alignItems: "center",
+                width: '100%'
+            }}
+                mpContainer={{ mt: 10, ml: 10 }}
+            >
+                <Label
+                    labelSize={14}
+                    style={{}}
+                    mpLabel={{}}
+                >{useDate(start_time)} </Label>
+                <Label
+                    labelSize={14}
+                >{useTime(start_time)} </Label>
+            </Container>
             <Container
                 containerStyle={{
                     borderRadius: 35,
@@ -65,6 +84,9 @@ const TeamList: React.FC = ({
                     backgroundColor: 'red'
                 }}
                 width={20} height={20}
+                onPress={() => {
+                    dispatch(deleteLeagueWatcher(game_key))
+                }}
             >
                 <Ionicons
                     name="md-close"

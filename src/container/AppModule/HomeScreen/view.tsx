@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView, FlatList, StatusBar, ListRenderItem } from "react-native";
 import Btn from "../../../components/Btn";
 import Label from "../../../components/Label";
@@ -12,6 +12,9 @@ import MyLeague from "./MyLeague";
 import LiveMatch from "./LiveMatch";
 import Img from "../../../components/Img";
 import { AppImages } from "../../../assets/images/map";
+import { useDispatch, useSelector } from "react-redux";
+import { increamentCount } from "../../../store/slices/counterSlice";
+import { getScheduleListWatcher } from "../../../store/slices/scheduleSlice";
 
 
 interface props extends navigationProps {
@@ -21,6 +24,15 @@ interface props extends navigationProps {
 const HomeScreen: React.FC<props> = ({
     navigation
 }) => {
+
+    // const dispatch = useDispatch()
+    // const { data, loading } = useSelector((state) => state.schedule)
+
+    // useEffect(() => {
+    //     dispatch(getScheduleListWatcher())
+    // }, [])
+
+    // console.log("data", data)    
 
     const renderLeague: ListRenderItem<{}> = ({ item, index }) => {
         return <Container
@@ -45,10 +57,8 @@ const HomeScreen: React.FC<props> = ({
             <Label
                 labelSize={16}
                 style={{
-
                 }}
                 mpLabel={{ pl: 15, pt: 5 }}
-
             >Private game</Label>
             <Btn
                 title="Play Now"
@@ -115,7 +125,8 @@ const HomeScreen: React.FC<props> = ({
     }
 
     return (
-        <MainContainer style={{ backgroundColor: "#f2f2f2" }} >
+        <MainContainer style={{ backgroundColor: "#f2f2f2" }}
+        >
             <StatusBar backgroundColor="transparent" barStyle="light-content" />
             <ScrollView
                 key={1}
@@ -138,4 +149,5 @@ const HomeScreen: React.FC<props> = ({
         </MainContainer>
     )
 }
+
 export default HomeScreen;

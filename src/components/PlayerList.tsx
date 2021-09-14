@@ -6,19 +6,20 @@ import { screenWidth } from '../types/sizes';
 import { useNavigation } from '@react-navigation/native';
 import { homeNavProps, navigationProps, unAuthParamList } from '../types/nav';
 import { OrangeColor } from '../assets/colors';
+import { PlayerPositionTypes } from '../types/flatListTypes';
 
-const PlayerList: React.FC = ({
-
+const PlayerList: React.FC<PlayerPositionTypes> = ({
+    Position
 }) => {
     // const { navigation } = useNavigation<navigationProps>();
     const navigation = useNavigation<homeNavProps>();
     return <>
         <Container
             containerStyle={{ flexDirection: "row", alignItems: "center" }}
-            mpContainer={{ mh: 15 }}
+            mpContainer={{ mh: 20 }}
             height={55}
         >
-            <Label labelSize={16} style={{ letterSpacing: 0.5, color: 'grey' }} >QB</Label>
+            <Label labelSize={12} style={{ letterSpacing: 0.5, color: 'grey' }} >{Position}</Label>
             <Ionicons
                 name="md-person"
                 size={52}
@@ -35,12 +36,11 @@ const PlayerList: React.FC = ({
                     borderWidth: 2,
                     borderRadius: 30,
                     borderColor: OrangeColor,
-                    // position: 'absolute',
-                    // right: 0,
+                    position: 'absolute',
+                    right: 5,
                     borderStyle: "dashed",
                     justifyContent: "center",
-                    alignItems: "center",
-                    marginLeft: screenWidth * 0.36
+                    alignItems: "center"
                 }}
                 width={30} height={30}
                 onPress={() => {

@@ -23,25 +23,32 @@ import { Host, Portal } from 'react-native-portalize';
 
 interface props {
     closeModal: () => void,
+    selectedPosition: (position: string) => void,
     modalizeRef: React.Ref<Modalize>
 }
 
 
 const SelectPlayerPositionModal: React.FC<props> = ({
     closeModal,
-    modalizeRef
+    modalizeRef,
+    selectedPosition
 }) => {
+    const [positionIndex, setPositionIndex] = React.useState<number>(0)
+
     // console.log(openModal)
-    const renderItem: ListRenderItem<{}> = ({ item, index }) => {
+    const renderItem: ListRenderItem<any> = ({ item, index }) => {
         return (
             <Container
                 containerStyle={{
                     justifyContent: 'center',
-                    backgroundColor: index == 1 ? '#f7dfd2' : 'white'
+                    backgroundColor: index == positionIndex? '#f7dfd2' : 'white'
                 }}
                 height={50}
                 mpContainer={{ pl: 20 }}
-                onPress={closeModal}
+                onPress={() => {
+                    selectedPosition(item)
+                    setPositionIndex(index)
+                }}
             >
                 <Label
                     labelSize={16}
@@ -50,7 +57,7 @@ const SelectPlayerPositionModal: React.FC<props> = ({
                     }}
                 >{item}</Label>
                 {
-                    index == 1 ?
+                    index == positionIndex ?
                         <Container
                             containerStyle={{
                                 borderRadius: 30,

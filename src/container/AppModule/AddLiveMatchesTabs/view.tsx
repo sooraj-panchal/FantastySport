@@ -41,13 +41,14 @@ const AddLiveMatchesTabs: React.FC<props> = (props) => {
         <MainContainer>
             {/* <HeadToHeadTab {...props} /> */}
             {/* <BattleLeagueTab {...props} /> */}
-            <TabView
+            {/* <TabView
                 navigationState={{ index, routes }}
                 renderScene={renderScene}
                 onIndexChange={setIndex}
                 initialLayout={{ width: layout.width }}
                 renderTabBar={renderTabBar}
-            />
+            /> */}
+            <HeadToHeadTab {...props} />
         </MainContainer>
     )
 }

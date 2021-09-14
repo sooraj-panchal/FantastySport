@@ -7,12 +7,19 @@ import Img from './Img';
 import Label from './Label';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Alert } from 'react-native';
+import { newsListTypes } from '../types/flatListTypes';
+import { medium, regular } from '../assets/fonts/fonts';
+import moment from 'moment';
 interface props {
 
 }
 
-const NewsList: React.FC<props> = ({
-
+const NewsList: React.FC<newsListTypes> = ({
+    title,
+    description,
+    cat_name,
+    uploadedDate,
+    image
 }) => {
     const navigation = useNavigation<homeNavProps>()
 
@@ -68,8 +75,8 @@ const NewsList: React.FC<props> = ({
                 elevation: 2,
                 overflow: 'hidden'
             }}
-            mpContainer={{ mt: 10, mh: 20 }}
-            height={240}
+            mpContainer={{ mt: 10, mh: 20, pb: 10 }}
+            // height={250}
             onPress={() => {
                 navigation.navigate('NewsDetail')
             }}
@@ -85,20 +92,30 @@ const NewsList: React.FC<props> = ({
                 {renderPlayButton()}
             </Container>
             <Container
-                mpContainer={{ mh: 10, mt: 10 }}
+                mpContainer={{ mh: 10 }}
             >
                 <Label
                     labelSize={15}
-                    style={{ fontWeight: '900' }}
-                >Main news title</Label>
+                    style={{ fontFamily: medium }}
+                    mpLabel={{ mt: 5 }}
+                >{title}</Label>
                 <Label
                     labelSize={12}
-                >Lorem ipsum dolor sit amet consectetur adipisicing elit, dicta error aspernatur.</Label>
+                    style={{ color: 'grey' }}
+                >{cat_name}</Label>
                 <Label
-                    labelSize={10}
-                    style={{ color: 'grey', letterSpacing: 0.5 }}
-                    mpLabel={{ mt: 2 }}
-                >Saturday, May 15</Label>
+                    labelSize={13}
+                    numberOfLines={2}
+                    style={{ color: "black", maxWidth: '90%' }}
+                    mpLabel={{ mt: 5 }}
+                >{description}</Label>
+                <Label
+                    labelSize={12}
+                    style={{
+                        color: 'black',
+                    }}
+                    mpLabel={{ mt: 5, mr: 10 }}
+                >{uploadedDate}</Label>
             </Container>
         </Container>
     )

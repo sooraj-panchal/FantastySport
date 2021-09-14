@@ -7,14 +7,23 @@ import Img from '../../../components/Img';
 import { AppImages } from '../../../assets/images/map';
 import { OrangeColor } from '../../../assets/colors';
 import { medium } from '../../../assets/fonts/fonts';
+import { LeaguePlayerTypes } from '../../../types/flatListTypes';
+import { useTime } from '../../../utils/timeZone';
+import moment from 'moment';
 interface props {
-    onPress: () => void,
-    index: number
-
+    onPress: () => void
 }
-const PlayerList: React.FC<props> = ({
+const PlayerList: React.FC<props & LeaguePlayerTypes> = ({
     onPress,
-    index
+    photoUrl,
+    Name,
+    Position,
+    FantasyPointsDraftKings,
+    FantasyPosition,
+    Team,
+    isSelected,
+    Opponent,
+    GameDate
 }) => {
 
     return <>
@@ -27,22 +36,23 @@ const PlayerList: React.FC<props> = ({
             height={80}
         >
             <Img
-                imgSrc={AppImages.player_1}
+                imgSrc={{ uri: photoUrl || 'dummy' }}
                 width={50} height={50}
-            // style={{
+            // imgStyle={{
+            //     resizeMode: 'contain'
             // }}
             />
             <Container mpContainer={{ pl: 15 }} >
-                <Label labelSize={14} style={{ color: "black",fontFamily:medium }}  >P. Mahomes</Label>
+                <Label labelSize={14} style={{ color: "black", fontFamily: medium }}  >{Name}</Label>
                 <Container containerStyle={{ flexDirection: "row", alignItems: "center" }} mpContainer={{ mt: 2 }} >
-                    <Label labelSize={14} style={{ color: 'grey' }} >QB</Label>
-                    <Label labelSize={14} style={{}} mpLabel={{ pl: 10 }} >Accuracy 98%</Label>
-                    <Label labelSize={14} style={{}} mpLabel={{ pl: 10 }} >Proj. 18pts</Label>
+                    <Label labelSize={14} style={{ color: 'grey' }} >{FantasyPosition}</Label>
+                    <Label labelSize={14} style={{ color: 'black' }} mpLabel={{ pl: 5 }} >Accuracy 98%</Label>
+                    <Label labelSize={14} style={{ color: 'black' }} mpLabel={{ pl: 10 }} >Proj. {FantasyPointsDraftKings}pts</Label>
                 </Container>
-                <Label labelSize={14} style={{ color: "grey" }} mpLabel={{ mt: 2 }} >Sun 4:25PM v SEA</Label>
+                <Label labelSize={14} style={{ color: "grey" }} mpLabel={{ mt: 2 }} >{moment(GameDate).format('ddd')} {useTime(GameDate)} v {Opponent}</Label>
             </Container>
             {
-                index == 1 ?
+                isSelected ?
                     <Container
                         containerStyle={{
                             borderRadius: 30,

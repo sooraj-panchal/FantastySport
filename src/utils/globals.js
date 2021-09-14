@@ -2,7 +2,7 @@ import { Dimensions, Platform, StatusBar } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 
-export function getStatusBarHeight(val= 0) {
+export function getStatusBarHeight(val = 0) {
   const insets = useSafeAreaInsets()
   return Platform.OS == "android" ? StatusBar.currentHeight + val : insets.top + val
 }
@@ -14,7 +14,6 @@ export const fcmToken = '';
 export const authToken = "sJ4[pR3=bM5^gJ0]pS6.gI2$hV5*uS"
 export const toastMessage = ""
 export const buyer_id = ""
-
 
 export const screenWidth = Dimensions.get("window").width;
 export const screenHeight = Dimensions.get("window").height;

@@ -1,132 +1,133 @@
-import React from 'react';
-import { OrangeColor } from '../../../assets/colors';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Container from '../../../components/Container';
-import Label from '../../../components/Label';
 import MainContainer from '../../../components/MainContainer';
 import { navigationProps } from '../../../types/nav';
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import { FlatList } from 'react-native-gesture-handler';
 import { ListRenderItem } from 'react-native';
-import Img from '../../../components/Img';
-import { AppImages } from '../../../assets/images/map';
-interface props extends navigationProps {
+import HeadToHeadTeam from './HeadToHeadTeam';
+import { scheduleListTypes } from '../../../types/flatListTypes';
+import { useDispatch, useSelector } from 'react-redux';
+import { getScheduleListWatcher } from '../../../store/slices/scheduleSlice';
+import { RootState } from '../../../types/reduxTypes';
+import Label from '../../../components/Label';
+import { selectedLeagueWatcher } from '../../../store/slices/selectedLeagueSlice';
 
-}
+interface props extends navigationProps { }
+
 
 const HeadToHeadTab: React.FC<props> = ({
     navigation, route
 }) => {
-    const renderItem: ListRenderItem<{}> = ({ item, index }) => {
-        return <Container
-            containerStyle={{
-                backgroundColor: "white",
-                height: 130,
-                elevation: 1,
-                borderRadius: 5,
-                justifyContent: "center",
-                alignItems: "flex-start"
-            }}
-            mpContainer={{ mh: 15 }}
-        >
-            <Container
-                containerStyle={{ flexDirection: "row" }}
-            >
-                <Container containerStyle={{
-                    justifyContent: "center",
-                    alignItems: 'center'
-                }} mpContainer={{ ml: 20 }} >
-                    <Img
-                        imgSrc={AppImages.green_logo}
-                        imgStyle={{  }}
-                        width={40} height={45} />
-                    <Label
-                        labelSize={15}
-                        style={{}}
-                        mpLabel={{ mt: 5 }}
-                    >Team name</Label>
-                </Container>
-                <Label labelSize={16} mpLabel={{ mt: 5, mh: 5 }} style={{ color: "grey", letterSpacing: 0.5 }} >VS</Label>
-                <Container containerStyle={{
-                    justifyContent: "center",
-                    alignItems: 'center'
-                }} >
-                    <Img
-                        imgSrc={AppImages.green_logo}
-                        imgStyle={{  }}
-                        width={40} height={45} />
-                    <Label
-                        labelSize={15}
-                        style={{}}
-                        mpLabel={{ mt: 5 }}
-                    >Team name</Label>
-                </Container>
-            </Container>
-            <Label
-                labelSize={16}
-                style={{}}
-                mpLabel={{ mt: 10, ml: 20 }}
-            >21-07-2000   04:00 PM </Label>
-            {
-                index == 0 ?
-                    <Container
-                        containerStyle={{
-                            borderRadius: 35,
-                            position: 'absolute',
-                            right: 15,
-                            top: 15,
-                            borderStyle: "dashed",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            backgroundColor: OrangeColor
-                        }}
-                        width={35} height={35}
-                    >
-                        <Ionicons
-                            name="ios-checkmark-sharp"
-                            size={25}
-                            style={{
-                                color: "white"
-                            }}
-                            color={OrangeColor}
-                        />
-                    </Container> :
-                    <Container
-                        containerStyle={{
-                            borderWidth: 2,
-                            borderRadius: 35,
-                            borderColor: OrangeColor,
-                            position: 'absolute',
-                            right: 15,
-                            top: 15,
-                            borderStyle: "dashed",
-                            justifyContent: "center",
-                            alignItems: "center"
-                        }}
-                        width={35} height={35}
-                    >
-                        <Ionicons
-                            name="add-sharp"
-                            size={30}
-                            style={{
+    const scheduleLoading = useSelector((state: RootState) => state.schedule.loading)
+    const scheduleListData: scheduleListTypes[] = useSelector((state: RootState) => state.schedule.data)
+    const selectedLeagueData: scheduleListTypes[] = useSelector((state: RootState) => state.selectedLeague.data)
 
-                            }}
-                            color={OrangeColor}
-                        />
-                    </Container>
+    const dispatch = useDispatch()
+    const [scheduleList, setScheduleList] = useState<scheduleListTypes[]>([])
+    // const isMounted = useRef(false)
+
+    useEffect(() => {
+        dispatch(getScheduleListWatcher())
+    }, [])
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => {
+                const isSelectedAnyItem = scheduleList.some(item => item.isSelected == true)
+                return <Label
+                    labelSize={18}
+                    style={{ color: "white", opacity: isSelectedAnyItem ? 1 : 0.3 }}
+                    mpLabel={{ mr: 10 }}
+                    onPress={() => {
+                        const data = scheduleList.filter((item, index) => {
+                            return item.isSelected == true
+                        })
+                        dispatch(selectedLeagueWatcher(data))
+                        console.log("data", data)
+                        navigation.goBack()
+                    }}
+                >Save</Label>
             }
-        </Container>
+        })
+    }, [scheduleList])
+
+    useEffect(() => {
+        if (selectedLeagueData.length) {
+            const data = scheduleListData.map((item, index) => {
+                const isSelected = selectedLeagueData.find((i) => i.game_key == item.game_key)?.isSelected
+                return {
+                    ...item,
+                    isSelected: isSelected || false
+                }
+            })
+            data.sort((a, b) => Number(b.isSelected) - Number(a.isSelected))
+            setScheduleList(data)
+        } else {
+            const data = scheduleListData.map((item, index) => {
+                return {
+                    ...item,
+                    isSelected: false
+                }
+            })
+            setScheduleList(data)
+        }
+    }, [scheduleListData, selectedLeagueData])
+
+    // console.log("data", data)
+
+    // useEffect(() => {
+    //     isMounted.current = true
+    //     getData()
+    //     return () => {
+    //         isMounted.current = false;
+    //     };
+    // }, [])
+
+    const selectLeague = (index: number) => {
+        const array = [...scheduleList];
+        array[index]['isSelected'] = !array[index]['isSelected'];
+        setScheduleList(array);
+    };
+
+    const renderItem: ListRenderItem<scheduleListTypes> = ({ item, index }) => {
+        // console.log(item.game_key)
+        // const { selectedClients, clientsArray } = this.state;
+        return <HeadToHeadTeam
+            {...item}
+            index={index}
+            isSelected={item.isSelected}
+            onPress={() => {
+                selectLeague(index)
+            }}
+        />
     }
+
+    const getItemLayout = React.useCallback((data, index) => ({
+        length: 140,
+        offset: 140 * index,
+        index
+    }), [])
+
     return (
-        <MainContainer>
+        <MainContainer
+            loading={scheduleLoading}
+        >
             <FlatList
-                data={[1, 2, 3, 4, 5, 6]}
+                data={scheduleList}
+                // extraData={selectedLeague}
                 renderItem={renderItem}
-                keyExtractor={(item, index) => `renderList ${index.toString()}`}
+                keyExtractor={(item, index) => `renderList ${item.game_key}`}
                 // contentContainerStyle={{paddingBottom:10}}
                 ListHeaderComponent={() => <Container mpContainer={{ mt: 10 }} />}
                 ListFooterComponent={() => <Container mpContainer={{ mb: 10 }} />}
                 ItemSeparatorComponent={() => <Container mpContainer={{ mv: 5 }} />}
                 showsVerticalScrollIndicator={false}
+                getItemLayout={getItemLayout}
+                removeClippedSubviews={true} // Unmount components when outside of window 
+                initialNumToRender={2} // Reduce initial render amount
+                maxToRenderPerBatch={1} // Reduce number in each render batch
+                updateCellsBatchingPeriod={100} // Increase time between renders
+                windowSize={7}
             />
         </MainContainer>
     )

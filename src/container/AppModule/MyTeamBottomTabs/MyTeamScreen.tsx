@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Btn from '../../../components/Btn';
 import Container from '../../../components/Container';
 import MainContainer from '../../../components/MainContainer';
@@ -11,10 +11,43 @@ import { ListRenderItem, View } from 'react-native';
 import PlayerList from '../../../components/PlayerList';
 import Img from '../../../components/Img';
 import { AppImages } from '../../../assets/images/map';
+import { PlayerPositionTypes } from '../../../types/flatListTypes';
 const MyTeamScreen: React.FC<navigationProps> = ({
     navigation
 }) => {
-
+    const myPlayerList: Array<PlayerPositionTypes> = [
+        {
+            Position: "QB"
+        },
+        {
+            Position: "WR"
+        },
+        {
+            Position: "WR"
+        },
+        {
+            Position: "WR"
+        },
+        {
+            Position: "RB"
+        },
+        {
+            Position: "RB"
+        },
+        {
+            Position: "TE"
+        },
+        {
+            Position: "W/R/T"
+        },
+        {
+            Position: "K"
+        },
+        {
+            Position: "DEF"
+        }
+    ]
+    // const [myPlayerList, setMyPlayerList] = useState<PlayerPositionTypes[]>([])
     React.useLayoutEffect(() => {
         return (
             navigation.setOptions({
@@ -188,49 +221,51 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                     <Label labelSize={15} style={{ letterSpacing: 0.5, width: 45, textAlign: 'center' }}  >Proj</Label>
                     <Label labelSize={15} style={{ letterSpacing: 0.5, width: 75, textAlign: 'center' }} >Pred</Label>
                 </Container>
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => {
-                    if (index == 0) {
-                        return <PlayerList
-                            key={`teamheader${index.toString()}`}
-                        />
-                    } else
-                        return <>
-                            <Container
-                                containerStyle={{ flexDirection: "row", alignItems: "center" }}
-                                mpContainer={{ mh: 15 }}
-                                height={60}
-                                key={`teamheader${index.toString()}`}
-                            >
-                                <Label labelSize={16} style={{ letterSpacing: 0.5, color: OrangeColor }} >QB</Label>
-                                {/* <Ionicons
-                                            name="md-person"
-                                            size={35}
-                                            color={'grey'}
-                                            style={{
-                                                marginHorizontal: 15,
-                                            }}
-                                        /> */}
-                                <Img
-                                    imgSrc={AppImages.player_1}
-                                    width={40} height={40}
-                                    // style={{
-                                    // }}
-                                    mpImage={{ mh: 15 }}
-                                />
-                                <Container>
-                                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black" }} >P. Mahomes</Label>
-                                    <Label labelSize={12} style={{ letterSpacing: 0.5, color: "grey" }} >Sun 4:25PM v SEA</Label>
-                                </Container>
-                                <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
-                                    <Label labelSize={12} style={{ letterSpacing: 0.5, color: "green" }}>36.3</Label>
-                                </Container>
-                                <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
-                                    <Label labelSize={12} style={{ letterSpacing: 0.5, color: "black" }}>36.3</Label>
-                                </Container>
-                            </Container>
-                            <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />
-                        </>
-                })}
+                {myPlayerList.map((item, index) => {
+                    // if (index == 0) {
+                    return <PlayerList
+                        key={`teamheader${index.toString()}`}
+                        Position={item.Position}
+                    />
+                    //     } else
+                    //         return <>
+                    //             <Container
+                    //                 containerStyle={{ flexDirection: "row", alignItems: "center" }}
+                    //                 mpContainer={{ mh: 15 }}
+                    //                 height={60}
+                    //                 key={`teamheader${index.toString()}`}
+                    //             >
+                    //                 <Label labelSize={16} style={{ letterSpacing: 0.5, color: OrangeColor }} >QB</Label>
+                    //                 {/* <Ionicons
+                    //                             name="md-person"
+                    //                             size={35}
+                    //                             color={'grey'}
+                    //                             style={{
+                    //                                 marginHorizontal: 15,
+                    //                             }}
+                    //                         /> */}
+                    //                 <Img
+                    //                     imgSrc={AppImages.player_1}
+                    //                     width={40} height={40}
+                    //                     // style={{
+                    //                     // }}
+                    //                     mpImage={{ mh: 15 }}
+                    //                 />
+                    //                 <Container>
+                    //                     <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black" }} >P. Mahomes</Label>
+                    //                     <Label labelSize={12} style={{ letterSpacing: 0.5, color: "grey" }} >Sun 4:25PM v SEA</Label>
+                    //                 </Container>
+                    //                 <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
+                    //                     <Label labelSize={12} style={{ letterSpacing: 0.5, color: "green" }}>36.3</Label>
+                    //                 </Container>
+                    //                 <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
+                    //                     <Label labelSize={12} style={{ letterSpacing: 0.5, color: "black" }}>36.3</Label>
+                    //                 </Container>
+                    //             </Container>
+                    //             <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />
+                    //         </>
+                })
+                }
             </View>
         </ScrollView>
     </MainContainer>
