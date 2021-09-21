@@ -1,6 +1,7 @@
 import { RouteProp, CompositeNavigationProp, NavigatorScreenParams } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { LeaguePlayerTypes } from './flatListTypes';
 
 
 export type RootStackParamList = {
@@ -28,7 +29,7 @@ export type unAuthParamList = {
   CreateLeague: undefined;
   AddLiveMatches: undefined;
   MyTeamTab: NavigatorScreenParams<MyTeamtabParamList>,
-  AddPlayer: undefined;
+  AddPlayer: { Position: any,isWRTPosition:boolean };
   AddSniperPoint: undefined;
   InviteFriend: undefined;
   EditTeamInfo: undefined;
@@ -43,8 +44,8 @@ export type unAuthParamList = {
   NewsDetail: undefined;
   TermsAndCondition: { title: string };
   ChangePassword: undefined;
-  AddPlayerPoint:undefined;
-  LiveMatchList:undefined;
+  AddPlayerPoint: { myPlayerListArray: Array<LeaguePlayerTypes> };
+  LiveMatchList: undefined;
 };
 
 export type tabParamList = {
@@ -77,8 +78,16 @@ export type homeNavProps = CompositeNavigationProp<
     NativeStackNavigationProp<RootStackParamList>
   >
 >;
-
 export type navigationProps = {
   route: authRouteProp;
   navigation: homeNavProps;
 };
+export type appProps = {
+  route: authRouteProp;
+  navigation: homeNavProps;
+};
+
+export type AddPlayerProps = NativeStackScreenProps<unAuthParamList, 'AddPlayerPoint'>;
+
+export type PlayersNav = NativeStackScreenProps<unAuthParamList, 'AddPlayer'>;
+

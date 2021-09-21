@@ -24,16 +24,18 @@ import { Host, Portal } from 'react-native-portalize';
 interface props {
     closeModal: () => void,
     selectedPosition: (position: string) => void,
-    modalizeRef: React.Ref<Modalize>
+    modalizeRef: React.Ref<Modalize>,
+    Position: string
 }
 
 
 const SelectPlayerPositionModal: React.FC<props> = ({
     closeModal,
     modalizeRef,
-    selectedPosition
+    selectedPosition,
+    Position
 }) => {
-    const [positionIndex, setPositionIndex] = React.useState<number>(0)
+    const [position, setPosition] = React.useState<string>(Position || 'all')
 
     // console.log(openModal)
     const renderItem: ListRenderItem<any> = ({ item, index }) => {
@@ -41,13 +43,13 @@ const SelectPlayerPositionModal: React.FC<props> = ({
             <Container
                 containerStyle={{
                     justifyContent: 'center',
-                    backgroundColor: index == positionIndex? '#f7dfd2' : 'white'
+                    backgroundColor: item == position ? '#f7dfd2' : 'white'
                 }}
                 height={50}
                 mpContainer={{ pl: 20 }}
                 onPress={() => {
                     selectedPosition(item)
-                    setPositionIndex(index)
+                    setPosition(item)
                 }}
             >
                 <Label
@@ -57,7 +59,7 @@ const SelectPlayerPositionModal: React.FC<props> = ({
                     }}
                 >{item}</Label>
                 {
-                    index == positionIndex ?
+                    item == position ?
                         <Container
                             containerStyle={{
                                 borderRadius: 30,
@@ -118,7 +120,7 @@ const SelectPlayerPositionModal: React.FC<props> = ({
                     </Container>
                 }}
                 flatListProps={{
-                    data: ["All", "QB", "RB", "WR", "TE", "W/R/T", "DEF", "K", "WR", "TE", "W/R/T", "DEF", "K"],
+                    data: ["All", "QB", "RB", "WR", "TE", "W/R/T", "DEF", "K"],
                     renderItem: renderItem,
                     keyExtractor: (item, index) => `renderPosition${index.toString()}`,
                     showsVerticalScrollIndicator: false,

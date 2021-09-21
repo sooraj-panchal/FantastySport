@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Container from '../../../components/Container';
 import InputBox from '../../../components/InputBox';
 import Label from '../../../components/Label';
@@ -14,6 +14,8 @@ import PickerModal from '../../../components/Picker';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../types/reduxTypes';
 import { scheduleListTypes } from '../../../types/flatListTypes';
+import WeekModal from '../../../components/Modals/WeekModal';
+import { Modalize } from 'react-native-modalize';
 interface props extends navigationProps {
 
 }
@@ -26,7 +28,12 @@ const CreateLeagueScreen: React.FC<props> = ({
     const [leagueName, setLeagueName] = React.useState<string>('')
     const [numOfParticipent, setNumOfParticipent] = React.useState<string>('')
     const [isPrivate, setIsPrivate] = React.useState<boolean>(true)
-    const selectedLeagueList = useSelector((state: RootState) => state.selectedLeague.data)
+    const [isSingleWeek, setIsSingleWeek] = useState<boolean>(true)
+    const selectedLeagueList: Array<scheduleListTypes> = useSelector((state: RootState) => state.selectedLeague.data)
+    const weekModalRef = useRef<Modalize>(null)
+    const onChangeScope = (value: boolean) => {
+        setIsSingleWeek(value)
+    }
 
     const leagueScope = () => {
         return <>
@@ -38,48 +45,15 @@ const CreateLeagueScreen: React.FC<props> = ({
                     flexDirection: "row",
                     alignItems: "center"
                 }}
-                mpContainer={{ mt: 15 }}
+                mpContainer={{ mt: 15, mb: 10 }}
             >
-                {/* <Container
-                    containerStyle={{
-                        flexDirection: "row",
-                        alignItems: "center"
-                    }}
-                >
-                    <Container
-                        containerStyle={{
-                            borderRadius: 30,
-                            borderWidth: 1,
-                            borderColor: "black",
-                            justifyContent: "center",
-                            alignItems: "center"
-                        }}
-                        width={20} height={20}
-                        mpContainer={{
-                            ml: 20
-                        }}
-                    >
-                        <Container
-                            containerStyle={{
-                                borderRadius: 30,
-                                borderWidth: 1,
-                                backgroundColor: "black",
-                                justifyContent: "center",
-                                alignItems: "center"
-                            }}
-                            width={12} height={12}
-                        />
-                    </Container>
-                    <Label
-                        labelSize={15}
-                        mpLabel={{ ml: 10 }}
-                    >Single game</Label>
-                </Container> */}
                 <Container
                     containerStyle={{
                         flexDirection: "row",
                         alignItems: "center"
                     }}
+                    onPress={() => onChangeScope(true)}
+
                 >
                     <Container
                         containerStyle={{
@@ -94,21 +68,60 @@ const CreateLeagueScreen: React.FC<props> = ({
                             ml: 20
                         }}
                     >
-                        <Container
-                            containerStyle={{
-                                borderRadius: 30,
-                                borderWidth: 1,
-                                backgroundColor: "black",
-                                justifyContent: "center",
-                                alignItems: "center"
-                            }}
-                            width={12} height={12}
-                        />
+                        {isSingleWeek ?
+                            <Container
+                                containerStyle={{
+                                    borderRadius: 30,
+                                    borderWidth: 1,
+                                    backgroundColor: "black",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                                width={12} height={12}
+                            /> : null}
                     </Container>
                     <Label
                         labelSize={15}
                         mpLabel={{ ml: 10 }}
-                    >Multiple games</Label>
+                    >Single Week</Label>
+                </Container>
+                <Container
+                    containerStyle={{
+                        flexDirection: "row",
+                        alignItems: "center"
+                    }}
+                    onPress={() => onChangeScope(false)}
+
+                >
+                    <Container
+                        containerStyle={{
+                            borderRadius: 30,
+                            borderWidth: 1,
+                            borderColor: "black",
+                            justifyContent: "center",
+                            alignItems: "center"
+                        }}
+                        width={20} height={20}
+                        mpContainer={{
+                            ml: 20
+                        }}
+                    >
+                        {!isSingleWeek ?
+                            <Container
+                                containerStyle={{
+                                    borderRadius: 30,
+                                    borderWidth: 1,
+                                    backgroundColor: "black",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                                width={12} height={12}
+                            /> : null}
+                    </Container>
+                    <Label
+                        labelSize={15}
+                        mpLabel={{ ml: 10 }}
+                    >Multi Week</Label>
                 </Container>
             </Container>
         </>
@@ -352,65 +365,75 @@ const CreateLeagueScreen: React.FC<props> = ({
     }
 
 
-    const addedTeam = () => {
-        return <FlatList
-            data={selectedLeagueList}
-            renderItem={renderAddedTeamItem}
-            keyExtractor={(item, index) => `renderList ${index.toString()}`}
-            // contentContainerStyle={{paddingBottom:10}}
-            ListHeaderComponent={() => <Container mpContainer={{ mt: 15 }} />}
-            ListFooterComponent={() => <Container mpContainer={{ mb: 10 }} />}
-            ItemSeparatorComponent={() => <Container mpContainer={{ mv: 5 }} />}
-        />
+    const renderFooter = () => {
+        return <>
+            <Btn
+                title="Choose game"
+                onPress={() => {
+                    weekModalRef.current?.open()
+                    // navigation.navigate('AddLiveMatches')
+                }}
+                mpBtn={{ mh: 20, mt: 5 }}
+                btnHeight={30}
+                radius={5}
+                btnStyle={{ backgroundColor: greenColor, width: 120, elevation: 2 }}
+                labelSize={14}
+                labelStyle={{ color: "white" }}
+            />
+            {leagueOption()}
+            {renderLeagueName()}
+            {/* {leagueType()} */}
+            {participent()}
+            {pointScoring()}
+            <Btn
+                title="CREATE"
+                mpBtn={{ mh: 20, mt: 15 }}
+                btnHeight={45}
+                radius={5}
+                btnStyle={{ backgroundColor: OrangeColor }}
+                labelSize={16}
+                labelStyle={{ color: "white" }}
+                onPress={() => {
+                    navigation.navigate("MyTeamTab", {
+                        screen: "MyTeam"
+                    })
+                }}
+            />
+        </>
+
     }
 
     return (
         <MainContainer>
-            <ScrollView contentContainerStyle={{ paddingBottom: 20 }} >
-                <Container containerStyle={{
-                    width: "90%",
-                    backgroundColor: "white",
-                    alignSelf: "center",
-                    elevation: 2,
-                    borderRadius: 10
+            <Container containerStyle={{
+                width: "90%",
+                backgroundColor: "white",
+                alignSelf: "center",
+                elevation: 2,
+                borderRadius: 10
+            }}
+                mpContainer={{ mv: 20, mh: 10, pv: 20 }}
+            >
+                <FlatList
+                    data={selectedLeagueList}
+                    renderItem={renderAddedTeamItem}
+                    keyExtractor={(item, index) => `renderList ${index.toString()}`}
+                    contentContainerStyle={{ paddingBottom: 10 }}
+                    ListHeaderComponent={leagueScope}
+                    ListFooterComponent={renderFooter}
+                    ItemSeparatorComponent={() => <Container mpContainer={{ mv: 5 }} />}
+                    ListFooterComponentStyle={{ marginTop: 10 }}
+                    showsVerticalScrollIndicator={false}
+                />
+            </Container>
+            {/* </ScrollView> */}
+            <WeekModal
+                modalizeRef={weekModalRef}
+                closeModal={() => {
+                    weekModalRef.current?.close()
                 }}
-                    mpContainer={{ mt: 20, mh: 10, pv: 20 }}
-                >
-                    {leagueScope()}
-                    {addedTeam()}
-                    <Btn
-                        title="Choose game"
-                        onPress={() => {
-                            navigation.navigate('AddLiveMatches')
-                        }}
-                        mpBtn={{ mh: 20, mt: 5 }}
-                        btnHeight={30}
-                        radius={5}
-                        btnStyle={{ backgroundColor: greenColor, width: 120, elevation: 2 }}
-                        labelSize={14}
-                        labelStyle={{ color: "white" }}
-                    />
-                    {leagueOption()}
-                    {renderLeagueName()}
-                    {/* {leagueType()} */}
-                    {participent()}
-                    {pointScoring()}
-                    <Btn
-                        title="CREATE"
-                        mpBtn={{ mh: 20, mt: 15 }}
-                        btnHeight={45}
-                        radius={5}
-                        btnStyle={{ backgroundColor: OrangeColor }}
-                        labelSize={16}
-                        labelStyle={{ color: "white" }}
-                        onPress={() => {
-                            navigation.navigate("MyTeamTab", {
-                                screen: "MyTeam"
-                            })
-                        }}
-                    />
-                </Container>
-            </ScrollView>
+                isSingleWeek={isSingleWeek}
+            />
         </MainContainer>
     )
 }

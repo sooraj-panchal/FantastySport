@@ -63,23 +63,32 @@ export interface LeaguePlayerTypes {
     Name: string,
     Position: string,
     FantasyPosition?: string,
-    FantasyPointsFantasyDraft?: string,
-    FantasyPointsDraftKings?: string,
+    FantasyPointsFantasyDraft?: string|any,
+    FantasyPointsDraftKings?: string|any,
     photoUrl?: string;
     isSelected?: boolean;
     GameDate: Date;
     Opponent: string;
+    PredictionPoints?: string |any ;
+    Accuracy?:string;
+    SniperPoints?:string|any,
+    isWRTPosition?:boolean
 }
 
 export interface PlayerPositionTypes {
+    PlayerID?: number,
     Team?: string,
     Name?: string,
-    Position: string,
+    Position?: string,
     FantasyPosition?: string,
-    FantasyPointsFantasyDraft?: string,
-    FantasyPointsDraftKings?: string,
+    FantasyPointsFantasyDraft?: string|any,
+    FantasyPointsDraftKings?: string|any,
     photoUrl?: string;
     isSelected?: boolean;
     GameDate?: Date;
     Opponent?: string;
+    PredictionPoints?: string|any ;
+    Accuracy?:string;
+    SniperPoints?:string|any
+    isWRTPosition?:boolean
 }

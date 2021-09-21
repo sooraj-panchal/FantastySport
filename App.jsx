@@ -15,7 +15,7 @@ import moment from 'moment';
 import { array } from 'prop-types';
 import { store } from './src/store';
 const App = () => {
-    LogBox.ignoreAllLogs(true)
+    LogBox.ignoreAllLogs( true );
     // useEffect( () => {
     //     var currentTime = new Date( '2021-09-09T20:20:00' );
     //     var currentOffset = currentTime.getTimezoneOffset();
@@ -68,21 +68,22 @@ const App = () => {
         }
     };
 
+
     // const { store, persistor } = configureStore();
 
     return (
         <SafeAreaProvider  >
             <Provider store={ store }>
-                
-                {/* <PersistGate loading={ <ActivityIndicator /> } > */}
-                    <NavigationContainer
-                        theme={ { colors: { background: "#246e87" } } }
-                    >
-                        <Host>
-                            { _renderStatusBar() }
-                        </Host>
-                    </NavigationContainer>
-                {/* </PersistGate> */}
+
+                {/* <PersistGate loading={ <ActivityIndicator /> } > */ }
+                <NavigationContainer
+                    theme={ { colors: { background: "#246e87" } } }
+                >
+                    <Host>
+                        { _renderStatusBar() }
+                    </Host>
+                </NavigationContainer>
+                {/* </PersistGate> */ }
             </Provider>
         </SafeAreaProvider>
     );

@@ -8,15 +8,16 @@ import PrivateGameList from '../../../components/PrivateGameList';
 import PublicGameList from '../../../components/PublicGameList';
 import { navigationProps } from '../../../types/nav';
 interface props extends navigationProps { }
+
 const MyLeagueScreen: React.FC<props> = ({
 
 }) => {
 
-    const renderPrivateGame: ListRenderItem<{}> = ({}) => {
-        return <PrivateGameList/>
+    const renderPrivateGame: ListRenderItem<{}> = ({ }) => {
+        return <PrivateGameList />
     }
-    const renderPublicGame: ListRenderItem<{}> = ({}) => {
-        return <PublicGameList/>
+    const renderPublicGame: ListRenderItem<{}> = ({ }) => {
+        return <PublicGameList />
     }
     return (
         <MainContainer>
@@ -29,21 +30,21 @@ const MyLeagueScreen: React.FC<props> = ({
                     data={[1, 2]}
                     renderItem={renderPrivateGame}
                     keyExtractor={(item, index) => `Private game ${index.toString()}`}
-                    ListHeaderComponent={()=><Container mpContainer={{mt:10}} />}
-                    ListFooterComponent={()=><Container mpContainer={{mb:10}} />}
-                    ItemSeparatorComponent={()=><Container mpContainer={{mt:10}} />}
+                    ListHeaderComponent={() => <Container mpContainer={{ mt: 10 }} />}
+                    ListFooterComponent={() => <Container mpContainer={{ mb: 10 }} />}
+                    ItemSeparatorComponent={() => <Container mpContainer={{ mt: 10 }} />}
                 />
-                   <Label
+                <Label
                     labelSize={18}
                     mpLabel={{ mt: 5, ml: 20 }}
                 >Public game</Label>
-                 <FlatList
+                <FlatList
                     data={[1, 2]}
                     renderItem={renderPublicGame}
                     keyExtractor={(item, index) => `Public game ${index.toString()}`}
-                    ListHeaderComponent={()=><Container mpContainer={{mt:10}} />}
-                    ListFooterComponent={()=><Container mpContainer={{mb:10}} />}
-                    ItemSeparatorComponent={()=><Container mpContainer={{mt:10}} />}
+                    ListHeaderComponent={() => <Container mpContainer={{ mt: 10 }} />}
+                    ListFooterComponent={() => <Container mpContainer={{ mb: 10 }} />}
+                    ItemSeparatorComponent={() => <Container mpContainer={{ mt: 10 }} />}
                 />
             </ScrollView>
         </MainContainer>

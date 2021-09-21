@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Btn from '../../../components/Btn';
 import Container from '../../../components/Container';
 import MainContainer from '../../../components/MainContainer';
@@ -8,46 +8,65 @@ import Label from '../../../components/Label';
 import { greenColor, OrangeColor, PrimaryColor } from '../../../assets/colors';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { ListRenderItem, View } from 'react-native';
-import PlayerList from '../../../components/PlayerList';
+import MyPlayersList from '../../../components/MyPlayersList';
 import Img from '../../../components/Img';
 import { AppImages } from '../../../assets/images/map';
-import { PlayerPositionTypes } from '../../../types/flatListTypes';
+import { LeaguePlayerTypes, PlayerPositionTypes } from '../../../types/flatListTypes';
+import { myPlayers, positions, positionsLength } from '../../../utils/jsonArray'
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../types/reduxTypes';
+import moment from 'moment';
+import { useTime } from '../../../utils/timeZone';
+import { screenWidth } from '../../../types/sizes';
+import DEFPositionModal from '../../../components/Modals/DEFPostionModal';
+import { Modalize } from 'react-native-modalize';
 const MyTeamScreen: React.FC<navigationProps> = ({
     navigation
 }) => {
-    const myPlayerList: Array<PlayerPositionTypes> = [
-        {
-            Position: "QB"
-        },
-        {
-            Position: "WR"
-        },
-        {
-            Position: "WR"
-        },
-        {
-            Position: "WR"
-        },
-        {
-            Position: "RB"
-        },
-        {
-            Position: "RB"
-        },
-        {
-            Position: "TE"
-        },
-        {
-            Position: "W/R/T"
-        },
-        {
-            Position: "K"
-        },
-        {
-            Position: "DEF"
-        }
-    ]
-    // const [myPlayerList, setMyPlayerList] = useState<PlayerPositionTypes[]>([])
+    const myPlayerListArray: PlayerPositionTypes[] = useSelector((state: RootState) => state.myPlayer.data)
+    const [myPlayerListData, setMyPlayerListData] = React.useState<PlayerPositionTypes[] | any>(myPlayers)
+    const [totalPredictionPoints, setTotalPredictionPoints] = React.useState<number | any>(0.00)
+    const [totalProjectedPoints, setTotalProjectedPoints] = React.useState<number | any>(0.00)
+    const [totalSniperPoints, setTotalSniperPoints] = React.useState<number | any>(0.00)
+    const [totalActualPoints, setTotalActualPoints] = React.useState<number | string>(0.00)
+    const defModalRef = useRef<Modalize>(null)
+    React.useEffect(() => {
+        let groupedPlayers: any = {}
+        positions.forEach((position) => {
+            groupedPlayers[position] = myPlayerListArray.filter((i) => {
+                return i.Position == position
+            })
+            for (let i = groupedPlayers[position].length; i < positionsLength[position]; i++) {
+                groupedPlayers[position].push(null)
+            }
+        })
+        totalPointsHandler()
+        setMyPlayerListData(groupedPlayers)
+    }, [myPlayerListArray])
+
+    const totalPointsHandler = () => {
+        // let { PredictionPoints } =
+        //     myPlayerListArray.reduce((a, b) => {
+        //         return ({
+        //             PredictionPoints: Number(a.PredictionPoints) + Number(b.PredictionPoints),
+        //             FantasyPointsDraftKings: Number(a.FantasyPointsDraftKings) + Number(b.FantasyPointsDraftKings)
+        //         })
+        //     });
+        // const PredictionPoints = myPlayerListArray.reduce(function (a, b) {
+        //     return a + Number(b.PredictionPoints);
+        // }, 0);
+        // const FantasyPointsDraftKings = myPlayerListArray.reduce(function (a, b) {
+        //     return a + Number(b.FantasyPointsDraftKings);
+        // }, 0);
+        // const sniperPoints = myPlayerListArray.reduce(function (a, b) {
+        //     return a + Number(b.SniperPoints);
+        // }, 0);
+        // setTotalPredictionPoints(Math.abs(PredictionPoints / 10).toFixed(2))
+        // setTotalProjectedPoints(Math.abs(FantasyPointsDraftKings / 10).toFixed(2))
+        // setTotalSniperPoints(Math.abs(sniperPoints / 10).toFixed(2))
+        // setTotalActualPoints(Math.abs(FantasyPointsDraftKings / 10).toFixed(2))
+    }
+
     React.useLayoutEffect(() => {
         return (
             navigation.setOptions({
@@ -85,56 +104,16 @@ const MyTeamScreen: React.FC<navigationProps> = ({
         )
     }, [])
 
-    const renderItem: ListRenderItem<{}> = ({ item, index }) => {
-        return <>
-            <Container
-                containerStyle={{ flexDirection: "row", alignItems: "center" }}
-                mpContainer={{ mh: 15 }}
-                height={55}
-            >
-                <Label labelSize={16} style={{ letterSpacing: 0.5, color: 'grey' }} >QB</Label>
-                <Ionicons
-                    name="md-person"
-                    size={52}
-                    color={'grey'}
-                    style={{
-                        alignSelf: "flex-end",
-                        marginHorizontal: 20,
-                        marginTop: 10
-                    }}
-                />
-                <Label labelSize={16} style={{ letterSpacing: 0.5, color: "grey" }} >Empty</Label>
-                <Container
-                    containerStyle={{
-                        borderWidth: 2,
-                        borderRadius: 30,
-                        borderColor: 'red',
-                        position: 'absolute',
-                        right: 0,
-                        borderStyle: "dashed",
-                        justifyContent: "center",
-                        alignItems: "center"
-                    }}
-                    width={30} height={30}
-                >
-                    <Ionicons
-                        name="add-sharp"
-                        size={25}
-                        style={{
+    const renderItem = (item: PlayerPositionTypes, position: string) => {
+        return <MyPlayersList
+            Position={position}
+            {...item}
 
-                        }}
-                        color={'red'}
-                    />
-                </Container>
-            </Container>
-            <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} mpContainer={{ mh: 15 }} />
-        </>
+        />
     }
 
-    return <MainContainer
-        style={{ backgroundColor: 'white' }}
-    >
-        <ScrollView>
+    const renderListHeader = () => {
+        return <>
             <Container containerStyle={{ flexDirection: "row", alignItems: "center" }}
                 mpContainer={{ ml: 15, mt: 15 }}
             >
@@ -166,10 +145,10 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                         alignItems: "flex-end"
                     }}
                 >
-                    <Label labelSize={16} style={{ fontWeight: "bold" }}  >Act 0.00</Label>
-                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: OrangeColor }} >Fantasy sniper</Label>
-                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: OrangeColor }} >Points Prediction. 0.0</Label>
-                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: greenColor }} >Proj. 0.0</Label>
+                    <Label labelSize={16} style={{ fontWeight: "bold" }}  >Act {totalActualPoints}</Label>
+                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: OrangeColor }} >Fantasy sniper {totalSniperPoints}</Label>
+                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: OrangeColor }} >Points Prediction. {totalPredictionPoints}</Label>
+                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: greenColor }} >Proj. {totalProjectedPoints}</Label>
                 </Container>
             </Container>
             <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} mpContainer={{ mv: 10, mh: 15 }} />
@@ -192,20 +171,39 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                 }}
             />
             {/* <Container
-            containerStyle={{
-                borderBottomWidth: 1,
-                borderTopWidth: 1,
-                borderColor: 'lightgrey'
-            }}
-            mpContainer={{ pv: 10, mh: 15, mt: 10 }}
-        >
-            <Label labelSize={16} >Offense</Label>
-        </Container> */}
-            {/* <FlatList
-            data={[1, 2, 3, 4, 5]}
-            renderItem={renderItem}
-        // ItemSeparatorComponent={() => <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} mpContainer={{ mh: 15 }} />}
-        /> */}
+                containerStyle={{
+                    borderBottomWidth: 1,
+                    borderTopWidth: 1,
+                    borderColor: 'lightgrey',
+                    flexDirection: "row",
+                    alignItems: 'center'
+                }}
+                mpContainer={{ pv: 10, ph: 15, mt: 10 }}
+            >
+                <Label labelSize={16} style={{ width: 225 }} >Offense</Label>
+                <Label labelSize={15} style={{ letterSpacing: 0.5, width: 45, textAlign: 'center' }}  >Proj</Label>
+                <Label labelSize={15} style={{ letterSpacing: 0.5, width: 75, textAlign: 'center' }} >Pred</Label>
+            </Container> */}
+        </>
+    }
+    return <MainContainer
+        style={{ backgroundColor: 'white' }}
+    >
+        {renderListHeader()}
+        {/* <ScrollView>
+            {
+                Object.keys(myPlayerListData).map((position) => {
+                    return <View>
+                        {
+                            myPlayerListData[position].map((item: LeaguePlayerTypes) => {
+                                return renderItem(item, position)
+                            })
+                        }
+                    </View>
+                })
+            }
+        </ScrollView> */}
+        <ScrollView horizontal={true} >
             <View>
                 <Container
                     containerStyle={{
@@ -217,57 +215,30 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                     }}
                     mpContainer={{ pv: 10, ph: 15, mt: 10 }}
                 >
-                    <Label labelSize={16} style={{ width: 225 }} >Offense</Label>
-                    <Label labelSize={15} style={{ letterSpacing: 0.5, width: 45, textAlign: 'center' }}  >Proj</Label>
-                    <Label labelSize={15} style={{ letterSpacing: 0.5, width: 75, textAlign: 'center' }} >Pred</Label>
+                    <Label labelSize={16} style={{ width: screenWidth * 0.60 }} >Offense</Label>
+                    <Label labelSize={15} style={{ letterSpacing: 0.5, width: screenWidth * 0.20, textAlign: 'center' }}  >Proj</Label>
+                    <Label labelSize={15} style={{ letterSpacing: 0.5, width: screenWidth * 0.15, textAlign: 'center' }} >Pred</Label>
+                    <Label labelSize={15} style={{ letterSpacing: 0.5, width: 75, textAlign: 'center' }} >Sniper</Label>
                 </Container>
-                {myPlayerList.map((item, index) => {
-                    // if (index == 0) {
-                    return <PlayerList
-                        key={`teamheader${index.toString()}`}
-                        Position={item.Position}
-                    />
-                    //     } else
-                    //         return <>
-                    //             <Container
-                    //                 containerStyle={{ flexDirection: "row", alignItems: "center" }}
-                    //                 mpContainer={{ mh: 15 }}
-                    //                 height={60}
-                    //                 key={`teamheader${index.toString()}`}
-                    //             >
-                    //                 <Label labelSize={16} style={{ letterSpacing: 0.5, color: OrangeColor }} >QB</Label>
-                    //                 {/* <Ionicons
-                    //                             name="md-person"
-                    //                             size={35}
-                    //                             color={'grey'}
-                    //                             style={{
-                    //                                 marginHorizontal: 15,
-                    //                             }}
-                    //                         /> */}
-                    //                 <Img
-                    //                     imgSrc={AppImages.player_1}
-                    //                     width={40} height={40}
-                    //                     // style={{
-                    //                     // }}
-                    //                     mpImage={{ mh: 15 }}
-                    //                 />
-                    //                 <Container>
-                    //                     <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black" }} >P. Mahomes</Label>
-                    //                     <Label labelSize={12} style={{ letterSpacing: 0.5, color: "grey" }} >Sun 4:25PM v SEA</Label>
-                    //                 </Container>
-                    //                 <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
-                    //                     <Label labelSize={12} style={{ letterSpacing: 0.5, color: "green" }}>36.3</Label>
-                    //                 </Container>
-                    //                 <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
-                    //                     <Label labelSize={12} style={{ letterSpacing: 0.5, color: "black" }}>36.3</Label>
-                    //                 </Container>
-                    //             </Container>
-                    //             <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />
-                    //         </>
-                })
-                }
+                <ScrollView>
+                    {
+                        Object.keys(myPlayerListData).map((position, index) => {
+                            return (
+                                myPlayerListData[position].map((item: LeaguePlayerTypes) => {
+                                    return renderItem(item, position)
+                                })
+                            )
+                        })
+                    }
+                </ScrollView>
             </View>
         </ScrollView>
+        {/* <DEFPositionModal
+            modalizeRef={defModalRef}
+            closeModal={()=>{
+                defModalRef.current?.close()
+            }}
+        /> */}
     </MainContainer>
 }
 export default MyTeamScreen;

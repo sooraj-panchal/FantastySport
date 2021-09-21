@@ -36,15 +36,19 @@
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from './slices/counterSlice';
 import scheduleReducer from './slices/scheduleSlice';
-import leaguePlayerReducer from './slices/leaguePlayerSlice'
-import selectedLeagueReducer from './slices/selectedLeagueSlice'
+import leaguePlayerReducer from './slices/leaguePlayerSlice';
+import selectedLeagueReducer from './slices/selectedLeagueSlice';
+import myPlayerListReducer from './slices/myPlayerListSlice';
+import defPositionReducer from './slices/defPositionSlice';
 
 export const store = configureStore( {
     reducer: {
         counter: counterReducer,
         schedule: scheduleReducer,
-        leaguePlayer:leaguePlayerReducer,
-        selectedLeague:selectedLeagueReducer
+        leaguePlayer: leaguePlayerReducer,
+        selectedLeague: selectedLeagueReducer,
+        myPlayer: myPlayerListReducer,
+        defPosition:defPositionReducer
     },
     middleware: ( getDefaultMiddleware ) =>
         getDefaultMiddleware( {

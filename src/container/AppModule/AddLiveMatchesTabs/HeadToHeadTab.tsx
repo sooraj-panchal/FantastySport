@@ -11,7 +11,8 @@ import { getScheduleListWatcher } from '../../../store/slices/scheduleSlice';
 import { RootState } from '../../../types/reduxTypes';
 import Label from '../../../components/Label';
 import { selectedLeagueWatcher } from '../../../store/slices/selectedLeagueSlice';
-
+import { IWeek } from '../../../utils/jsonArray';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 interface props extends navigationProps { }
 
 
@@ -21,14 +22,20 @@ const HeadToHeadTab: React.FC<props> = ({
     const scheduleLoading = useSelector((state: RootState) => state.schedule.loading)
     const scheduleListData: scheduleListTypes[] = useSelector((state: RootState) => state.schedule.data)
     const selectedLeagueData: scheduleListTypes[] = useSelector((state: RootState) => state.selectedLeague.data)
+    const selectedWeek: IWeek[] = useSelector((state: RootState) => state.selectedLeague.selectedWeek)
 
     const dispatch = useDispatch()
     const [scheduleList, setScheduleList] = useState<scheduleListTypes[]>([])
+    const [currentWeek, setCurrentWeek] = useState<string | number>(selectedWeek[0]?.week || 0)
     // const isMounted = useRef(false)
 
     useEffect(() => {
-        dispatch(getScheduleListWatcher())
-    }, [])
+        console.log('selectedWeek', selectedWeek)
+        const data = {
+            week: currentWeek
+        }
+        dispatch(getScheduleListWatcher(data))
+    }, [currentWeek])
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -107,6 +114,64 @@ const HeadToHeadTab: React.FC<props> = ({
         offset: 140 * index,
         index
     }), [])
+    const renderSelectedWeekItem: ListRenderItem<IWeek> = ({ item, index }) => {
+        let isCurrentWeek = item.week == currentWeek;
+        return <Container
+            containerStyle={{
+                justifyContent: 'center',
+                backgroundColor: isCurrentWeek ? '#f7dfd2' : 'white',
+                borderWidth: 1,
+                borderColor: "grey",
+                borderRadius: 4,
+                // width:screenWidth*0.15,
+                flex: 0.32,
+                alignItems: "center",
+            }}
+            height={40}
+            mpContainer={{ mt: 10, ml: 15 }}
+            onPress={() => {
+                setCurrentWeek(item.week)
+            }}
+        >
+            <Label
+                labelSize={14}
+                style={{
+                    letterSpacing: 0.5,
+                }}
+            >Week {item.week}</Label>
+            {
+                isCurrentWeek ?
+                    <Container
+                        containerStyle={{
+                            // borderRadius: 30,
+                            position: 'absolute',
+                            right: 0,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            backgroundColor: 'black',
+                            top: 0,
+                            borderBottomLeftRadius: 10
+                        }}
+                        width={20} height={20}
+                    // onPress={onPress}
+                    >
+                        <Ionicons
+                            name="md-checkmark"
+                            size={15}
+                            color={'white'}
+                        />
+                    </Container> : null
+            }
+        </Container>
+    }
+
+    const renderListHeader = () => {
+        return <FlatList
+            data={selectedWeek}
+            renderItem={renderSelectedWeekItem}
+            numColumns={3}
+        />
+    }
 
     return (
         <MainContainer
@@ -118,7 +183,7 @@ const HeadToHeadTab: React.FC<props> = ({
                 renderItem={renderItem}
                 keyExtractor={(item, index) => `renderList ${item.game_key}`}
                 // contentContainerStyle={{paddingBottom:10}}
-                ListHeaderComponent={() => <Container mpContainer={{ mt: 10 }} />}
+                ListHeaderComponent={renderListHeader}
                 ListFooterComponent={() => <Container mpContainer={{ mb: 10 }} />}
                 ItemSeparatorComponent={() => <Container mpContainer={{ mv: 5 }} />}
                 showsVerticalScrollIndicator={false}
@@ -128,6 +193,7 @@ const HeadToHeadTab: React.FC<props> = ({
                 maxToRenderPerBatch={1} // Reduce number in each render batch
                 updateCellsBatchingPeriod={100} // Increase time between renders
                 windowSize={7}
+                ListHeaderComponentStyle={{ marginBottom: 10 }}
             />
         </MainContainer>
     )

@@ -1,20 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ScrollView, FlatList, StatusBar, ListRenderItem } from "react-native";
 import Btn from "../../../components/Btn";
 import Label from "../../../components/Label";
 import MainContainer from "../../../components/MainContainer";
-import { OrangeColor } from "../../../assets/colors";
 import Container from "../../../components/Container";
 import { navigationProps } from "../../../types/nav";
-import { screenWidth } from "../../../types/sizes";
 import News from "./News";
 import MyLeague from "./MyLeague";
 import LiveMatch from "./LiveMatch";
 import Img from "../../../components/Img";
 import { AppImages } from "../../../assets/images/map";
-import { useDispatch, useSelector } from "react-redux";
-import { increamentCount } from "../../../store/slices/counterSlice";
-import { getScheduleListWatcher } from "../../../store/slices/scheduleSlice";
+import styles from "./styles";
+import { OrangeColor, PrimaryColor } from "../../../assets/colors";
+import { medium } from "../../../assets/fonts/fonts";
 
 
 interface props extends navigationProps {
@@ -25,99 +23,71 @@ const HomeScreen: React.FC<props> = ({
     navigation
 }) => {
 
-    // const dispatch = useDispatch()
-    // const { data, loading } = useSelector((state) => state.schedule)
+    const leagueGameArray: Array<string> = ['Private game', 'Public game']
 
-    // useEffect(() => {
-    //     dispatch(getScheduleListWatcher())
-    // }, [])
-
-    // console.log("data", data)    
-
-    const renderLeague: ListRenderItem<{}> = ({ item, index }) => {
+    const renderLeague: ListRenderItem<string> = ({ item, index }) => {
         return <Container
-            containerStyle={{
-                width: screenWidth * 0.85,
-                height: 170,
-                marginBottom: 5,
-                borderRadius: 10,
-                backgroundColor: "white",
-                elevation: 2,
-                overflow: "hidden"
-            }}
+            containerStyle={styles.container}
         >
             <Label
                 labelSize={25}
-                style={{
-                    fontWeight: "bold"
-                }}
+                style={styles.leagueText}
                 mpLabel={{ pl: 15, pt: 15 }}
 
             >Fantasy league</Label>
             <Label
                 labelSize={16}
-                style={{
-                }}
+
                 mpLabel={{ pl: 15, pt: 5 }}
-            >Private game</Label>
-            <Btn
-                title="Play Now"
-                onPress={() => {
-                    navigation.navigate("CreateOrJoin")
-                }}
-                btnHeight={45}
-                btnStyle={{
-                    backgroundColor: OrangeColor,
-                    width: screenWidth * 0.35,
-                    position: "absolute",
-                    bottom: 20,
-                    left: 15
-                }}
-                radius={10}
-                labelSize={18}
-                labelStyle={{ color: "white" }}
-            />
+            >{item}</Label>
+            <Container mpContainer={{
+
+            }}
+                containerStyle={styles.btnContainer}
+            >
+                <Btn
+                    title="Create"
+                    onPress={() => {
+                        navigation.navigate("CreateLeague")
+                    }}
+                    btnHeight={40}
+                    btnStyle={[styles.playBtn]}
+                    radius={4}
+                    labelSize={14}
+                    textColor="white"
+                    labelStyle={{ fontFamily: medium }}
+                />
+                <Btn
+                    title="Join"
+                    onPress={() => {
+                        // navigation.navigate("CreateOrJoin")
+                        navigation.navigate("JoinLeague")
+                    }}
+                    btnHeight={40}
+                    btnStyle={[styles.playBtn, { backgroundColor: 'white', borderWidth: 1.2, borderColor: PrimaryColor }]}
+                    radius={4}
+                    labelSize={14}
+                    textColor={PrimaryColor}
+                    mpBtn={{ ml: 10 }}
+                    labelStyle={{ fontFamily: medium }}
+                />
+            </Container>
             <Container
-                containerStyle={{
-                    position: "absolute",
-                    right: 30,
-                    top: -20,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    transform: [{
-                        rotate: '15deg'
-                    }]
-                }}
+                containerStyle={styles.middleView}
             >
                 <Container
-                    containerStyle={{
-                        backgroundColor: "#f2d5d7",
-                        width: 10,
-                        height: 220
-                    }}
+                    containerStyle={styles.separater}
                 />
                 <Container
-                    containerStyle={{
-                        backgroundColor: "#f2d5d7",
-                        width: 45,
-                        height: 220
-                    }}
+                    containerStyle={styles.separater1}
                     mpContainer={{ ml: 10 }}
                 />
             </Container>
             <Container
-                containerStyle={{
-                    position: 'absolute',
-                    right: -60,
-                    bottom: -20,
-                }}
+                containerStyle={styles.leagueBGContainer}
             >
                 <Img
-                    imgStyle={{
-                        height: 170,
-                        width: 170,
-                        resizeMode: 'contain'
-                    }}
+                    imgStyle={styles.leagueBGImage}
                     imgSrc={AppImages.league_bg_image}
                 />
             </Container>
@@ -134,7 +104,7 @@ const HomeScreen: React.FC<props> = ({
             >
                 <News />
                 <FlatList
-                    data={[1, 2, 3]}
+                    data={leagueGameArray}
                     renderItem={renderLeague}
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -149,5 +119,4 @@ const HomeScreen: React.FC<props> = ({
         </MainContainer>
     )
 }
-
 export default HomeScreen;

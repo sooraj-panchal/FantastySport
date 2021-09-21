@@ -1,22 +1,58 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Btn from '../../../components/Btn';
 import Container from '../../../components/Container';
 import MainContainer from '../../../components/MainContainer';
-import { navigationProps } from '../../../types/nav';
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import { AddPlayerProps } from '../../../types/nav';
 import Label from '../../../components/Label';
-import { greenColor, OrangeColor, PrimaryColor } from '../../../assets/colors';
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
-import { ListRenderItem, View } from 'react-native';
-import PlayerList from '../../../components/PlayerList';
-import Img from '../../../components/Img';
-import { AppImages } from '../../../assets/images/map';
+import { PrimaryColor } from '../../../assets/colors';
 import { medium } from '../../../assets/fonts/fonts';
-import InputBox from '../../../components/InputBox';
-import { screenWidth } from '../../../types/sizes';
-const AddPlayerPointScreen: React.FC<navigationProps> = ({
-    navigation
+import { LeaguePlayerTypes } from '../../../types/flatListTypes';
+import PointAddedPlayerList from '../../../components/PointAddedPlayerList';
+import { ListRenderItem, FlatList, Alert } from 'react-native';
+import { addToMyPlayerWatcher } from '../../../store/slices/myPlayerListSlice';
+import { useDispatch } from 'react-redux';
+
+
+const AddPlayerPointScreen: React.FC<AddPlayerProps> = ({
+    navigation, route
 }) => {
+    // const myPlayerListArray: PlayerPositionTypes[] = useSelector((state: RootState) => state.myPlayer.data)
+    const [playerList, setPlayerList] = useState<Array<LeaguePlayerTypes>>([])
+    const dispatch = useDispatch()
+    useEffect(() => {
+        const data = route.params?.myPlayerListArray.map((item, index) => {
+            item.PredictionPoints = item.PredictionPoints || ''
+            return item
+        })
+        // console.log("data", data)
+        setPlayerList(data)
+        // if (myPlayerListArray.length) {
+        //     console.log(myPlayerListArray)
+        //     setPlayerList(myPlayerListArray)
+        // }
+    }, [])
+
+    const addPlayerToTeam = () => {
+        let isPredictionPoints = playerList.every((item, index) => item.PredictionPoints !== "")
+        console.log(isPredictionPoints)
+        if (isPredictionPoints) {
+            const data = playerList.map((item, index) => {
+                let B2 = item.PredictionPoints
+                let C2 = item.FantasyPointsDraftKings
+                return {
+                    ...item,
+                    Accuracy: Math.abs(B2 / C2).toFixed(0),
+                    SniperPoints: ((1 - Math.abs((B2 - C2) / C2)) * C2).toFixed(0)
+                }
+            })
+            dispatch(addToMyPlayerWatcher(data))
+            navigation.navigate('MyTeamTab', {
+                screen: 'MyTeam'
+            })
+        } else {
+            Alert.alert('Fantasy sniper App', "Please Add All Player's prediction points")
+        }
+    }
 
     React.useLayoutEffect(() => {
         return (
@@ -35,60 +71,27 @@ const AddPlayerPointScreen: React.FC<navigationProps> = ({
                             backgroundColor: PrimaryColor
                         }}
                         onPress={() => {
-                            navigation.navigate('MyTeamTab', {
-                                screen: 'MyTeam'
-                            })
+                            addPlayerToTeam()
+                            // console.log(playerList)
                         }}
                     />
                 }
             })
         )
-    }, [])
+    }, [playerList])
 
-    const renderItem: ListRenderItem<{}> = ({ item, index }) => {
-        return <>
-            <Container
-                containerStyle={{ flexDirection: "row", alignItems: "center" }}
-                mpContainer={{ mh: 15 }}
-                height={55}
-            >
-                <Label labelSize={16} style={{ letterSpacing: 0.5, color: 'grey' }} >QB</Label>
-                <Ionicons
-                    name="md-person"
-                    size={52}
-                    color={'grey'}
-                    style={{
-                        alignSelf: "flex-end",
-                        marginHorizontal: 20,
-                        marginTop: 10
-                    }}
-                />
-                <Label labelSize={16} style={{ letterSpacing: 0.5, color: "grey" }} >Empty</Label>
-                <Container
-                    containerStyle={{
-                        borderWidth: 2,
-                        borderRadius: 30,
-                        borderColor: 'red',
-                        position: 'absolute',
-                        right: 0,
-                        borderStyle: "dashed",
-                        justifyContent: "center",
-                        alignItems: "center"
-                    }}
-                    width={30} height={30}
-                >
-                    <Ionicons
-                        name="add-sharp"
-                        size={25}
-                        style={{
-
-                        }}
-                        color={'red'}
-                    />
-                </Container>
-            </Container>
-            <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} mpContainer={{ mh: 15 }} />
-        </>
+    const renderItem: ListRenderItem<LeaguePlayerTypes> = ({
+        item, index
+    }) => {
+        return <PointAddedPlayerList
+            {...item}
+            onChangeText={(val) => {
+                const data = [...playerList]
+                data[index]['PredictionPoints'] = val
+                setPlayerList(data)
+            }}
+        // Position={item.isWRTPosition ? 'W/R/T' : item.Position}
+        />
     }
 
     return <MainContainer
@@ -107,47 +110,11 @@ const AddPlayerPointScreen: React.FC<navigationProps> = ({
             <Label labelSize={15} style={{ letterSpacing: 0.5, width: 45, textAlign: 'center' }}  >Proj</Label>
             <Label labelSize={15} style={{ letterSpacing: 0.5, width: 75, textAlign: 'center' }} >Pred</Label>
         </Container>
-        <ScrollView>
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13].map((item, index) => {
-                return <>
-                    <Container
-                        containerStyle={{ flexDirection: "row", alignItems: "center" }}
-                        mpContainer={{ mh: 15 }}
-                        height={60}
-                        key={`teamheader${index.toString()}`}
-                    >
-                        <Label labelSize={12} style={{ color: OrangeColor }} >QB</Label>
-                        <Img
-                            imgSrc={AppImages.player_1}
-                            width={50} height={50}
-                            mpImage={{ mh: 10 }}
-                        />
-                        <Container>
-                            <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black" }} >P. Mahomes</Label>
-                            <Label labelSize={12} style={{ letterSpacing: 0.5, color: "grey" }} >Sun 4:25PM v SEA</Label>
-                        </Container>
-                        <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
-                            <Label labelSize={12} style={{ letterSpacing: 0.5, color: "green" }}>36.3</Label>
-                        </Container>
-                        <InputBox
-                            placeholder="0.00"
-                            containerStyle={{
-                                borderWidth: 1,
-                                borderColor: "lightgrey",
-                                width: screenWidth * 0.15
-                            }}
-                            inputStyle={{ padding: 0 }}
-                            mpContainer={{ pl: 10, ml: 20 }}
-                            inputHeight={30}
-                        />
-                        {/* <Container containerStyle={{ justifyContent: 'center', alignItems: 'flex-end' }} width={60} >
-                            <Label labelSize={12} style={{ letterSpacing: 0.5, color: "black" }}>36.3</Label>
-                        </Container> */}
-                    </Container>
-                    <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />
-                </>
-            })}
-        </ScrollView>
+        <FlatList
+            data={playerList}
+            renderItem={renderItem}
+            keyExtractor={(item) => `${item.PlayerID}`}
+        />
     </MainContainer >
 }
 export default AddPlayerPointScreen;

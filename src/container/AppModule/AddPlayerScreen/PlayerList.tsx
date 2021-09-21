@@ -19,13 +19,13 @@ const PlayerList: React.FC<props & LeaguePlayerTypes> = ({
     Name,
     Position,
     FantasyPointsDraftKings,
-    FantasyPosition,
+    // FantasyPosition,
     Team,
     isSelected,
     Opponent,
-    GameDate
+    GameDate,
+    Accuracy,
 }) => {
-
     return <>
         <Container
             containerStyle={{
@@ -45,11 +45,11 @@ const PlayerList: React.FC<props & LeaguePlayerTypes> = ({
             <Container mpContainer={{ pl: 15 }} >
                 <Label labelSize={14} style={{ color: "black", fontFamily: medium }}  >{Name}</Label>
                 <Container containerStyle={{ flexDirection: "row", alignItems: "center" }} mpContainer={{ mt: 2 }} >
-                    <Label labelSize={14} style={{ color: 'grey' }} >{FantasyPosition}</Label>
-                    <Label labelSize={14} style={{ color: 'black' }} mpLabel={{ pl: 5 }} >Accuracy 98%</Label>
+                    <Label labelSize={12} style={{ color: 'grey' }} >{Position}</Label>
+                    {Accuracy ? <Label labelSize={13} style={{ color: 'black' }} mpLabel={{ pl: 5 }} >Accuracy {Accuracy} %</Label> : null}
                     <Label labelSize={14} style={{ color: 'black' }} mpLabel={{ pl: 10 }} >Proj. {FantasyPointsDraftKings}pts</Label>
                 </Container>
-                <Label labelSize={14} style={{ color: "grey" }} mpLabel={{ mt: 2 }} >{moment(GameDate).format('ddd')} {useTime(GameDate)} v {Opponent}</Label>
+                <Label labelSize={14} style={{ color: "grey" }} mpLabel={{ mt: 2 }} >{moment(GameDate).format('ddd')} {useTime(GameDate)} {Team} vs {Opponent}</Label>
             </Container>
             {
                 isSelected ?

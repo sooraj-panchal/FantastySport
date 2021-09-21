@@ -8,7 +8,7 @@ import Label from '../../../components/Label';
 import { greenColor, OrangeColor, PrimaryColor } from '../../../assets/colors';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { ListRenderItem, View } from 'react-native';
-import PlayerList from '../../../components/PlayerList';
+import PlayerList from '../../../components/MyPlayersList';
 import * as Progress from 'react-native-progress';
 import { screenWidth } from '../../../types/sizes';
 import Img from '../../../components/Img';

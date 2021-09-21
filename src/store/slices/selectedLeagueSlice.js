@@ -1,9 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+
+
 export const selectedLeagueSlice = createSlice( {
     name: "selectedLeagueSlice",
     initialState: {
-        data: []
+        data: [],
+        selectedWeek:[]
     },
     reducers: {
         selectedLeagueWatcher: ( state, action ) => {
@@ -12,11 +15,11 @@ export const selectedLeagueSlice = createSlice( {
         deleteLeagueWatcher: ( state, action ) => {
             state.data = state.data.filter( ( item, index ) => item.game_key != action.payload );
         },
-        // updateLeagueWatcher: ( state, action ) => {
-        //     state.data = 
-        // }
+        selectedWeekWatcher:(state,action)=>{
+            state.selectedWeek = action.payload
+        }
     }
 } );
 
-export const { selectedLeagueWatcher, deleteLeagueWatcher } = selectedLeagueSlice.actions;
+export const { selectedLeagueWatcher, deleteLeagueWatcher,selectedWeekWatcher } = selectedLeagueSlice.actions;
 export default selectedLeagueSlice.reducer;

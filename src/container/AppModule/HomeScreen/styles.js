@@ -1,81 +1,62 @@
 import { StyleSheet } from "react-native";
 import { DarkBlueColor, OrangeColor } from "../../../assets/colors";
 import { medium, semiBold } from "../../../assets/fonts/fonts";
+import { screenWidth } from "../../../types/sizes";
 
 const styles = StyleSheet.create({
-    headerContainer: {
-        backgroundColor: DarkBlueColor
-    },
-    headerTopContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-    },
-    headerLeftContainer: {
-        flexDirection: "row",
-        alignItems: "center"
-    },
-    headerRightContainer:{
-        borderRadius:4,
-        backgroundColor:'#0b4b6b',
-    },
-    headerRightlabelStyle:{
-        color:"white"
-    },
-    headerLabel: {
-        color: "white",
-        fontFamily:semiBold
-    },
-    searchContainer: {
-        backgroundColor: DarkBlueColor,
-        justifyContent: "center",
-    },
-    searchBtn: {
+    container:{
+        width: screenWidth * 0.85,
+        height: 170,
+        marginBottom: 5,
+        borderRadius: 10,
         backgroundColor: "white",
-        alignItems:"center",
-        borderRadius: 4,
-        borderWidth: 0,
-        justifyContent:"flex-start"
-    },
-    searchBtnLabel: {
-        color: "black",
-        opacity:0.3,
-        paddingLeft: 10,
-        letterSpacing:0.2,
-        fontFamily:medium
-    },
-    propertyTypeLabelContainer: {
-        justifyContent: "space-between",
-        flexDirection: "row",
-        paddingTop: 15,
-        paddingHorizontal: 15
-    },
-    propertyTypeContainer: {
-        backgroundColor: "#f9f9f9",
-        borderRadius: 5,
-        borderWidth: 1,
-        borderColor: "#e3e3e3",
-        elevation: 0,
+        elevation: 2,
         overflow: "hidden"
     },
-    propertyTypeImage: {
-
+    leagueText:{
+        fontWeight: "bold"
     },
-    propertyNameContainer: {
-        height: 40,
-        justifyContent: "center"
+    btnContainer:{
+        position: "absolute",
+        bottom: 20,
+        left: 15,
+        flexDirection:'row',
+        alignItems:'center'
     },
-    propertyTypeListContainer: {
-        marginHorizontal: 15,
-        marginTop: 10
+    playBtn:{
+        backgroundColor: OrangeColor,
+        width: screenWidth * 0.20,
     },
-    propertyForYouButton: {
-        // width: 100,
-        backgroundColor:DarkBlueColor,
-        alignItems: "center",
-        justifyContent: "center",
-        borderRadius:20,
-        borderWidth:0
+    playBtnText:{ color: "white" },
+    middleView:{
+        position: "absolute",
+        right: 30,
+        top: -20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        transform: [{
+            rotate: '15deg'
+        }]
+    },
+    separater:{
+        backgroundColor: "#f2d5d7",
+        width: 10,
+        height: 220
+    },
+    separater1:{
+        backgroundColor: "#f2d5d7",
+        width: 45,
+        height: 220
+    },
+    leagueBGContainer:{
+        position: 'absolute',
+        right: -60,
+        bottom: -20,
+    },
+    leagueBGImage:{
+        height: 170,
+        width: 170,
+        resizeMode: 'contain'
     }
 })
 export default styles

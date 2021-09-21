@@ -13,7 +13,8 @@
 
 import moment from "moment";
 
-const convertTimeDate = (date: Date) => {
+
+const convertTimeDate = (date: Date | any) => {
     var currentTime = new Date(date);
     var currentOffset = currentTime.getTimezoneOffset();
     var ISTOffset = 570;
@@ -21,13 +22,13 @@ const convertTimeDate = (date: Date) => {
     return ISTTime;
 }
 
-export const useTime = (time: Date) => {
+export const useTime = (time: Date | any) => {
     let ISTTime = convertTimeDate(time)
     let exactTime = moment(ISTTime).format('LT')
     return exactTime;
 };
 
-export const useDate = (date: Date) => {
+export const useDate = (date: Date | any) => {
     let ISTDate = convertTimeDate(date)
     let exactDate = moment(ISTDate).format('dddd, MMMM Do')
     return exactDate;
