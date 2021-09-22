@@ -44,7 +44,7 @@ export type unAuthParamList = {
   NewsDetail: undefined;
   TermsAndCondition: { title: string };
   ChangePassword: undefined;
-  AddPlayerPoint: { myPlayerListArray: Array<LeaguePlayerTypes> };
+  AddPlayerPoint: undefined;
   LiveMatchList: undefined;
 };
 

@@ -40,9 +40,7 @@ const HomeScreen: React.FC<props> = ({
 
                 mpLabel={{ pl: 15, pt: 5 }}
             >{item}</Label>
-            <Container mpContainer={{
-
-            }}
+            <Container
                 containerStyle={styles.btnContainer}
             >
                 <Btn

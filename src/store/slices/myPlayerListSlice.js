@@ -7,7 +7,13 @@ export const myPlayerListSlice = createSlice( {
     },
     reducers: {
         addToMyPlayerWatcher: ( state, action ) => {
-            state.data = action.payload;
+            let data = action.payload.filter( ( thing, index, self ) =>
+                index === self.findIndex( ( t ) => {
+                    console.log( t.PlayerID === thing.PlayerID );
+                    return t.PlayerID === thing.PlayerID;
+                } )
+            );
+            state.data = data;
         },
         // deleteLeagueWatcher: ( state, action ) => {
         //     state.data = state.data.filter( ( item, index ) => item.game_key != action.payload );

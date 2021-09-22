@@ -7,7 +7,7 @@ import { ListRenderItem } from 'react-native';
 import HeadToHeadTeam from './HeadToHeadTeam';
 import { scheduleListTypes } from '../../../types/flatListTypes';
 import { useDispatch, useSelector } from 'react-redux';
-import { getScheduleListWatcher } from '../../../store/slices/scheduleSlice';
+import { getScheduleListWatcher, updateWeek } from '../../../store/slices/scheduleSlice';
 import { RootState } from '../../../types/reduxTypes';
 import Label from '../../../components/Label';
 import { selectedLeagueWatcher } from '../../../store/slices/selectedLeagueSlice';
@@ -23,18 +23,15 @@ const HeadToHeadTab: React.FC<props> = ({
     const scheduleListData: scheduleListTypes[] = useSelector((state: RootState) => state.schedule.data)
     const selectedLeagueData: scheduleListTypes[] = useSelector((state: RootState) => state.selectedLeague.data)
     const selectedWeek: IWeek[] = useSelector((state: RootState) => state.selectedLeague.selectedWeek)
+    const currentWeek: number = useSelector((state: RootState) => state.schedule.currentWeek)
 
     const dispatch = useDispatch()
     const [scheduleList, setScheduleList] = useState<scheduleListTypes[]>([])
-    const [currentWeek, setCurrentWeek] = useState<string | number>(selectedWeek[0]?.week || 0)
+    // const [currentWeek, setCurrentWeek] = useState<string | number>(selectedWeek[0]?.week || 0)
     // const isMounted = useRef(false)
 
     useEffect(() => {
-        console.log('selectedWeek', selectedWeek)
-        const data = {
-            week: currentWeek
-        }
-        dispatch(getScheduleListWatcher(data))
+        dispatch(getScheduleListWatcher())
     }, [currentWeek])
 
     useLayoutEffect(() => {
@@ -130,7 +127,7 @@ const HeadToHeadTab: React.FC<props> = ({
             height={40}
             mpContainer={{ mt: 10, ml: 15 }}
             onPress={() => {
-                setCurrentWeek(item.week)
+                dispatch(updateWeek(item.week))
             }}
         >
             <Label

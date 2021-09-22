@@ -6,29 +6,30 @@ import { AddPlayerProps } from '../../../types/nav';
 import Label from '../../../components/Label';
 import { PrimaryColor } from '../../../assets/colors';
 import { medium } from '../../../assets/fonts/fonts';
-import { LeaguePlayerTypes } from '../../../types/flatListTypes';
+import { LeaguePlayerTypes, PlayerPositionTypes } from '../../../types/flatListTypes';
 import PointAddedPlayerList from '../../../components/PointAddedPlayerList';
 import { ListRenderItem, FlatList, Alert } from 'react-native';
 import { addToMyPlayerWatcher } from '../../../store/slices/myPlayerListSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../types/reduxTypes';
 
 
 const AddPlayerPointScreen: React.FC<AddPlayerProps> = ({
     navigation, route
 }) => {
-    // const myPlayerListArray: PlayerPositionTypes[] = useSelector((state: RootState) => state.myPlayer.data)
+    const myPlayerListArray: LeaguePlayerTypes[] = useSelector((state: RootState) => state.myPlayer.data)
     const [playerList, setPlayerList] = useState<Array<LeaguePlayerTypes>>([])
     const dispatch = useDispatch()
     useEffect(() => {
-        const data = route.params?.myPlayerListArray.map((item, index) => {
-            item.PredictionPoints = item.PredictionPoints || ''
-            return item
-        })
-        // console.log("data", data)
-        setPlayerList(data)
+        // const data = route.params?.myPlayerListArray.map((item, index) => {
+        //     item.PredictionPoints = item.PredictionPoints || ''
+        //     return item
+        // })
+        // // console.log("data", data)
+        // setPlayerList(data)
         // if (myPlayerListArray.length) {
         //     console.log(myPlayerListArray)
-        //     setPlayerList(myPlayerListArray)
+        setPlayerList(myPlayerListArray)
         // }
     }, [])
 

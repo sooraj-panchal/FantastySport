@@ -18,9 +18,9 @@ const getSchedules = async ( week ) => {
 
 export const getScheduleListWatcher = createAsyncThunk(
     'teams/schedule',
-    async ( payload, getState ) => {
-        const { week } = payload;
-        const scheduleArray = await getSchedules( week );
+    async ( payload, { getState } ) => {
+        const state = getState();
+        const scheduleArray = await getSchedules( state.schedule.currentWeek );
         const response = await axios.get( 'https://api.sportsdata.io/v3/nfl/scores/json/Teams', {
             headers: {
                 'Accept': 'application/json',
@@ -64,7 +64,13 @@ const scheduleSlice = createSlice( {
     initialState: {
         loading: false,
         data: [],
-        error: null
+        error: null,
+        currentWeek: 1,
+    },
+    reducers: {
+        updateWeek: ( state, action ) => {
+            state.currentWeek = action.payload;
+        }
     },
     extraReducers: builder => {
         builder.addCase( getScheduleListWatcher.pending, ( state, action ) => {
@@ -79,5 +85,5 @@ const scheduleSlice = createSlice( {
         } );
     }
 } );
-
+export const { updateWeek } = scheduleSlice.actions;
 export default scheduleSlice.reducer;

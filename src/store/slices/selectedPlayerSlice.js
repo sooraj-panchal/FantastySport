@@ -7,14 +7,11 @@ export const selectedLeagueSlice = createSlice( {
     },
     reducers: {
         selectedPlayerWatcher: ( state, action ) => {
-            state.data = action.payload;
+            state.data = [ state.data, ...action.payload ];
         },
         deleteLeagueWatcher: ( state, action ) => {
             state.data = state.data.filter( ( item, index ) => item.game_key != action.payload );
-        },
-        // updateLeagueWatcher: ( state, action ) => {
-        //     state.data = 
-        // }
+        }
     }
 } );
 

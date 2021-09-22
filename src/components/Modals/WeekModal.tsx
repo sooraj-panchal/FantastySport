@@ -28,14 +28,32 @@ const WeekModal: React.FC<props> = ({
 }) => {
     const navigation = useNavigation<homeNavProps>()
     const [weekList, setWeekList] = useState<Array<IWeek>>([])
+    
     useEffect(() => {
         setWeekList(WeekArray.map((item, index) => {
-            item.isSelected = false
+            item.isSelected = index ? false : true
             return item
         }))
     }, [isSingleWeek])
 
     const dispatch = useDispatch()
+
+    const selectWeekHandler = (item: IWeek, index: number) => {
+        const data = [...weekList]
+        if (isSingleWeek) {
+            data.map((value, placeindex) =>
+                placeindex === index
+                    ? (data[placeindex]['isSelected'] =
+                        !data[placeindex]['isSelected'])
+                    : (data[placeindex]['isSelected'] = false),
+            );
+            setWeekList(data)
+        } else {
+            data[index]['isSelected'] = index ? !data[index]['isSelected'] : true
+            setWeekList(data)
+        }
+
+    }
     const renderItem: ListRenderItem<IWeek> = ({ item, index }) => {
         return (
             <Container
@@ -52,20 +70,7 @@ const WeekModal: React.FC<props> = ({
                 height={40}
                 mpContainer={{ mt: 10, ml: 15 }}
                 onPress={() => {
-                    const data = [...weekList]
-                    console.log(isSingleWeek)
-                    if (isSingleWeek) {
-                        data.map((value, placeindex) =>
-                            placeindex === index
-                                ? (data[placeindex]['isSelected'] =
-                                    !data[placeindex]['isSelected'])
-                                : (data[placeindex]['isSelected'] = false),
-                        );
-                        setWeekList(data)
-                    } else {
-                        data[index]['isSelected'] = !data[index]['isSelected']
-                        setWeekList(data)
-                    }
+                    selectWeekHandler(item, index)
                 }}
             >
                 <Label

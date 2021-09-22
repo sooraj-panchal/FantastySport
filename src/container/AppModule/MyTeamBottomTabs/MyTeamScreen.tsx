@@ -7,7 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Label from '../../../components/Label';
 import { greenColor, OrangeColor, PrimaryColor } from '../../../assets/colors';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
-import { ListRenderItem, View } from 'react-native';
+import { Alert, ListRenderItem, View } from 'react-native';
 import MyPlayersList from '../../../components/MyPlayersList';
 import Img from '../../../components/Img';
 import { AppImages } from '../../../assets/images/map';
@@ -52,19 +52,22 @@ const MyTeamScreen: React.FC<navigationProps> = ({
         //             FantasyPointsDraftKings: Number(a.FantasyPointsDraftKings) + Number(b.FantasyPointsDraftKings)
         //         })
         //     });
-        // const PredictionPoints = myPlayerListArray.reduce(function (a, b) {
-        //     return a + Number(b.PredictionPoints);
-        // }, 0);
-        // const FantasyPointsDraftKings = myPlayerListArray.reduce(function (a, b) {
-        //     return a + Number(b.FantasyPointsDraftKings);
-        // }, 0);
-        // const sniperPoints = myPlayerListArray.reduce(function (a, b) {
-        //     return a + Number(b.SniperPoints);
-        // }, 0);
-        // setTotalPredictionPoints(Math.abs(PredictionPoints / 10).toFixed(2))
-        // setTotalProjectedPoints(Math.abs(FantasyPointsDraftKings / 10).toFixed(2))
-        // setTotalSniperPoints(Math.abs(sniperPoints / 10).toFixed(2))
-        // setTotalActualPoints(Math.abs(FantasyPointsDraftKings / 10).toFixed(2))
+        let isPredictionPoints = myPlayerListArray.every((item, index) => item.PredictionPoints !== "")
+        if (isPredictionPoints) {
+            const PredictionPoints = myPlayerListArray.reduce(function (a, b) {
+                return a + Number(b.PredictionPoints);
+            }, 0);
+            const FantasyPointsDraftKings = myPlayerListArray.reduce(function (a, b) {
+                return a + Number(b.FantasyPointsDraftKings);
+            }, 0);
+            const sniperPoints = myPlayerListArray.reduce(function (a, b) {
+                return a + Number(b.SniperPoints);
+            }, 0);
+            setTotalPredictionPoints(Math.abs(PredictionPoints / 10).toFixed(2))
+            setTotalProjectedPoints(Math.abs(FantasyPointsDraftKings / 10).toFixed(2))
+            setTotalSniperPoints(Math.abs(sniperPoints / 10).toFixed(2))
+            setTotalActualPoints(Math.abs(FantasyPointsDraftKings / 10).toFixed(2))
+        }
     }
 
     React.useLayoutEffect(() => {
@@ -114,14 +117,34 @@ const MyTeamScreen: React.FC<navigationProps> = ({
 
     const renderListHeader = () => {
         return <>
-            <Container containerStyle={{ flexDirection: "row", alignItems: "center" }}
-                mpContainer={{ ml: 15, mt: 15 }}
+            <Container containerStyle={{ flexDirection: "row", alignItems: "center", justifyContent: 'space-between' }}
+                mpContainer={{ ml: 15, mt: 10 }}
             >
-                <Label labelSize={15}  >Week 1</Label>
-                <Ionicons
-                    name="ios-chevron-forward"
-                    size={20}
-                    color="black"
+                <Container containerStyle={{ flexDirection: "row", alignItems: "center" }} >
+                    <Label labelSize={15}  >Week 1</Label>
+                    <Ionicons
+                        name="ios-chevron-forward"
+                        size={20}
+                        color="black"
+                    />
+                </Container>
+                <Btn
+                    title="Edit Team"
+                    labelSize={14}
+                    labelStyle={{
+                        color: 'white'
+                    }}
+                    radius={8}
+                    mpBtn={{ mr: 10 }}
+                    btnStyle={{
+                        backgroundColor: PrimaryColor,
+                        width: 85,
+                        alignSelf: "flex-end"
+                    }}
+                    onPress={() => {
+                        navigation.navigate('EditTeamInfo')
+                        // navigation.navigate('AddPlayer')
+                    }}
                 />
             </Container>
             <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} mpContainer={{ mv: 10, mh: 15 }} />
@@ -152,24 +175,7 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                 </Container>
             </Container>
             <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} mpContainer={{ mv: 10, mh: 15 }} />
-            <Btn
-                title="Edit Team"
-                labelSize={14}
-                labelStyle={{
-                    color: 'white'
-                }}
-                radius={8}
-                mpBtn={{ mr: 10 }}
-                btnStyle={{
-                    backgroundColor: PrimaryColor,
-                    width: 85,
-                    alignSelf: "flex-end"
-                }}
-                onPress={() => {
-                    navigation.navigate('EditTeamInfo')
-                    // navigation.navigate('AddPlayer')
-                }}
-            />
+
             {/* <Container
                 containerStyle={{
                     borderBottomWidth: 1,
@@ -186,6 +192,7 @@ const MyTeamScreen: React.FC<navigationProps> = ({
             </Container> */}
         </>
     }
+    console.log('myPlayerListArray', myPlayerListArray)
     return <MainContainer
         style={{ backgroundColor: 'white' }}
     >
@@ -203,6 +210,49 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                 })
             }
         </ScrollView> */}
+        <Container containerStyle={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            alignSelf: 'flex-end'
+        }}>
+            <Btn
+                title="Add"
+                labelSize={14}
+                labelStyle={{
+                    color: 'white'
+                }}
+                radius={8}
+                mpBtn={{ mr: 10 }}
+                btnStyle={{
+                    backgroundColor: PrimaryColor,
+                    width: 85,
+                    alignSelf: "flex-end"
+                }}
+                onPress={() => {
+                    navigation.navigate('AddPlayerPoint')
+                    // navigation.navigate('AddPlayer')
+                }}
+            />
+            <Btn
+                title="Save"
+                labelSize={14}
+                labelStyle={{
+                    color: 'white'
+                }}
+                radius={8}
+                mpBtn={{ mr: 10 }}
+                btnStyle={{
+                    backgroundColor: PrimaryColor,
+                    width: 85,
+                    alignSelf: "flex-end"
+                }}
+                onPress={() => {
+                    Alert.alert("", 'Save Player')
+                    // navigation.navigate('EditTeamInfo')
+                    // navigation.navigate('AddPlayer')
+                }}
+            />
+        </Container>
         <ScrollView horizontal={true} >
             <View>
                 <Container
@@ -231,6 +281,7 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                         })
                     }
                 </ScrollView>
+
             </View>
         </ScrollView>
         {/* <DEFPositionModal

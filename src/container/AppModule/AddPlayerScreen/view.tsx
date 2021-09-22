@@ -214,8 +214,9 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
     const [loading, setLoading] = useState(true)
     const [playerByPositionList, setplayerByPositionList] = React.useState<LeaguePlayerTypes[]>([])
     const myPlayerListArray: PlayerPositionTypes[] = useSelector((state: RootState) => state.myPlayer.data)
+    const leagueTeamNameList: Array<scheduleListTypes> = useSelector((state: RootState) => state.selectedLeague.leagueTeamNameList)
+    const currentWeek: number = useSelector((state: RootState) => state.schedule.currentWeek)
 
-    const MyLeagues: Array<scheduleListTypes> = useSelector((state: RootState) => state.selectedLeague.data)
     const dispatch = useDispatch()
     React.useLayoutEffect(() => {
         return (
@@ -236,18 +237,10 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
     }, [playerList])
 
     React.useEffect(() => getLeaguePlayers(), [])
+
     const getLeaguePlayers = () => {
-        const LegueTeamList: Array<string> = [];
-        MyLeagues.map((item) => {
-            if (item.homeTeam) {
-                LegueTeamList.push(item.homeTeam.key);
-            }
-            if (item.awayTeam) {
-                LegueTeamList.push(item.awayTeam.key);
-            }
-        });
-        LegueTeamList.map(async (item, index) => {
-            const response: AxiosResponse<LeaguePlayerTypes[]> = await axios.get(`https://api.sportsdata.io/v3/nfl/projections/json/PlayerGameProjectionStatsByTeam/2021REG/1/${item}`, {
+        leagueTeamNameList.map(async (item, index) => {
+            const response: AxiosResponse<LeaguePlayerTypes[]> = await axios.get(`https://api.sportsdata.io/v3/nfl/projections/json/PlayerGameProjectionStatsByTeam/2021REG/${currentWeek}/${item}`, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -270,9 +263,9 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
                 } else {
                     item.Position = item.Position;
                 }
-                return item;
+                return item
             })
-            console.log("getDataByFilterPosition", getDataByFilterPosition)
+            console.log('getDataByFilterPosition', getDataByFilterPosition)
             setPlayerList((prev) => [...prev, ...getDataByFilterPosition])
             setplayerByPositionList((prev) => [...prev, ...myPlayers])
             setLoading(false)
@@ -293,7 +286,18 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
             const TeamData = response.data.find((i) => i.PlayerID == item.PlayerID)
             return {
                 ...item,
-                photoUrl: TeamData?.PhotoUrl
+                photoUrl: TeamData?.PhotoUrl,
+                Position: item.Position,
+                PlayerID: item.PlayerID,
+                Team: item.Team,
+                Name: item.Name,
+                FantasyPointsDraftKings: item.FantasyPointsDraftKings,
+                isSelected: item.isSelected,
+                GameDate: item.GameDate,
+                Opponent: item.Opponent,
+                Accuracy: item.Accuracy,
+                PredictionPoints: item.PredictionPoints || '',
+                SniperPoints: item.SniperPoints || ''
             }
         })
         return data
@@ -339,7 +343,7 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
 
     const addPlayerToTeam = () => {
         const data = playerByPositionList.filter((item) => item.isSelected)
-        dispatch(addToMyPlayerWatcher([myPlayerListArray, ...data]))
+        dispatch(addToMyPlayerWatcher([...myPlayerListArray, ...data]))
         navigation.goBack()
     }
 

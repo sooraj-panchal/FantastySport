@@ -5,7 +5,7 @@ import { BlackColor, OrangeColor, PrimaryColor } from '../../assets/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { screenHeight } from '../../utils/styleUtils';
 import { Modalize } from 'react-native-modalize';
-import { ListRenderItem } from 'react-native';
+import { Alert, ListRenderItem } from 'react-native';
 import { Portal } from 'react-native-portalize';
 import { IWeek, WeekArray } from '../../utils/jsonArray';
 import Btn from '../Btn';
@@ -13,13 +13,16 @@ import { useNavigation } from '@react-navigation/core';
 import { homeNavProps, navigationProps } from '../../types/nav';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectedWeekWatcher } from '../../store/slices/selectedLeagueSlice';
-import { LeaguePlayerTypes } from '../../types/flatListTypes';
-import { getDefPositionList } from '../../store/slices/defPositionSlice';
+import { LeaguePlayerTypes, PlayerPositionTypes } from '../../types/flatListTypes';
+import { getDefPositionList, setDefPlayers } from '../../store/slices/defPositionSlice';
 import { RootState } from '../../types/reduxTypes';
 import Img from '../Img';
 import { medium } from '../../assets/fonts/fonts';
 import moment from 'moment';
 import { useTime } from '../../utils/timeZone';
+import { SvgUri } from 'react-native-svg';
+import { array } from 'prop-types';
+import { addToMyPlayerWatcher } from '../../store/slices/myPlayerListSlice';
 
 interface props {
     closeModal: () => void,
@@ -33,16 +36,22 @@ const DEFPositionModal: React.FC<props> = ({
     modalizeRef
 }) => {
     const navigation = useNavigation<homeNavProps>()
-    const defensePositionList = useSelector((state: RootState) => state.defPosition.data)
+    const defensePositionList: LeaguePlayerTypes[] = useSelector((state: RootState) => state.defPosition.data)
+    const myPlayerListArray: PlayerPositionTypes[] = useSelector((state: RootState) => state.myPlayer.data)
+
     const dispatch = useDispatch()
+
     useEffect(() => {
         dispatch(getDefPositionList())
     }, [])
 
-    console.log('defensePositionList', defensePositionList)
+    console.log("myPlayerListArray", myPlayerListArray)
+
 
     const renderItem: ListRenderItem<LeaguePlayerTypes> = ({ item, index }) => {
         const { photoUrl, Name, Position, Accuracy, FantasyPointsDraftKings, isSelected, GameDate, Team, Opponent } = item
+        // console.log('item', item)
+        let imageType = photoUrl?.split('.').pop() == 'svg';
         return (
             <>
                 <Container
@@ -53,10 +62,21 @@ const DEFPositionModal: React.FC<props> = ({
                     mpContainer={{ mh: 15 }}
                     height={80}
                 >
-                    <Img
-                        imgSrc={{ uri: photoUrl || 'dummy' }}
-                        width={50} height={50}
-                    />
+                    <Container height={45} width={50} >
+                        {
+                            imageType ?
+                                <SvgUri
+                                    width={45}
+                                    height={45}
+                                    uri={photoUrl || 'dummy'}
+                                />
+                                :
+                                <Img
+                                    imgSrc={{ uri: photoUrl || 'dummy' }}
+                                    imgStyle={{}}
+                                    width={40} height={45} />
+                        }
+                    </Container>
                     <Container mpContainer={{ pl: 15 }} >
                         <Label labelSize={14} style={{ color: "black", fontFamily: medium }}  >{Name}</Label>
                         <Container containerStyle={{ flexDirection: "row", alignItems: "center" }} mpContainer={{ mt: 2 }} >
@@ -79,7 +99,7 @@ const DEFPositionModal: React.FC<props> = ({
                                 }}
                                 width={30} height={30}
                                 onPress={() => {
-
+                                    playerSelectedPosition(item, index)
                                 }}
                             >
                                 <Ionicons
@@ -104,7 +124,7 @@ const DEFPositionModal: React.FC<props> = ({
                                 }}
                                 width={30} height={30}
                                 onPress={() => {
-
+                                    playerSelectedPosition(item, index)
                                 }}
                             >
                                 <Ionicons
@@ -123,6 +143,24 @@ const DEFPositionModal: React.FC<props> = ({
         )
     }
 
+    const playerSelectedPosition = (item: LeaguePlayerTypes, index: number) => {
+        const array = [...defensePositionList];
+        let posLength = array.filter((item, index) => item.isSelected).length
+        if (posLength == 1 && !item.isSelected) {
+            Alert.alert('Fantasy sniper', `You can select up to ${1} ${'DEF'}`)
+        } else {
+            array[index]['isSelected'] = !array[index]['isSelected'];
+        }
+        console.log(array)
+        dispatch(setDefPlayers(array))
+    }
+
+    const addPlayerToTeam = () => {
+        const data = defensePositionList.filter((item) => item.isSelected)
+        dispatch(addToMyPlayerWatcher([...myPlayerListArray, ...data]))
+        closeModal()
+    }
+
     return (
         <Portal>
             <Modalize ref={modalizeRef}
@@ -130,7 +168,7 @@ const DEFPositionModal: React.FC<props> = ({
                     borderTopLeftRadius: 20,
                     borderTopRightRadius: 20,
                 }}
-                modalHeight={screenHeight * 0.60}
+                adjustToContentHeight={true}
                 withHandle={false}
                 HeaderComponent={() => {
                     return <Container
@@ -161,7 +199,25 @@ const DEFPositionModal: React.FC<props> = ({
                     data: defensePositionList,
                     renderItem: renderItem,
                     keyExtractor: (item, index) => `renderPosition${index.toString()}`,
-                    showsVerticalScrollIndicator: false
+                    showsVerticalScrollIndicator: false,
+                    ListFooterComponent: () => {
+                        const isSelectedAnyItem = defensePositionList.some(item => item.isSelected == true)
+                        return <Btn
+                            title="Save"
+                            btnStyle={{
+                                backgroundColor: PrimaryColor,
+                                borderRadius: 4,
+                                opacity: isSelectedAnyItem ? 1 : 0.5
+                            }}
+                            btnHeight={40}
+                            mpBtn={{ mh: 15, mt: 20, mb: 20 }}
+                            onPress={() => {
+                                addPlayerToTeam()
+                            }}
+                            textColor="white"
+                            labelSize={16}
+                        />
+                    }
                 }}
             />
         </Portal>
