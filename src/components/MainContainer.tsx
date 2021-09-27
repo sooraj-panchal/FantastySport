@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getStatusBarHeight } from '../utils/globals';
@@ -6,7 +6,7 @@ import { getStatusBarHeight } from '../utils/globals';
 import Loader from './Loader';
 import ModalLoader from './ModalLoader';
 
-// import Toast from 'react-native-simple-toast';
+import Toast from 'react-native-simple-toast';
 // import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 interface Props {
@@ -18,7 +18,13 @@ interface Props {
     style?: StyleProp<ViewStyle>,
     absoluteModalLoading?: boolean,
     loadingLabel?: string,
-    statusBarHeight?: boolean
+    statusBarHeight?: boolean,
+    errorMessage?: {
+        data: {
+            message: string
+        },
+        status: string
+    } | any
 }
 
 const MainContainer: React.FC<Props> = ({
@@ -30,17 +36,17 @@ const MainContainer: React.FC<Props> = ({
     style,
     absoluteModalLoading,
     loadingLabel,
-    statusBarHeight
+    statusBarHeight,
+    errorMessage
 }) => {
 
     const insets = useSafeAreaInsets()
 
-    // useEffect(() => {
-    //     if (globals.toastMessage) {
-    //         Toast.show(globals.toastMessage, Toast.LONG)
-    //         globals.toastMessage = ""
-    //     }
-    // }, [globals.toastMessage])
+    useEffect(() => {
+        if (errorMessage) {
+            Toast.show(errorMessage.data.message, Toast.LONG)
+        }
+    }, [errorMessage])
 
     const absoluteLoadingContainer = () => {
         if (absoluteModalLoading) return <ModalLoader loadingLabel={loadingLabel} />

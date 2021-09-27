@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../container/AppModule/HomeScreen/view';
-import ProfileScreen from '../container/AppModule/ProfileScreen';
+import ProfileScreen from '../container/AppModule/ProfileScreen/view';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { DarkBlueColor, PrimaryColor } from "../assets/colors";
 

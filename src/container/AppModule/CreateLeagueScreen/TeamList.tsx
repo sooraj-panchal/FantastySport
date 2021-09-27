@@ -9,7 +9,7 @@ import { medium, regular } from '../../../assets/fonts/fonts';
 import { scheduleListTypes } from '../../../types/flatListTypes';
 import { useDate, useTime } from '../../../utils/timeZone';
 import { useDispatch } from 'react-redux';
-import { deleteLeagueWatcher, selectedLeagueWatcher } from '../../../store/slices/selectedLeagueSlice';
+import { deleteLeagueWatcher, selectedLeagueWatcher } from '../../../store/slices/selectedLeague';
 
 const TeamList: React.FC<scheduleListTypes> = ({
     awayTeam,

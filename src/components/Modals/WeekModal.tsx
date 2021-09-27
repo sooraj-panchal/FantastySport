@@ -12,7 +12,7 @@ import Btn from '../Btn';
 import { useNavigation } from '@react-navigation/core';
 import { homeNavProps, navigationProps } from '../../types/nav';
 import { useDispatch } from 'react-redux';
-import { selectedWeekWatcher } from '../../store/slices/selectedLeagueSlice';
+import { selectedWeekWatcher } from '../../store/slices/selectedLeague';
 
 interface props {
     closeModal: () => void,

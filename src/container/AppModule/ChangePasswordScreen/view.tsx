@@ -26,11 +26,7 @@ interface props extends navigationProps {
 
 const ChangePasswordScreen: React.FC<props> = ({
     navigation,
-    route,
-    resetPasswordWatcher,
-    resetPasswordSuccess,
-    resetPasswordResponse,
-    resetPasswordLoading
+    route
 }) => {
 
     const resetPasswordHandler = (values: { password: string }) => {
@@ -38,20 +34,12 @@ const ChangePasswordScreen: React.FC<props> = ({
         data.append("auth_token", globals.authToken)
         data.append("password", values.password)
         data.append("email", route.params.email)
-        resetPasswordWatcher(data)
+        // resetPasswordWatcher(data)/
     }
-
-    useEffect(() => {
-        if (resetPasswordResponse?.status == "success") {
-            navigation.dispatch(AuthStack)
-        }
-        return () => resetPasswordSuccess(null)
-    }, [resetPasswordResponse])
 
 
     return (
         <MainContainer
-            absoluteModalLoading={resetPasswordLoading}
         >
             <AuthWrapper>
                 <ScrollView contentContainerStyle={{ paddingBottom: 100 }} >

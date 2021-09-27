@@ -198,7 +198,7 @@ import EditProfileModal from "../../../components/Modals/EditProfileModal";
 import PickPlayerModal from '../../../components/Modals/PickPlayerModal';
 import SelectPlayerPositionModal from '../../../components/Modals/SelectPlayerPositionModal';
 import { api_token } from '../../../services/apiPaths';
-import { addToMyPlayerWatcher } from '../../../store/slices/myPlayerListSlice';
+import { addToMyPlayerWatcher } from '../../../store/slices/myPlayerList';
 import { LeaguePlayerTypes, PlayerDetailTypes, PlayerPositionTypes, scheduleListTypes } from '../../../types/flatListTypes';
 import { navigationProps, PlayersNav } from '../../../types/nav';
 import { RootState } from '../../../types/reduxTypes';

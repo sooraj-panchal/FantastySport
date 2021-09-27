@@ -4,14 +4,14 @@ import { OrangeColor } from '../../../assets/colors';
 import { AuthImages } from '../../../assets/images/map';
 import Btn from '../../../components/Btn';
 import Img from '../../../components/Img';
-import Label from '../../../components/Label';
 import MainContainer from '../../../components/MainContainer';
 import { navigationProps } from '../../../types/nav';
-import { screenHeight, screenWidth } from '../../../types/sizes';
+import { screenWidth } from '../../../types/sizes';
 
 interface props extends navigationProps {
 
 }
+
 const AuthScreen: React.FC<props> = ({
     navigation, route
 }) => {
@@ -21,18 +21,13 @@ const AuthScreen: React.FC<props> = ({
             backgroundColor: "white"
         }}
     >
-        {/* <StatusBar backgroundColor="transparent" translucent barStyle="light-content" /> */}
         <ImageBackground
             source={AuthImages.auth_bg}
             style={{
                 justifyContent: 'center',
-                // alignItems: 'center',
                 flex: 1,
                 paddingTop: 80
-
             }}
-        // width={screenWidth}
-        // height={screenHeight}
         >
             <Img
                 imgSrc={AuthImages.Splash_logo}

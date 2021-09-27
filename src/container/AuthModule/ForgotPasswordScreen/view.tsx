@@ -1,41 +1,52 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native'
 import { navigationProps } from '../../../types/nav';
 import MainContainer from '../../../components/MainContainer'
 import { ScrollView } from 'react-native-gesture-handler';
 import { Formik } from 'formik';
 import * as yup from 'yup'
-import HeaderBtn from '../../../components/HeaderBtn';
-import Img from '../../../components/Img';
-import { AuthImages } from '../../../assets/images/map';
 import Label from '../../../components/Label';
 import { medium, regular, semiBold } from '../../../assets/fonts/fonts';
 import InputBox from '../../../components/InputBox';
-import { DarkBlueColor, LightGrayColor, OrangeColor } from '../../../assets/colors';
+import { OrangeColor } from '../../../assets/colors';
 import Btn from '../../../components/Btn';
 import Octicons from 'react-native-vector-icons/Octicons'
 import AuthWrapper from '../../../components/AuthWrapper';
+import { useForgotPasswordMutation } from '../../../features/auth';
 
 interface props extends navigationProps {
     forgotPasswordLoading: boolean
 }
 
+interface formVales {
+    email: string;
+}
+
 const ForgotPasswordScreen: React.FC<props> = ({
     route,
     navigation,
-    forgotPasswordLoading
 }) => {
+    const initialValues: formVales = { email: '' }
+    const [forgotPassword, { isLoading, data = {}, error }] = useForgotPasswordMutation()
+
+    const forgotPasswordHandler = (values: formVales) => {
+        let data = new FormData()
+        data.append('email', values.email)
+        forgotPassword(data)
+    }
+
     return (
         <MainContainer
-            absoluteModalLoading={forgotPasswordLoading}
             style={{ backgroundColor: "#246e87" }}
+            absoluteModalLoading={isLoading}
+            errorMessage={error}
         >
             <AuthWrapper>
                 <ScrollView contentContainerStyle={{ paddingBottom: 100 }} >
                     <Formik
-                        initialValues={{ email: '' }}
+                        initialValues={initialValues}
                         onSubmit={values => {
-                            navigation.navigate("EmailSent")
+                            forgotPasswordHandler(values)
+                            // navigation.navigate("EmailSent")
                         }}
                         validationSchema={yup.object().shape({
                             email: yup
@@ -68,8 +79,8 @@ const ForgotPasswordScreen: React.FC<props> = ({
                                     onBlur={() => setFieldTouched('email')}
                                     keyboardType="email-address"
                                     autoCompleteType="email"
-                                    // errors={errors.email}
-                                    // touched={touched.email}
+                                    errors={errors.email}
+                                    touched={touched.email}
                                     mpContainer={{ mt: 30, mh: 20 }}
                                     inputHeight={50}
                                     placeholder="E-mail"
@@ -78,21 +89,9 @@ const ForgotPasswordScreen: React.FC<props> = ({
                                         borderRadius: 10,
                                         borderWidth: 0
                                     }}
-                                    leftIcon={() => {
-                                        return (
-                                            <Octicons
-                                                name="mail"
-                                                size={20}
-                                                style={{
-                                                    width: 25,
-                                                    marginLeft: 10,
-                                                }}
-                                            />
-                                        )
-                                    }}
+                                    leftIcon={() => <Octicons name="mail" size={20} style={{ width: 25, marginLeft: 10, }} />}
                                     textSize={15}
                                     inputStyle={{ width: "80%" }}
-                                // placeholderTextColor={LightGrayColor}
                                 />
                                 <Btn
                                     title="SEND"

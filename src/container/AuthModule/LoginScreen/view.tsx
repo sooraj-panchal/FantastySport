@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import { View, Text, Button, StatusBar, ImageBackground } from 'react-native'
 import { navigationProps } from '../../../types/nav';
 import MainContainer from '../../../components/MainContainer'
 import Btn from '../../../components/Btn';
@@ -11,35 +10,69 @@ import { AuthImages } from '../../../assets/images/map';
 import Label from '../../../components/Label';
 import { medium, semiBold } from '../../../assets/fonts/fonts';
 import Container from '../../../components/Container';
-import { DarkBlueColor, LightGrayColor, OrangeColor } from '../../../assets/colors';
+import { OrangeColor } from '../../../assets/colors';
 import InputBox from '../../../components/InputBox';
 import Ionicans from 'react-native-vector-icons/Ionicons'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import Octicons from 'react-native-vector-icons/Octicons'
 import { AppStack } from '../../../navigator/navActions';
 import AuthWrapper from '../../../components/AuthWrapper';
-
+import { useLoginMutation } from '../../../features/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCredentials } from '../../../store/slices/auth';
+import { RootState } from '../../../store';
 interface props extends navigationProps {
     loginLoading: boolean,
 }
 
+interface formValues {
+    email: string,
+    password: string,
+    fcm_token?: string
+}
+
 const LoginScreen: React.FC<props> = ({
     route,
-    navigation,
-    loginLoading
+    navigation
 }) => {
+    const dispatch = useDispatch()
+    const [login, { isLoading, error }] = useLoginMutation()
+
+    const initialState: formValues = { email: '', password: '' }
+    const onLoginHandle = async (values: formValues) => {
+        const data = new FormData();
+        data.append('email', values.email)
+        data.append('password', values.password)
+        data.append('fcm_token', values.fcm_token || '')
+        // console.log(data)
+        login(data)
+        try {
+            const user = await login(data).unwrap()
+            console.log(user)
+            if (user.otp_verify == "Y") {
+                dispatch(setCredentials({ user: user }))
+                navigation.dispatch(AppStack)
+            } else {
+                navigation.navigate('Verification', {
+                    email: user.email
+                })
+            }
+        } catch (err) {
+            console.log('err', err)
+        }
+    }
 
     return (
         <MainContainer
-            absoluteModalLoading={loginLoading}
-            // statusBarHeight
             style={{ backgroundColor: "#246e87" }}
+            absoluteModalLoading={isLoading}
+            errorMessage={error}
         >
             <AuthWrapper>
                 <ScrollView>
                     <Formik
-                        initialValues={{ email: '', password: "" }}
-                        onSubmit={values => { }}
+                        initialValues={initialState}
+                        onSubmit={values => { onLoginHandle(values) }}
                         validationSchema={yup.object().shape({
                             email: yup
                                 .string()
@@ -47,7 +80,7 @@ const LoginScreen: React.FC<props> = ({
                                 .required("Email is must be required"),
                             password: yup
                                 .string()
-                                .min(6)
+                                .min(4)
                                 .required("Password is must be required"),
                         })}
                     >
@@ -87,8 +120,8 @@ const LoginScreen: React.FC<props> = ({
                                     onChangeText={handleChange("email")}
                                     onBlur={() => setFieldTouched('email')}
                                     keyboardType="email-address"
-                                // errors={errors.email}
-                                // touched={touched.email}
+                                    touched={touched.email}
+                                    errors={errors.email}
                                 />
                                 <InputBox
                                     value={values.password}
@@ -127,13 +160,12 @@ const LoginScreen: React.FC<props> = ({
                                             />
                                         )
                                     }}
-                                // placeholderTextColor={LightGrayColor}
-                                // errors={errors.password}
-                                // touched={touched.password}
+                                    touched={touched.password}
+                                    errors={errors.password}
                                 />
                                 <Label
                                     labelSize={14}
-                                    mpLabel={{ mr:20, mt: 10 }}
+                                    mpLabel={{ mr: 20, mt: 10 }}
                                     style={{ textAlign: "right", color: 'white', fontFamily: medium }}
                                     onPress={() => {
                                         navigation.navigate("ForgotPassword")
@@ -141,7 +173,7 @@ const LoginScreen: React.FC<props> = ({
                                 >Forgot Password?</Label>
                                 <Btn
                                     title="LOGIN"
-                                    mpBtn={{ mh:20, mt: 20, pt: 4 }}
+                                    mpBtn={{ mh: 20, mt: 20, pt: 4 }}
                                     btnStyle={{
                                         backgroundColor: OrangeColor,
                                         justifyContent: "center"
@@ -150,16 +182,9 @@ const LoginScreen: React.FC<props> = ({
                                     btnHeight={50}
                                     labelSize={15}
                                     labelStyle={{ color: "white", fontFamily: medium }}
-                                    onPress={() => {
-                                        // handleSubmit()
-                                        navigation.navigate("Verification", {
-                                            email: "soorajpanchal786@gmail.com"
-                                        })
-                                        // navigation.dispatch(AppStack)
-                                    }}
+                                    onPress={handleSubmit}
                                 />
                                 <Container containerStyle={{
-                                    // flex: 1,
                                     flexDirection: "row",
                                     alignSelf: "center",
                                     marginTop: 30,
@@ -200,7 +225,6 @@ const LoginScreen: React.FC<props> = ({
                                                 imgSrc={AuthImages.gle_icon}
                                                 width={22}
                                                 height={23}
-                                            // onPress={loginWithGoogle}
                                             />
                                         )
                                     }}
@@ -236,5 +260,4 @@ const LoginScreen: React.FC<props> = ({
         </MainContainer>
     )
 }
-
 export default LoginScreen;

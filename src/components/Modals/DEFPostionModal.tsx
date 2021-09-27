@@ -12,9 +12,9 @@ import Btn from '../Btn';
 import { useNavigation } from '@react-navigation/core';
 import { homeNavProps, navigationProps } from '../../types/nav';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectedWeekWatcher } from '../../store/slices/selectedLeagueSlice';
+import { selectedWeekWatcher } from '../../store/slices/selectedLeague';
 import { LeaguePlayerTypes, PlayerPositionTypes } from '../../types/flatListTypes';
-import { getDefPositionList, setDefPlayers } from '../../store/slices/defPositionSlice';
+import { getDefPositionList, setDefPlayers } from '../../store/slices/defPosition';
 import { RootState } from '../../types/reduxTypes';
 import Img from '../Img';
 import { medium } from '../../assets/fonts/fonts';
@@ -22,7 +22,7 @@ import moment from 'moment';
 import { useTime } from '../../utils/timeZone';
 import { SvgUri } from 'react-native-svg';
 import { array } from 'prop-types';
-import { addToMyPlayerWatcher } from '../../store/slices/myPlayerListSlice';
+import { addToMyPlayerWatcher } from '../../store/slices/myPlayerList';
 
 interface props {
     closeModal: () => void,

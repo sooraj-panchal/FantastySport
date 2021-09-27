@@ -4,42 +4,32 @@ import AuthStackScreen from './auth';
 import SplashScreen from '../container/AuthModule/SplashScreen';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import * as globals from '../utils/globals';
-import { connect } from 'react-redux';
-// import { MyDrawer } from './Drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useSelector } from 'react-redux';
 
 const AppContainer = ( {
-    // asyncBuyerDataWatcher,
-    // asyncBuyerDataResponse,
-    // asyncBuyerDataLoading
 } ) => {
     const [ loading, setLoading ] = useState( true );
-
+    const token = useSelector( ( store ) => store.auth?.token );
     const StackScreen = createNativeStackNavigator();
     const RootStack = createNativeStackNavigator();
-    // const RootStack = createNativeStackNavigator<RootStackParamList>()
 
     useEffect( () => {
         setLoading( true );
-        // asyncBuyerDataWatcher()
     }, [] );
 
     useEffect( () => {
         setTimeout( () => {
             setLoading( false );
         }, 1000 );
-        // if (asyncBuyerDataResponse) {
-        //     console.log(asyncBuyerDataResponse)
-        //     globals.buyer_id = asyncBuyerDataResponse?.buyer_id
-        // }
     }, [] );
-    // asyncBuyerDataResponse
+
+    console.log( 'token', token );
 
     return (
         <RootStack.Navigator
             screenOptions={ { headerShown: false, animation: "none" } }
-            initialRouteName={ "AppStack" }
+            initialRouteName={ token ? "AppStack" : "AuthStack" }
         >
             {
                 loading ?
@@ -61,16 +51,4 @@ const AppContainer = ( {
         </RootStack.Navigator>
     );
 };
-
-// const mapStateToProps = store => {
-//     return {
-//         asyncBuyerDataResponse: asyncBuyerDataSelector(store),
-//         asyncBuyerDataLoading: asyncBuyerDataLoading(store)
-//     }
-// }
-
-// const mapDispatchToProps = {
-//     asyncBuyerDataWatcher
-// };
-// export default connect(mapStateToProps, mapDispatchToProps)(AppContainer)
 export default AppContainer;

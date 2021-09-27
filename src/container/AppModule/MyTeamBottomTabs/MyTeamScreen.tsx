@@ -12,7 +12,7 @@ import MyPlayersList from '../../../components/MyPlayersList';
 import Img from '../../../components/Img';
 import { AppImages } from '../../../assets/images/map';
 import { LeaguePlayerTypes, PlayerPositionTypes } from '../../../types/flatListTypes';
-import { myPlayers, positions, positionsLength } from '../../../utils/jsonArray'
+import { IWeek, myPlayers, positions, positionsLength } from '../../../utils/jsonArray'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../types/reduxTypes';
 import moment from 'moment';
@@ -23,12 +23,15 @@ import { Modalize } from 'react-native-modalize';
 const MyTeamScreen: React.FC<navigationProps> = ({
     navigation
 }) => {
-    const myPlayerListArray: PlayerPositionTypes[] = useSelector((state: RootState) => state.myPlayer.data)
     const [myPlayerListData, setMyPlayerListData] = React.useState<PlayerPositionTypes[] | any>(myPlayers)
     const [totalPredictionPoints, setTotalPredictionPoints] = React.useState<number | any>(0.00)
     const [totalProjectedPoints, setTotalProjectedPoints] = React.useState<number | any>(0.00)
     const [totalSniperPoints, setTotalSniperPoints] = React.useState<number | any>(0.00)
     const [totalActualPoints, setTotalActualPoints] = React.useState<number | string>(0.00)
+    const myPlayerListArray: PlayerPositionTypes[] = useSelector((state: RootState) => state.myPlayer.data)
+    const selectedWeek: IWeek[] = useSelector((state: RootState) => state.selectedLeague.selectedWeek)
+    const currentWeek: number = useSelector((state: RootState) => state.schedule.currentWeek)
+
     const defModalRef = useRef<Modalize>(null)
     React.useEffect(() => {
         let groupedPlayers: any = {}
@@ -193,6 +196,59 @@ const MyTeamScreen: React.FC<navigationProps> = ({
         </>
     }
     console.log('myPlayerListArray', myPlayerListArray)
+
+
+    const renderSelectedWeekItem: ListRenderItem<IWeek> = ({ item, index }) => {
+        let isCurrentWeek = item.week == currentWeek;
+        return <Container
+            containerStyle={{
+                justifyContent: 'center',
+                backgroundColor: isCurrentWeek ? '#f7dfd2' : 'white',
+                borderWidth: 1,
+                borderColor: "grey",
+                borderRadius: 4,
+                // width:screenWidth*0.15,
+                flex: 0.32,
+                alignItems: "center",
+                opacity: isCurrentWeek ? 1 : 0.5
+            }}
+            height={40}
+            mpContainer={{ mt: 10, ml: 15 }}
+            onPress={() => {
+            }}
+        >
+            <Label
+                labelSize={14}
+                style={{
+                    letterSpacing: 0.5,
+                }}
+            >Week {item.week}</Label>
+            {
+                isCurrentWeek ?
+                    <Container
+                        containerStyle={{
+                            // borderRadius: 30,
+                            position: 'absolute',
+                            right: 0,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            backgroundColor: 'black',
+                            top: 0,
+                            borderBottomLeftRadius: 10
+                        }}
+                        width={20} height={20}
+                    // onPress={onPress}
+                    >
+                        <Ionicons
+                            name="md-checkmark"
+                            size={15}
+                            color={'white'}
+                        />
+                    </Container> : null
+            }
+        </Container>
+    }
+
     return <MainContainer
         style={{ backgroundColor: 'white' }}
     >
@@ -210,6 +266,11 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                 })
             }
         </ScrollView> */}
+        {/* <FlatList
+            data={selectedWeek}
+            renderItem={renderSelectedWeekItem}
+            numColumns={3}
+        /> */}
         <Container containerStyle={{
             flexDirection: 'row',
             alignItems: 'center',

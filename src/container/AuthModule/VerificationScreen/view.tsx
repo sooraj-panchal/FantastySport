@@ -4,6 +4,7 @@ import { ScrollView, Text, TouchableOpacity, StyleSheet, View } from 'react-nati
 import {
     CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell,
 } from 'react-native-confirmation-code-field'
+import { useDispatch } from 'react-redux'
 import { DarkBlueColor, OrangeColor, PrimaryColor } from '../../../assets/colors'
 import { medium, semiBold } from '../../../assets/fonts/fonts'
 import { AuthImages } from '../../../assets/images/map'
@@ -13,7 +14,9 @@ import HeaderBtn from '../../../components/HeaderBtn'
 import Img from '../../../components/Img'
 import Label from '../../../components/Label'
 import MainContainer from '../../../components/MainContainer'
+import { useOtpVerifyMutation } from '../../../features/auth'
 import { AppStack } from '../../../navigator/navActions'
+import { setCredentials } from '../../../store/slices/auth'
 import { navigationProps } from '../../../types/nav'
 
 interface props extends navigationProps {
@@ -22,13 +25,11 @@ interface props extends navigationProps {
 
 const VerificationScreen: React.FC<props> = ({
     navigation,
-    route,
-    verifyOtpLoading,
-    // verifyOtpResponse,
-    // verifyOtpWatcher,
-    // asyncBuyerDataWatcher,
-    // verifyOtpSuccess
+    route
 }) => {
+    const dispatch = useDispatch()
+    const [verifyOtp, { isLoading, data = {}, error }] = useOtpVerifyMutation()
+
     const CELL_COUNT = 4;
 
     const [value, setValue] = useState('');
@@ -38,36 +39,24 @@ const VerificationScreen: React.FC<props> = ({
         setValue,
     });
 
-    // const route = useRoute<RootRouteProps<'Verification'>>();
-
-    // const verifyOtpHandler = () => {
-    //     let data = new FormData()
-    //     data.append("auth_token", globals.authToken)
-    //     data.append("otp", value)
-    //     data.append("id", route.params.buyer_id)
-    //     console.log(data)
-    //     verifyOtpWatcher(data)
-    // }
-
-    // useEffect(() => {
-    //     if (verifyOtpResponse?.status == "success") {
-    //         if (route.params?.from == "forgoPassword") {
-    //             navigation.navigate('ResetPassword', {
-    //                 email: route.params?.email
-    //                 // ...route.params
-    //             })
-    //         } else {
-    //             globals.buyer_id = verifyOtpResponse.data.buyer_id
-    //             asyncBuyerDataWatcher({ ...verifyOtpResponse?.data })
-    //             navigation.dispatch(AppStack)
-    //         }
-    //     }
-    //     return () => verifyOtpSuccess(null)
-    // }, [verifyOtpResponse])
+    const verifyOtpHandler = async () => {
+        let data = new FormData()
+        data.append('email', route.params.email)
+        data.append('otp', value)
+        try {
+            const user = await verifyOtp(data).unwrap()
+            console.log(user)
+            dispatch(setCredentials({ user: user }))
+            navigation.dispatch(AppStack)
+        } catch (err) {
+            console.log('err', err)
+        }
+    }
 
     return (
         <MainContainer
-            absoluteModalLoading={verifyOtpLoading}
+            absoluteModalLoading={isLoading}
+            errorMessage={error}
         >
             <AuthWrapper>
                 <ScrollView contentContainerStyle={{ paddingBottom: 100 }} >
@@ -76,7 +65,7 @@ const VerificationScreen: React.FC<props> = ({
                         mpLabel={{ ml: 20, mt: 10 }}
                         style={{
                             fontFamily: semiBold,
-                            color:'white'
+                            color: 'white'
                         }}
                     >Verify Email</Label>
                     <Label
@@ -87,7 +76,7 @@ const VerificationScreen: React.FC<props> = ({
                             maxWidth: "80%",
                             alignSelf: "center",
                             textAlign: "center",
-                            color:'white'
+                            color: 'white'
                         }}
                     >We will sent you a code to verify your email address to</Label>
                     <Label
@@ -96,7 +85,7 @@ const VerificationScreen: React.FC<props> = ({
                         style={{
                             fontFamily: medium,
                             textAlign: "center",
-                            color:'white'
+                            color: 'white'
                         }}
                     >{route.params.email}</Label>
                     <CodeField
@@ -119,7 +108,7 @@ const VerificationScreen: React.FC<props> = ({
                     />
                     <Btn
                         title="Confirm"
-                        mpBtn={{ mh: 20, mt: 60}}
+                        mpBtn={{ mh: 20, mt: 60 }}
                         btnStyle={{
                             borderRadius: 10,
                             backgroundColor: OrangeColor,
@@ -129,9 +118,8 @@ const VerificationScreen: React.FC<props> = ({
                         labelSize={15}
                         labelStyle={{ fontFamily: medium, color: "white" }}
                         onPress={() => {
-                            // verifyOtpHandler()
+                            verifyOtpHandler()
                             // navigation.navigate("InviteFriend")
-                            navigation.dispatch(AppStack)
                             // navigation.navigate('ResetPassword', {
                             //     email: route.params?.email
                             //     // ...route.params
@@ -145,7 +133,7 @@ const VerificationScreen: React.FC<props> = ({
                         marginTop: 20
                     }} >
                         <Label labelSize={18}
-                            style={{ alignSelf: "center", fontFamily: medium,color:'white'}}
+                            style={{ alignSelf: "center", fontFamily: medium, color: 'white' }}
                         >I Didn't recieve a code!</Label>
                         <Label
                             style={{ color: DarkBlueColor, fontFamily: medium }} mpLabel={{ ml: 10 }}

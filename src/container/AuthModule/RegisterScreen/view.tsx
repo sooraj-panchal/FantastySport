@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { ScrollView } from 'react-native'
-import { DarkBlueColor, LightGrayColor, OrangeColor } from '../../../assets/colors'
+import { OrangeColor } from '../../../assets/colors'
 import { medium, semiBold } from '../../../assets/fonts/fonts'
 import Ionicans from 'react-native-vector-icons/Ionicons'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import { Formik } from 'formik'
 import * as yup from 'yup';
-import { AuthImages } from '../../../assets/images/map'
 import { navigationProps } from '../../../types/nav'
 import MainContainer from '../../../components/MainContainer'
-import HeaderBtn from '../../../components/HeaderBtn'
-import Img from '../../../components/Img'
 import Label from '../../../components/Label'
 import InputBox from '../../../components/InputBox'
 import Btn from '../../../components/Btn'
@@ -18,34 +15,84 @@ import Octicons from 'react-native-vector-icons/Octicons'
 import Container from '../../../components/Container'
 import CheckBox from '@react-native-community/checkbox'
 import AuthWrapper from '../../../components/AuthWrapper'
+import { useRegisterMutation } from '../../../features/auth'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../../../store'
 
 
 interface props extends navigationProps {
     resetPasswordLoading: boolean
 }
 
+interface formValues {
+    first_name: string,
+    last_name: string,
+    email: string,
+    confirmpassword: string,
+    password: string,
+    fcm_token?: string
+}
 
 const RegisterScreen: React.FC<props> = ({
     navigation,
     route,
-
 }) => {
-
+    // const dispatch = useDispatch()
+    const [register, { isLoading, error }] = useRegisterMutation()
+    const initialValues: formValues = { first_name: '', last_name: "", email: "", confirmpassword: '', password: '' }
     const [isChecked, setIschecked] = useState<boolean>()
+
+    const onRegisterHandler = async (values: formValues) => {
+        let data = new FormData()
+        data.append('first_name', values.first_name)
+        data.append('last_name', values.last_name)
+        data.append('email', values.email)
+        data.append('password', values.password)
+        data.append('google_id', '')
+        data.append('facebook_id', '')
+        data.append('fcm_token', '')
+        // data.append('fcm_id', '')
+        // console.log(data)
+        try {
+            const user = await register(data).unwrap()
+            console.log(user)
+            // dispatch(setCredentials({ user: user }))
+            navigation.navigate('Verification', {
+                email: user.email,
+            })
+        } catch (err) {
+            console.log('err', err)
+        }
+        // register(data)
+    }
 
     return (
         <MainContainer
             style={{ backgroundColor: "#246e87" }}
+            absoluteModalLoading={isLoading}
+            errorMessage={error}
         >
             <AuthWrapper>
                 <ScrollView contentContainerStyle={{ paddingBottom: 100 }} >
                     <Formik
-                        initialValues={{ confirmpassword: '', password: '' }}
-                        onSubmit={values => { }}
+                        initialValues={initialValues}
+                        onSubmit={values => onRegisterHandler(values)}
                         validationSchema={yup.object().shape({
+                            first_name: yup
+                                .string()
+                                .min(2, "First name must be atleast 2 characters")
+                                .required('First name is required field'),
+                            last_name: yup
+                                .string()
+                                .min(2, "Last name must be atleast 2 characters")
+                                .required('Last name is required field'),
+                            email: yup
+                                .string()
+                                .email("Email must be a valid email")
+                                .required("Email is must be required"),
                             password: yup
                                 .string()
-                                .min(6)
+                                .min(4)
                                 .required("Password is must be required"),
                             confirmpassword: yup
                                 .string()
@@ -64,11 +111,11 @@ const RegisterScreen: React.FC<props> = ({
                                     }}
                                 >Register</Label>
                                 <InputBox
-                                    value={values.password}
-                                    onChangeText={handleChange("password")}
-                                    onBlur={() => setFieldTouched('password')}
-                                    // touched={touched.password}
-                                    // errors={errors.password}
+                                    value={values.first_name}
+                                    onChangeText={handleChange("first_name")}
+                                    onBlur={() => setFieldTouched('first_name')}
+                                    touched={touched.first_name}
+                                    errors={errors.first_name}
                                     mpContainer={{ mt: 20, mh: 20 }}
                                     inputHeight={50}
                                     placeholder="First name"
@@ -83,13 +130,12 @@ const RegisterScreen: React.FC<props> = ({
                                     leftIcon={() => <Ionicans name="md-person" size={20}
                                         style={{ width: 25, marginLeft: 10 }} />}
                                 />
-
                                 <InputBox
-                                    value={values.password}
-                                    onChangeText={handleChange("password")}
-                                    onBlur={() => setFieldTouched('password')}
-                                    // touched={touched.password}
-                                    // errors={errors.password}
+                                    value={values.last_name}
+                                    onChangeText={handleChange("last_name")}
+                                    onBlur={() => setFieldTouched('last_name')}
+                                    touched={touched.last_name}
+                                    errors={errors.last_name}
                                     mpContainer={{ mt: 10, mh: 20 }}
                                     inputHeight={50}
                                     placeholder="Last name"
@@ -105,11 +151,11 @@ const RegisterScreen: React.FC<props> = ({
                                         style={{ width: 25, marginLeft: 10 }} />}
                                 />
                                 <InputBox
-                                    value={values.password}
-                                    onChangeText={handleChange("password")}
-                                    onBlur={() => setFieldTouched('password')}
-                                    // touched={touched.password}
-                                    // errors={errors.password}
+                                    value={values.email}
+                                    onChangeText={handleChange("email")}
+                                    onBlur={() => setFieldTouched('email')}
+                                    touched={touched.email}
+                                    errors={errors.email}
                                     mpContainer={{ mt: 10, mh: 20 }}
                                     inputHeight={50}
                                     placeholder="Email"
@@ -128,8 +174,8 @@ const RegisterScreen: React.FC<props> = ({
                                     value={values.password}
                                     onChangeText={handleChange("password")}
                                     onBlur={() => setFieldTouched('password')}
-                                    // touched={touched.password}
-                                    // errors={errors.password}
+                                    touched={touched.password}
+                                    errors={errors.password}
                                     mpContainer={{ mt: 10, mh: 20 }}
                                     inputHeight={50}
                                     placeholder="Password"
@@ -150,8 +196,8 @@ const RegisterScreen: React.FC<props> = ({
                                     value={values.confirmpassword}
                                     onChangeText={handleChange("confirmpassword")}
                                     onBlur={() => setFieldTouched('confirmpassword')}
-                                    // touched={touched.confirmpassword}
-                                    // errors={errors.confirmpassword}
+                                    touched={touched.confirmpassword}
+                                    errors={errors.confirmpassword}
                                     mpContainer={{ mt: 10, mh: 20 }}
                                     inputHeight={50}
                                     placeholder="Confirm password"

@@ -15,13 +15,11 @@ interface props extends navigationProps {
 }
 
 const EmailSentScreen: React.FC<props> = ({
-    navigation,
-    route
+    navigation
 }) => {
     return (
         <MainContainer style={{
             justifyContent: 'center',
-            // alignItems: "center",
             backgroundColor: "#246e87"
         }}
         >

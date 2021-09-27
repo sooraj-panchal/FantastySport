@@ -7,10 +7,10 @@ import { ListRenderItem } from 'react-native';
 import HeadToHeadTeam from './HeadToHeadTeam';
 import { scheduleListTypes } from '../../../types/flatListTypes';
 import { useDispatch, useSelector } from 'react-redux';
-import { getScheduleListWatcher, updateWeek } from '../../../store/slices/scheduleSlice';
+import { getScheduleListWatcher, updateWeek } from '../../../store/slices/schedule';
 import { RootState } from '../../../types/reduxTypes';
 import Label from '../../../components/Label';
-import { selectedLeagueWatcher } from '../../../store/slices/selectedLeagueSlice';
+import { selectedLeagueWatcher } from '../../../store/slices/selectedLeague';
 import { IWeek } from '../../../utils/jsonArray';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 interface props extends navigationProps { }

@@ -1,10 +1,10 @@
 import React from 'react';
-import LoginScreen from '../container/AuthModule/LoginScreen';
-import RegisterScreen from '../container/AuthModule/RegisterScreen';
-import ForgotPasswordScreen from '../container/AuthModule/ForgotPasswordScreen';
+import LoginScreen from '../container/AuthModule/LoginScreen/view';
+import RegisterScreen from '../container/AuthModule/RegisterScreen/view';
+import ForgotPasswordScreen from '../container/AuthModule/ForgotPasswordScreen/view';
 import EmailSentScreen from '../container/AuthModule/EmailSentScreen';
-import VerificationScreen from '../container/AuthModule/VerificationScreen';
-import ResetPasswordScreen from '../container/AuthModule/ResetPasswordScreen';
+import VerificationScreen from '../container/AuthModule/VerificationScreen/view';
+import ResetPasswordScreen from '../container/AuthModule/ResetPasswordScreen/view';
 import AppIntroScreen from '../container/AuthModule/AppIntroScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../types/nav';

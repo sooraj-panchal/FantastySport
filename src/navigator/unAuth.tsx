@@ -2,7 +2,7 @@ import React from 'react';
 import { PrimaryColor } from '../assets/colors';
 import Tabs from './Tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import ChangePasswordScreen from '../container/AppModule/ChangePasswordScreen';
+import ChangePasswordScreen from '../container/AppModule/ChangePasswordScreen/view';
 import TermsAndConditionScreen from '../container/AppModule/TermsConditionScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { unAuthParamList } from '../types/nav';

@@ -9,7 +9,7 @@ import { medium } from '../../../assets/fonts/fonts';
 import { LeaguePlayerTypes, PlayerPositionTypes } from '../../../types/flatListTypes';
 import PointAddedPlayerList from '../../../components/PointAddedPlayerList';
 import { ListRenderItem, FlatList, Alert } from 'react-native';
-import { addToMyPlayerWatcher } from '../../../store/slices/myPlayerListSlice';
+import { addToMyPlayerWatcher } from '../../../store/slices/myPlayerList';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../types/reduxTypes';
 
