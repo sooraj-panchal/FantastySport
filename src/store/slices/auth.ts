@@ -7,6 +7,7 @@ const slice = createSlice({
   initialState: {
     user: {},
     token: ''
+
   },
   reducers: {
     setCredentials: (
@@ -14,7 +15,7 @@ const slice = createSlice({
       { payload: { user } }: PayloadAction<{ user: UserResponse }>
     ) => {
       state.user = user
-      state.token = user.api_token
+      state.token = user.api_token || ''
     },
     logoutUser: (state) => {
       state.user = {}

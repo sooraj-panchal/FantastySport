@@ -45,7 +45,7 @@ const DEFPositionModal: React.FC<props> = ({
         dispatch(getDefPositionList())
     }, [])
 
-    console.log("myPlayerListArray", myPlayerListArray)
+    // console.log("myPlayerListArray", myPlayerListArray)
 
 
     const renderItem: ListRenderItem<LeaguePlayerTypes> = ({ item, index }) => {

@@ -46,8 +46,14 @@ const VerificationScreen: React.FC<props> = ({
         try {
             const user = await verifyOtp(data).unwrap()
             console.log(user)
-            dispatch(setCredentials({ user: user }))
-            navigation.dispatch(AppStack)
+            if (route.params?.fromReset) {
+                navigation.navigate('ResetPassword', {
+                    email: route.params.email
+                })
+            } else {
+                dispatch(setCredentials({ user: user }))
+                navigation.dispatch(AppStack)
+            }
         } catch (err) {
             console.log('err', err)
         }

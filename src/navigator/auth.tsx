@@ -19,7 +19,7 @@ const AuthStackScreen = () => {
             screenOptions={{
                 headerShown: false,
                 animation: 'slide_from_right',
-                headerBackTitleVisible:false
+                headerBackTitleVisible: false
             }}
         >
             <StackScreen.Screen
@@ -97,4 +97,5 @@ const AuthStackScreen = () => {
         </StackScreen.Navigator>
     )
 }
+
 export default AuthStackScreen;

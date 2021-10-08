@@ -216,6 +216,7 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
     const myPlayerListArray: PlayerPositionTypes[] = useSelector((state: RootState) => state.myPlayer.data)
     const leagueTeamNameList: Array<scheduleListTypes> = useSelector((state: RootState) => state.selectedLeague.leagueTeamNameList)
     const currentWeek: number = useSelector((state: RootState) => state.schedule.currentWeek)
+    const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
 
     const dispatch = useDispatch()
     React.useLayoutEffect(() => {
@@ -239,36 +240,41 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
     React.useEffect(() => getLeaguePlayers(), [])
 
     const getLeaguePlayers = () => {
+        console.log('leagueTeamNameList==>', leagueTeamNameList)
         leagueTeamNameList.map(async (item, index) => {
-            const response: AxiosResponse<LeaguePlayerTypes[]> = await axios.get(`https://api.sportsdata.io/v3/nfl/projections/json/PlayerGameProjectionStatsByTeam/2021REG/${currentWeek}/${item}`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    "Ocp-Apim-Subscription-Key": '881199c7a4104d75876bd87860a231a8'
-                }
-            })
-            let data = await getPlayerImage(response.data?.slice(0, 10))
-            let myPlayers = getMyPlayerList(data)
+            try {
+                const response: AxiosResponse<LeaguePlayerTypes[]> = await axios.get(`https://api.sportsdata.io/v3/nfl/projections/json/PlayerGameProjectionStatsByTeam/2021REG/${leagueDetails?.week[0].week_no}/${item}`, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        "Ocp-Apim-Subscription-Key": '881199c7a4104d75876bd87860a231a8'
+                    }
+                })
+                let data = await getPlayerImage(response.data?.slice(0, 10))
+                let myPlayers = getMyPlayerList(data)
 
-            let getDataByFilterPosition = myPlayers.filter((item, index) => {
-                if (route.params.Position == "W/R/T" && !item.isSelected) {
-                    return item.Position == "WR" || item.Position == "RB" || item.Position == "TE"
-                } else {
-                    return item.Position == route.params.Position
-                }
-            }).map((item, index) => {
-                let isWrtPosition = item.Position == "WR" || item.Position == "RB" || item.Position == "TE"
-                if (route.params.Position == "W/R/T" && !item.isSelected && isWrtPosition) {
-                    item.Position = 'W/R/T'
-                } else {
-                    item.Position = item.Position;
-                }
-                return item
-            })
-            console.log('getDataByFilterPosition', getDataByFilterPosition)
-            setPlayerList((prev) => [...prev, ...getDataByFilterPosition])
-            setplayerByPositionList((prev) => [...prev, ...myPlayers])
-            setLoading(false)
+                let getDataByFilterPosition = myPlayers.filter((item, index) => {
+                    if (route.params.Position == "W/R/T" && !item.isSelected) {
+                        return item.Position == "WR" || item.Position == "RB" || item.Position == "TE"
+                    } else {
+                        return item.Position == route.params.Position
+                    }
+                }).map((item, index) => {
+                    let isWrtPosition = item.Position == "WR" || item.Position == "RB" || item.Position == "TE"
+                    if (route.params.Position == "W/R/T" && !item.isSelected && isWrtPosition) {
+                        item.Position = 'W/R/T'
+                    } else {
+                        item.Position = item.Position;
+                    }
+                    return item
+                })
+                console.log('getDataByFilterPosition', getDataByFilterPosition)
+                setPlayerList((prev) => [...prev, ...getDataByFilterPosition])
+                setplayerByPositionList((prev) => [...prev, ...myPlayers])
+                setLoading(false)
+            } catch (error) {
+                console.log('errror', error)
+            }
         })
     }
 
@@ -302,8 +308,6 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
         })
         return data
     }
-
-
 
     const getMyPlayerList = (leaguePlayers: Array<LeaguePlayerTypes>) => {
         if (myPlayerListArray.length) {

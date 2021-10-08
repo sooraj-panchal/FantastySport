@@ -10,6 +10,9 @@ import authReducer from './slices/auth';
 import { persistReducer, persistStore } from 'redux-persist';
 import { combineReducers } from 'redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ProfileApi } from '../features/profile';
+import { LeagueApi } from '../features/league';
+import { sportsDataApi } from '../features/sportsData';
 
 const reducers = combineReducers({
     schedule: scheduleReducer,
@@ -19,6 +22,9 @@ const reducers = combineReducers({
     defPosition: defPositionReducer,
     auth: authReducer,
     [authApi.reducerPath]: authApi.reducer,
+    [LeagueApi.reducerPath]: LeagueApi.reducer,
+    [ProfileApi.reducerPath]: ProfileApi.reducer,
+    [sportsDataApi.reducerPath]: sportsDataApi.reducer
 });
 
 const persistConfig = {
@@ -36,9 +42,12 @@ const store = configureStore({
                 ignoredActions: ["persist/PERSIST"]
             }
         }).concat(authApi.middleware)
+        .concat(ProfileApi.middleware)
+        .concat(LeagueApi.middleware)
+        .concat(sportsDataApi.middleware)
     // getDefaultMiddleware().concat(authApi.middleware),
 });
-
+// ProfileApi.middleware, 
 let persistor = persistStore(store);
 
 export {

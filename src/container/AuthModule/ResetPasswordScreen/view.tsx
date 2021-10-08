@@ -1,37 +1,58 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { ScrollView } from 'react-native'
-import { DarkBlueColor, LightGrayColor, OrangeColor } from '../../../assets/colors'
+import { OrangeColor } from '../../../assets/colors'
 import { medium, semiBold } from '../../../assets/fonts/fonts'
 import Ionicans from 'react-native-vector-icons/Ionicons'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import { Formik } from 'formik'
 import * as yup from 'yup';
-import { AuthImages } from '../../../assets/images/map'
 import { navigationProps } from '../../../types/nav'
 import MainContainer from '../../../components/MainContainer'
-import HeaderBtn from '../../../components/HeaderBtn'
-import Img from '../../../components/Img'
 import Label from '../../../components/Label'
 import InputBox from '../../../components/InputBox'
 import Btn from '../../../components/Btn'
 import AuthWrapper from '../../../components/AuthWrapper'
+import { useResetPasswordMutation } from '../../../features/auth'
 
 interface props extends navigationProps {
     resetPasswordLoading: boolean
 }
 
+interface formValues {
+    password: string,
+    confirmpassword: string
+}
 
 const ResetPasswordScreen: React.FC<props> = ({
+    navigation,
+    route
 }) => {
+    const [resetPassword, { data, isLoading, error }] = useResetPasswordMutation<any>()
+    const initialValues: formValues = { password: '', confirmpassword: '' }
+
+    const resetPasswordHandler = (values: formValues) => {
+        let data = new FormData()
+        data.append('email', route.params.email)
+        data.append('password', values.password)
+        resetPassword(data).unwrap().then((res: any) => {
+            console.log('res',res)
+            if (res.status == 'Success') {
+                navigation.navigate('Login')
+            }
+        })
+    }
+
     return (
         <MainContainer
             style={{ backgroundColor: "#246e87" }}
+            absoluteModalLoading={isLoading}
+            successMessage={data?.message}
         >
             <AuthWrapper>
                 <ScrollView contentContainerStyle={{ paddingBottom: 100 }} >
                     <Formik
-                        initialValues={{ confirmpassword: '', password: '' }}
-                        onSubmit={values => { }}
+                        initialValues={initialValues}
+                        onSubmit={values => { resetPasswordHandler(values) }}
                         validationSchema={yup.object().shape({
                             password: yup
                                 .string()
@@ -57,8 +78,8 @@ const ResetPasswordScreen: React.FC<props> = ({
                                     value={values.password}
                                     onChangeText={handleChange("password")}
                                     onBlur={() => setFieldTouched('password')}
-                                    // touched={touched.password}
-                                    // errors={errors.password}
+                                    touched={touched.password}
+                                    errors={errors.password}
                                     mpContainer={{ mt: 20, mh: 20 }}
                                     inputHeight={50}
                                     placeholder="Password"
@@ -101,8 +122,8 @@ const ResetPasswordScreen: React.FC<props> = ({
                                     value={values.confirmpassword}
                                     onChangeText={handleChange("confirmpassword")}
                                     onBlur={() => setFieldTouched('confirmpassword')}
-                                    // touched={touched.confirmpassword}
-                                    // errors={errors.confirmpassword}
+                                    touched={touched.confirmpassword}
+                                    errors={errors.confirmpassword}
                                     mpContainer={{ mt: 10, mh: 20 }}
                                     inputHeight={50}
                                     placeholder="Confirm password"

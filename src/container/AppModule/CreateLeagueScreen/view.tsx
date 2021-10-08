@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Container from '../../../components/Container';
 import InputBox from '../../../components/InputBox';
 import Label from '../../../components/Label';
@@ -6,16 +6,16 @@ import MainContainer from '../../../components/MainContainer';
 import { navigationProps } from '../../../types/nav';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Btn from '../../../components/Btn';
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { greenColor, OrangeColor, PrimaryColor } from '../../../assets/colors';
-import { ListRenderItem } from 'react-native';
+import { ListRenderItem, FlatList, ScrollView } from 'react-native';
 import TeamList from './TeamList';
 import PickerModal from '../../../components/Picker';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../types/reduxTypes';
-import { scheduleListTypes } from '../../../types/flatListTypes';
+import { scheduleItemTypes, scheduleListTypes } from '../../../types/flatListTypes';
 import WeekModal from '../../../components/Modals/WeekModal';
 import { Modalize } from 'react-native-modalize';
+import { useCreateLeagueMutation, useLeagueListQuery } from '../../../features/league';
 interface props extends navigationProps {
 
 }
@@ -29,11 +29,54 @@ const CreateLeagueScreen: React.FC<props> = ({
     const [numOfParticipent, setNumOfParticipent] = React.useState<string>('')
     const [isPrivate, setIsPrivate] = React.useState<boolean>(true)
     const [isSingleWeek, setIsSingleWeek] = useState<boolean>(true)
-    const selectedLeagueList: Array<scheduleListTypes> = useSelector((state: RootState) => state.selectedLeague.data)
+    const selectedScheduleData: Array<scheduleItemTypes> = useSelector((state: RootState) => state.schedule.selectedScheduleData)
+    const selectedWeek: Array<{ week: string }> = useSelector((state: RootState) => state.selectedLeague.selectedWeek)
     const weekModalRef = useRef<Modalize>(null)
+
+    const [createLeague, { isLoading, data, error }] = useCreateLeagueMutation<any>()
+
     const onChangeScope = (value: boolean) => {
         setIsSingleWeek(value)
     }
+
+
+    const createLeagueHandler = () => {
+        const mySelectedWeek = selectedWeek.map((item, index) => ({ week: item.week }))
+        const leagueTeam = selectedScheduleData.map((item, index) => {
+            return {
+                team_id: item.homeTeam.team_id,
+                team_key: item.homeTeam.key,
+                team_logo: item.homeTeam.logo,
+                team_name: item.homeTeam.full_name,
+                op_team_id: item.awayTeam.team_id,
+                op_team_key: item.awayTeam.key,
+                op_team_logo: item.awayTeam.logo,
+                op_team_name: item.awayTeam.full_name,
+                start_time: item.start_time,
+            }
+        })
+        const leagueData = selectedWeek.map((item, index) => {
+            return {
+                week: item.week,
+                schedule: index == 0 ? leagueTeam : []
+            }
+        })
+        const formData = new FormData()
+        formData.append('week_type', isSingleWeek ? 'singleWeek' : 'multipleWeek')
+        formData.append('week', JSON.stringify(mySelectedWeek))
+        formData.append('type', isPrivate ? 'private' : 'public')
+        formData.append('name', leagueName)
+        formData.append('max_participant', numOfParticipent)
+        formData.append('scoring_system', selectPointSystem)
+        formData.append('week_detail', JSON.stringify(leagueData))
+        console.log('data', JSON.stringify(formData))
+        createLeague(formData).unwrap().then(() => {
+            navigation.goBack()
+        })
+    }
+
+    console.log('data', data)
+    console.log('error', error)
 
     const leagueScope = () => {
         return <>
@@ -237,7 +280,7 @@ const CreateLeagueScreen: React.FC<props> = ({
                 containerStyle={{ borderColor: "lightgrey" }}
                 inputHeight={45}
                 value={leagueName}
-                onChangeText={(val) => setLeagueName(val)}
+                onChange={(val) => setLeagueName(val.nativeEvent.text)}
             />
         </>
     }
@@ -327,6 +370,7 @@ const CreateLeagueScreen: React.FC<props> = ({
             </Container>
         </>
     }
+
     const participent = () => {
         return <>
             <Label
@@ -359,21 +403,24 @@ const CreateLeagueScreen: React.FC<props> = ({
         </>
     }
 
-    const renderAddedTeamItem: ListRenderItem<scheduleListTypes> = ({ item, index }) => {
+    const renderAddedTeamItem = (item: scheduleItemTypes, index: number) => {
         return <TeamList {...item}
         />
     }
-
 
     const renderFooter = () => {
         return <>
             <Btn
                 title="Choose game"
                 onPress={() => {
-                    weekModalRef.current?.open()
+                    if (selectedScheduleData.length) {
+                        navigation.navigate('AddLiveMatches')
+                    } else {
+                        weekModalRef.current?.open()
+                    }
                     // navigation.navigate('AddLiveMatches')
                 }}
-                mpBtn={{ mh: 20, mt: 5 }}
+                mpBtn={{ mh: 20, mt: 10 }}
                 btnHeight={30}
                 radius={5}
                 btnStyle={{ backgroundColor: greenColor, width: 120, elevation: 2 }}
@@ -393,18 +440,16 @@ const CreateLeagueScreen: React.FC<props> = ({
                 btnStyle={{ backgroundColor: OrangeColor }}
                 labelSize={16}
                 labelStyle={{ color: "white" }}
-                onPress={() => {
-                    navigation.navigate("MyTeamTab", {
-                        screen: "MyTeam"
-                    })
-                }}
+                onPress={createLeagueHandler}
             />
         </>
-
     }
 
     return (
-        <MainContainer>
+        <MainContainer
+            absoluteModalLoading={isLoading}
+            successMessage={data?.message}
+        >
             <Container containerStyle={{
                 width: "90%",
                 backgroundColor: "white",
@@ -414,17 +459,27 @@ const CreateLeagueScreen: React.FC<props> = ({
             }}
                 mpContainer={{ mv: 20, mh: 10, pv: 20 }}
             >
-                <FlatList
-                    data={selectedLeagueList}
-                    renderItem={renderAddedTeamItem}
-                    keyExtractor={(item, index) => `renderList ${index.toString()}`}
+                <ScrollView
                     contentContainerStyle={{ paddingBottom: 10 }}
-                    ListHeaderComponent={leagueScope}
-                    ListFooterComponent={renderFooter}
-                    ItemSeparatorComponent={() => <Container mpContainer={{ mv: 5 }} />}
-                    ListFooterComponentStyle={{ marginTop: 10 }}
-                    showsVerticalScrollIndicator={false}
-                />
+                >
+                    {leagueScope()}
+                    {
+                        selectedScheduleData.map((item, index) => {
+                            return renderAddedTeamItem(item, index)
+                        })
+                    }
+                    {/* <FlatList
+                        data={selectedLeagueList}
+                        renderItem={renderAddedTeamItem}
+                        keyExtractor={(item, index) => `renderList ${index.toString()}`}
+                        contentContainerStyle={{ paddingBottom: 10 }}
+                        ListHeaderComponent={leagueScope}
+                        ItemSeparatorComponent={() => <Container mpContainer={{ mv: 5 }} />}
+                        ListFooterComponentStyle={{ marginTop: 10 }}
+                        showsVerticalScrollIndicator={false}
+                    /> */}
+                    {renderFooter()}
+                </ScrollView>
             </Container>
             {/* </ScrollView> */}
             <WeekModal
@@ -434,6 +489,7 @@ const CreateLeagueScreen: React.FC<props> = ({
                 }}
                 isSingleWeek={isSingleWeek}
             />
+
         </MainContainer>
     )
 }

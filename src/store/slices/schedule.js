@@ -64,20 +64,40 @@ const scheduleSlice = createSlice( {
     initialState: {
         loading: false,
         data: [],
+        selectedScheduleData: [],
         error: null,
         currentWeek: 1,
+
     },
     reducers: {
         updateWeek: ( state, action ) => {
             state.currentWeek = action.payload;
-        }
+        },
+        getCurrentWeek: ( state, action ) => {
+            state.currentWeek = action.payload;
+        },
+        selecteSchedule: ( state, action ) => {
+            state.data[ action.payload ][ 'isSelected' ] = !state.data[ action.payload ][ 'isSelected' ];
+            state.data = state.data;
+        },
+        selectedScheduleList: ( state, action ) => {
+            state.selectedScheduleData = action.payload;
+        },
+        deleteScheduleWatcher: ( state, action ) => {
+            state.selectedScheduleData = state.selectedScheduleData.filter( ( item ) => item.game_key != action.payload );
+        },
     },
     extraReducers: builder => {
         builder.addCase( getScheduleListWatcher.pending, ( state, action ) => {
             state.loading = true;
             state.data = [];
         } ).addCase( getScheduleListWatcher.fulfilled, ( state, action ) => {
-            state.data = action.payload;
+            let data = action.payload?.map( ( item, index ) => {
+                const isItem = state.selectedScheduleData.find( ( findItem ) => findItem.game_key == item.game_key );
+                item.isSelected = isItem ? true : false;
+                return item;
+            } );
+            state.data = data;
             state.loading = false;
         } ).addCase( getScheduleListWatcher.rejected, ( state, action ) => {
             state.loading = false;
@@ -85,5 +105,5 @@ const scheduleSlice = createSlice( {
         } );
     }
 } );
-export const { updateWeek } = scheduleSlice.actions;
+export const { updateWeek, getCurrentWeek, selecteSchedule, selectedScheduleList, deleteScheduleWatcher } = scheduleSlice.actions;
 export default scheduleSlice.reducer;

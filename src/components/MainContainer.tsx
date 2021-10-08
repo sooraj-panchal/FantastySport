@@ -24,7 +24,8 @@ interface Props {
             message: string
         },
         status: string
-    } | any
+    } | any,
+    successMessage?: string
 }
 
 const MainContainer: React.FC<Props> = ({
@@ -37,7 +38,8 @@ const MainContainer: React.FC<Props> = ({
     absoluteModalLoading,
     loadingLabel,
     statusBarHeight,
-    errorMessage
+    errorMessage,
+    successMessage
 }) => {
 
     const insets = useSafeAreaInsets()
@@ -47,6 +49,12 @@ const MainContainer: React.FC<Props> = ({
             Toast.show(errorMessage.data.message, Toast.LONG)
         }
     }, [errorMessage])
+
+    useEffect(() => {
+        if (successMessage) {
+            Toast.show(successMessage, Toast.LONG)
+        }
+    }, [successMessage])
 
     const absoluteLoadingContainer = () => {
         if (absoluteModalLoading) return <ModalLoader loadingLabel={loadingLabel} />

@@ -1,6 +1,8 @@
+import { useNavigation } from '@react-navigation/core';
 import React from 'react';
 import { View } from 'react-native-animatable';
 import PagerView from 'react-native-pager-view';
+import { useDispatch, useSelector } from 'react-redux';
 import { MyLeagueList } from '../../../../arrayList';
 import { DarkBlueColor, OrangeColor, redColor } from '../../../assets/colors';
 import { medium } from '../../../assets/fonts/fonts';
@@ -9,16 +11,27 @@ import Container from '../../../components/Container';
 import Img from '../../../components/Img';
 import Label from '../../../components/Label';
 import MainContainer from '../../../components/MainContainer';
+import { useLeagueListQuery } from '../../../features/league';
+import { RootState } from '../../../store';
+import { leagueDetailsWatcher } from '../../../store/slices/selectedLeague';
+import { homeNavProps, navigationProps } from '../../../types/nav';
+import { UserResponse } from '../../../types/responseTypes';
 import { screenWidth } from '../../../types/sizes';
 
 
 const MyLeague: React.FC = ({
 
 }) => {
+    const dispatch = useDispatch()
     const [page, setPage] = React.useState<Number>(0)
+    const { data, isLoading } = useLeagueListQuery(null)
+    const user: UserResponse = useSelector((store: RootState) => store.auth.user)
+
+    console.log('data', JSON.stringify(data))
+    const navigation = useNavigation<homeNavProps>()
 
     return (
-        <Container>
+        <MainContainer loading={isLoading} >
             <Container containerStyle={{
                 flexDirection: "row",
                 alignItems: "center",
@@ -49,9 +62,10 @@ const MyLeague: React.FC = ({
                     console.log(event.nativeEvent.position)
                     setPage(event.nativeEvent.position)
                 }}
+                key={'PagerView'}
             >
                 {
-                    MyLeagueList.map((item, index) => {
+                    data?.map((item, index) => {
                         return <View key={index}>
                             <Container
                                 containerStyle={{
@@ -63,6 +77,14 @@ const MyLeague: React.FC = ({
                                     borderRadius: 10
                                 }}
                                 mpContainer={{ pl: 15 }}
+                                onPress={() => {
+                                    // console.log(item)
+                                    // let parsedWeek = JSON.parse(item.week)
+                                    dispatch(leagueDetailsWatcher({ ...item }))
+                                    navigation.navigate('MyTeamTab', {
+                                        screen: 'MyTeam'
+                                    })
+                                }}
                             >
                                 <Label
                                     labelSize={17}
@@ -71,7 +93,7 @@ const MyLeague: React.FC = ({
                                         color: "black"
                                     }}
                                     mpLabel={{ mt: 10 }}
-                                >{item.name}</Label>
+                                >{`${user.first_name} ${user.last_name}`}</Label>
                                 <Container containerStyle={{
                                     flexDirection: "row",
                                     alignItems: 'center'
@@ -91,7 +113,7 @@ const MyLeague: React.FC = ({
                                             fontWeight: "900"
                                         }}
                                         mpLabel={{ ml: 10 }}
-                                    >{item.league_name}</Label>
+                                    >{item.name}</Label>
                                 </Container>
                                 <Container containerStyle={{
                                     flexDirection: "row",
@@ -105,14 +127,14 @@ const MyLeague: React.FC = ({
                                             fontWeight: "900"
                                         }}
                                     >Match time : </Label>
-                                    <Label
+                                    {/* <Label
                                         labelSize={15}
                                         style={{
                                             letterSpacing: 0.5,
                                             color: "black",
                                             fontWeight: "900"
                                         }}
-                                    >{item.match_time}</Label>
+                                    >{item.league_match[0]?.start_time}</Label> */}
                                 </Container>
                                 <Img
                                     imgSrc={AppImages.private}
@@ -136,7 +158,7 @@ const MyLeague: React.FC = ({
                 }}
                 mpContainer={{ mt: 5 }}
             >
-                {MyLeagueList.map((item, index) => {
+                {data?.map((item, index) => {
                     return (
                         <Container key={`paginDot ${index}`}
                             containerStyle={{
@@ -153,7 +175,7 @@ const MyLeague: React.FC = ({
                     )
                 })}
             </Container>
-        </Container>
+        </MainContainer>
     )
 }
 export default MyLeague;

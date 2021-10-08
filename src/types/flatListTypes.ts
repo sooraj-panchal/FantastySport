@@ -31,8 +31,7 @@ export interface teamTypes {
     WikipediaLogoUrl: string;
 }
 
-export interface scheduleListTypes {
-    index?: number
+export interface scheduleItemTypes {
     awayTeam: {
         full_name: string,
         key: string,
@@ -49,7 +48,12 @@ export interface scheduleListTypes {
     };
     start_time: Date;
     game_key?: number;
-    isSelected: boolean
+    isSelected?: boolean
+}
+
+export interface scheduleListTypes {
+    week: number,
+    schedule: Array<scheduleItemTypes>
 }
 
 export interface PlayerDetailTypes {
@@ -63,16 +67,16 @@ export interface LeaguePlayerTypes {
     Name: string,
     Position: string,
     FantasyPosition?: string,
-    FantasyPointsFantasyDraft?: string|any,
-    FantasyPointsDraftKings?: string|any,
+    FantasyPointsFantasyDraft?: string | any,
+    FantasyPointsDraftKings?: string | any,
     photoUrl?: string;
     isSelected?: boolean;
     GameDate: Date;
     Opponent: string;
-    PredictionPoints?: string |any ;
-    Accuracy?:string;
-    SniperPoints?:string|any,
-    isWRTPosition?:boolean
+    PredictionPoints?: string | any;
+    Accuracy?: string;
+    SniperPoints?: string | any,
+    isWRTPosition?: boolean
 }
 
 export interface PlayerPositionTypes {
@@ -81,14 +85,14 @@ export interface PlayerPositionTypes {
     Name?: string,
     Position?: string,
     FantasyPosition?: string,
-    FantasyPointsFantasyDraft?: string|any,
-    FantasyPointsDraftKings?: string|any,
+    FantasyPointsFantasyDraft?: string | any,
+    FantasyPointsDraftKings?: string | any,
     photoUrl?: string;
     isSelected?: boolean;
     GameDate?: Date;
     Opponent?: string;
-    PredictionPoints?: string|any ;
-    Accuracy?:string;
-    SniperPoints?:string|any
-    isWRTPosition?:boolean
+    PredictionPoints?: string | any;
+    Accuracy?: string;
+    SniperPoints?: string | any
+    isWRTPosition?: boolean
 }

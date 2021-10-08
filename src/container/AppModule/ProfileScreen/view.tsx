@@ -14,95 +14,10 @@ import { AuthStack } from "../../../navigator/navActions";
 import EditProfileModal from "../../../components/Modals/EditProfileModal";
 import { navigationProps } from "../../../types/nav";
 import { ImageBackground } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../../store/slices/auth";
-
-
-
-const ImageContainer = ({
-
-}) => {
-    const [openModal, setOpenModal] = useState(false)
-    return (
-        <ImageBackground
-            style={{
-                width: "100%",
-                height: 260,
-                justifyContent: "center",
-                alignItems: "center",
-            }}
-            source={AppImages.profile_bg}
-        >
-            <EditProfileModal
-                openModal={openModal}
-                closeModal={() => setOpenModal(false)}
-            />
-            <Img
-                width={90}
-                height={90}
-                imgStyle={{ borderRadius: 100, borderWidth: 4, borderColor: 'white' }}
-                imgSrc={{ uri: AuthImages.profile_image }}
-            />
-            <Label
-                style={{ color: "white", fontFamily: medium, letterSpacing: 0.5 }}
-                labelSize={20}
-                mpLabel={{ pt: 15 }}
-            >Adams depp</Label>
-            <Label
-                style={{ color: "white", letterSpacing: 0.5 }}
-                labelSize={16}
-                mpLabel={{ mt: 5 }}
-            >Johnwick@gmail.com</Label>
-            <Btn
-                title="Edit Profile"
-                onPress={() => {
-                    setOpenModal(true)
-                }}
-                btnStyle={{
-                    borderWidth: 1,
-                    borderRadius: 4,
-                    // paddingVertical:20,
-                    paddingHorizontal: 30,
-                    borderColor: 'white',
-                    backgroundColor: 'transparent'
-                }}
-                labelSize={14}
-                labelStyle={{ color: 'white' }}
-                mpBtn={{ mt: 15 }}
-                btnHeight={35}
-            />
-        </ImageBackground>
-    )
-}
-const ListContainer = ({
-    onPress,
-    name
-}: { onPress: () => void, name: string }) => {
-    return (
-        <Btn
-            btnStyle={{
-                backgroundColor: 'white',
-                justifyContent: "flex-start"
-            }}
-            btnHeight={45}
-            title={name}
-            labelSize={14}
-            labelStyle={{
-                color: "black"
-            }}
-            mpBtn={{ mh: 5, pl: 20 }}
-            rightIcon={() => {
-                return <Ionicons
-                    name="chevron-forward"
-                    size={30}
-                    color="grey"
-                    style={{ position: "absolute", right: 10 }}
-                />
-            }}
-            onPress={onPress}
-        />
-    )
-}
+import { RootState } from "../../../store";
+import ImageContainer from "./ImageContainer";
 
 interface props extends navigationProps {
 
@@ -119,6 +34,38 @@ const ProfileScreen: React.FC<props> = ({
     const logoutHandler = () => {
         dispatch(logoutUser())
         navigation.dispatch(AuthStack)
+    }
+
+
+
+    const ListContainer = ({
+        onPress,
+        name
+    }: { onPress: () => void, name: string }) => {
+        return (
+            <Btn
+                btnStyle={{
+                    backgroundColor: 'white',
+                    justifyContent: "flex-start"
+                }}
+                btnHeight={45}
+                title={name}
+                labelSize={14}
+                labelStyle={{
+                    color: "black"
+                }}
+                mpBtn={{ mh: 5, pl: 20 }}
+                rightIcon={() => {
+                    return <Ionicons
+                        name="chevron-forward"
+                        size={30}
+                        color="grey"
+                        style={{ position: "absolute", right: 10 }}
+                    />
+                }}
+                onPress={onPress}
+            />
+        )
     }
 
     return (

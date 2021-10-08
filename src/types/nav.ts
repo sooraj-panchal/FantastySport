@@ -11,9 +11,9 @@ export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
   ForgotPassword: undefined;
-  Verification: { email: string };
+  Verification: { email: string, fromReset?: boolean };
   EmailSent: undefined;
-  ResetPassword: undefined;
+  ResetPassword: { email?: string };
   InviteFriend: undefined;
 };
 
@@ -29,7 +29,7 @@ export type unAuthParamList = {
   CreateLeague: undefined;
   AddLiveMatches: undefined;
   MyTeamTab: NavigatorScreenParams<MyTeamtabParamList>,
-  AddPlayer: { Position: any,isWRTPosition:boolean };
+  AddPlayer: { Position: any, isWRTPosition: boolean };
   AddSniperPoint: undefined;
   InviteFriend: undefined;
   EditTeamInfo: undefined;
@@ -85,6 +85,7 @@ export type navigationProps = {
 export type appProps = {
   route: authRouteProp;
   navigation: homeNavProps;
+
 };
 
 export type AddPlayerProps = NativeStackScreenProps<unAuthParamList, 'AddPlayerPoint'>;

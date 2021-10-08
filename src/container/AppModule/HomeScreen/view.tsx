@@ -14,7 +14,6 @@ import styles from "./styles";
 import { OrangeColor, PrimaryColor } from "../../../assets/colors";
 import { medium } from "../../../assets/fonts/fonts";
 
-
 interface props extends navigationProps {
 
 }

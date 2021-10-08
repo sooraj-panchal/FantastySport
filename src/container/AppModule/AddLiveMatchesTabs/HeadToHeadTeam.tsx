@@ -7,15 +7,14 @@ import Label from '../../../components/Label';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import moment from 'moment';
 import { SvgUri, Image as SvgImage } from 'react-native-svg';
-import { scheduleListTypes } from '../../../types/flatListTypes';
+import { scheduleItemTypes, scheduleListTypes } from '../../../types/flatListTypes';
 import { useDate, useTime } from '../../../utils/timeZone';
 
 interface other {
     onPress: () => void
 }
 
-const HeadToHeadTeam: React.FC<scheduleListTypes & other> = ({
-    index,
+const HeadToHeadTeam: React.FC<scheduleItemTypes & other> = ({
     awayTeam,
     homeTeam,
     start_time,

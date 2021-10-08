@@ -2,16 +2,14 @@ import React from 'react';
 import Container from '../../../components/Container';
 import Label from '../../../components/Label';
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import Img from '../../../components/Img';
-import { AppImages } from '../../../assets/images/map';
 import { OrangeColor } from '../../../assets/colors';
-import { medium, regular } from '../../../assets/fonts/fonts';
-import { scheduleListTypes } from '../../../types/flatListTypes';
+import { medium } from '../../../assets/fonts/fonts';
+import { scheduleItemTypes } from '../../../types/flatListTypes';
 import { useDate, useTime } from '../../../utils/timeZone';
 import { useDispatch } from 'react-redux';
-import { deleteLeagueWatcher, selectedLeagueWatcher } from '../../../store/slices/selectedLeague';
+import { deleteScheduleWatcher } from '../../../store/slices/schedule';
 
-const TeamList: React.FC<scheduleListTypes> = ({
+const TeamList: React.FC<scheduleItemTypes> = ({
     awayTeam,
     homeTeam,
     start_time,
@@ -29,7 +27,7 @@ const TeamList: React.FC<scheduleListTypes> = ({
                 // borderWidth: 1,
                 // borderColor: "#f2f2f2"
             }}
-            mpContainer={{ mh: 15 }}
+            mpContainer={{ mh: 15,mt:10 }}
         >
             <Container
                 containerStyle={{ flexDirection: "row" }}
@@ -85,7 +83,7 @@ const TeamList: React.FC<scheduleListTypes> = ({
                 }}
                 width={20} height={20}
                 onPress={() => {
-                    dispatch(deleteLeagueWatcher(game_key))
+                    dispatch(deleteScheduleWatcher(game_key))
                 }}
             >
                 <Ionicons

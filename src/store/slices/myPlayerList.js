@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { LeagueApi } from '../../features/league';
 
 export const myPlayerListSlice = createSlice( {
     name: "myPlayerListSlice",
     initialState: {
-        data: []
+        data: [],
+        MyTeamList: []
     },
     reducers: {
         addToMyPlayerWatcher: ( state, action ) => {
@@ -21,7 +23,15 @@ export const myPlayerListSlice = createSlice( {
         // updateLeagueWatcher: ( state, action ) => {
         //     state.data = 
         // }
-    }
+    },
+    extraReducers: ( builder ) => {
+        builder.addMatcher(
+            LeagueApi.endpoints.getMyTeams.matchFulfilled,
+            ( state, { payload } ) => {
+                state.MyTeamList = payload;
+            }
+        );
+    },
 } );
 
 export const { addToMyPlayerWatcher } = myPlayerListSlice.actions;

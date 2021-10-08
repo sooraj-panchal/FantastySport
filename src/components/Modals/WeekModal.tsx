@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/core';
 import { homeNavProps, navigationProps } from '../../types/nav';
 import { useDispatch } from 'react-redux';
 import { selectedWeekWatcher } from '../../store/slices/selectedLeague';
+import { getCurrentWeek } from '../../store/slices/schedule';
 
 interface props {
     closeModal: () => void,
@@ -28,7 +29,7 @@ const WeekModal: React.FC<props> = ({
 }) => {
     const navigation = useNavigation<homeNavProps>()
     const [weekList, setWeekList] = useState<Array<IWeek>>([])
-    
+
     useEffect(() => {
         setWeekList(WeekArray.map((item, index) => {
             item.isSelected = index ? false : true
@@ -157,7 +158,9 @@ const WeekModal: React.FC<props> = ({
                             mpBtn={{ mh: 15, mt: 20 }}
                             onPress={() => {
                                 let selectedWeek = weekList.filter((item, index) => item.isSelected)
+                                console.log("selectedweek", selectedWeek)
                                 dispatch(selectedWeekWatcher(selectedWeek))
+                                dispatch(getCurrentWeek(selectedWeek[0].week))
                                 closeModal()
                                 navigation.navigate('AddLiveMatches')
                             }}

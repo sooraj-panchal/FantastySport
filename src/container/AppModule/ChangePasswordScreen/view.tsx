@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ScrollView } from 'react-native'
 import { DarkBlueColor, LightGrayColor, OrangeColor } from '../../../assets/colors'
 import { medium, semiBold } from '../../../assets/fonts/fonts'
@@ -7,7 +7,7 @@ import MainContainer from '../../../components/MainContainer'
 import TextInputComp from '../../../components/TextInputComp'
 import Ionicans from 'react-native-vector-icons/Ionicons'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
-import { Formik } from 'formik'
+import { Formik, FormikValues } from 'formik'
 import * as yup from 'yup';
 import { AuthStack } from '../../../navigator/navActions'
 import * as globals from '../../../utils/globals'
@@ -15,31 +15,42 @@ import { navigationProps } from '../../../types/nav'
 import InputBox from '../../../components/InputBox'
 import AuthWrapper from '../../../components/AuthWrapper'
 import Label from '../../../components/Label'
+import { useChangePasswordMutation } from '../../../features/auth'
 
+// interface props extends navigationProps {
 
-interface props extends navigationProps {
-    resetPasswordWatcher: any,
-    resetPasswordSuccess: any,
-    resetPasswordResponse: any,
-    resetPasswordLoading: boolean
+// }
+interface formValues {
+    oldpassword: string,
+    password: string,
+    confirmpassword: string
 }
-
-const ChangePasswordScreen: React.FC<props> = ({
+const ChangePasswordScreen: React.FC<navigationProps> = ({
     navigation,
     route
 }) => {
+    const [changePassword, { data, isLoading, error }] = useChangePasswordMutation<any>()
+    const [isOldPasswordVisible, setIsOldPasswordVisible] = useState<boolean>(false)
+    const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
+    const [isNewPasswordVisible, setIsNewPasswordVisible] = useState<boolean>(false)
 
-    const resetPasswordHandler = (values: { password: string }) => {
+    const initialValues: formValues = { oldpassword: '', password: '', confirmpassword: '' }
+
+    const changePasswordHandler = (values: formValues) => {
         var data = new FormData()
-        data.append("auth_token", globals.authToken)
+        data.append("old_password", values.oldpassword)
         data.append("password", values.password)
-        data.append("email", route.params.email)
-        // resetPasswordWatcher(data)/
+        changePassword(data).unwrap().then((res) => {
+            // console.log("changepassword Response", res)
+            navigation.goBack()
+        })
     }
-
 
     return (
         <MainContainer
+            absoluteModalLoading={isLoading}
+            errorMessage={error}
+            successMessage={data?.message}
         >
             <AuthWrapper>
                 <ScrollView contentContainerStyle={{ paddingBottom: 100 }} >
@@ -52,8 +63,8 @@ const ChangePasswordScreen: React.FC<props> = ({
                         }}
                     >Change password</Label>
                     <Formik
-                        initialValues={{ oldpassword: "", confirmpassword: '', password: '' }}
-                        onSubmit={values => resetPasswordHandler(values)}
+                        initialValues={initialValues}
+                        onSubmit={values => changePasswordHandler(values)}
                         validationSchema={yup.object().shape({
                             oldpassword: yup
                                 .string()
@@ -75,8 +86,8 @@ const ChangePasswordScreen: React.FC<props> = ({
                                     value={values.oldpassword}
                                     onChangeText={handleChange("oldpassword")}
                                     onBlur={() => setFieldTouched('oldpassword')}
-                                    // touched={touched.oldpassword}
-                                    // errors={errors.oldpassword}
+                                    touched={touched.oldpassword}
+                                    errors={errors.oldpassword}
                                     mpContainer={{ mt: 30, mh: 20 }}
                                     inputHeight={50}
                                     placeholder="Old password"
@@ -104,23 +115,27 @@ const ChangePasswordScreen: React.FC<props> = ({
                                     rightIcon={() => {
                                         return (
                                             <Ionicans
-                                                name="md-eye"
+                                                name={isOldPasswordVisible ? "md-eye" : "md-eye-off"}
                                                 size={20}
                                                 style={{
                                                     position: "absolute",
                                                     right: 15,
                                                 }}
+                                                onPress={() => {
+                                                    setIsOldPasswordVisible(!isOldPasswordVisible)
+                                                }}
                                             />
                                         )
                                     }}
+                                    secureTextEntry={isOldPasswordVisible ? false : true}
                                 // placeholderTextColor={LightGrayColor}
                                 />
                                 <InputBox
                                     value={values.password}
                                     onChangeText={handleChange("password")}
                                     onBlur={() => setFieldTouched('password')}
-                                    // touched={touched.password}
-                                    // errors={errors.password}
+                                    touched={touched.password}
+                                    errors={errors.password}
                                     mpContainer={{ mt: 20, mh: 20 }}
                                     inputHeight={50}
                                     placeholder="Password"
@@ -148,23 +163,28 @@ const ChangePasswordScreen: React.FC<props> = ({
                                     rightIcon={() => {
                                         return (
                                             <Ionicans
-                                                name="md-eye"
+                                                name={isPasswordVisible ? "md-eye" : "md-eye-off"}
                                                 size={20}
                                                 style={{
                                                     position: "absolute",
                                                     right: 15,
                                                 }}
+                                                onPress={() => {
+                                                    setIsPasswordVisible(!isPasswordVisible)
+                                                }}
                                             />
                                         )
                                     }}
+                                    secureTextEntry={isPasswordVisible ? false : true}
+
                                 // placeholderTextColor={LightGrayColor}
                                 />
                                 <InputBox
                                     value={values.confirmpassword}
                                     onChangeText={handleChange("confirmpassword")}
                                     onBlur={() => setFieldTouched('confirmpassword')}
-                                    // touched={touched.confirmpassword}
-                                    // errors={errors.confirmpassword}
+                                    touched={touched.confirmpassword}
+                                    errors={errors.confirmpassword}
                                     mpContainer={{ mt: 20, mh: 20 }}
                                     inputHeight={50}
                                     placeholder="Confitm password"
@@ -192,16 +212,19 @@ const ChangePasswordScreen: React.FC<props> = ({
                                     rightIcon={() => {
                                         return (
                                             <Ionicans
-                                                name="md-eye"
+                                                name={isNewPasswordVisible ? "md-eye" : "md-eye-off"}
                                                 size={20}
                                                 style={{
                                                     position: "absolute",
                                                     right: 15,
                                                 }}
+                                                onPress={() => {
+                                                    setIsNewPasswordVisible(!isNewPasswordVisible)
+                                                }}
                                             />
                                         )
                                     }}
-                                // placeholderTextColor={LightGrayColor}
+                                    secureTextEntry={isNewPasswordVisible ? false : true}
                                 />
                                 <Btn
                                     title="CHANGE"

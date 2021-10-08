@@ -12,6 +12,7 @@ import Btn from '../../../components/Btn';
 import Octicons from 'react-native-vector-icons/Octicons'
 import AuthWrapper from '../../../components/AuthWrapper';
 import { useForgotPasswordMutation } from '../../../features/auth';
+import { forgotPasswordResponse, statusRes } from '../../../types/responseTypes';
 
 interface props extends navigationProps {
     forgotPasswordLoading: boolean
@@ -31,8 +32,15 @@ const ForgotPasswordScreen: React.FC<props> = ({
     const forgotPasswordHandler = (values: formVales) => {
         let data = new FormData()
         data.append('email', values.email)
-        forgotPassword(data)
+        forgotPassword(data).unwrap().then((res: forgotPasswordResponse) => {
+            navigation.navigate('Verification', {
+                email: res.email,
+                fromReset: true
+            })
+        })
     }
+
+    console.log("response", data)
 
     return (
         <MainContainer

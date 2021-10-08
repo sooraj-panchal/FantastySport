@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import Btn from '../../../components/Btn';
 import Container from '../../../components/Container';
 import MainContainer from '../../../components/MainContainer';
@@ -6,8 +6,8 @@ import { navigationProps } from '../../../types/nav';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Label from '../../../components/Label';
 import { greenColor, OrangeColor, PrimaryColor } from '../../../assets/colors';
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
-import { Alert, ListRenderItem, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { ListRenderItem, View } from 'react-native';
 import MyPlayersList from '../../../components/MyPlayersList';
 import Img from '../../../components/Img';
 import { AppImages } from '../../../assets/images/map';
@@ -15,46 +15,85 @@ import { LeaguePlayerTypes, PlayerPositionTypes } from '../../../types/flatListT
 import { IWeek, myPlayers, positions, positionsLength } from '../../../utils/jsonArray'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../types/reduxTypes';
-import moment from 'moment';
-import { useTime } from '../../../utils/timeZone';
 import { screenWidth } from '../../../types/sizes';
-import DEFPositionModal from '../../../components/Modals/DEFPostionModal';
-import { Modalize } from 'react-native-modalize';
+import { useCreateTeamMutation, useGetMyTeamsQuery } from '../../../features/league';
+import { addToMyPlayerWatcher } from '../../../store/slices/myPlayerList';
+import { useGetMyLiveMatchQuery } from '../../../features/sportsData';
+import { UserResponse } from '../../../types/responseTypes';
+
 const MyTeamScreen: React.FC<navigationProps> = ({
     navigation
 }) => {
+    const dispatch = useDispatch()
     const [myPlayerListData, setMyPlayerListData] = React.useState<PlayerPositionTypes[] | any>(myPlayers)
     const [totalPredictionPoints, setTotalPredictionPoints] = React.useState<number | any>(0.00)
     const [totalProjectedPoints, setTotalProjectedPoints] = React.useState<number | any>(0.00)
     const [totalSniperPoints, setTotalSniperPoints] = React.useState<number | any>(0.00)
     const [totalActualPoints, setTotalActualPoints] = React.useState<number | string>(0.00)
     const myPlayerListArray: PlayerPositionTypes[] = useSelector((state: RootState) => state.myPlayer.data)
-    const selectedWeek: IWeek[] = useSelector((state: RootState) => state.selectedLeague.selectedWeek)
     const currentWeek: number = useSelector((state: RootState) => state.schedule.currentWeek)
+    const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
+    const user: UserResponse = useSelector((state: RootState) => state.auth.user)
+    const [createTeamWatcher, { data, isLoading }] = useCreateTeamMutation()
 
-    const defModalRef = useRef<Modalize>(null)
-    React.useEffect(() => {
-        let groupedPlayers: any = {}
-        positions.forEach((position) => {
-            groupedPlayers[position] = myPlayerListArray.filter((i) => {
-                return i.Position == position
+    const { error: getMyTeamListError, data: getMyTeam, isLoading: getMyTeamLoding, isFetching: getMyTeamFetching } = useGetMyTeamsQuery({
+        league_id: leagueDetails.league_id,
+        week_id: leagueDetails.week[0].week_id
+    }, {
+        pollingInterval: 300000
+    })
+
+    useEffect(() => {
+        if (getMyTeam?.players?.length) {
+            let playerList = getMyTeam?.players
+            let groupedPlayers: any = {}
+
+            positions.forEach((position) => {
+                groupedPlayers[position] = playerList.filter((i) => {
+                    return i.Position == position
+                })
+                for (let i = groupedPlayers[position].length; i < positionsLength[position]; i++) {
+                    groupedPlayers[position].push(null)
+                }
             })
-            for (let i = groupedPlayers[position].length; i < positionsLength[position]; i++) {
-                groupedPlayers[position].push(null)
+
+            setMyPlayerListData(groupedPlayers)
+            let isPredictionPoints = playerList.every((item, index) => item.PredictionPoints !== "")
+            if (isPredictionPoints) {
+                const PredictionPoints = playerList.reduce(function (a, b) {
+                    return a + Number(b.PredictionPoints);
+                }, 0);
+                const FantasyPointsDraftKings = playerList.reduce(function (a, b) {
+                    return a + Number(b.FantasyPointsDraftKings);
+                }, 0);
+                const sniperPoints = playerList.reduce(function (a, b) {
+                    return a + Number(b.SniperPoints);
+                }, 0);
+                setTotalPredictionPoints(Math.abs(PredictionPoints / 10).toFixed(2))
+                setTotalProjectedPoints(Math.abs(FantasyPointsDraftKings / 10).toFixed(2))
+                setTotalSniperPoints(Math.abs(sniperPoints / 10).toFixed(2))
+                setTotalActualPoints(Math.abs(FantasyPointsDraftKings / 10).toFixed(2))
             }
-        })
-        totalPointsHandler()
-        setMyPlayerListData(groupedPlayers)
+        }
+    }, [getMyTeam])
+
+    React.useEffect(() => {
+        if (myPlayerListArray.length) {
+            let groupedPlayers: any = {}
+            positions.forEach((position) => {
+                groupedPlayers[position] = myPlayerListArray.filter((i) => {
+                    return i.Position == position
+                })
+                for (let i = groupedPlayers[position].length; i < positionsLength[position]; i++) {
+                    groupedPlayers[position].push(null)
+                }
+            })
+            totalPointsHandler()
+            setMyPlayerListData(groupedPlayers)
+        }
     }, [myPlayerListArray])
 
     const totalPointsHandler = () => {
-        // let { PredictionPoints } =
-        //     myPlayerListArray.reduce((a, b) => {
-        //         return ({
-        //             PredictionPoints: Number(a.PredictionPoints) + Number(b.PredictionPoints),
-        //             FantasyPointsDraftKings: Number(a.FantasyPointsDraftKings) + Number(b.FantasyPointsDraftKings)
-        //         })
-        //     });
         let isPredictionPoints = myPlayerListArray.every((item, index) => item.PredictionPoints !== "")
         if (isPredictionPoints) {
             const PredictionPoints = myPlayerListArray.reduce(function (a, b) {
@@ -114,17 +153,17 @@ const MyTeamScreen: React.FC<navigationProps> = ({
         return <MyPlayersList
             Position={position}
             {...item}
-
         />
     }
 
+    // console.log(leagueDetails?.week[0]?.week)
     const renderListHeader = () => {
         return <>
             <Container containerStyle={{ flexDirection: "row", alignItems: "center", justifyContent: 'space-between' }}
                 mpContainer={{ ml: 15, mt: 10 }}
             >
                 <Container containerStyle={{ flexDirection: "row", alignItems: "center" }} >
-                    <Label labelSize={15}  >Week 1</Label>
+                    <Label labelSize={15}  >Week {leagueDetails.week[0].week_no}</Label>
                     <Ionicons
                         name="ios-chevron-forward"
                         size={20}
@@ -161,9 +200,8 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                 <Img
                     imgSrc={AppImages.green_logo}
                     width={28} height={32} />
-                <Container
-                >
-                    <Label labelSize={16} style={{ fontWeight: "bold", letterSpacing: 0.5 }}  >Adam's Team</Label>
+                <Container>
+                    <Label labelSize={16} style={{ fontWeight: "bold", letterSpacing: 0.5 }}  > {user.first_name}'s Team</Label>
                     <Label labelSize={14} style={{ letterSpacing: 0.5 }} >4-3-3 | - of 1</Label>
                 </Container>
                 <Container
@@ -177,26 +215,14 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                     <Label labelSize={14} style={{ letterSpacing: 0.5, color: greenColor }} >Proj. {totalProjectedPoints}</Label>
                 </Container>
             </Container>
-            <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} mpContainer={{ mv: 10, mh: 15 }} />
-
-            {/* <Container
-                containerStyle={{
-                    borderBottomWidth: 1,
-                    borderTopWidth: 1,
-                    borderColor: 'lightgrey',
-                    flexDirection: "row",
-                    alignItems: 'center'
-                }}
-                mpContainer={{ pv: 10, ph: 15, mt: 10 }}
-            >
-                <Label labelSize={16} style={{ width: 225 }} >Offense</Label>
-                <Label labelSize={15} style={{ letterSpacing: 0.5, width: 45, textAlign: 'center' }}  >Proj</Label>
-                <Label labelSize={15} style={{ letterSpacing: 0.5, width: 75, textAlign: 'center' }} >Pred</Label>
-            </Container> */}
+            {
+                getMyTeam?.players?.length ? null :
+                    <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} mpContainer={{ mv: 10, mh: 15 }} />
+            }
         </>
     }
-    console.log('myPlayerListArray', myPlayerListArray)
 
+    // console.log('myPlayerListArray', myPlayerListArray)
 
     const renderSelectedWeekItem: ListRenderItem<IWeek> = ({ item, index }) => {
         let isCurrentWeek = item.week == currentWeek;
@@ -251,30 +277,17 @@ const MyTeamScreen: React.FC<navigationProps> = ({
 
     return <MainContainer
         style={{ backgroundColor: 'white' }}
+        absoluteModalLoading={isLoading}
+        successMessage={data?.message}
+        loading={getMyTeamLoding}
+        absoluteLoading={getMyTeamFetching}
     >
         {renderListHeader()}
-        {/* <ScrollView>
-            {
-                Object.keys(myPlayerListData).map((position) => {
-                    return <View>
-                        {
-                            myPlayerListData[position].map((item: LeaguePlayerTypes) => {
-                                return renderItem(item, position)
-                            })
-                        }
-                    </View>
-                })
-            }
-        </ScrollView> */}
-        {/* <FlatList
-            data={selectedWeek}
-            renderItem={renderSelectedWeekItem}
-            numColumns={3}
-        /> */}
         <Container containerStyle={{
             flexDirection: 'row',
             alignItems: 'center',
-            alignSelf: 'flex-end'
+            alignSelf: 'flex-end',
+            display: getMyTeam?.players?.length ? 'none' : 'flex'
         }}>
             <Btn
                 title="Add"
@@ -291,7 +304,6 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                 }}
                 onPress={() => {
                     navigation.navigate('AddPlayerPoint')
-                    // navigation.navigate('AddPlayer')
                 }}
             />
             <Btn
@@ -308,13 +320,32 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                     alignSelf: "flex-end"
                 }}
                 onPress={() => {
-                    Alert.alert("", 'Save Player')
-                    // navigation.navigate('EditTeamInfo')
-                    // navigation.navigate('AddPlayer')
+                    const saveLeaguePlayers = myPlayerListArray.map((item, index) => {
+                        return {
+                            PlayerID: item.PlayerID,
+                            Name: item.Name,
+                            Position: item.Position,
+                            Team: item.Team,
+                            Opponent: item.Opponent,
+                            Accuracy: item.Accuracy,
+                            GameDate: item.GameDate,
+                            photoUrl: item.photoUrl,
+                            PredictionPoints: item.PredictionPoints,
+                            SniperPoints: item.SniperPoints,
+                            FantasyPointsDraftKings: item.FantasyPointsDraftKings
+                        }
+                    })
+                    let data = new FormData()
+                    data.append('week_id', leagueDetails.week[0].week_id)
+                    data.append('players', JSON.stringify(saveLeaguePlayers))
+                    data.append('league_id', leagueDetails.league_id)
+                    createTeamWatcher(data).unwrap().then((res) => {
+                        dispatch(addToMyPlayerWatcher([]))
+                    })
                 }}
             />
         </Container>
-        <ScrollView horizontal={true} >
+        <ScrollView horizontal={true} key="scrollView1" >
             <View>
                 <Container
                     containerStyle={{
@@ -335,22 +366,17 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                     {
                         Object.keys(myPlayerListData).map((position, index) => {
                             return (
-                                myPlayerListData[position].map((item: LeaguePlayerTypes) => {
-                                    return renderItem(item, position)
+                                myPlayerListData[position].map((item: LeaguePlayerTypes, index: number) => {
+                                    return <View key={index.toString()}>
+                                        {renderItem(item, position)}
+                                    </View>
                                 })
                             )
                         })
                     }
                 </ScrollView>
-
             </View>
         </ScrollView>
-        {/* <DEFPositionModal
-            modalizeRef={defModalRef}
-            closeModal={()=>{
-                defModalRef.current?.close()
-            }}
-        /> */}
     </MainContainer>
 }
 export default MyTeamScreen;
