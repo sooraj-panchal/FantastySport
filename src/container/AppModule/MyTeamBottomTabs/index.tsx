@@ -11,9 +11,13 @@ import { HeaderBackButton } from '@react-navigation/elements'
 import Container from "../../../components/Container";
 import Label from "../../../components/Label";
 import { regular } from "../../../assets/fonts/fonts";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 const Tab = createBottomTabNavigator<MyTeamtabParamList>();
 
 const MyTeamBottomTabs = () => {
+    const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
+
     return (
         <Tab.Navigator
             screenOptions={{
@@ -46,7 +50,7 @@ const MyTeamBottomTabs = () => {
                             )
                         },
                         headerShown: true,
-                        headerTitle: "Redbelly's League",
+                        headerTitle: leagueDetails.name,
                         headerTitleStyle: {
                             fontSize: 16,
                             fontFamily: regular
@@ -86,9 +90,9 @@ const MyTeamBottomTabs = () => {
                         )
                     },
                     headerShown: true,
-                    headerTitle: "Adam's Team",
+                    headerTitle: leagueDetails.name,
                     headerTintColor: "white",
-                    tabBarLabel: "Live Match",
+                    tabBarLabel: "Live MatchUp",
                     headerLeft: () => {
                         return <HeaderBackButton
                             tintColor="white"

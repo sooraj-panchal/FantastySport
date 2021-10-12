@@ -5,7 +5,8 @@ export const myPlayerListSlice = createSlice( {
     name: "myPlayerListSlice",
     initialState: {
         data: [],
-        MyTeamList: []
+        MyTeamList: [],
+        LiveMatchList:[]
     },
     reducers: {
         addToMyPlayerWatcher: ( state, action ) => {
@@ -16,6 +17,9 @@ export const myPlayerListSlice = createSlice( {
                 } )
             );
             state.data = data;
+        },
+        liveMatchWatcher: ( state, action ) => {
+            state.LiveMatchList = action.payload;
         },
         // deleteLeagueWatcher: ( state, action ) => {
         //     state.data = state.data.filter( ( item, index ) => item.game_key != action.payload );
@@ -28,11 +32,11 @@ export const myPlayerListSlice = createSlice( {
         builder.addMatcher(
             LeagueApi.endpoints.getMyTeams.matchFulfilled,
             ( state, { payload } ) => {
-                state.MyTeamList = payload;
+                state.MyTeamList = payload?.players;
             }
         );
     },
 } );
 
-export const { addToMyPlayerWatcher } = myPlayerListSlice.actions;
+export const { addToMyPlayerWatcher,liveMatchWatcher } = myPlayerListSlice.actions;
 export default myPlayerListSlice.reducer;

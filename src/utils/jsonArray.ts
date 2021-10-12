@@ -86,7 +86,7 @@ const leagueData = {
 const data = [
     {
         week: 1,
-        league_id:'',
+        league_id: '',
         players: [
             {
                 "Accuracy": "1",

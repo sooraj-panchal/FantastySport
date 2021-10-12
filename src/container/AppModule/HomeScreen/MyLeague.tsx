@@ -115,7 +115,7 @@ const MyLeague: React.FC = ({
                                         mpLabel={{ ml: 10 }}
                                     >{item.name}</Label>
                                 </Container>
-                                <Container containerStyle={{
+                                {/* <Container containerStyle={{
                                     flexDirection: "row",
                                     alignItems: 'center'
                                 }} mpContainer={{ mt: 10 }} >
@@ -127,15 +127,15 @@ const MyLeague: React.FC = ({
                                             fontWeight: "900"
                                         }}
                                     >Match time : </Label>
-                                    {/* <Label
+                                    <Label
                                         labelSize={15}
                                         style={{
                                             letterSpacing: 0.5,
                                             color: "black",
                                             fontWeight: "900"
                                         }}
-                                    >{item.league_match[0]?.start_time}</Label> */}
-                                </Container>
+                                    >{item.league_match[0]?.start_time}</Label>
+                                </Container> */}
                                 <Img
                                     imgSrc={AppImages.private}
                                     imgStyle={{

@@ -21,6 +21,8 @@ import org.reactnative.maskedview.RNCMaskedViewPackage;
 import com.reactnativecommunity.picker.RNCPickerPackage;
 // react-native-gesture-handler
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+// react-native-image-crop-picker
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
 // react-native-pager-view
 import com.reactnativepagerview.PagerViewPackage;
 // react-native-reanimated
@@ -83,6 +85,7 @@ public class PackageList {
       new RNCMaskedViewPackage(),
       new RNCPickerPackage(),
       new RNGestureHandlerPackage(),
+      new PickerPackage(),
       new PagerViewPackage(),
       new ReanimatedPackage(),
       new SafeAreaContextPackage(),

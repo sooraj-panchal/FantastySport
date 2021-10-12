@@ -27,10 +27,14 @@ import NewsDetailScreen from '../container/AppModule/NewsDetailScreen/view';
 import AddPlayerPointScreen from '../container/AppModule/AddPointScreen/view';
 import LiveMatchListScreen from '../container/AppModule/LiveMatchListScreen/view';
 import { Platform } from 'react-native';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 const StackScreen = createNativeStackNavigator<unAuthParamList>()
 
 const AppStackScreen: React.FC = () => {
+    const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
+
     return (
         <StackScreen.Navigator
             initialRouteName="tabs"
@@ -50,7 +54,7 @@ const AppStackScreen: React.FC = () => {
                 options={({ navigation, route }) => {
                     return ({
                         headerShown: false,
-                        
+
                     })
                 }}
             />
@@ -166,7 +170,7 @@ const AppStackScreen: React.FC = () => {
                 component={LiveMatchDetailScreen}
                 options={({ navigation }) => ({
                     headerShown: true,
-                    headerTitle: "Joshu's team"
+                    headerTitle: leagueDetails.name,
                 })}
             />
             <StackScreen.Screen

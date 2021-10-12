@@ -13,6 +13,7 @@ import { AppImages } from "../../../assets/images/map";
 import styles from "./styles";
 import { OrangeColor, PrimaryColor } from "../../../assets/colors";
 import { medium } from "../../../assets/fonts/fonts";
+import AllLeague from "./AllLeague";
 
 interface props extends navigationProps {
 
@@ -111,6 +112,7 @@ const HomeScreen: React.FC<props> = ({
                     keyExtractor={(item, index) => `MyLeague ${index.toString()}`}
                 />
                 <MyLeague />
+                <AllLeague />
                 <LiveMatch />
             </ScrollView>
         </MainContainer>

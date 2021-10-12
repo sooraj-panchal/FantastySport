@@ -53,7 +53,20 @@ export interface MyTeamResponse {
   league_id?: number,
   week_id?: number,
   players: Array<PlayerPositionTypes>,
+  team_name?: string,
+  team_logo?: string
 }
 export interface MyTeamLogoResponse {
-  WikipediaLogoUrl: string
+  WikipediaLogoUrl: string | ''
 }
+
+export interface TeamMatchDetailsResponse {
+  team_name: string,
+  team_logo: string,
+  accuracy: number,
+  prediction_points: number,
+  sniper_points: number,
+  fantasyPoint: number,
+  players: Array<PlayerPositionTypes>,
+}
+

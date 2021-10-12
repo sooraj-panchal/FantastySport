@@ -27,7 +27,8 @@ export const selectedLeagueSlice = createSlice({
                 item.schedule?.map((item) => {
                     if (item?.team_id) {
                         LegueTeamList.push(item.team_key);
-                    } else {
+                    }
+                    if (item?.op_team_id) {
                         LegueTeamList.push(item.op_team_key);
                     }
                 })
@@ -35,7 +36,6 @@ export const selectedLeagueSlice = createSlice({
             state.leagueDetails = action.payload;
             state.leagueTeamNameList = LegueTeamList;
         },
-        
     }
 });
 

@@ -36,8 +36,6 @@ const ProfileScreen: React.FC<props> = ({
         navigation.dispatch(AuthStack)
     }
 
-
-
     const ListContainer = ({
         onPress,
         name

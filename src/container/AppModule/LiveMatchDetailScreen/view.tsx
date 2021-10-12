@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Btn from '../../../components/Btn';
 import Container from '../../../components/Container';
 import MainContainer from '../../../components/MainContainer';
-import { navigationProps } from '../../../types/nav';
+import { LiveMatchDetailNav, navigationProps } from '../../../types/nav';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Label from '../../../components/Label';
 import { greenColor, OrangeColor, PrimaryColor } from '../../../assets/colors';
@@ -14,47 +14,70 @@ import { screenWidth } from '../../../types/sizes';
 import Img from '../../../components/Img';
 import { AppImages } from '../../../assets/images/map';
 import { medium } from '../../../assets/fonts/fonts';
+import { useTeamMatchDetailsQuery } from '../../../features/league';
+import { TeamMatchDetailsResponse } from '../../../types/responseTypes';
+import { SvgUri } from 'react-native-svg';
+import moment from 'moment'
+import { useTime } from '../../../utils/timeZone';
+const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
+    navigation,
+    route,
 
-const LiveMatchDetailScreen: React.FC<navigationProps> = ({
-    navigation
 }) => {
+    const { data, isLoading, isFetching } = useTeamMatchDetailsQuery({
+        team_id: 2,
+        op_team_id: route.params?.op_team_id,
+    }, {
+        pollingInterval: 3000
+    })
 
-    React.useLayoutEffect(() => {
-        return (
-            navigation.setOptions({
-                headerRight: () => {
-                    return <Container
-                        containerStyle={{
-                            flexDirection: "row",
-                            alignItems: "center"
-                        }}
-                        mpContainer={{ mr: 15, mt: 5 }}
-                    >
-                        <Btn
-                            title="Invite friends"
-                            labelSize={12}
-                            labelStyle={{
-                                color: 'white'
-                            }}
-                            radius={8}
-                            mpBtn={{ ph: 10, mr: 10 }}
-                            btnStyle={{
-                                backgroundColor: OrangeColor
-                            }}
-                            onPress={() => {
-                                navigation.navigate('InviteFriend')
-                            }}
-                        />
-                        <Ionicons
-                            name="ios-settings"
-                            size={22}
-                            color='white'
-                        />
-                    </Container>
-                }
-            })
-        )
-    }, [])
+    const imageType = useMemo(() => {
+        if (data?.[0].team_logo) {
+            return data?.[0].team_logo?.split('.').pop() == 'svg';
+        }
+        if (data?.[1]?.team_logo) {
+            return data?.[1].team_logo?.split('.').pop() == 'svg';
+        }
+    }, [data])
+
+    console.log('data', JSON.stringify(data))
+
+    // React.useLayoutEffect(() => {
+    //     return (
+    //         navigation.setOptions({
+    //             headerRight: () => {
+    //                 return <Container
+    //                     containerStyle={{
+    //                         flexDirection: "row",
+    //                         alignItems: "center"
+    //                     }}
+    //                     mpContainer={{ mr: 15, mt: 5 }}
+    //                 >
+    //                     <Btn
+    //                         title="Invite friends"
+    //                         labelSize={12}
+    //                         labelStyle={{
+    //                             color: 'white'
+    //                         }}
+    //                         radius={8}
+    //                         mpBtn={{ ph: 10, mr: 10 }}
+    //                         btnStyle={{
+    //                             backgroundColor: OrangeColor
+    //                         }}
+    //                         onPress={() => {
+    //                             navigation.navigate('InviteFriend')
+    //                         }}
+    //                     />
+    //                     <Ionicons
+    //                         name="ios-settings"
+    //                         size={22}
+    //                         color='white'
+    //                     />
+    //                 </Container>
+    //             }
+    //         })
+    //     )
+    // }, [])
 
     const renderItem: ListRenderItem<{}> = ({ item, index }) => {
         return <>
@@ -71,7 +94,7 @@ const LiveMatchDetailScreen: React.FC<navigationProps> = ({
                     style={{
                         alignSelf: "flex-end",
                         marginHorizontal: 20,
-                        marginTop: 10
+                        marginTop: 10,
                     }}
                 />
                 <Label labelSize={16} style={{ letterSpacing: 0.5, color: "grey" }} >Empty</Label>
@@ -131,38 +154,43 @@ const LiveMatchDetailScreen: React.FC<navigationProps> = ({
                     <Container
                         containerStyle={{
                             width: "40%",
-                            alignItems: "flex-end",
+                            alignItems: "flex-start"
                         }}
                     >
+                        <Label
+                            labelSize={16}
+                            style={{ color: "black" }}
+                        >{data?.[0].team_name}</Label>
                         <Container
                             containerStyle={{
                                 flexDirection: "row",
                                 alignItems: "center"
                             }}
                         >
-                            <Img
-                                imgStyle={{ width: 35, height: 40 }}
-                                imgSrc={AppImages.green_logo}
-                                mpImage={{ mt: 20 }}
-                            />
-                            <Container
-                                containerStyle={{
-                                    alignItems: 'flex-end'
-                                }}
-                            >
-                                <Label
-                                    labelSize={16}
-                                    style={{ color: "black", left: 10 }}
-                                >Joshu's Team</Label>
-                                <Label
-                                    labelSize={35}
-                                    style={{ color: "black", fontWeight: "bold" }}
-                                >0.00</Label>
+
+                            <Container height={40} width={40}>
+                                {
+                                    imageType ?
+                                        <SvgUri
+                                            width={40}
+                                            height={40}
+                                            uri={`https://chessmafia.com/php/fantasy/public/uploads/${data?.[0].team_logo}` || ''}
+                                        />
+                                        :
+                                        <Img
+                                            imgSrc={{ uri: `https://chessmafia.com/php/fantasy/public/uploads/${data?.[0].team_logo}` || 'dummy' }}
+                                            width={40} height={45} />
+                                }
                             </Container>
+                            <Label
+                                labelSize={35}
+                                style={{ color: "black" }}
+                                mpLabel={{ ml: 10 }}
+                            >{data?.[0].sniper_points}</Label>
                         </Container>
                     </Container>
                     <Container
-                        mpContainer={{ mt: 30, mh: 20 }}
+                        mpContainer={{ mt: 30, ml: 15, mr: 20 }}
                     >
                         {renderVS()}
                     </Container>
@@ -175,7 +203,7 @@ const LiveMatchDetailScreen: React.FC<navigationProps> = ({
                         <Label
                             labelSize={16}
                             style={{ color: "black" }}
-                        >Adam's Team</Label>
+                        >{data?.[1].team_name}</Label>
                         <Container
                             containerStyle={{
                                 flexDirection: "row",
@@ -185,12 +213,28 @@ const LiveMatchDetailScreen: React.FC<navigationProps> = ({
                             <Label
                                 labelSize={35}
                                 style={{ color: "black" }}
-                            >0.00</Label>
-                            <Img
+                            >{data?.[1].sniper_points}</Label>
+                            {/* <Img
                                 imgStyle={{ width: 35, height: 40 }}
                                 imgSrc={AppImages.green_logo}
                                 mpImage={{ ml: 10 }}
-                            />
+                            /> */}
+                            <Container
+                                mpContainer={{ ml: 10 }}
+                            >
+                                {
+                                    imageType ?
+                                        <SvgUri
+                                            width={40}
+                                            height={40}
+                                            uri={`https://chessmafia.com/php/fantasy/public/uploads/${data?.[1].team_logo}` || ''}
+                                        />
+                                        :
+                                        <Img
+                                            imgSrc={{ uri: `https://chessmafia.com/php/fantasy/public/uploads/${data?.[1].team_logo}` || 'dummy' }}
+                                            width={40} height={45} />
+                                }
+                            </Container>
                         </Container>
                     </Container>
                 </Container>
@@ -204,7 +248,7 @@ const LiveMatchDetailScreen: React.FC<navigationProps> = ({
                     <Label
                         labelSize={16}
                         style={{ color: greenColor, fontFamily: medium }}
-                    >94.3</Label>
+                    >{data?.[0].sniper_points}</Label>
                     <Label
                         labelSize={14}
                         style={{ color: OrangeColor, fontFamily: medium, width: 70, textAlign: 'center' }}
@@ -212,7 +256,7 @@ const LiveMatchDetailScreen: React.FC<navigationProps> = ({
                     <Label
                         labelSize={16}
                         style={{ color: 'grey', fontFamily: medium }}
-                    >83.4</Label>
+                    >{data?.[1].sniper_points}</Label>
                 </Container>
                 <Container containerStyle={{
                     flexDirection: 'row',
@@ -325,6 +369,8 @@ const LiveMatchDetailScreen: React.FC<navigationProps> = ({
 
     return <MainContainer
         style={{ backgroundColor: 'white' }}
+        loading={isLoading}
+        absoluteLoading={isFetching}
     >
         <ScrollView>
             <Container containerStyle={{ flexDirection: "row", alignItems: "center" }}
@@ -353,79 +399,162 @@ const LiveMatchDetailScreen: React.FC<navigationProps> = ({
             </Container>
             <View>
                 <ScrollView>
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => {
-                        return <>
-                            <Container
-                                containerStyle={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
-                                }}
-                                height={75}
-                            >
-                                <Container
-                                    containerStyle={{
-                                        flexDirection: "row",
-                                        width: "40%",
-                                        justifyContent: 'space-between'
-                                    }}
-                                >
-                                    <Container>
-                                        <Label labelSize={12} style={{ letterSpacing: 0.5, color: "black" }} >P. Mahomes</Label>
-                                        <Label labelSize={12} style={{ letterSpacing: 0.5, color: 'black' }} mpLabel={{ mv: 5 }} >QB</Label>
-                                        <Label labelSize={12} style={{ letterSpacing: 0.5, color: "grey" }} >Sun 4:25 vs Sea</Label>
-                                    </Container>
-                                    <Container
-                                        containerStyle={{ bottom: 4 }}
-                                    >
-                                        <Label labelSize={18} style={{ letterSpacing: 5, color: 'black' }} >---</Label>
-                                        <Label labelSize={15} style={{ letterSpacing: 0.5, color: 'grey' }} >38.3</Label>
-                                    </Container>
-                                </Container>
-                                <Container
-                                    containerStyle={{
-                                        width: "10%",
-                                        justifyContent: 'center',
-                                        backgroundColor: '#f2f2f2',
-                                        alignItems: 'center'
-                                    }}
-                                    height={75}
-                                    mpContainer={{ mh: 8 }}
-                                >
-                                    <Label
-                                        labelSize={15}
-                                        style={{
-                                            color: 'red'
-                                        }}
-                                    >QB</Label>
-                                </Container>
-                                <Container
-                                    containerStyle={{
-                                        flexDirection: "row",
-                                        justifyContent: 'space-between',
-                                        width: "40%"
-                                    }}
-                                >
-                                    <Container
-                                        containerStyle={{ bottom: 4 }}
-                                    >
-                                        <Label labelSize={18} style={{ letterSpacing: 5, color: 'black' }} >---</Label>
-                                        <Label labelSize={15} style={{ letterSpacing: 0.5, color: 'grey' }} >38.3</Label>
-                                    </Container>
+                    {/* {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => {
+                        return <> */}
+                    {/* <Container
+                        containerStyle={{
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                        height={75}
+                    > */}
+                    <Container
+                        containerStyle={{
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <View style={{
+                            width: "40%",
+                        }} >
+                            {data?.[0]?.players.map((item, index) => {
+                                return <>
                                     <Container
                                         containerStyle={{
-                                            alignItems: 'flex-end'
+                                            flexDirection: "row",
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            height: 75
                                         }}
+                                        mpContainer={{ mr: 5 }}
                                     >
-                                        <Label labelSize={12} style={{ letterSpacing: 0.5, color: "black" }} >P. Mahomes</Label>
-                                        <Label labelSize={12} style={{ letterSpacing: 0.5, color: 'black' }} mpLabel={{ mv: 5 }} >QB</Label>
-                                        <Label labelSize={12} style={{ letterSpacing: 0.5, color: "grey" }} >Sun 4:25 vs Sea</Label>
+                                        <Container>
+                                            <Label labelSize={12} style={{ color: "black", fontFamily: medium }} >{item.Name}</Label>
+                                            <Container containerStyle={{ flexDirection: 'row', alignItems: "center" }} mpContainer={{ mv: 5 }}  >
+                                                <Label labelSize={15} style={{ color: 'grey', fontFamily: medium }} >38.3</Label>
+                                                <Label labelSize={12} style={{ color: 'black' }} mpLabel={{ ml: 5 }} >{item.Position}</Label>
+                                            </Container>
+                                            <Label labelSize={12} style={{ color: "grey" }} >{moment(item.GameDate).format('ddd')} {useTime(item.GameDate)} v {item.Opponent}</Label>
+                                        </Container>
+                                        {/* <Container
+                                            containerStyle={{ bottom: 4 }}
+                                        >
+                                            <Label labelSize={18} style={{ letterSpacing: 5, color: 'black' }} >---</Label>
+                                        </Container> */}
                                     </Container>
-                                </Container>
-                            </Container>
-                            <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />
-                        </>
-                    })}
+                                    <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />
+                                </>
+                            })}
+                        </View>
+                        <View style={{
+                            width: "12%",
+                            // marginHorizontal: 8
+                        }}
+                        >
+                            {
+                                ['QB', 'WR', 'WR', 'WR', 'RB', 'RB', 'TE', 'W/R/T', 'K', 'DEF'].map((item, index) => {
+                                    return <>
+                                        <Container
+                                            containerStyle={{
+                                                justifyContent: 'center',
+                                                backgroundColor: '#f2f2f2',
+                                                alignItems: 'center'
+                                            }}
+                                            height={75}
+                                        >
+                                            <Label
+                                                labelSize={item == 'W/R/T' ? 12 : 15}
+                                                style={{
+                                                    color: 'red'
+                                                }}
+                                            >{item}</Label>
+                                        </Container>
+                                        <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />
+                                    </>
+                                })
+                            }
+                        </View>
+                        <View
+                            style={{
+                                width: "40%",
+                            }}
+                        >
+                            {data?.[1].players.map((item, index) => {
+                                return <>
+                                    <Container
+                                        containerStyle={{
+                                            flexDirection: "row",
+                                            justifyContent: 'space-between',
+                                            height: 75,
+                                            alignItems: 'center',
+                                        }}
+                                        mpContainer={{ ml: 10 }}
+                                    >
+                                        <Container>
+                                            <Label labelSize={12} style={{ color: "black", fontFamily: medium }} >{item.Name}</Label>
+                                            <Container containerStyle={{ flexDirection: 'row', alignItems: "center" }} mpContainer={{ mv: 5 }}  >
+                                                <Label labelSize={15} style={{ color: 'grey', fontFamily: medium }} >38.3</Label>
+                                                <Label labelSize={12} style={{ color: 'black' }} mpLabel={{ ml: 5 }} >{item.Position}</Label>
+                                            </Container>
+                                            <Label labelSize={12} style={{ color: "grey" }} >{moment(item.GameDate).format('ddd')} {useTime(item.GameDate)} v {item.Opponent}</Label>
+                                        </Container>
+                                        {/* <Container
+                                            containerStyle={{ bottom: 4 }}
+                                        >
+                                            <Label labelSize={18} style={{ letterSpacing: 5, color: 'black' }} >---</Label>
+                                            <Label labelSize={15} style={{ letterSpacing: 0.5, color: 'grey' }} >38.3</Label>
+                                        </Container> */}
+                                    </Container>
+                                    <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />
+                                </>
+                            })}
+                        </View>
+                    </Container>
+                    {/* <Container
+                        containerStyle={{
+                            width: "10%",
+                            justifyContent: 'center',
+                            backgroundColor: '#f2f2f2',
+                            alignItems: 'center'
+                        }}
+                        height={75}
+                        mpContainer={{ mh: 8 }}
+                    >
+                        <Label
+                            labelSize={15}
+                            style={{
+                                color: 'red'
+                            }}
+                        >QB</Label>
+                    </Container>
+                    <Container
+                        containerStyle={{
+                            flexDirection: "row",
+                            justifyContent: 'space-between',
+                            width: "40%"
+                        }}
+                    >
+                        <Container
+                            containerStyle={{ bottom: 4 }}
+                        >
+                            <Label labelSize={18} style={{ letterSpacing: 5, color: 'black' }} >---</Label>
+                            <Label labelSize={15} style={{ letterSpacing: 0.5, color: 'grey' }} >38.3</Label>
+                        </Container>
+                        <Container
+                            containerStyle={{
+                                alignItems: 'flex-end'
+                            }}
+                        >
+                            <Label labelSize={12} style={{ letterSpacing: 0.5, color: "black" }} >P. Mahomes</Label>
+                            <Label labelSize={12} style={{ letterSpacing: 0.5, color: 'black' }} mpLabel={{ mv: 5 }} >QB</Label>
+                            <Label labelSize={12} style={{ letterSpacing: 0.5, color: "grey" }} >Sun 4:25 vs Sea</Label>
+                        </Container>
+                    </Container> */}
+                    {/* </Container> */}
+                    {/* </>
+                    })} */}
                 </ScrollView>
             </View>
         </ScrollView>

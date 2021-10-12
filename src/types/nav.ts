@@ -11,7 +11,7 @@ export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
   ForgotPassword: undefined;
-  Verification: { email: string, fromReset?: boolean };
+  Verification: { email: string | undefined, fromReset?: boolean };
   EmailSent: undefined;
   ResetPassword: { email?: string };
   InviteFriend: undefined;
@@ -32,11 +32,11 @@ export type unAuthParamList = {
   AddPlayer: { Position: any, isWRTPosition: boolean };
   AddSniperPoint: undefined;
   InviteFriend: undefined;
-  EditTeamInfo: undefined;
+  EditTeamInfo: { team_id: any, team_name: any, team_logo: any } | undefined;
   EditTeam: undefined;
   JoinLeague: undefined;
   JoinLeagueTeamName: undefined;
-  LiveMatchDetail: undefined;
+  LiveMatchDetail: { op_team_id: number } | undefined;
   Standing: undefined;
   TeamLevel: undefined;
   WinnerDetail: undefined;
@@ -91,4 +91,6 @@ export type appProps = {
 export type AddPlayerProps = NativeStackScreenProps<unAuthParamList, 'AddPlayerPoint'>;
 
 export type PlayersNav = NativeStackScreenProps<unAuthParamList, 'AddPlayer'>;
+export type EditTeamNav = NativeStackScreenProps<unAuthParamList, 'EditTeamInfo'>;
+export type LiveMatchDetailNav = NativeStackScreenProps<unAuthParamList, 'LiveMatchDetail'>;
 

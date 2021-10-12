@@ -14,7 +14,7 @@ export interface registerRequest {
 }
 
 export const authApi = createApi({
-  reducerPath:'authApi',
+  reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://chessmafia.com/php/fantasy/api/',
     prepareHeaders: (headers, { getState }) => {

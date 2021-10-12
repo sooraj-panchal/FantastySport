@@ -76,7 +76,7 @@ const InputBox: React.FC<Props & TextInputProps> = ({
                         mpLabel={{}}
                         style={{
                             color: 'white',
-                            fontFamily:semiBold
+                            fontFamily: semiBold
                         }}
                     >{errors}</Label>
                 </Container>

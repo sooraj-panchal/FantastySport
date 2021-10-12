@@ -45,10 +45,10 @@ const LoginScreen: React.FC<props> = ({
         data.append('password', values.password)
         data.append('fcm_token', values.fcm_token || '')
         // console.log(data)
-        login(data)
+        // login(data)
         try {
             const user = await login(data).unwrap()
-            console.log(user)
+            console.log("login response ==>", user)
             if (user.otp_verify == "Y") {
                 dispatch(setCredentials({ user: user }))
                 navigation.dispatch(AppStack)

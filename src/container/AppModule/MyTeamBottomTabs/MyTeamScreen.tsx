@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import Btn from '../../../components/Btn';
 import Container from '../../../components/Container';
 import MainContainer from '../../../components/MainContainer';
@@ -7,7 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Label from '../../../components/Label';
 import { greenColor, OrangeColor, PrimaryColor } from '../../../assets/colors';
 import { ScrollView } from 'react-native-gesture-handler';
-import { ListRenderItem, View } from 'react-native';
+import { ListRenderItem, View, Alert } from 'react-native';
 import MyPlayersList from '../../../components/MyPlayersList';
 import Img from '../../../components/Img';
 import { AppImages } from '../../../assets/images/map';
@@ -18,12 +18,13 @@ import { RootState } from '../../../types/reduxTypes';
 import { screenWidth } from '../../../types/sizes';
 import { useCreateTeamMutation, useGetMyTeamsQuery } from '../../../features/league';
 import { addToMyPlayerWatcher } from '../../../store/slices/myPlayerList';
-import { useGetMyLiveMatchQuery } from '../../../features/sportsData';
 import { UserResponse } from '../../../types/responseTypes';
+import { SvgUri } from 'react-native-svg';
 
 const MyTeamScreen: React.FC<navigationProps> = ({
     navigation
 }) => {
+
     const dispatch = useDispatch()
     const [myPlayerListData, setMyPlayerListData] = React.useState<PlayerPositionTypes[] | any>(myPlayers)
     const [totalPredictionPoints, setTotalPredictionPoints] = React.useState<number | any>(0.00)
@@ -35,15 +36,29 @@ const MyTeamScreen: React.FC<navigationProps> = ({
     const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
     const user: UserResponse = useSelector((state: RootState) => state.auth.user)
     const [createTeamWatcher, { data, isLoading }] = useCreateTeamMutation()
+    const havePlayers = useSelector((state: RootState) => state.myPlayer.MyTeamList)
+    // const { data: haveData } = useGetMyTeamsQuery({
+    //     league_id: leagueDetails.league_id,
+    //     week_id: leagueDetails.week[0].week_id
+    // }, {
+    //     pollingInterval: 30000
+    // })
 
-    const { error: getMyTeamListError, data: getMyTeam, isLoading: getMyTeamLoding, isFetching: getMyTeamFetching } = useGetMyTeamsQuery({
+    const { error: getMyTeamListError, data: getMyTeam, isLoading: getMyTeamLoding, isFetching: getMyTeamFetching, refetch } = useGetMyTeamsQuery({
         league_id: leagueDetails.league_id,
-        week_id: leagueDetails.week[0].week_id
+        week_id: leagueDetails.week[0].week_id,
     }, {
-        pollingInterval: 300000
+        pollingInterval: havePlayers?.length == 10 ? 300000 : 0,
+        refetchOnMountOrArgChange:true
     })
 
+    // useEffect(() => {
+    //     refetch()
+    // }, [])
+    // console.log('haveData', JSON.stringify(myPlayerListArray))
+
     useEffect(() => {
+
         if (getMyTeam?.players?.length) {
             let playerList = getMyTeam?.players
             let groupedPlayers: any = {}
@@ -103,6 +118,7 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                 return a + Number(b.FantasyPointsDraftKings);
             }, 0);
             const sniperPoints = myPlayerListArray.reduce(function (a, b) {
+                console.log('sniperPoints', b.SniperPoints)
                 return a + Number(b.SniperPoints);
             }, 0);
             setTotalPredictionPoints(Math.abs(PredictionPoints / 10).toFixed(2))
@@ -156,6 +172,11 @@ const MyTeamScreen: React.FC<navigationProps> = ({
         />
     }
 
+    const imageType = useMemo(() => {
+        return getMyTeam?.team_logo?.split('.').pop() == 'svg';
+    }, [getMyTeam])
+
+
     // console.log(leagueDetails?.week[0]?.week)
     const renderListHeader = () => {
         return <>
@@ -181,10 +202,15 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                     btnStyle={{
                         backgroundColor: PrimaryColor,
                         width: 85,
-                        alignSelf: "flex-end"
+                        alignSelf: "flex-end",
+                        display: getMyTeam?.team_id ? 'flex' : 'none'
                     }}
                     onPress={() => {
-                        navigation.navigate('EditTeamInfo')
+                        navigation.navigate('EditTeamInfo', {
+                            team_id: getMyTeam?.team_id,
+                            team_name: getMyTeam?.team_name,
+                            team_logo: getMyTeam?.team_logo,
+                        })
                         // navigation.navigate('AddPlayer')
                     }}
                 />
@@ -193,20 +219,33 @@ const MyTeamScreen: React.FC<navigationProps> = ({
             <Container
                 containerStyle={{
                     flexDirection: "row",
-                    justifyContent: "space-between"
+                    // justifyContent: "space-between"
                 }}
                 mpContainer={{ mh: 15 }}
+                height={80}
             >
-                <Img
-                    imgSrc={AppImages.green_logo}
-                    width={28} height={32} />
-                <Container>
-                    <Label labelSize={16} style={{ fontWeight: "bold", letterSpacing: 0.5 }}  > {user.first_name}'s Team</Label>
+                {imageType ?
+                    <SvgUri
+                        width={40}
+                        height={40}
+                        uri={`https://chessmafia.com/php/fantasy/public/uploads/${getMyTeam?.team_logo}` || 'dummy'}
+                    />
+                    :
+                    <Img
+                        imgStyle={{}}
+                        width={40} height={40}
+                        mpImage={{ ml: 15 }}
+                        imgSrc={{ uri: `https://chessmafia.com/php/fantasy/public/uploads/${getMyTeam?.team_logo}` || 'dummy' }} />
+                }
+                <Container mpContainer={{ml:5}} >
+                    <Label labelSize={16} style={{ fontWeight: "bold", letterSpacing: 0.5 }}  > {getMyTeam?.team_name}</Label>
                     <Label labelSize={14} style={{ letterSpacing: 0.5 }} >4-3-3 | - of 1</Label>
                 </Container>
                 <Container
                     containerStyle={{
-                        alignItems: "flex-end"
+                        alignItems: "flex-end",
+                        position: 'absolute',
+                        right:10
                     }}
                 >
                     <Label labelSize={16} style={{ fontWeight: "bold" }}  >Act {totalActualPoints}</Label>
@@ -215,9 +254,10 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                     <Label labelSize={14} style={{ letterSpacing: 0.5, color: greenColor }} >Proj. {totalProjectedPoints}</Label>
                 </Container>
             </Container>
+
             {
-                getMyTeam?.players?.length ? null :
-                    <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} mpContainer={{ mv: 10, mh: 15 }} />
+                myPlayerListArray?.length == 10 ?
+                    <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} mpContainer={{ mv: 10, mh: 15 }} /> : null
             }
         </>
     }
@@ -275,6 +315,54 @@ const MyTeamScreen: React.FC<navigationProps> = ({
         </Container>
     }
 
+    const saveTeamHandler = () => {
+        const isAllPredictionPointsAdded = myPlayerListArray?.every((item, index) => { return item.PredictionPoints })
+        console.log('isAllPredictionPointsAdded', isAllPredictionPointsAdded)
+        if (isAllPredictionPointsAdded) {
+            const saveLeaguePlayers = myPlayerListArray.map((item, index) => {
+                return {
+                    PlayerID: item.PlayerID,
+                    Name: item.Name,
+                    Position: item.Position,
+                    Team: item.Team,
+                    Opponent: item.Opponent,
+                    Accuracy: item.Accuracy,
+                    GameDate: item.GameDate,
+                    photoUrl: item.photoUrl,
+                    PredictionPoints: item.PredictionPoints,
+                    SniperPoints: item.SniperPoints,
+                    FantasyPointsDraftKings: item.FantasyPointsDraftKings
+                }
+            })
+            let data = new FormData()
+            data.append('week_id', leagueDetails.week[0].week_id)
+            data.append('players', JSON.stringify(saveLeaguePlayers))
+            data.append('league_id', leagueDetails.league_id)
+            createTeamWatcher(data).unwrap().then((res) => {
+                navigation.goBack()
+                dispatch(addToMyPlayerWatcher([]))
+                refetch()
+            })
+        } else {
+            Alert.alert(
+                "Alert!",
+                "To save a team, you'll need to add prediction points for all players.",
+                [
+                    {
+                        text: "Cancel",
+                        style: "cancel"
+                    },
+                    {
+                        text: "ADD POINTS", onPress: () => {
+                            navigation.navigate('AddPlayerPoint')
+                        }
+                    }
+                ]
+            );
+        }
+        // console.log('isAllPredictionPointsAdded', isAllPredictionPointsAdded)
+    }
+
     return <MainContainer
         style={{ backgroundColor: 'white' }}
         absoluteModalLoading={isLoading}
@@ -283,68 +371,31 @@ const MyTeamScreen: React.FC<navigationProps> = ({
         absoluteLoading={getMyTeamFetching}
     >
         {renderListHeader()}
-        <Container containerStyle={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            alignSelf: 'flex-end',
-            display: getMyTeam?.players?.length ? 'none' : 'flex'
-        }}>
-            <Btn
-                title="Add"
-                labelSize={14}
-                labelStyle={{
-                    color: 'white'
-                }}
-                radius={8}
-                mpBtn={{ mr: 10 }}
-                btnStyle={{
-                    backgroundColor: PrimaryColor,
-                    width: 85,
-                    alignSelf: "flex-end"
-                }}
-                onPress={() => {
-                    navigation.navigate('AddPlayerPoint')
-                }}
-            />
-            <Btn
-                title="Save"
-                labelSize={14}
-                labelStyle={{
-                    color: 'white'
-                }}
-                radius={8}
-                mpBtn={{ mr: 10 }}
-                btnStyle={{
-                    backgroundColor: PrimaryColor,
-                    width: 85,
-                    alignSelf: "flex-end"
-                }}
-                onPress={() => {
-                    const saveLeaguePlayers = myPlayerListArray.map((item, index) => {
-                        return {
-                            PlayerID: item.PlayerID,
-                            Name: item.Name,
-                            Position: item.Position,
-                            Team: item.Team,
-                            Opponent: item.Opponent,
-                            Accuracy: item.Accuracy,
-                            GameDate: item.GameDate,
-                            photoUrl: item.photoUrl,
-                            PredictionPoints: item.PredictionPoints,
-                            SniperPoints: item.SniperPoints,
-                            FantasyPointsDraftKings: item.FantasyPointsDraftKings
-                        }
-                    })
-                    let data = new FormData()
-                    data.append('week_id', leagueDetails.week[0].week_id)
-                    data.append('players', JSON.stringify(saveLeaguePlayers))
-                    data.append('league_id', leagueDetails.league_id)
-                    createTeamWatcher(data).unwrap().then((res) => {
-                        dispatch(addToMyPlayerWatcher([]))
-                    })
-                }}
-            />
-        </Container>
+        {
+            myPlayerListArray.length == 10 ?
+                <Container containerStyle={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    alignSelf: 'flex-end',
+                }}>
+                    <Btn
+                        title="Save"
+                        labelSize={14}
+                        labelStyle={{
+                            color: 'white'
+                        }}
+                        radius={8}
+                        mpBtn={{ mr: 10 }}
+                        btnStyle={{
+                            backgroundColor: PrimaryColor,
+                            width: 85,
+                            alignSelf: "flex-end",
+                        }}
+                        onPress={saveTeamHandler}
+                    />
+                </Container> : null
+        }
+
         <ScrollView horizontal={true} key="scrollView1" >
             <View>
                 <Container

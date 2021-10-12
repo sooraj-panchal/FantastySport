@@ -43,7 +43,7 @@ const AddPlayerPointScreen: React.FC<AddPlayerProps> = ({
                 return {
                     ...item,
                     Accuracy: Math.abs(B2 / C2).toFixed(0),
-                    SniperPoints: ((1 - Math.abs((B2 - C2) / C2)) * C2).toFixed(0)
+                    SniperPoints: item.FantasyPointsDraftKings == 0 ? 0 : ((1 - Math.abs((B2 - C2) / C2)) * C2).toFixed(0)
                 }
             })
             dispatch(addToMyPlayerWatcher(data))
