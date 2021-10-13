@@ -148,16 +148,13 @@ const LiveMatchScreen: React.FC<props> = ({
     const modalizeRef = useRef<Modalize>(null);
     const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
     const { LiveMatchList: liveMatchData } = useSelector((state: RootState) => state.myPlayer)
-
+    
     const { data, isLoading, error, isFetching } = useGetLiveMatchesQuery({
         league_id: leagueDetails.league_id,
         week: 1,
     }, {
         // pollingInterval: 3000
     })
-
-    console.log("LiveMatchList", liveMatchData)
-
     const renderItem: ListRenderItem<any> = ({ item, index }) => {
         let color = index % 2 ? OrangeColor : greenColor
         return <LiveMatchList

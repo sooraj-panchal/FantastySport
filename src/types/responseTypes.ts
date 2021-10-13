@@ -70,3 +70,11 @@ export interface TeamMatchDetailsResponse {
   players: Array<PlayerPositionTypes>,
 }
 
+export interface TeamListResponse {
+  team_id: number,
+  user_id: number,
+  team_name: string,
+  team_logo: string,
+  accuracy: number,
+  fantasyPoint: number
+}

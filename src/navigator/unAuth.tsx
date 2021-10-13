@@ -21,7 +21,7 @@ import JoinLeagueTeamNameScreen from '../container/AppModule/JoinLeagueTeamNameS
 import LiveMatchDetailScreen from '../container/AppModule/LiveMatchDetailScreen/view';
 import StandingScreen from '../container/AppModule/StandingScreen/view';
 import TeamLevelScreen from '../container/AppModule/TeamLevelScreen/view';
-import WinnerDetailScreen from '../container/AppModule/WinnerDetailScreen/view';
+import TeamDetailScreen from '../container/AppModule/TeamDetailScreen/view';
 import GameDetailScreen from '../container/AppModule/GameDetailScreen/view';
 import NewsDetailScreen from '../container/AppModule/NewsDetailScreen/view';
 import AddPlayerPointScreen from '../container/AppModule/AddPointScreen/view';
@@ -190,8 +190,8 @@ const AppStackScreen: React.FC = () => {
                 })}
             />
             <StackScreen.Screen
-                name="WinnerDetail"
-                component={WinnerDetailScreen}
+                name="TeamDetail"
+                component={TeamDetailScreen}
                 options={({ navigation }) => ({
                     headerShown: true,
                     headerTitle: "John's Official Team"

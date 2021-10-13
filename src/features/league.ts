@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import axios from 'axios'
+import { AnyMessageParams } from 'yup/lib/types'
 import { mainUrl } from '../services/apiPaths'
 import { RootState } from '../store'
 import { liveMatchWatcher } from '../store/slices/myPlayerList'
-import { forgotPasswordResponse, MyLeagueResponse, MyTeamResponse, TeamMatchDetailsResponse, UserResponse } from '../types/responseTypes'
+import { forgotPasswordResponse, MyLeagueResponse, MyTeamResponse, TeamListResponse, TeamMatchDetailsResponse, UserResponse } from '../types/responseTypes'
 import { fetchBaseQueryApi } from './fetchBaseQuery'
 
 export const LeagueApi = createApi({
@@ -115,7 +116,27 @@ export const LeagueApi = createApi({
                 console.log("matchDetail===>", JSON.stringify(response))
                 return response.data
             }
-        })
+        }),
+        getTeamsByLeague: builder.query({
+            query: (league_id) => ({
+                url: `allTeamByLeague/${league_id}`
+            }),
+            // providesTags: ['EditTeam'],
+            transformResponse: (response: { data: TeamListResponse[] }) => {
+                console.log("getTeamsByLeague Response==>", response)
+                return response.data;
+            }
+        }),
+        getTeamDetailByLeague: builder.query({
+            query: (team_id) => ({
+                url: `teamDetail/${team_id}`
+            }),
+            // providesTags: ['EditTeam'],
+            transformResponse: (response: { data: MyTeamResponse[] }) => {
+                console.log("getTeamDetailByLeague Response==>", response)
+                return response.data[0]
+            }
+        }),
     }),
 })
 
@@ -127,6 +148,8 @@ export const {
     useUpdateTeamDetailsMutation,
     useGetLiveMatchesQuery,
     useAllLeagueListQuery,
-    useTeamMatchDetailsQuery
+    useTeamMatchDetailsQuery,
+    useGetTeamsByLeagueQuery,
+    useGetTeamDetailByLeagueQuery
 } = LeagueApi
 

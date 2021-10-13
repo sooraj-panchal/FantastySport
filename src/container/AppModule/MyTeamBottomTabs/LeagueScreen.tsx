@@ -8,13 +8,19 @@ import { FlatList } from 'react-native-gesture-handler';
 import { ListRenderItem } from 'react-native';
 import { navigationProps } from '../../../types/nav';
 import Btn from '../../../components/Btn';
+import { useGetTeamsByLeagueQuery } from '../../../features/league';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+import { TeamListResponse } from '../../../types/responseTypes';
 interface props extends navigationProps {
 
 }
 const LeagueScreen: React.FC<props> = ({
     navigation
 }) => {
+    const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
 
+    const { data, isLoading, isFetching } = useGetTeamsByLeagueQuery(leagueDetails.league_id)
 
     React.useLayoutEffect(() => {
         return (
@@ -53,7 +59,8 @@ const LeagueScreen: React.FC<props> = ({
         )
     }, [])
 
-    const renderItem: ListRenderItem<{}> = ({ item, index }) => {
+    const renderItem: ListRenderItem<TeamListResponse> = ({ item, index }) => {
+        const { team_name, fantasyPoint, accuracy,team_id } = item
         return (
             <Container
                 containerStyle={{
@@ -63,15 +70,20 @@ const LeagueScreen: React.FC<props> = ({
                     // width:"88%"
                 }}
                 mpContainer={{ mh: 10, mt: 10 }}
+                onPress={() => {
+                    navigation.navigate('TeamDetail',{
+                        team_id:team_id
+                    })
+                }}
             >
                 <Label
                     labelSize={14}
                     style={{
                         // fontWeight: 'bold',
-                        maxWidth: "40%"
+                        width: "32%"
                     }}
                     numberOfLines={1}
-                >John's Official team asdas</Label>
+                >{team_name}</Label>
                 <Container
                     containerStyle={{
                         flexDirection: 'row',
@@ -82,25 +94,29 @@ const LeagueScreen: React.FC<props> = ({
                     <Label
                         labelSize={14}
                         style={{
+                            width:80
                         }}
                     >3-1-0</Label>
                     <Label
                         labelSize={14}
                         style={{
+                            width:60
                         }}
-                        mpLabel={{ mh: 35 }}
-                    >98%</Label>
+                    >{accuracy}%</Label>
                     <Label
                         labelSize={14}
                         style={{
+                            width:50
                         }}
-                    >102.8</Label>
+                    >{fantasyPoint.toFixed(2)}</Label>
                 </Container>
             </Container>
         )
     }
 
-    return <MainContainer>
+    return <MainContainer
+        loading={isLoading}
+    >
         <Container
             containerStyle={{ backgroundColor: 'white', borderRadius: 10, elevation: 2 }}
             mpContainer={{ mh: 20, mt: 10, pv: 10 }}
@@ -114,6 +130,7 @@ const LeagueScreen: React.FC<props> = ({
                 mpContainer={{ mh: 10, mt: 5 }}
                 onPress={() => {
                     navigation.navigate('Standing')
+
                 }}
             >
                 <Label
@@ -164,7 +181,7 @@ const LeagueScreen: React.FC<props> = ({
             </Container>
             <Container height={1} containerStyle={{ backgroundColor: 'lightgrey' }} mpContainer={{ mt: 10, mh: 10 }} />
             <FlatList
-                data={[1, 2, 3, 4, 5, 6]}
+                data={data}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => `league ${index.toString()}`}
             />

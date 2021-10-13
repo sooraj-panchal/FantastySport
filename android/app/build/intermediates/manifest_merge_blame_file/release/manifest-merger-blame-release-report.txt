@@ -1,0 +1,100 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.fantastysport"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+8-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="29" />
+9-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:4:5-67
+11-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:4:22-64
+12    <uses-permission android:name="android.permission.CAMERA" />
+12-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:5:5-64
+12-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:5:22-62
+13
+14    <queries>
+14-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/release/AndroidManifest.xml:10:5-14:15
+15        <intent>
+15-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/release/AndroidManifest.xml:11:9-13:18
+16            <action android:name="android.media.action.IMAGE_CAPTURE" />
+16-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/release/AndroidManifest.xml:12:13-73
+16-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/release/AndroidManifest.xml:12:21-70
+17        </intent>
+18    </queries>
+19
+20    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+20-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/release/AndroidManifest.xml:16:5-81
+20-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/release/AndroidManifest.xml:16:22-78
+21
+22    <application
+22-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:6:5-24:19
+23        android:name="com.fantastysport.MainApplication"
+23-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:7:7-38
+24        android:allowBackup="false"
+24-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:11:7-34
+25        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+25-->[androidx.core:core:1.1.0] /Users/p/.gradle/caches/transforms-2/files-2.1/d67cd79abd1ca209502f51c69d23182b/core-1.1.0/AndroidManifest.xml:24:18-86
+26        android:icon="@mipmap/fantasy"
+26-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:9:7-37
+27        android:label="@string/app_name"
+27-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:8:7-39
+28        android:roundIcon="@mipmap/fantasy"
+28-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:10:7-42
+29        android:theme="@style/AppTheme" >
+29-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:12:7-38
+30        <activity
+30-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:13:7-23:18
+31            android:name="com.fantastysport.MainActivity"
+31-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:14:9-37
+32            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+32-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:16:9-86
+33            android:label="@string/app_name"
+33-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:15:9-41
+34            android:launchMode="singleTask"
+34-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:17:9-40
+35            android:windowSoftInputMode="adjustResize" >
+35-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:18:9-51
+36            <intent-filter>
+36-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:19:9-22:25
+37                <action android:name="android.intent.action.MAIN" />
+37-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:20:13-65
+37-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:20:21-62
+38
+39                <category android:name="android.intent.category.LAUNCHER" />
+39-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:21:13-73
+39-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:21:23-70
+40            </intent-filter>
+41        </activity>
+42
+43        <provider
+43-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/release/AndroidManifest.xml:19:9-27:20
+44            android:name="androidx.core.content.FileProvider"
+44-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/release/AndroidManifest.xml:20:13-62
+45            android:authorities="com.fantastysport.provider"
+45-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/release/AndroidManifest.xml:21:13-60
+46            android:exported="false"
+46-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/release/AndroidManifest.xml:22:13-37
+47            android:grantUriPermissions="true" >
+47-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/release/AndroidManifest.xml:23:13-47
+48            <meta-data
+48-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/release/AndroidManifest.xml:24:13-26:58
+49                android:name="android.support.FILE_PROVIDER_PATHS"
+49-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/release/AndroidManifest.xml:25:17-67
+50                android:resource="@xml/provider_paths" />
+50-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/release/AndroidManifest.xml:26:17-55
+51        </provider>
+52
+53        <activity
+53-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/release/AndroidManifest.xml:29:9-31:72
+54            android:name="com.yalantis.ucrop.UCropActivity"
+54-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/release/AndroidManifest.xml:30:13-60
+55            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+55-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/release/AndroidManifest.xml:31:13-69
+56    </application>
+57
+58</manifest>

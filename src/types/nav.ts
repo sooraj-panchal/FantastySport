@@ -36,10 +36,10 @@ export type unAuthParamList = {
   EditTeam: undefined;
   JoinLeague: undefined;
   JoinLeagueTeamName: undefined;
-  LiveMatchDetail: { op_team_id: number } | undefined;
+  LiveMatchDetail: { op_team_id: number, team_id: number | any } | undefined;
   Standing: undefined;
   TeamLevel: undefined;
-  WinnerDetail: undefined;
+  TeamDetail: { team_id: number } | undefined;
   GameDetail: undefined;
   NewsDetail: undefined;
   TermsAndCondition: { title: string };
@@ -93,4 +93,5 @@ export type AddPlayerProps = NativeStackScreenProps<unAuthParamList, 'AddPlayerP
 export type PlayersNav = NativeStackScreenProps<unAuthParamList, 'AddPlayer'>;
 export type EditTeamNav = NativeStackScreenProps<unAuthParamList, 'EditTeamInfo'>;
 export type LiveMatchDetailNav = NativeStackScreenProps<unAuthParamList, 'LiveMatchDetail'>;
+export type TeamDetailNav = NativeStackScreenProps<unAuthParamList, 'TeamDetail'>;
 

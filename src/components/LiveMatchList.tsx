@@ -222,6 +222,9 @@ import Img from './Img';
 import Label from './Label';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { SvgUri } from 'react-native-svg';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { UserResponse } from '../types/responseTypes';
 interface props {
     color: string,
     onChangeTeam: () => void
@@ -233,9 +236,12 @@ const LiveMatchList: React.FC<props | any> = ({
     SniperPoints,
     team_logo,
     team_name,
-    user_team_id
+    user_team_id,
+    user_id
 }) => {
     const navigation = useNavigation<homeNavProps>()
+    const { user }: { user: UserResponse } = useSelector((state: RootState) => state.auth)
+    const { LiveMatchList: liveMatchData } = useSelector((state: RootState) => state.myPlayer)
     let imageType = team_logo?.split('.').pop() == 'svg';
 
     return <View>
@@ -246,8 +252,14 @@ const LiveMatchList: React.FC<props | any> = ({
             borderRadius: 4
         }} mpContainer={{ mt: 5, pv: 10, ph: 10, mh: 15 }}
             onPress={() => {
-                navigation.navigate('LiveMatchDetail',{
-                    op_team_id:user_team_id
+                const myTeam: any = liveMatchData.find((item: any, index) => item.user_id == user.id)
+                const WithoutMyTeam: any = liveMatchData.filter((item: any, index) => {
+                    return item.user_id != user.id
+                })
+                console.log("WithoutMyTeam", WithoutMyTeam)
+                navigation.navigate('LiveMatchDetail', {
+                    team_id: myTeam?.user_team_id,
+                    op_team_id: user_id == user.id ? WithoutMyTeam[0]?.user_team_id : user_team_id
                 })
             }}
         >

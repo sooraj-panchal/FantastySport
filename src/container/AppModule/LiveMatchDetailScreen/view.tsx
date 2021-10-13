@@ -25,7 +25,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
 
 }) => {
     const { data, isLoading, isFetching } = useTeamMatchDetailsQuery({
-        team_id: 2,
+        team_id: route.params?.team_id,
         op_team_id: route.params?.op_team_id,
     }, {
         pollingInterval: 3000

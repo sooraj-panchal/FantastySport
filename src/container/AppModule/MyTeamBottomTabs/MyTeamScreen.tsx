@@ -37,19 +37,13 @@ const MyTeamScreen: React.FC<navigationProps> = ({
     const user: UserResponse = useSelector((state: RootState) => state.auth.user)
     const [createTeamWatcher, { data, isLoading }] = useCreateTeamMutation()
     const havePlayers = useSelector((state: RootState) => state.myPlayer.MyTeamList)
-    // const { data: haveData } = useGetMyTeamsQuery({
-    //     league_id: leagueDetails.league_id,
-    //     week_id: leagueDetails.week[0].week_id
-    // }, {
-    //     pollingInterval: 30000
-    // })
 
-    const { error: getMyTeamListError, data: getMyTeam, isLoading: getMyTeamLoding, isFetching: getMyTeamFetching, refetch } = useGetMyTeamsQuery({
+    const {  data: getMyTeam, isLoading: getMyTeamLoding, isFetching: getMyTeamFetching, refetch } = useGetMyTeamsQuery({
         league_id: leagueDetails.league_id,
         week_id: leagueDetails.week[0].week_id,
     }, {
         pollingInterval: havePlayers?.length == 10 ? 300000 : 0,
-        refetchOnMountOrArgChange:true
+        refetchOnMountOrArgChange: true
     })
 
     // useEffect(() => {
@@ -237,7 +231,7 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                         mpImage={{ ml: 15 }}
                         imgSrc={{ uri: `https://chessmafia.com/php/fantasy/public/uploads/${getMyTeam?.team_logo}` || 'dummy' }} />
                 }
-                <Container mpContainer={{ml:5}} >
+                <Container mpContainer={{ ml: 5 }} >
                     <Label labelSize={16} style={{ fontWeight: "bold", letterSpacing: 0.5 }}  > {getMyTeam?.team_name}</Label>
                     <Label labelSize={14} style={{ letterSpacing: 0.5 }} >4-3-3 | - of 1</Label>
                 </Container>
@@ -245,7 +239,7 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                     containerStyle={{
                         alignItems: "flex-end",
                         position: 'absolute',
-                        right:10
+                        right: 10
                     }}
                 >
                     <Label labelSize={16} style={{ fontWeight: "bold" }}  >Act {totalActualPoints}</Label>
