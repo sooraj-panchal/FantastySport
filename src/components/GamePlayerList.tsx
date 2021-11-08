@@ -1,17 +1,26 @@
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
-import { homeNavProps } from '../types/nav';
+import { homeNavProps, navigationProps } from '../types/nav';
+import { GameDetailResponse } from '../types/responseTypes';
 import Container from './Container';
 import Label from './Label';
 
 interface props {
     index: number,
+    onPress: () => void
 }
 
-const GamePlayerList: React.FC<props> = ({
-    index
+const GamePlayerList: React.FC<GameDetailResponse & props> = ({
+    id,
+    team_name,
+    rank,
+    pts,
+    index,
+    onPress
 }) => {
     const navigation = useNavigation<homeNavProps>()
+    const route = useRoute<any>()
+
     return (
         <Container
             containerStyle={{
@@ -21,42 +30,40 @@ const GamePlayerList: React.FC<props> = ({
             }}
             mpContainer={{ ph: 10 }}
             height={70}
-            onPress={() => {
-                navigation.navigate('WinnerDetail')
-            }}
+            onPress={onPress}
         >
             <Label
                 labelSize={16}
                 mpLabel={{ ml: 20 }}
                 numberOfLines={1}
-            >{index + 1}</Label>
+            >{rank}</Label>
             <Container
                 mpContainer={{ ml: 50 }}
             >
                 <Label
                     labelSize={16}
                     numberOfLines={1}
-                >Michael</Label>
-                <Label
+                >{team_name}</Label>
+                {/* <Label
                     labelSize={14}
                     mpLabel={{ mt: 4 }}
                     numberOfLines={1}
                     style={{ color: 'red' }}
-                >2 players remaining</Label>
+                >2 players remaining</Label> */}
             </Container>
             <Container
                 containerStyle={{
                     position: 'absolute',
-                    right: 30,
+                    right: 40,
                 }}
             >
                 <Label
                     labelSize={14}
-                >106.1</Label>
-                <Label
+                >{pts}</Label>
+                {/* <Label
                     labelSize={14}
-                    mpLabel={{mt:2}}
-                >(16.5)</Label>
+                    mpLabel={{ mt: 2 }}
+                >(16.5)</Label> */}
             </Container>
         </Container>
     )

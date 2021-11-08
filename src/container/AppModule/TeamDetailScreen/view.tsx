@@ -19,45 +19,16 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
     navigation,
     route
 }) => {
-    const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
-    const [totalPredictionPoints, setTotalPredictionPoints] = React.useState<number | any>(0.00)
-    const [totalProjectedPoints, setTotalProjectedPoints] = React.useState<number | any>(0.00)
-    const [totalSniperPoints, setTotalSniperPoints] = React.useState<number | any>(0.00)
-    const [totalActualPoints, setTotalActualPoints] = React.useState<number | string>(0.00)
-
     const { data: getMyTeam, isLoading } = useGetTeamDetailByLeagueQuery(route.params?.team_id)
-    console.log('getMyTeam', getMyTeam)
-    useEffect(() => {
-        if (getMyTeam?.players?.length) {
-            let isPredictionPoints = getMyTeam?.players.every((item, index) => item.PredictionPoints !== "")
-            if (isPredictionPoints) {
-                const PredictionPoints = getMyTeam?.players.reduce(function (a, b) {
-                    return a + Number(b.PredictionPoints);
-                }, 0);
-                const FantasyPointsDraftKings = getMyTeam?.players.reduce(function (a, b) {
-                    return a + Number(b.FantasyPointsDraftKings);
-                }, 0);
-                const sniperPoints = getMyTeam?.players.reduce(function (a, b) {
-                    return a + Number(b.SniperPoints);
-                }, 0);
-                setTotalPredictionPoints(Math.abs(PredictionPoints / 10).toFixed(2))
-                setTotalProjectedPoints(Math.abs(FantasyPointsDraftKings / 10).toFixed(2))
-                setTotalSniperPoints(Math.abs(sniperPoints / 10).toFixed(2))
-                setTotalActualPoints(Math.abs(FantasyPointsDraftKings / 10).toFixed(2))
-            }
-        }
-    }, [getMyTeam])
 
     const imageType = useMemo(() => {
         return getMyTeam?.team_logo?.split('.').pop() == 'svg';
     }, [getMyTeam])
 
-    const mySniper = Math.abs(6 / 7).toFixed(2)
-    console.log('1-ABS((B2-C2)/C2))*C2', mySniper)
-
     React.useLayoutEffect(() => {
         return (
             navigation.setOptions({
+                headerTitle: getMyTeam?.team_name || '',
                 headerRight: () => {
                     return <Container
                         containerStyle={{
@@ -71,28 +42,33 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                             textColor='white'
                             mpLabel={{ mr: 10 }}
                         >Accuracy</Label>
-                        <Container
-                            containerStyle={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                backgroundColor: OrangeColor,
-                                borderRadius: 35,
-                            }}
-                            width={35} height={35}
-                        >
-                            <Label
-                                labelSize={12}
-                                style={{
-                                    color: "white"
-                                }}
-                            >97%</Label>
-                        </Container>
+                        {
+                            getMyTeam?.accuracy ?
+                                <Container
+                                    containerStyle={{
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        backgroundColor: OrangeColor,
+                                        borderRadius: 35,
+                                    }}
+                                    width={35} height={35}
+                                >
+                                    <Label
+                                        labelSize={12}
+                                        style={{
+                                            color: "white"
+                                        }}
+                                    >{getMyTeam?.accuracy}%</Label>
+                                </Container>
+                                : null
+                        }
                     </Container>
                 },
-                headerTitle: "John's...."
             })
         )
-    }, [])
+    }, [getMyTeam])
+
+    console.log('getMyTeam', getMyTeam)
 
     return <MainContainer
         style={{ backgroundColor: 'white' }}
@@ -102,7 +78,6 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
             <Container
                 containerStyle={{
                     flexDirection: "row",
-                    // justifyContent: "space-between"
                 }}
                 mpContainer={{ mh: 15, mt: 20, mb: 10 }}
                 height={80}
@@ -115,9 +90,9 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                     />
                     :
                     <Img
-                        imgStyle={{}}
-                        width={40} height={40}
-                        mpImage={{ ml: 15 }}
+                        imgStyle={{ borderRadius: 40 }}
+                        width={45} height={45}
+                        mpImage={{ ml: 10 }}
                         imgSrc={{ uri: `https://chessmafia.com/php/fantasy/public/uploads/${getMyTeam?.team_logo}` || 'dummy' }} />
                 }
                 <Container
@@ -134,12 +109,19 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                         top: 5
                     }}
                 >
-                    <Label labelSize={16} style={{ fontWeight: "bold" }}  >Act {totalActualPoints}</Label>
-                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: OrangeColor }} >Fantasy sniper {totalSniperPoints}</Label>
-                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: OrangeColor }} >Points Prediction. {totalPredictionPoints}</Label>
-                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: greenColor }} >Proj. {totalProjectedPoints}</Label>
+                    <Label labelSize={16} style={{ fontWeight: "bold" }}  >Act {getMyTeam?.actual_points?.toFixed(2)}</Label>
+                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: OrangeColor }} >Fantasy sniper {getMyTeam?.sniper_points?.toFixed(2)}</Label>
+                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: OrangeColor }} >Points Prediction. {getMyTeam?.prediction_points?.toFixed(2)}</Label>
+                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: greenColor }} >Proj. {getMyTeam?.projection_points?.toFixed(2)}</Label>
                 </Container>
             </Container>
+            {/* <Label 
+            labelSize={14} style={{ letterSpacing: 0.5,textAlign:'right' }} 
+            mpLabel={{mr:20,mt:10}}
+            onPress={()=>{
+
+            }}
+            >Compare team</Label> */}
             <View>
                 <ScrollView horizontal={true} >
                     <ScrollView>
@@ -155,12 +137,13 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                         >
                             <Label labelSize={16} style={{ width: 225 }} >{ }</Label>
                             <Label labelSize={15} style={{ letterSpacing: 0.5, width: 50, textAlign: 'center' }}  >Proj</Label>
-                            <Label labelSize={15} style={{ letterSpacing: 0.5, width: 80, textAlign: 'center' }} >Pred</Label>
-                            <Label labelSize={15} style={{ letterSpacing: 0.5, width: 50, textAlign: 'center' }} >Sniper</Label>
+                            <Label labelSize={15} style={{ letterSpacing: 0.5, width: 70, textAlign: 'center' }} >Pred</Label>
+                            <Label labelSize={15} style={{ letterSpacing: 0.5, width: 70, textAlign: 'center' }} >Actual</Label>
+                            <Label labelSize={15} style={{ letterSpacing: 0.5, width: 60, textAlign: 'center' }} >Sniper</Label>
                             <Label labelSize={15} style={{ letterSpacing: 0.5, width: 90, textAlign: 'center' }} >Accuracy</Label>
                         </Container>
                         {getMyTeam?.players.map((item, index) => {
-                            let { photoUrl, Name, Position, SniperPoints, PredictionPoints, FantasyPointsDraftKings, Accuracy } = item
+                            let { photoUrl, Name, Position, SniperPoints, PredictionPoints, Accuracy, ProjectionPoints, ActualPoints } = item
                             let imageType = photoUrl?.split('.').pop() == 'svg';
                             return <>
                                 <Container
@@ -179,7 +162,8 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                                                 :
                                                 <Img
                                                     imgSrc={{ uri: photoUrl || '' }}
-                                                    width={40} height={45} />
+                                                    width={40} height={45}
+                                                />
                                         }
                                     </Container>
                                     <Container containerStyle={{ width: 120 }} mpContainer={{ ml: 20 }} >
@@ -187,10 +171,13 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                                         <Label labelSize={13} style={{ letterSpacing: 0.5, color: "grey" }} >{Position}</Label>
                                     </Container>
                                     <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={90} >
-                                        <Label labelSize={14} style={{ letterSpacing: 0.5, color: greenColor, textAlign: 'center' }}>{FantasyPointsDraftKings}</Label>
+                                        <Label labelSize={14} style={{ letterSpacing: 0.5, color: greenColor, textAlign: 'center' }}>{ProjectionPoints}</Label>
                                     </Container>
                                     <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={45} >
                                         <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black", textAlign: 'center' }}>{PredictionPoints}</Label>
+                                    </Container>
+                                    <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={70} >
+                                        <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black", textAlign: 'center' }}>{ActualPoints}</Label>
                                     </Container>
                                     <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={70} >
                                         <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black", textAlign: 'center' }}>{SniperPoints}</Label>

@@ -4,7 +4,7 @@ import { AnyMessageParams } from 'yup/lib/types'
 import { mainUrl } from '../services/apiPaths'
 import { RootState } from '../store'
 import { liveMatchWatcher } from '../store/slices/myPlayerList'
-import { forgotPasswordResponse, MyLeagueResponse, MyTeamResponse, TeamListResponse, TeamMatchDetailsResponse, UserResponse } from '../types/responseTypes'
+import { forgotPasswordResponse, GameDetailResponse, LeagueItemResponse, LiveMatchUpResponse, MyLeagueResponse, MyTeamResponse, TeamListResponse, TeamMatchDetailsResponse, UserResponse } from '../types/responseTypes'
 import { fetchBaseQueryApi } from './fetchBaseQuery'
 
 export const LeagueApi = createApi({
@@ -94,8 +94,7 @@ export const LeagueApi = createApi({
                 } catch (err) {
                     console.log("error... ", err);
                 }
-            },
-
+            }
         }),
         allLeagueList: builder.query({
             query: () => ({
@@ -137,6 +136,100 @@ export const LeagueApi = createApi({
                 return response.data[0]
             }
         }),
+        liveMatchupRanking: builder.query({
+            query: ({current_week}) => ({
+                url: `liveMatch?sort=id&order=desc&limit=10&week_no=${current_week}`
+            }),
+            // providesTags: ['EditTeam'],
+            transformResponse: (response: { data: LiveMatchUpResponse[] }) => {
+                console.log("liveMatchupRanking Response==>", response)
+                return response.data
+            }
+        }),
+        verifyLeagueCode: builder.mutation<any, any>({
+            query: (credentials) => ({
+                url: 'verifyCodeLeague',
+                method: 'POST',
+                body: credentials
+            }),
+            transformResponse: (response) => {
+                console.log("verifyCodeLeague Response==>", response)
+                return response;
+            }
+        }),
+        joinPrivateLeague: builder.mutation<any, any>({
+            query: (credentials) => ({
+                url: 'joinLeague',
+                method: 'POST',
+                body: credentials
+            }),
+            transformResponse: (response) => {
+                console.log("joinPrivateLeague Response==>", response)
+                return response;
+            }
+        }),
+        getPublicLeague: builder.query({
+            query: ({current_week}) => ({
+                url: `myAllLeague?week_no=${current_week}&type=public`
+            }),
+            // providesTags: ['EditTeam'],
+            transformResponse: (response: { data: LeagueItemResponse[] }) => {
+                console.log("GetPublicLeague Response==>", response)
+                return response.data
+            }
+        }),
+        getPrivateLeague: builder.query({
+            query: ({current_week}) => ({
+                url: `myAllLeague?week_no=${current_week}&type=private`
+            }),
+            // providesTags: ['EditTeam'],
+            transformResponse: (response: { data: MyLeagueResponse[] }) => {
+                console.log("getPrivateLeague Response==>", response)
+                return response.data
+            }
+        }),
+        winnerTeamList: builder.query({
+            query: ({current_week}) => ({
+                url: `winnerTeamList?week_no=${current_week}`
+            }),
+            // providesTags: ['EditTeam'],
+            transformResponse: (response: { data: LiveMatchUpResponse[] }) => {
+                console.log("winnerTeamList Response==>", response)
+                return response.data
+            }
+        }),
+        gameDetails: builder.query({
+            query: ({ league_id, week_id }) => ({
+                url: `gameDetail?league_id=${league_id}&week_id=${week_id}`
+            }),
+            // providesTags: ['EditTeam'],
+            transformResponse: (response: { data: GameDetailResponse[] }) => {
+                console.log("gameDetails Response==>", response)
+                return response.data
+            }
+        }),
+        createGame: builder.mutation<any, any>({
+            query: (credentials) => ({
+                url: 'createGame',
+                method: 'POST',
+                body: credentials
+            }),
+            // invalidatesTags: ['League'],
+            transformResponse: (response) => {
+                console.log("createGame Response==>", response)
+                return response;
+            }
+        }),
+        myGameList: builder.query({
+            query: ({current_week}) => ({
+                url: `myjoinLeague?week_no=${current_week}`
+            }),
+            // providesTags: ['EditTeam'],
+            transformResponse: (response: { data: MyLeagueResponse[] }) => {
+                console.log("myGameList Response==>", response)
+                return response.data
+            }
+        }),
     }),
 })
 
@@ -150,6 +243,15 @@ export const {
     useAllLeagueListQuery,
     useTeamMatchDetailsQuery,
     useGetTeamsByLeagueQuery,
-    useGetTeamDetailByLeagueQuery
+    useGetTeamDetailByLeagueQuery,
+    useLiveMatchupRankingQuery,
+    useJoinPrivateLeagueMutation,
+    useGetPublicLeagueQuery,
+    useGetPrivateLeagueQuery,
+    useVerifyLeagueCodeMutation,
+    useWinnerTeamListQuery,
+    useGameDetailsQuery,
+    useCreateGameMutation,
+    useMyGameListQuery
 } = LeagueApi
 

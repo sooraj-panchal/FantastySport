@@ -15,7 +15,7 @@ target 'FantastySport' do
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
-
+  pod 'Firebase/Analytics'
   target 'FantastySportTests' do
     inherit! :complete
     # Pods for testing

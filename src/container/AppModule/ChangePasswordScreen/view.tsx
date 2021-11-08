@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ScrollView } from 'react-native'
+import { Keyboard, ScrollView } from 'react-native'
 import { DarkBlueColor, LightGrayColor, OrangeColor } from '../../../assets/colors'
 import { medium, semiBold } from '../../../assets/fonts/fonts'
 import Btn from '../../../components/Btn'
@@ -53,7 +53,9 @@ const ChangePasswordScreen: React.FC<navigationProps> = ({
             successMessage={data?.message}
         >
             <AuthWrapper>
-                <ScrollView contentContainerStyle={{ paddingBottom: 100 }} >
+                <ScrollView contentContainerStyle={{ paddingBottom: 100 }}
+                    keyboardShouldPersistTaps={'always'}
+                >
                     <Label
                         labelSize={30}
                         mpLabel={{ ml: 20 }}

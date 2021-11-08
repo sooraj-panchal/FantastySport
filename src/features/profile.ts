@@ -29,7 +29,8 @@ export const ProfileApi = createApi({
             async onQueryStarted(id, { dispatch, queryFulfilled }) {
                 try {
                     const { data }: any = await queryFulfilled
-                    dispatch(setCredentials({ user: data }))
+                    // console.log('data queryFulfilled',data?.data)
+                    dispatch(setCredentials({ user: data?.data }))
                 } catch (err) {
                     console.log('err queryFulfilled', err)
                 }

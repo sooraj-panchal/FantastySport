@@ -3,8 +3,7 @@ import React from 'react';
 import { View } from 'react-native-animatable';
 import PagerView from 'react-native-pager-view';
 import { useDispatch, useSelector } from 'react-redux';
-import { MyLeagueList } from '../../../../arrayList';
-import { DarkBlueColor, OrangeColor, redColor } from '../../../assets/colors';
+import { DarkBlueColor } from '../../../assets/colors';
 import { medium } from '../../../assets/fonts/fonts';
 import { AppImages } from '../../../assets/images/map';
 import Container from '../../../components/Container';
@@ -14,7 +13,7 @@ import MainContainer from '../../../components/MainContainer';
 import { useLeagueListQuery } from '../../../features/league';
 import { RootState } from '../../../store';
 import { leagueDetailsWatcher } from '../../../store/slices/selectedLeague';
-import { homeNavProps, navigationProps } from '../../../types/nav';
+import { homeNavProps } from '../../../types/nav';
 import { UserResponse } from '../../../types/responseTypes';
 import { screenWidth } from '../../../types/sizes';
 
@@ -24,14 +23,14 @@ const MyLeague: React.FC = ({
 }) => {
     const dispatch = useDispatch()
     const [page, setPage] = React.useState<Number>(0)
-    const { data, isLoading } = useLeagueListQuery(null)
+    const { data, isLoading, isFetching } = useLeagueListQuery(null)
     const user: UserResponse = useSelector((store: RootState) => store.auth.user)
-
+    
     console.log('data', JSON.stringify(data))
     const navigation = useNavigation<homeNavProps>()
 
     return (
-        <MainContainer loading={isLoading} >
+        <MainContainer loading={isLoading || isFetching}  >
             <Container containerStyle={{
                 flexDirection: "row",
                 alignItems: "center",

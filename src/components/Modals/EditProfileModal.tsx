@@ -59,7 +59,6 @@ const EditProfileModal: React.FC<props> = ({
     console.log('response', data)
     console.log('error', error)
 
-
     return (
         <MainContainer
             absoluteModalLoading={isLoading}
@@ -74,6 +73,7 @@ const EditProfileModal: React.FC<props> = ({
                     margin: 0,
                     marginHorizontal: 20
                 }}
+            // deviceHeight={999999999}
             >
                 <Container containerStyle={{
                     backgroundColor: "white",

@@ -16,15 +16,15 @@ import { IWeek, myPlayers, positions, positionsLength } from '../../../utils/jso
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../types/reduxTypes';
 import { screenWidth } from '../../../types/sizes';
-import { useCreateTeamMutation, useGetMyTeamsQuery } from '../../../features/league';
+import { useCreateGameMutation, useCreateTeamMutation, useGetMyTeamsQuery } from '../../../features/league';
 import { addToMyPlayerWatcher } from '../../../store/slices/myPlayerList';
 import { UserResponse } from '../../../types/responseTypes';
 import { SvgUri } from 'react-native-svg';
+import { AppStack } from '../../../navigator/navActions';
 
 const MyTeamScreen: React.FC<navigationProps> = ({
     navigation
 }) => {
-
     const dispatch = useDispatch()
     const [myPlayerListData, setMyPlayerListData] = React.useState<PlayerPositionTypes[] | any>(myPlayers)
     const [totalPredictionPoints, setTotalPredictionPoints] = React.useState<number | any>(0.00)
@@ -35,10 +35,10 @@ const MyTeamScreen: React.FC<navigationProps> = ({
     const currentWeek: number = useSelector((state: RootState) => state.schedule.currentWeek)
     const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
     const user: UserResponse = useSelector((state: RootState) => state.auth.user)
-    const [createTeamWatcher, { data, isLoading }] = useCreateTeamMutation()
+    const [createGameWatcher, { data, isLoading,error }] = useCreateGameMutation()
     const havePlayers = useSelector((state: RootState) => state.myPlayer.MyTeamList)
 
-    const {  data: getMyTeam, isLoading: getMyTeamLoding, isFetching: getMyTeamFetching, refetch } = useGetMyTeamsQuery({
+    const { data: getMyTeam, isLoading: getMyTeamLoding, isFetching: getMyTeamFetching, refetch } = useGetMyTeamsQuery({
         league_id: leagueDetails.league_id,
         week_id: leagueDetails.week[0].week_id,
     }, {
@@ -329,11 +329,11 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                 }
             })
             let data = new FormData()
-            data.append('week_id', leagueDetails.week[0].week_id)
             data.append('players', JSON.stringify(saveLeaguePlayers))
-            data.append('league_id', leagueDetails.league_id)
-            createTeamWatcher(data).unwrap().then((res) => {
-                navigation.goBack()
+            data.append('team_id',leagueDetails.team_id)
+            console.log('data',data)
+            createGameWatcher(data).unwrap().then((res) => {
+                navigation.dispatch(AppStack)
                 dispatch(addToMyPlayerWatcher([]))
                 refetch()
             })
@@ -356,6 +356,8 @@ const MyTeamScreen: React.FC<navigationProps> = ({
         }
         // console.log('isAllPredictionPointsAdded', isAllPredictionPointsAdded)
     }
+
+    console.log("error from create game",error)
 
     return <MainContainer
         style={{ backgroundColor: 'white' }}

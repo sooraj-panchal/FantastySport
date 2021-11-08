@@ -19,7 +19,12 @@ const ModalLoader = ({
     loading
 }) => {
     return (
-        <Modal transparent={true} visible={loading}>
+        <Modal transparent={true} visible={loading}
+        style={{
+            height:'100%',
+            flex:1
+        }}
+        >
             <View style={styles.modalView}>
                 {Platform.OS == "android"
                     ? (

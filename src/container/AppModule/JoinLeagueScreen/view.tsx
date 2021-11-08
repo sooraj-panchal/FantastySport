@@ -1,30 +1,65 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Btn from '../../../components/Btn';
 import Container from '../../../components/Container';
 import Label from '../../../components/Label';
 import MainContainer from '../../../components/MainContainer';
-import { navigationProps } from '../../../types/nav';
+import { JoinLeagueNav, navigationProps } from '../../../types/nav';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import InputBox from '../../../components/InputBox';
 import Img from '../../../components/Img';
 import { AuthImages } from '../../../assets/images/map';
 import { screenWidth } from '../../../types/sizes';
+import { useJoinPrivateLeagueMutation, useVerifyLeagueCodeMutation } from '../../../features/league';
+import { Alert } from 'react-native';
 interface props extends navigationProps {
 
 }
-const JoinLeagueScreen: React.FC<props> = ({
-navigation
+const JoinLeagueScreen: React.FC<JoinLeagueNav> = ({
+    navigation,
+    route
 }) => {
+    const [invitationCode, setInvitationCode] = useState<string | any>('')
+    const [verifyLeagueCode, { data, isLoading, error }] = useVerifyLeagueCodeMutation<any>()
+    // console.log('route.params?.code', route.params?.code)
+
+    console.log('route.params?.week_id', route.params?.week_id)
+
+    useEffect(() => {
+        setInvitationCode(route.params?.code || '')
+    }, [route])
+
+    const joinLeagueHandler = () => {
+        if (invitationCode.trim().length) {
+            let data = new FormData()
+            data.append('unique_code', invitationCode)
+            verifyLeagueCode(data).unwrap().then((res) => {
+                navigation.navigate('CreateTeam', {
+                    code: invitationCode,
+                    week_id: route.params?.week_id,
+                    type:'private'
+                })
+            })
+        } else {
+            Alert.alert('Fantasy sniper App', 'Enter valid code')
+        }
+    } 
+
+    console.log("error", error)
+
     return (
-        <MainContainer  >
+        <MainContainer
+            absoluteModalLoading={isLoading}
+            successMessage={data?.message}
+            errorMessage={error}
+        >
             <Img
                 imgSrc={AuthImages.Splash_logo}
                 imgStyle={{
                     alignSelf: "center",
-                    width:screenWidth*0.80
+                    width: screenWidth * 0.80
                 }}
                 height={100}
-                mpImage={{mt:80}}
+                mpImage={{ mt: 80 }}
             />
             <Container
                 containerStyle={{
@@ -47,7 +82,7 @@ navigation
                     }}
                 >Enter the league code</Label>
                 <InputBox
-                    placeholder="1010F82G3YR"
+                    placeholder="League code"
                     onPress={() => { }}
                     containerStyle={{
                         backgroundColor: "white",
@@ -58,11 +93,14 @@ navigation
                     inputHeight={45}
                     mpContainer={{ mt: 10, mh: 15, pl: 10 }}
                     textSize={16}
+                    value={invitationCode}
+                    onChangeText={(text) => setInvitationCode(text)}
                 />
                 <Btn
                     title="NEXT"
-                    onPress={() => { 
-                        navigation.navigate("JoinLeagueTeamName")
+                    onPress={() => {
+                        joinLeagueHandler()
+                        // navigation.navigate("JoinLeagueTeamName")
                     }}
                     btnStyle={{
                         backgroundColor: "red"

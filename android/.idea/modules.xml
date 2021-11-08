@@ -6,6 +6,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/FantastySport.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/FantastySport.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/1698482618/FantastySport.react-native-async-storage_async-storage.iml" filepath="$PROJECT_DIR$/.idea/modules/1698482618/FantastySport.react-native-async-storage_async-storage.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-20129388/FantastySport.react-native-community_checkbox.iml" filepath="$PROJECT_DIR$/.idea/modules/-20129388/FantastySport.react-native-community_checkbox.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/522770628/FantastySport.react-native-firebase_app.iml" filepath="$PROJECT_DIR$/.idea/modules/522770628/FantastySport.react-native-firebase_app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/369644942/FantastySport.react-native-firebase_dynamic-links.iml" filepath="$PROJECT_DIR$/.idea/modules/369644942/FantastySport.react-native-firebase_dynamic-links.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-543062937/FantastySport.react-native-firebase_messaging.iml" filepath="$PROJECT_DIR$/.idea/modules/-543062937/FantastySport.react-native-firebase_messaging.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/1970527649/FantastySport.react-native-gesture-handler.iml" filepath="$PROJECT_DIR$/.idea/modules/1970527649/FantastySport.react-native-gesture-handler.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/1511885332/FantastySport.react-native-image-crop-picker.iml" filepath="$PROJECT_DIR$/.idea/modules/1511885332/FantastySport.react-native-image-crop-picker.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/1587844724/FantastySport.react-native-masked-view_masked-view.iml" filepath="$PROJECT_DIR$/.idea/modules/1587844724/FantastySport.react-native-masked-view_masked-view.iml" />
@@ -14,6 +17,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1731002405/FantastySport.react-native-reanimated.iml" filepath="$PROJECT_DIR$/.idea/modules/-1731002405/FantastySport.react-native-reanimated.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/247861706/FantastySport.react-native-safe-area-context.iml" filepath="$PROJECT_DIR$/.idea/modules/247861706/FantastySport.react-native-safe-area-context.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1702017438/FantastySport.react-native-screens.iml" filepath="$PROJECT_DIR$/.idea/modules/-1702017438/FantastySport.react-native-screens.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1755360390/FantastySport.react-native-share.iml" filepath="$PROJECT_DIR$/.idea/modules/-1755360390/FantastySport.react-native-share.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/1655701439/FantastySport.react-native-svg.iml" filepath="$PROJECT_DIR$/.idea/modules/1655701439/FantastySport.react-native-svg.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/1351288277/FantastySport.react-native-vector-icons.iml" filepath="$PROJECT_DIR$/.idea/modules/1351288277/FantastySport.react-native-vector-icons.iml" />
     </modules>

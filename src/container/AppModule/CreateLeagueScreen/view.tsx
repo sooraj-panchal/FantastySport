@@ -67,7 +67,7 @@ const CreateLeagueScreen: React.FC<props> = ({
         formData.append('type', isPrivate ? 'private' : 'public')
         formData.append('name', leagueName)
         formData.append('max_participant', numOfParticipent)
-        formData.append('scoring_system', selectPointSystem)
+        formData.append('scoring_system', 'SNIPER' || selectPointSystem)
         formData.append('week_detail', JSON.stringify(leagueData))
         console.log('data', JSON.stringify(formData))
         createLeague(formData).unwrap().then(() => {
@@ -128,7 +128,7 @@ const CreateLeagueScreen: React.FC<props> = ({
                         mpLabel={{ ml: 10 }}
                     >Single Week</Label>
                 </Container>
-                <Container
+                {/* <Container
                     containerStyle={{
                         flexDirection: "row",
                         alignItems: "center"
@@ -165,7 +165,7 @@ const CreateLeagueScreen: React.FC<props> = ({
                         labelSize={15}
                         mpLabel={{ ml: 10 }}
                     >Multi Week</Label>
-                </Container>
+                </Container> */}
             </Container>
         </>
     }
@@ -431,7 +431,7 @@ const CreateLeagueScreen: React.FC<props> = ({
             {renderLeagueName()}
             {/* {leagueType()} */}
             {participent()}
-            {pointScoring()}
+            {/* {pointScoring()} */}
             <Btn
                 title="CREATE"
                 mpBtn={{ mh: 20, mt: 15 }}

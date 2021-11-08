@@ -34,7 +34,7 @@ const MyPlayersList: React.FC<PlayerPositionTypes> = ({
                 mpContainer={{ mh: 20 }}
                 height={55}
             >
-                <Label labelSize={12} style={{ letterSpacing: 0.5, color: 'grey' }} >{Position}</Label>
+                <Label labelSize={12} style={{ letterSpacing: 0.5, color: 'grey',width:35 }} >{Position}</Label>
                 <Ionicons
                     name="md-person"
                     size={52}

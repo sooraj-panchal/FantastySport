@@ -18,9 +18,9 @@ import Octicons from 'react-native-vector-icons/Octicons'
 import { AppStack } from '../../../navigator/navActions';
 import AuthWrapper from '../../../components/AuthWrapper';
 import { useLoginMutation } from '../../../features/auth';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setCredentials } from '../../../store/slices/auth';
-import { RootState } from '../../../store';
+
 interface props extends navigationProps {
     loginLoading: boolean,
 }
@@ -36,9 +36,11 @@ const LoginScreen: React.FC<props> = ({
     navigation
 }) => {
     const dispatch = useDispatch()
+    // const getStore = useStore()
+    // console.log("getState",getStore.getState())
     const [login, { isLoading, error }] = useLoginMutation()
-
     const initialState: formValues = { email: '', password: '' }
+
     const onLoginHandle = async (values: formValues) => {
         const data = new FormData();
         data.append('email', values.email)

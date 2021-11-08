@@ -15,6 +15,7 @@ import { TeamListResponse } from '../../../types/responseTypes';
 interface props extends navigationProps {
 
 }
+
 const LeagueScreen: React.FC<props> = ({
     navigation
 }) => {

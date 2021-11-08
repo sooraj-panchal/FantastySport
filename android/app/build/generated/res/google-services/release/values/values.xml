@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">470440487634-lfs834utcft3oqeov5hc4mtetdhdb7bn.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">470440487634</string>
+    <string name="google_api_key" translatable="false">AIzaSyDqJLU5hfvacBtzINjSpBRA6GNCubFX74w</string>
+    <string name="google_app_id" translatable="false">1:470440487634:android:8c94978af2894899dedb0b</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDqJLU5hfvacBtzINjSpBRA6GNCubFX74w</string>
+    <string name="google_storage_bucket" translatable="false">fantasysniper-2c1f6.appspot.com</string>
+    <string name="project_id" translatable="false">fantasysniper-2c1f6</string>
+</resources>

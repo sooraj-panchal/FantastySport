@@ -6,12 +6,50 @@ import MainContainer from '../../../components/MainContainer';
 import { navigationProps } from '../../../types/nav';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { OrangeColor } from '../../../assets/colors';
-interface props extends navigationProps {
+import { firebase } from '@react-native-firebase/dynamic-links';
+import Share from 'react-native-share'
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 
-}
-const InviteFriendScreen: React.FC<props> = ({
+const InviteFriendScreen: React.FC<any> = ({
 
 }) => {
+    const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
+    console.log('leagueDetails', leagueDetails.week[0].week_id)
+
+    const createLink = async () => {
+        let code = leagueDetails.unique_code
+        const link = await firebase.dynamicLinks().buildShortLink({
+            link: `https://fantasysniper?code=${code}&week_id=${leagueDetails.week[0].week_id}`,
+            android: {
+                packageName: 'com.fantastysport',
+            },
+            domainUriPrefix: 'https://fantasysport.page.link',
+            social: {
+                title: 'Join NFL Vip League',
+                descriptionText: 'Join League and create your team match to get your rank on the top of the NFL League',
+                imageUrl: 'https://clutchpoints.com/wp-content/uploads/2021/05/NFL-Tom-Brady-Peyton-Manning-Joe-Montana.jpg'
+            }
+        });
+        return link;
+    }
+
+    async function joinTeamCode() {
+        const url = await createLink();
+        console.log('url==>', url);
+        Share.open({
+            title: "Fantasy sniper app",
+            message: `League code ${leagueDetails.unique_code}`,
+            url: url,
+        })
+            .then((res) => {
+                console.log("share res", res);
+            })
+            .catch((err) => {
+                err && console.log(err);
+            });
+    }
+
     return (
         <MainContainer>
             <Label
@@ -41,7 +79,7 @@ const InviteFriendScreen: React.FC<props> = ({
                     }}
                 >If your friends have created team, they can use this code to join your league.</Label>
                 <Btn
-                    title="1010F82G3YR"
+                    title={leagueDetails.unique_code}
                     onPress={() => { }}
                     btnStyle={{
                         backgroundColor: "white",
@@ -79,7 +117,7 @@ const InviteFriendScreen: React.FC<props> = ({
                 >Invite friends using your chat apps.</Label>
                 <Btn
                     title="SHARE LEAGUE"
-                    onPress={() => { }}
+                    onPress={joinTeamCode}
                     btnStyle={{
                         backgroundColor: OrangeColor
                     }}

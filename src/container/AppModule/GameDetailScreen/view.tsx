@@ -1,29 +1,60 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import Container from '../../../components/Container';
 import Label from '../../../components/Label';
 import MainContainer from '../../../components/MainContainer';
 import { FlatList } from 'react-native-gesture-handler';
 import { ListRenderItem } from 'react-native';
-import { navigationProps } from '../../../types/nav';
-import WinnerList from '../../../components/WinnerList';
+import { GameDetailNav } from '../../../types/nav';
 import GamePlayerList from '../../../components/GamePlayerList';
-interface props extends navigationProps {
+import { useGameDetailsQuery } from '../../../features/league';
 
-}
-const GameDetailScreen: React.FC<props> = ({
+const GameDetailScreen: React.FC<GameDetailNav> = ({
+    route,
     navigation
 }) => {
+    let newData = {
+        league_id: route.params?.league_id,
+        week_id: route.params?.week_id,
+    }
 
-    const renderItem: ListRenderItem<{}> = ({ item, index }) => {
+    const { data, isLoading, error } = useGameDetailsQuery<any>(newData, {
+        refetchOnMountOrArgChange: true
+    })
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: route.params?.league_name
+        })
+    })
+
+    const renderItem: ListRenderItem<any> = ({ item, index }) => {
         return (
             <GamePlayerList
+                {...item}
                 index={index}
+                onPress={() => {
+                    if (route.params?.fromMyLeague) {
+                        navigation.navigate('TeamDetail', {
+                            team_id: item.id
+                        })
+                    } else {
+                        const WithoutMyTeam = data.filter((item: any) => {
+                            return item.id != route.params?.my_team_id
+                        })
+                        navigation.navigate('LiveMatchDetail', {
+                            team_id: route.params?.my_team_id,
+                            op_team_id: item.id == route.params?.my_team_id ? WithoutMyTeam[0]?.id : item.id
+                        })
+                    }
+
+                }}
             />
         )
     }
 
     return <MainContainer
         style={{ backgroundColor: 'white' }}
+        loading={isLoading}
     >
         <Container
             containerStyle={{
@@ -31,7 +62,7 @@ const GameDetailScreen: React.FC<props> = ({
                 alignItems: 'center',
                 // justifyContent: "space-between"
             }}
-            mpContainer={{mt: 15, mb: 5 }}
+            mpContainer={{ mt: 15, mb: 5 }}
         >
             <Label
                 labelSize={16}
@@ -58,7 +89,7 @@ const GameDetailScreen: React.FC<props> = ({
             >SNIPER pts</Label>
         </Container>
         <FlatList
-            data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
+            data={data}
             renderItem={renderItem}
             keyExtractor={(item, index) => `Winners${index.toString()}`}
         />

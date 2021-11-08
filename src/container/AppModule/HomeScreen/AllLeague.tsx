@@ -24,11 +24,11 @@ const AllLeague: React.FC = ({
 }) => {
     const dispatch = useDispatch()
     const [page, setPage] = React.useState<Number>(0)
-    const { data, isLoading,error } = useAllLeagueListQuery(null)
+    const { data, isLoading, error } = useAllLeagueListQuery(null)
     const user: UserResponse = useSelector((store: RootState) => store.auth.user)
 
     console.log('error', JSON.stringify(error))
-    
+
     const navigation = useNavigation<homeNavProps>()
 
     return (
@@ -45,11 +45,14 @@ const AllLeague: React.FC = ({
                     style={{
                         fontFamily: medium
                     }}
-                >Join Leagues</Label>
+                >Public Leagues</Label>
                 <Label
                     labelSize={16}
                     style={{
                         color: "grey"
+                    }}
+                    onPress={() => {
+                        navigation.navigate('PublicLeague')
                     }}
                 >View all</Label>
             </Container>
@@ -81,9 +84,14 @@ const AllLeague: React.FC = ({
                                 onPress={() => {
                                     // console.log(item)
                                     // let parsedWeek = JSON.parse(item.week)
-                                    dispatch(leagueDetailsWatcher({ ...item }))
-                                    navigation.navigate('MyTeamTab', {
-                                        screen: 'MyTeam'
+                                    // dispatch(leagueDetailsWatcher({ ...item }))
+                                    // navigation.navigate('MyTeamTab', {
+                                    //     screen: 'MyTeam'
+                                    // })
+                                    navigation.navigate('CreateTeam', {
+                                        week_id: item.week[0]?.week_id,
+                                        type: 'public',
+                                        league_id: item.league_id
                                     })
                                 }}
                             >
@@ -94,7 +102,7 @@ const AllLeague: React.FC = ({
                                         color: "black"
                                     }}
                                     mpLabel={{ mt: 10 }}
-                                >{`${user.first_name} ${user.last_name}`}</Label>
+                                >{item.user_name}</Label>
                                 <Container containerStyle={{
                                     flexDirection: "row",
                                     alignItems: 'center'

@@ -36,9 +36,18 @@ export const sportsDataApi = createApi({
                 console.log("getMyTeamLogo Response==>", teamLogoList)
                 return teamLogoList;
             }
-        })
+        }),
+        NFLCurrentWeek: builder.query({
+            query: () => ({
+                url: 'scores/json/CurrentWeek'
+            }),
+            transformResponse: (response) => {
+                console.log("NFLCurrentWeek Response==>", response)
+                return response;
+            }
+        }),
     })
 })
 
-export const { useGetMyLiveMatchQuery, useGetMyTeamLogoQuery } = sportsDataApi
+export const { useGetMyLiveMatchQuery, useGetMyTeamLogoQuery,useNFLCurrentWeekQuery } = sportsDataApi
 

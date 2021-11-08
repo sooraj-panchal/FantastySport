@@ -29,12 +29,19 @@ import LiveMatchListScreen from '../container/AppModule/LiveMatchListScreen/view
 import { Platform } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
+import LiveMatchupRankings from '../container/AppModule/LiveMatchupRankings';
+import CreateTeamScreen from '../container/AppModule/CreateTeamScreen';
+import CreateMatchScreen from '../container/AppModule/CreateMatchScreen';
+import MyTeamScreen from '../container/AppModule/MyTeamBottomTabs/MyTeamScreen';
+import PublicLeagueScreen from '../container/AppModule/PublicLeagueScreen';
+import { useNFLCurrentWeekQuery } from '../features/sportsData';
 
 const StackScreen = createNativeStackNavigator<unAuthParamList>()
 
 const AppStackScreen: React.FC = () => {
     const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
-
+    const { error } = useNFLCurrentWeekQuery(null)
+    // console.log('error from NFL', error)
     return (
         <StackScreen.Navigator
             initialRouteName="tabs"
@@ -166,6 +173,14 @@ const AppStackScreen: React.FC = () => {
                 })}
             />
             <StackScreen.Screen
+                name='CreateTeam'
+                component={CreateTeamScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Create team"
+                })}
+            />
+            <StackScreen.Screen
                 name="LiveMatchDetail"
                 component={LiveMatchDetailScreen}
                 options={({ navigation }) => ({
@@ -193,8 +208,7 @@ const AppStackScreen: React.FC = () => {
                 name="TeamDetail"
                 component={TeamDetailScreen}
                 options={({ navigation }) => ({
-                    headerShown: true,
-                    headerTitle: "John's Official Team"
+                    headerShown: true
                 })}
             />
             <StackScreen.Screen
@@ -262,6 +276,38 @@ const AppStackScreen: React.FC = () => {
                 options={({ navigation }) => ({
                     headerShown: true,
                     headerTitle: "My leagues",
+                })}
+            />
+            <StackScreen.Screen
+                name='LiveMatchupRankings'
+                component={LiveMatchupRankings}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Live Matchup Rankings",
+                })}
+            />
+            <StackScreen.Screen
+                name='MyTeam'
+                component={MyTeamScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "",
+                })}
+            />
+            <StackScreen.Screen
+                name='CreateMatch'
+                component={CreateMatchScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "",
+                })}
+            />
+            <StackScreen.Screen
+                name='PublicLeague'
+                component={PublicLeagueScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Public Leagues",
                 })}
             />
         </StackScreen.Navigator>

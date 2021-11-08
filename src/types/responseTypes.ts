@@ -43,9 +43,16 @@ export interface MyLeagueResponse {
   week: Array<WeekObject>,
   type?: 'private' | 'public',
   name?: string,
+  user_name:string,
   max_participant?: string | number,
   scoring_system: string,
-  league_id?: number
+  league_id?: number,
+  unique_code: string,
+  team_name?:string,
+  team_logo?:string,
+  is_game_created?:boolean,
+  participant_user:number,
+  team_id:number
 }
 
 export interface MyTeamResponse {
@@ -54,7 +61,13 @@ export interface MyTeamResponse {
   week_id?: number,
   players: Array<PlayerPositionTypes>,
   team_name?: string,
-  team_logo?: string
+  team_logo?: string,
+  fantasyPoint?: number,
+  accuracy?: number;
+  prediction_points?: number;
+  sniper_points?: number
+  projection_points?:number,
+  actual_points?:number
 }
 export interface MyTeamLogoResponse {
   WikipediaLogoUrl: string | ''
@@ -77,4 +90,33 @@ export interface TeamListResponse {
   team_logo: string,
   accuracy: number,
   fantasyPoint: number
+}
+
+export interface LeagueItemResponse {
+  id?: number,
+  league_name: string,
+  scoring_system: string,
+  type: "private" | 'public',
+  user_id?: number,
+  team_name?: string,
+  team_id?: number,
+  team_logo?: string,
+  picks_deadline?:string,
+  isLeagueRunning?:boolean,
+  league_id:number,
+  week_id:number
+}
+export interface LiveMatchUpResponse{
+  id:number,
+  name: string,
+  pts: number,
+  rank: number,
+  team_name:string
+}
+
+export interface GameDetailResponse{
+  id:number,
+  pts: number,
+  rank: number,
+  team_name:string
 }

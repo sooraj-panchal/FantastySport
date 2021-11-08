@@ -11,7 +11,8 @@ export const selectedLeagueSlice = createSlice( {
         },
         deleteLeagueWatcher: ( state, action ) => {
             state.data = state.data.filter( ( item, index ) => item.game_key != action.payload );
-        }
+        },
+        
     }
 } );
 

@@ -18,93 +18,405 @@
 13-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:5:5-64
 13-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:5:22-62
 14    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-14-->[com.facebook.flipper:flipper:0.75.1] /Users/p/.gradle/caches/transforms-2/files-2.1/a8f6015f96666ab8d93bfe5b64998bc8/jetified-flipper-0.75.1/AndroidManifest.xml:16:5-76
-14-->[com.facebook.flipper:flipper:0.75.1] /Users/p/.gradle/caches/transforms-2/files-2.1/a8f6015f96666ab8d93bfe5b64998bc8/jetified-flipper-0.75.1/AndroidManifest.xml:16:22-73
-15
-16    <queries>
-16-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:10:5-14:15
-17        <intent>
-17-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:9-13:18
-18            <action android:name="android.media.action.IMAGE_CAPTURE" />
-18-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:13-73
-18-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:21-70
-19        </intent>
-20    </queries>
-21
-22    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-22-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:5-81
-22-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:22-78
+14-->[com.facebook.flipper:flipper:0.75.1] /Users/p/.gradle/caches/transforms-2/files-2.1/ce1147b3e4e04fe87f556bced63a10fa/jetified-flipper-0.75.1/AndroidManifest.xml:16:5-76
+14-->[com.facebook.flipper:flipper:0.75.1] /Users/p/.gradle/caches/transforms-2/files-2.1/ce1147b3e4e04fe87f556bced63a10fa/jetified-flipper-0.75.1/AndroidManifest.xml:16:22-73
+15    <uses-permission android:name="android.permission.WAKE_LOCK" />
+15-->[:react-native-firebase_dynamic-links] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/dynamic-links/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:5-68
+15-->[:react-native-firebase_dynamic-links] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/dynamic-links/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:22-65
+16    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+16-->[:react-native-firebase_dynamic-links] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/dynamic-links/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:5-79
+16-->[:react-native-firebase_dynamic-links] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/dynamic-links/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:22-76
+17
+18    <queries>
+18-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:10:5-14:15
+19        <intent>
+19-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:9-13:18
+20            <action android:name="android.media.action.IMAGE_CAPTURE" />
+20-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:13-73
+20-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:21-70
+21        </intent>
+22    </queries>
 23
-24    <application
-24-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:6:5-24:19
-25        android:name="com.fantastysport.MainApplication"
-25-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:7:7-38
-26        android:allowBackup="false"
-26-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:11:7-34
-27        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-27-->[androidx.core:core:1.1.0] /Users/p/.gradle/caches/transforms-2/files-2.1/d67cd79abd1ca209502f51c69d23182b/core-1.1.0/AndroidManifest.xml:24:18-86
-28        android:debuggable="true"
-29        android:icon="@mipmap/fantasy"
-29-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:9:7-37
-30        android:label="@string/app_name"
-30-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:8:7-39
-31        android:roundIcon="@mipmap/fantasy"
-31-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:10:7-42
-32        android:theme="@style/AppTheme"
-32-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:12:7-38
-33        android:usesCleartextTraffic="true" >
-33-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/debug/AndroidManifest.xml:8:9-44
-34        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-34-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/debug/AndroidManifest.xml:11:9-86
-34-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/debug/AndroidManifest.xml:11:19-83
-35        <activity
-35-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:13:7-23:18
-36            android:name="com.fantastysport.MainActivity"
-36-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:14:9-37
-37            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
-37-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:16:9-86
-38            android:label="@string/app_name"
-38-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:15:9-41
-39            android:launchMode="singleTask"
-39-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:17:9-40
-40            android:windowSoftInputMode="adjustResize" >
-40-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:18:9-51
-41            <intent-filter>
-41-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:19:9-22:25
-42                <action android:name="android.intent.action.MAIN" />
-42-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:20:13-65
-42-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:20:21-62
-43
-44                <category android:name="android.intent.category.LAUNCHER" />
-44-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:21:13-73
-44-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:21:23-70
-45            </intent-filter>
-46        </activity>
+24    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+24-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:5-81
+24-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:22-78
+25    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+25-->[com.google.firebase:firebase-messaging:22.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/659420486e587c7496744d9234de768f/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:25:5-82
+25-->[com.google.firebase:firebase-messaging:22.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/659420486e587c7496744d9234de768f/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:25:22-79
+26    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+26-->[com.google.android.gms:play-services-measurement:19.0.2] /Users/p/.gradle/caches/transforms-2/files-2.1/01ba1afcd2970ef9342ce61b9329ecf3/jetified-play-services-measurement-19.0.2/AndroidManifest.xml:26:5-110
+26-->[com.google.android.gms:play-services-measurement:19.0.2] /Users/p/.gradle/caches/transforms-2/files-2.1/01ba1afcd2970ef9342ce61b9329ecf3/jetified-play-services-measurement-19.0.2/AndroidManifest.xml:26:22-107
+27
+28    <application
+28-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:6:5-31:19
+29        android:name="com.fantastysport.MainApplication"
+29-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:7:7-38
+30        android:allowBackup="false"
+30-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:11:7-34
+31        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+31-->[androidx.core:core:1.2.0] /Users/p/.gradle/caches/transforms-2/files-2.1/a4a010e99880a4d81ee6a7ed3ad8449a/core-1.2.0/AndroidManifest.xml:24:18-86
+32        android:debuggable="true"
+33        android:icon="@mipmap/fantasy"
+33-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:9:7-37
+34        android:label="@string/app_name"
+34-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:8:7-39
+35        android:roundIcon="@mipmap/fantasy"
+35-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:10:7-42
+36        android:theme="@style/AppTheme"
+36-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:12:7-38
+37        android:usesCleartextTraffic="true" >
+37-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/debug/AndroidManifest.xml:8:9-44
+38        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+38-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/debug/AndroidManifest.xml:11:9-86
+38-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/debug/AndroidManifest.xml:11:19-83
+39        <activity
+39-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:13:7-30:18
+40            android:name="com.fantastysport.MainActivity"
+40-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:14:9-37
+41            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+41-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:16:9-86
+42            android:label="@string/app_name"
+42-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:15:9-41
+43            android:launchMode="singleTask"
+43-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:17:9-40
+44            android:windowSoftInputMode="adjustResize" >
+44-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:18:9-51
+45            <intent-filter>
+45-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:20:9-23:25
+46                <action android:name="android.intent.action.MAIN" />
+46-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:21:13-65
+46-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:21:21-62
 47
-48        <provider
-48-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:9-27:20
-49            android:name="androidx.core.content.FileProvider"
-49-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:13-62
-50            android:authorities="com.fantastysport.provider"
-50-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:13-60
-51            android:exported="false"
-51-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:22:13-37
-52            android:grantUriPermissions="true" >
-52-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:23:13-47
-53            <meta-data
-53-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:24:13-26:58
-54                android:name="android.support.FILE_PROVIDER_PATHS"
-54-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:25:17-67
-55                android:resource="@xml/provider_paths" />
-55-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:26:17-55
-56        </provider>
-57
-58        <activity
-58-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:29:9-31:72
-59            android:name="com.yalantis.ucrop.UCropActivity"
-59-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:30:13-60
-60            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-60-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:31:13-69
-61    </application>
-62
-63</manifest>
+48                <category android:name="android.intent.category.LAUNCHER" />
+48-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:22:13-73
+48-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:22:23-70
+49            </intent-filter>
+50            <intent-filter>
+50-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:24:12-29:21
+51                <action android:name="android.intent.action.VIEW" />
+51-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:25:9-61
+51-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:25:17-58
+52
+53                <category android:name="android.intent.category.DEFAULT" />
+53-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:26:9-68
+53-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:26:19-65
+54                <category android:name="android.intent.category.BROWSABLE" />
+54-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:27:9-70
+54-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:27:19-67
+55
+56                <data
+56-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:28:9-77
+57                    android:host="fantasysport.page.link"
+57-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:28:15-52
+58                    android:scheme="https" />
+58-->/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/AndroidManifest.xml:28:53-75
+59            </intent-filter>
+60        </activity>
+61
+62        <service android:name="io.invertase.firebase.messaging.ReactNativeFirebaseMessagingHeadlessService" />
+62-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:9-111
+62-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:18-108
+63        <service
+63-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:9-23:19
+64            android:name="io.invertase.firebase.messaging.ReactNativeFirebaseMessagingService"
+64-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:13-95
+65            android:exported="false" >
+65-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:13-37
+66            <intent-filter>
+66-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:13-22:29
+67                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+67-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:17-78
+67-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:25-75
+68            </intent-filter>
+69        </service>
+70
+71        <receiver
+71-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:25:9-32:20
+72            android:name="io.invertase.firebase.messaging.ReactNativeFirebaseMessagingReceiver"
+72-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:26:13-96
+73            android:exported="true"
+73-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:27:13-36
+74            android:permission="com.google.android.c2dm.permission.SEND" >
+74-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:28:13-73
+75            <intent-filter>
+75-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:29:13-31:29
+76                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+76-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:30:17-81
+76-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:30:25-78
+77            </intent-filter>
+78        </receiver>
+79
+80        <meta-data
+80-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:34:9-36:36
+81            android:name="firebase_messaging_auto_init_enabled"
+81-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:35:13-64
+82            android:value="true" />
+82-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:36:13-33
+83        <meta-data
+83-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:37:9-39:32
+84            android:name="com.google.firebase.messaging.default_notification_channel_id"
+84-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:38:13-89
+85            android:value="" />
+85-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:39:13-29
+86        <meta-data
+86-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:40:9-42:47
+87            android:name="com.google.firebase.messaging.default_notification_color"
+87-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:41:13-84
+88            android:resource="@color/white" />
+88-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:42:13-44
+89        <meta-data
+89-->[:react-native-firebase_app] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/app/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:9-14:36
+90            android:name="app_data_collection_default_enabled"
+90-->[:react-native-firebase_app] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/app/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-63
+91            android:value="true" />
+91-->[:react-native-firebase_app] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/app/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:13-33
+92
+93        <service
+93-->[:react-native-firebase_app] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/app/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:9-20:19
+94            android:name="com.google.firebase.components.ComponentDiscoveryService"
+94-->[:react-native-firebase_app] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/app/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:18-89
+95            android:directBootAware="true"
+95-->[com.google.firebase:firebase-common:20.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/cf44503f512bd01edbb9a42565c54f02/jetified-firebase-common-20.0.0/AndroidManifest.xml:35:13-43
+96            android:exported="false" >
+96-->[com.google.firebase:firebase-messaging:22.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/659420486e587c7496744d9234de768f/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:51:13-37
+97            <meta-data
+97-->[:react-native-firebase_app] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/app/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:13-19:85
+98                android:name="com.google.firebase.components:io.invertase.firebase.app.ReactNativeFirebaseAppRegistrar"
+98-->[:react-native-firebase_app] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/app/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:17-120
+99                android:value="com.google.firebase.components.ComponentRegistrar" />
+99-->[:react-native-firebase_app] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/app/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:17-82
+100            <meta-data
+100-->[com.google.firebase:firebase-messaging:22.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/659420486e587c7496744d9234de768f/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:52:13-54:85
+101                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+101-->[com.google.firebase:firebase-messaging:22.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/659420486e587c7496744d9234de768f/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:53:17-119
+102                android:value="com.google.firebase.components.ComponentRegistrar" />
+102-->[com.google.firebase:firebase-messaging:22.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/659420486e587c7496744d9234de768f/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:54:17-82
+103            <meta-data
+103-->[com.google.firebase:firebase-datatransport:18.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/29c5673bc47885ea14d02ece37658da4/jetified-firebase-datatransport-18.0.0/AndroidManifest.xml:28:13-30:85
+104                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+104-->[com.google.firebase:firebase-datatransport:18.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/29c5673bc47885ea14d02ece37658da4/jetified-firebase-datatransport-18.0.0/AndroidManifest.xml:29:17-115
+105                android:value="com.google.firebase.components.ComponentRegistrar" />
+105-->[com.google.firebase:firebase-datatransport:18.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/29c5673bc47885ea14d02ece37658da4/jetified-firebase-datatransport-18.0.0/AndroidManifest.xml:30:17-82
+106            <meta-data
+106-->[com.google.firebase:firebase-dynamic-links:20.1.1] /Users/p/.gradle/caches/transforms-2/files-2.1/39393a91fa8570b754b79831a0334dfe/jetified-firebase-dynamic-links-20.1.1/AndroidManifest.xml:27:13-29:85
+107                android:name="com.google.firebase.components:com.google.firebase.dynamiclinks.internal.FirebaseDynamicLinkRegistrar"
+107-->[com.google.firebase:firebase-dynamic-links:20.1.1] /Users/p/.gradle/caches/transforms-2/files-2.1/39393a91fa8570b754b79831a0334dfe/jetified-firebase-dynamic-links-20.1.1/AndroidManifest.xml:28:17-133
+108                android:value="com.google.firebase.components.ComponentRegistrar" />
+108-->[com.google.firebase:firebase-dynamic-links:20.1.1] /Users/p/.gradle/caches/transforms-2/files-2.1/39393a91fa8570b754b79831a0334dfe/jetified-firebase-dynamic-links-20.1.1/AndroidManifest.xml:29:17-82
+109            <meta-data
+109-->[com.google.android.gms:play-services-measurement-api:19.0.2] /Users/p/.gradle/caches/transforms-2/files-2.1/97bcdb68bf0c53e1d797cee78224555c/jetified-play-services-measurement-api-19.0.2/AndroidManifest.xml:30:13-32:85
+110                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+110-->[com.google.android.gms:play-services-measurement-api:19.0.2] /Users/p/.gradle/caches/transforms-2/files-2.1/97bcdb68bf0c53e1d797cee78224555c/jetified-play-services-measurement-api-19.0.2/AndroidManifest.xml:31:17-139
+111                android:value="com.google.firebase.components.ComponentRegistrar" />
+111-->[com.google.android.gms:play-services-measurement-api:19.0.2] /Users/p/.gradle/caches/transforms-2/files-2.1/97bcdb68bf0c53e1d797cee78224555c/jetified-play-services-measurement-api-19.0.2/AndroidManifest.xml:32:17-82
+112            <meta-data
+112-->[com.google.firebase:firebase-installations:17.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/bfaa8387d061af9163bf78fbdd75ee7b/jetified-firebase-installations-17.0.0/AndroidManifest.xml:18:13-20:85
+113                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+113-->[com.google.firebase:firebase-installations:17.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/bfaa8387d061af9163bf78fbdd75ee7b/jetified-firebase-installations-17.0.0/AndroidManifest.xml:19:17-127
+114                android:value="com.google.firebase.components.ComponentRegistrar" />
+114-->[com.google.firebase:firebase-installations:17.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/bfaa8387d061af9163bf78fbdd75ee7b/jetified-firebase-installations-17.0.0/AndroidManifest.xml:20:17-82
+115        </service>
+116
+117        <provider
+117-->[:react-native-firebase_app] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/app/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:22:9-26:38
+118            android:name="io.invertase.firebase.app.ReactNativeFirebaseAppInitProvider"
+118-->[:react-native-firebase_app] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/app/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:23:13-88
+119            android:authorities="com.fantastysport.reactnativefirebaseappinitprovider"
+119-->[:react-native-firebase_app] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/app/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:24:13-86
+120            android:exported="false"
+120-->[:react-native-firebase_app] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/app/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:25:13-37
+121            android:initOrder="99" />
+121-->[:react-native-firebase_app] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/app/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:26:13-35
+122        <provider
+122-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:9-27:20
+123            android:name="androidx.core.content.FileProvider"
+123-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:13-62
+124            android:authorities="com.fantastysport.provider"
+124-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:13-60
+125            android:exported="false"
+125-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:22:13-37
+126            android:grantUriPermissions="true" >
+126-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:23:13-47
+127            <meta-data
+127-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:24:13-26:58
+128                android:name="android.support.FILE_PROVIDER_PATHS"
+128-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:25:17-67
+129                android:resource="@xml/provider_paths" />
+129-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:26:17-55
+130        </provider>
+131
+132        <activity
+132-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:29:9-31:72
+133            android:name="com.yalantis.ucrop.UCropActivity"
+133-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:30:13-60
+134            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+134-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:31:13-69
+135
+136        <provider
+136-->[:react-native-share] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:10:9-18:20
+137            android:name="cl.json.RNShareFileProvider"
+137-->[:react-native-share] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-55
+138            android:authorities="com.fantastysport.rnshare.fileprovider"
+138-->[:react-native-share] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:13-72
+139            android:exported="false"
+139-->[:react-native-share] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-37
+140            android:grantUriPermissions="true" >
+140-->[:react-native-share] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:13-47
+141            <meta-data
+141-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:24:13-26:58
+142                android:name="android.support.FILE_PROVIDER_PATHS"
+142-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:25:17-67
+143                android:resource="@xml/share_download_paths" />
+143-->[:react-native-image-crop-picker] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/react-native-image-crop-picker/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:26:17-55
+144        </provider>
+145
+146        <receiver
+146-->[com.google.firebase:firebase-messaging:22.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/659420486e587c7496744d9234de768f/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:28:9-35:20
+147            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+147-->[com.google.firebase:firebase-messaging:22.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/659420486e587c7496744d9234de768f/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:29:13-78
+148            android:exported="true"
+148-->[com.google.firebase:firebase-messaging:22.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/659420486e587c7496744d9234de768f/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:30:13-36
+149            android:permission="com.google.android.c2dm.permission.SEND" >
+149-->[com.google.firebase:firebase-messaging:22.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/659420486e587c7496744d9234de768f/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:31:13-73
+150            <intent-filter>
+150-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:29:13-31:29
+151                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+151-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:30:17-81
+151-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:30:25-78
+152            </intent-filter>
+153        </receiver>
+154        <!--
+155             FirebaseMessagingService performs security checks at runtime,
+156             but set to not exported to explicitly avoid allowing another app to call it.
+157        -->
+158        <service
+158-->[com.google.firebase:firebase-messaging:22.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/659420486e587c7496744d9234de768f/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:41:9-48:19
+159            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+159-->[com.google.firebase:firebase-messaging:22.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/659420486e587c7496744d9234de768f/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:42:13-82
+160            android:directBootAware="true"
+160-->[com.google.firebase:firebase-messaging:22.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/659420486e587c7496744d9234de768f/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:43:13-43
+161            android:exported="false" >
+161-->[com.google.firebase:firebase-messaging:22.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/659420486e587c7496744d9234de768f/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:44:13-37
+162            <intent-filter android:priority="-500" >
+162-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:13-22:29
+163                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+163-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:17-78
+163-->[:react-native-firebase_messaging] /Users/p/react-native/FantastySport/FantastySportApp/node_modules/@react-native-firebase/messaging/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:25-75
+164            </intent-filter>
+165        </service>
+166        <service
+166-->[com.google.android.datatransport:transport-backend-cct:3.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/c1b875a1567d127c75e5d36185d64378/jetified-transport-backend-cct-3.0.0/AndroidManifest.xml:29:9-35:19
+167            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+167-->[com.google.android.datatransport:transport-backend-cct:3.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/c1b875a1567d127c75e5d36185d64378/jetified-transport-backend-cct-3.0.0/AndroidManifest.xml:30:13-103
+168            android:exported="false" >
+168-->[com.google.android.datatransport:transport-backend-cct:3.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/c1b875a1567d127c75e5d36185d64378/jetified-transport-backend-cct-3.0.0/AndroidManifest.xml:31:13-37
+169            <meta-data
+169-->[com.google.android.datatransport:transport-backend-cct:3.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/c1b875a1567d127c75e5d36185d64378/jetified-transport-backend-cct-3.0.0/AndroidManifest.xml:32:13-34:39
+170                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+170-->[com.google.android.datatransport:transport-backend-cct:3.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/c1b875a1567d127c75e5d36185d64378/jetified-transport-backend-cct-3.0.0/AndroidManifest.xml:33:17-94
+171                android:value="cct" />
+171-->[com.google.android.datatransport:transport-backend-cct:3.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/c1b875a1567d127c75e5d36185d64378/jetified-transport-backend-cct-3.0.0/AndroidManifest.xml:34:17-36
+172        </service>
+173
+174        <provider
+174-->[com.google.firebase:firebase-common:20.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/cf44503f512bd01edbb9a42565c54f02/jetified-firebase-common-20.0.0/AndroidManifest.xml:26:9-31:39
+175            android:name="com.google.firebase.provider.FirebaseInitProvider"
+175-->[com.google.firebase:firebase-common:20.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/cf44503f512bd01edbb9a42565c54f02/jetified-firebase-common-20.0.0/AndroidManifest.xml:27:13-77
+176            android:authorities="com.fantastysport.firebaseinitprovider"
+176-->[com.google.firebase:firebase-common:20.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/cf44503f512bd01edbb9a42565c54f02/jetified-firebase-common-20.0.0/AndroidManifest.xml:28:13-72
+177            android:directBootAware="true"
+177-->[com.google.firebase:firebase-common:20.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/cf44503f512bd01edbb9a42565c54f02/jetified-firebase-common-20.0.0/AndroidManifest.xml:29:13-43
+178            android:exported="false"
+178-->[com.google.firebase:firebase-common:20.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/cf44503f512bd01edbb9a42565c54f02/jetified-firebase-common-20.0.0/AndroidManifest.xml:30:13-37
+179            android:initOrder="100" />
+179-->[com.google.firebase:firebase-common:20.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/cf44503f512bd01edbb9a42565c54f02/jetified-firebase-common-20.0.0/AndroidManifest.xml:31:13-36
+180
+181        <service
+181-->[com.google.android.datatransport:transport-runtime:3.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/2ebfb026f9cdcbb544bc48708eefe8cc/jetified-transport-runtime-3.0.0/AndroidManifest.xml:26:9-30:19
+182            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+182-->[com.google.android.datatransport:transport-runtime:3.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/2ebfb026f9cdcbb544bc48708eefe8cc/jetified-transport-runtime-3.0.0/AndroidManifest.xml:27:13-117
+183            android:exported="false"
+183-->[com.google.android.datatransport:transport-runtime:3.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/2ebfb026f9cdcbb544bc48708eefe8cc/jetified-transport-runtime-3.0.0/AndroidManifest.xml:28:13-37
+184            android:permission="android.permission.BIND_JOB_SERVICE" >
+184-->[com.google.android.datatransport:transport-runtime:3.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/2ebfb026f9cdcbb544bc48708eefe8cc/jetified-transport-runtime-3.0.0/AndroidManifest.xml:29:13-69
+185        </service>
+186
+187        <receiver
+187-->[com.google.android.datatransport:transport-runtime:3.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/2ebfb026f9cdcbb544bc48708eefe8cc/jetified-transport-runtime-3.0.0/AndroidManifest.xml:32:9-34:40
+188            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+188-->[com.google.android.datatransport:transport-runtime:3.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/2ebfb026f9cdcbb544bc48708eefe8cc/jetified-transport-runtime-3.0.0/AndroidManifest.xml:33:13-132
+189            android:exported="false" />
+189-->[com.google.android.datatransport:transport-runtime:3.0.0] /Users/p/.gradle/caches/transforms-2/files-2.1/2ebfb026f9cdcbb544bc48708eefe8cc/jetified-transport-runtime-3.0.0/AndroidManifest.xml:34:13-37
+190
+191        <activity
+191-->[com.google.android.gms:play-services-auth:19.2.0] /Users/p/.gradle/caches/transforms-2/files-2.1/e592dcb5d78b81f339f88c9c32d0e5e6/jetified-play-services-auth-19.2.0/AndroidManifest.xml:23:9-27:75
+192            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+192-->[com.google.android.gms:play-services-auth:19.2.0] /Users/p/.gradle/caches/transforms-2/files-2.1/e592dcb5d78b81f339f88c9c32d0e5e6/jetified-play-services-auth-19.2.0/AndroidManifest.xml:24:13-93
+193            android:excludeFromRecents="true"
+193-->[com.google.android.gms:play-services-auth:19.2.0] /Users/p/.gradle/caches/transforms-2/files-2.1/e592dcb5d78b81f339f88c9c32d0e5e6/jetified-play-services-auth-19.2.0/AndroidManifest.xml:25:13-46
+194            android:exported="false"
+194-->[com.google.android.gms:play-services-auth:19.2.0] /Users/p/.gradle/caches/transforms-2/files-2.1/e592dcb5d78b81f339f88c9c32d0e5e6/jetified-play-services-auth-19.2.0/AndroidManifest.xml:26:13-37
+195            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+195-->[com.google.android.gms:play-services-auth:19.2.0] /Users/p/.gradle/caches/transforms-2/files-2.1/e592dcb5d78b81f339f88c9c32d0e5e6/jetified-play-services-auth-19.2.0/AndroidManifest.xml:27:13-72
+196        <!--
+197            Service handling Google Sign-In user revocation. For apps that do not integrate with
+198            Google Sign-In, this service will never be started.
+199        -->
+200        <service
+200-->[com.google.android.gms:play-services-auth:19.2.0] /Users/p/.gradle/caches/transforms-2/files-2.1/e592dcb5d78b81f339f88c9c32d0e5e6/jetified-play-services-auth-19.2.0/AndroidManifest.xml:33:9-37:51
+201            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+201-->[com.google.android.gms:play-services-auth:19.2.0] /Users/p/.gradle/caches/transforms-2/files-2.1/e592dcb5d78b81f339f88c9c32d0e5e6/jetified-play-services-auth-19.2.0/AndroidManifest.xml:34:13-89
+202            android:exported="true"
+202-->[com.google.android.gms:play-services-auth:19.2.0] /Users/p/.gradle/caches/transforms-2/files-2.1/e592dcb5d78b81f339f88c9c32d0e5e6/jetified-play-services-auth-19.2.0/AndroidManifest.xml:35:13-36
+203            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+203-->[com.google.android.gms:play-services-auth:19.2.0] /Users/p/.gradle/caches/transforms-2/files-2.1/e592dcb5d78b81f339f88c9c32d0e5e6/jetified-play-services-auth-19.2.0/AndroidManifest.xml:36:13-107
+204            android:visibleToInstantApps="true" />
+204-->[com.google.android.gms:play-services-auth:19.2.0] /Users/p/.gradle/caches/transforms-2/files-2.1/e592dcb5d78b81f339f88c9c32d0e5e6/jetified-play-services-auth-19.2.0/AndroidManifest.xml:37:13-48
+205
+206        <activity
+206-->[com.google.android.gms:play-services-base:17.6.0] /Users/p/.gradle/caches/transforms-2/files-2.1/1736fd3a61e6e004a735719db9b4aa14/jetified-play-services-base-17.6.0/AndroidManifest.xml:23:9-26:75
+207            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+207-->[com.google.android.gms:play-services-base:17.6.0] /Users/p/.gradle/caches/transforms-2/files-2.1/1736fd3a61e6e004a735719db9b4aa14/jetified-play-services-base-17.6.0/AndroidManifest.xml:24:13-79
+208            android:exported="false"
+208-->[com.google.android.gms:play-services-base:17.6.0] /Users/p/.gradle/caches/transforms-2/files-2.1/1736fd3a61e6e004a735719db9b4aa14/jetified-play-services-base-17.6.0/AndroidManifest.xml:25:13-37
+209            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+209-->[com.google.android.gms:play-services-base:17.6.0] /Users/p/.gradle/caches/transforms-2/files-2.1/1736fd3a61e6e004a735719db9b4aa14/jetified-play-services-base-17.6.0/AndroidManifest.xml:26:13-72
+210
+211        <receiver
+211-->[com.google.android.gms:play-services-measurement:19.0.2] /Users/p/.gradle/caches/transforms-2/files-2.1/01ba1afcd2970ef9342ce61b9329ecf3/jetified-play-services-measurement-19.0.2/AndroidManifest.xml:29:9-33:20
+212            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+212-->[com.google.android.gms:play-services-measurement:19.0.2] /Users/p/.gradle/caches/transforms-2/files-2.1/01ba1afcd2970ef9342ce61b9329ecf3/jetified-play-services-measurement-19.0.2/AndroidManifest.xml:30:13-85
+213            android:enabled="true"
+213-->[com.google.android.gms:play-services-measurement:19.0.2] /Users/p/.gradle/caches/transforms-2/files-2.1/01ba1afcd2970ef9342ce61b9329ecf3/jetified-play-services-measurement-19.0.2/AndroidManifest.xml:31:13-35
+214            android:exported="false" >
+214-->[com.google.android.gms:play-services-measurement:19.0.2] /Users/p/.gradle/caches/transforms-2/files-2.1/01ba1afcd2970ef9342ce61b9329ecf3/jetified-play-services-measurement-19.0.2/AndroidManifest.xml:32:13-37
+215        </receiver>
+216
+217        <service
+217-->[com.google.android.gms:play-services-measurement:19.0.2] /Users/p/.gradle/caches/transforms-2/files-2.1/01ba1afcd2970ef9342ce61b9329ecf3/jetified-play-services-measurement-19.0.2/AndroidManifest.xml:35:9-38:40
+218            android:name="com.google.android.gms.measurement.AppMeasurementService"
+218-->[com.google.android.gms:play-services-measurement:19.0.2] /Users/p/.gradle/caches/transforms-2/files-2.1/01ba1afcd2970ef9342ce61b9329ecf3/jetified-play-services-measurement-19.0.2/AndroidManifest.xml:36:13-84
+219            android:enabled="true"
+219-->[com.google.android.gms:play-services-measurement:19.0.2] /Users/p/.gradle/caches/transforms-2/files-2.1/01ba1afcd2970ef9342ce61b9329ecf3/jetified-play-services-measurement-19.0.2/AndroidManifest.xml:37:13-35
+220            android:exported="false" />
+220-->[com.google.android.gms:play-services-measurement:19.0.2] /Users/p/.gradle/caches/transforms-2/files-2.1/01ba1afcd2970ef9342ce61b9329ecf3/jetified-play-services-measurement-19.0.2/AndroidManifest.xml:38:13-37
+221        <service
+221-->[com.google.android.gms:play-services-measurement:19.0.2] /Users/p/.gradle/caches/transforms-2/files-2.1/01ba1afcd2970ef9342ce61b9329ecf3/jetified-play-services-measurement-19.0.2/AndroidManifest.xml:39:9-43:72
+222            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+222-->[com.google.android.gms:play-services-measurement:19.0.2] /Users/p/.gradle/caches/transforms-2/files-2.1/01ba1afcd2970ef9342ce61b9329ecf3/jetified-play-services-measurement-19.0.2/AndroidManifest.xml:40:13-87
+223            android:enabled="true"
+223-->[com.google.android.gms:play-services-measurement:19.0.2] /Users/p/.gradle/caches/transforms-2/files-2.1/01ba1afcd2970ef9342ce61b9329ecf3/jetified-play-services-measurement-19.0.2/AndroidManifest.xml:41:13-35
+224            android:exported="false"
+224-->[com.google.android.gms:play-services-measurement:19.0.2] /Users/p/.gradle/caches/transforms-2/files-2.1/01ba1afcd2970ef9342ce61b9329ecf3/jetified-play-services-measurement-19.0.2/AndroidManifest.xml:42:13-37
+225            android:permission="android.permission.BIND_JOB_SERVICE" />
+225-->[com.google.android.gms:play-services-measurement:19.0.2] /Users/p/.gradle/caches/transforms-2/files-2.1/01ba1afcd2970ef9342ce61b9329ecf3/jetified-play-services-measurement-19.0.2/AndroidManifest.xml:43:13-69
+226
+227        <meta-data
+227-->[com.google.android.gms:play-services-basement:17.6.0] /Users/p/.gradle/caches/transforms-2/files-2.1/a4af859e11852ee18dca6d122327c0ac/jetified-play-services-basement-17.6.0/AndroidManifest.xml:23:9-25:69
+228            android:name="com.google.android.gms.version"
+228-->[com.google.android.gms:play-services-basement:17.6.0] /Users/p/.gradle/caches/transforms-2/files-2.1/a4af859e11852ee18dca6d122327c0ac/jetified-play-services-basement-17.6.0/AndroidManifest.xml:24:13-58
+229            android:value="@integer/google_play_services_version" />
+229-->[com.google.android.gms:play-services-basement:17.6.0] /Users/p/.gradle/caches/transforms-2/files-2.1/a4af859e11852ee18dca6d122327c0ac/jetified-play-services-basement-17.6.0/AndroidManifest.xml:25:13-66
+230    </application>
+231
+232</manifest>

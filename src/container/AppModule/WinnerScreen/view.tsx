@@ -6,6 +6,9 @@ import { FlatList } from 'react-native-gesture-handler';
 import { ListRenderItem, View } from 'react-native';
 import { navigationProps } from '../../../types/nav';
 import WinnerList from '../../../components/WinnerList';
+import { useWinnerTeamListQuery } from '../../../features/league';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 interface props extends navigationProps {
 
 }
@@ -13,23 +16,30 @@ interface props extends navigationProps {
 const WinnerScreen: React.FC<props> = ({
     navigation
 }) => {
+    const { NFLCurrentWeek } = useSelector((store: RootState) => store.leaguePlayer)
 
-    const renderItem: ListRenderItem<{}> = ({ item, index }) => {
+    const { data, isLoading, error } = useWinnerTeamListQuery({
+        current_week:NFLCurrentWeek
+    })
+
+    const renderItem: ListRenderItem<any> = ({ item, index }) => {
         return (
             <WinnerList
+                {...item}
                 index={index}
             />
         )
     }
 
+
     return <MainContainer
         style={{ backgroundColor: 'white' }}
+        loading={isLoading}
     >
         <Container
             containerStyle={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                // justifyContent: "space-between"
             }}
             mpContainer={{ mh: 10, mt: 15, mb: 5 }}
         >
@@ -59,7 +69,7 @@ const WinnerScreen: React.FC<props> = ({
         </Container>
         <View>
             <FlatList
-                data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
+                data={data}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => `Winners${index.toString()}`}
             />

@@ -31,16 +31,15 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
         pollingInterval: 3000
     })
 
-    const imageType = useMemo(() => {
-        if (data?.[0].team_logo) {
-            return data?.[0].team_logo?.split('.').pop() == 'svg';
-        }
-        if (data?.[1]?.team_logo) {
-            return data?.[1].team_logo?.split('.').pop() == 'svg';
+    console.log(route.params)
+
+    const { imageType, imageType1 } = useMemo(() => {
+        return {
+            imageType: data?.[0].team_logo?.split('.').pop() == 'svg',
+            imageType1: data?.[1].team_logo?.split('.').pop() == 'svg'
         }
     }, [data])
 
-    console.log('data', JSON.stringify(data))
 
     // React.useLayoutEffect(() => {
     //     return (
@@ -160,7 +159,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                         <Label
                             labelSize={16}
                             style={{ color: "black" }}
-                        >{data?.[0].team_name}</Label>
+                        >{data?.[1].team_name}</Label>
                         <Container
                             containerStyle={{
                                 flexDirection: "row",
@@ -174,11 +173,11 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                                         <SvgUri
                                             width={40}
                                             height={40}
-                                            uri={`https://chessmafia.com/php/fantasy/public/uploads/${data?.[0].team_logo}` || ''}
+                                            uri={`https://chessmafia.com/php/fantasy/public/uploads/${data?.[1].team_logo}` || ''}
                                         />
                                         :
                                         <Img
-                                            imgSrc={{ uri: `https://chessmafia.com/php/fantasy/public/uploads/${data?.[0].team_logo}` || 'dummy' }}
+                                            imgSrc={{ uri: `https://chessmafia.com/php/fantasy/public/uploads/${data?.[1].team_logo}` || 'dummy' }}
                                             width={40} height={45} />
                                 }
                             </Container>
@@ -186,7 +185,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                                 labelSize={35}
                                 style={{ color: "black" }}
                                 mpLabel={{ ml: 10 }}
-                            >{data?.[0].sniper_points}</Label>
+                            >{data?.[1].sniper_points}</Label>
                         </Container>
                     </Container>
                     <Container
@@ -203,7 +202,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                         <Label
                             labelSize={16}
                             style={{ color: "black" }}
-                        >{data?.[1].team_name}</Label>
+                        >{data?.[0].team_name}</Label>
                         <Container
                             containerStyle={{
                                 flexDirection: "row",
@@ -213,7 +212,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                             <Label
                                 labelSize={35}
                                 style={{ color: "black" }}
-                            >{data?.[1].sniper_points}</Label>
+                            >{data?.[0].sniper_points}</Label>
                             {/* <Img
                                 imgStyle={{ width: 35, height: 40 }}
                                 imgSrc={AppImages.green_logo}
@@ -223,15 +222,15 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                                 mpContainer={{ ml: 10 }}
                             >
                                 {
-                                    imageType ?
+                                    imageType1 ?
                                         <SvgUri
                                             width={40}
                                             height={40}
-                                            uri={`https://chessmafia.com/php/fantasy/public/uploads/${data?.[1].team_logo}` || ''}
+                                            uri={`https://chessmafia.com/php/fantasy/public/uploads/${data?.[0].team_logo}` || ''}
                                         />
                                         :
                                         <Img
-                                            imgSrc={{ uri: `https://chessmafia.com/php/fantasy/public/uploads/${data?.[1].team_logo}` || 'dummy' }}
+                                            imgSrc={{ uri: `https://chessmafia.com/php/fantasy/public/uploads/${data?.[0].team_logo}` || 'dummy' }}
                                             width={40} height={45} />
                                 }
                             </Container>
@@ -248,7 +247,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                     <Label
                         labelSize={16}
                         style={{ color: greenColor, fontFamily: medium }}
-                    >{data?.[0].sniper_points}</Label>
+                    >{data?.[1].sniper_points}</Label>
                     <Label
                         labelSize={14}
                         style={{ color: OrangeColor, fontFamily: medium, width: 70, textAlign: 'center' }}
@@ -256,7 +255,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                     <Label
                         labelSize={16}
                         style={{ color: 'grey', fontFamily: medium }}
-                    >{data?.[1].sniper_points}</Label>
+                    >{data?.[0].sniper_points}</Label>
                 </Container>
                 <Container containerStyle={{
                     flexDirection: 'row',
@@ -303,6 +302,12 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
     }
 
     const renderChance = () => {
+        let sniperpoints1: any = data?.[1].sniper_points
+        let chance1 = sniperpoints1 / 100
+
+        let sniperpoints2: any = data?.[0].sniper_points
+        let chance2 = sniperpoints2 / 100
+        
         return <Container>
             <Label
                 labelSize={15}
@@ -331,9 +336,10 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                         labelSize={16}
                         style={{ color: 'green' }}
                         mpLabel={{ mr: 10 }}
-                    >50%</Label>
+                    >{sniperpoints1}%</Label>
                     <Progress.Bar
-                        progress={0.3} width={screenWidth * 0.32}
+                        progress={chance1}
+                        width={screenWidth * 0.32}
                         borderColor={OrangeColor}
                         color={greenColor}
                         borderWidth={0}
@@ -349,7 +355,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                     mpContainer={{ ml: 10 }}
                 >
                     <Progress.Bar
-                        progress={0.3} width={screenWidth * 0.32}
+                        progress={chance2} width={screenWidth * 0.32}
                         borderColor={OrangeColor}
                         color={greenColor}
                         borderWidth={0}
@@ -361,7 +367,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                         labelSize={16}
                         style={{ color: 'green' }}
                         mpLabel={{ ml: 10 }}
-                    >50%</Label>
+                    >{sniperpoints2}%</Label>
                 </Container>
             </Container>
         </Container>
@@ -370,10 +376,10 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
     return <MainContainer
         style={{ backgroundColor: 'white' }}
         loading={isLoading}
-        absoluteLoading={isFetching}
+    // absoluteLoading={isFetching}
     >
         <ScrollView>
-            <Container containerStyle={{ flexDirection: "row", alignItems: "center" }}
+            {/* <Container containerStyle={{ flexDirection: "row", alignItems: "center" }}
                 mpContainer={{ ml: 15, mt: 15 }}
             >
                 <Label labelSize={15}  >Week 1</Label>
@@ -382,7 +388,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                     size={20}
                     color="black"
                 />
-            </Container>
+            </Container> */}
             {renderTeamFight()}
             {renderChance()}
             <Container
@@ -419,7 +425,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                         <View style={{
                             width: "40%",
                         }} >
-                            {data?.[0]?.players.map((item, index) => {
+                            {data?.[1]?.players.map((item, index) => {
                                 return <>
                                     <Container
                                         containerStyle={{
@@ -481,7 +487,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                                 width: "40%",
                             }}
                         >
-                            {data?.[1].players.map((item, index) => {
+                            {data?.[0].players.map((item, index) => {
                                 return <>
                                     <Container
                                         containerStyle={{

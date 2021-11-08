@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { authApi } from '../features/auth';
 import authReducer from './slices/auth';
 import { persistReducer, persistStore } from 'redux-persist';
-import { combineReducers } from 'redux';
+import { AnyAction, combineReducers, Reducer } from 'redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ProfileApi } from '../features/profile';
 import { LeagueApi } from '../features/league';
@@ -27,12 +27,20 @@ const reducers = combineReducers({
     [sportsDataApi.reducerPath]: sportsDataApi.reducer
 });
 
+
+const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
+    if (action.type === 'auth/logoutUser') {
+        state = {} as RootState;
+    }
+    return reducers(state, action);
+};
+
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
     whitelist: ['auth']
 };
-const persistedReducer = persistReducer(persistConfig, reducers);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
     reducer: persistedReducer,
@@ -42,9 +50,9 @@ const store = configureStore({
                 ignoredActions: ["persist/PERSIST"]
             }
         }).concat(authApi.middleware)
-        .concat(ProfileApi.middleware)
-        .concat(LeagueApi.middleware)
-        .concat(sportsDataApi.middleware)
+            .concat(ProfileApi.middleware)
+            .concat(LeagueApi.middleware)
+            .concat(sportsDataApi.middleware)
     // getDefaultMiddleware().concat(authApi.middleware),
 });
 // ProfileApi.middleware, 
@@ -55,7 +63,7 @@ export {
     persistor,
 };
 
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof reducers>
 export type AppDispatch = typeof store.dispatch
 export const useAppDispatch = () => useDispatch<AppDispatch>() // Export a hook that can be reused to resolve types
 

@@ -11,7 +11,7 @@ import LiveMatch from "./LiveMatch";
 import Img from "../../../components/Img";
 import { AppImages } from "../../../assets/images/map";
 import styles from "./styles";
-import { OrangeColor, PrimaryColor } from "../../../assets/colors";
+import { PrimaryColor } from "../../../assets/colors";
 import { medium } from "../../../assets/fonts/fonts";
 import AllLeague from "./AllLeague";
 
@@ -25,6 +25,9 @@ const HomeScreen: React.FC<props> = ({
 
     const leagueGameArray: Array<string> = ['Private game', 'Public game']
 
+    
+
+
     const renderLeague: ListRenderItem<string> = ({ item, index }) => {
         return <Container
             containerStyle={styles.container}
@@ -33,7 +36,6 @@ const HomeScreen: React.FC<props> = ({
                 labelSize={25}
                 style={styles.leagueText}
                 mpLabel={{ pl: 15, pt: 15 }}
-
             >Fantasy league</Label>
             <Label
                 labelSize={16}
@@ -59,7 +61,11 @@ const HomeScreen: React.FC<props> = ({
                     title="Join"
                     onPress={() => {
                         // navigation.navigate("CreateOrJoin")
-                        navigation.navigate("JoinLeague")
+                        if (index == 1) {
+                            navigation.navigate('PublicLeague')
+                        } else {
+                            navigation.navigate("JoinLeague")
+                        }
                     }}
                     btnHeight={40}
                     btnStyle={[styles.playBtn, { backgroundColor: 'white', borderWidth: 1.2, borderColor: PrimaryColor }]}
@@ -118,4 +124,5 @@ const HomeScreen: React.FC<props> = ({
         </MainContainer>
     )
 }
+
 export default HomeScreen;

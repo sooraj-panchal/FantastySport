@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, Modal, Text, View } from "react-native";
+import { Alert, Modal, ScrollView, Text, View } from "react-native";
 import { medium } from "../../../assets/fonts/fonts";
 import { AppImages, AuthImages } from "../../../assets/images/map";
 import Btn from "../../../components/Btn";
@@ -68,6 +68,7 @@ const ProfileScreen: React.FC<props> = ({
 
     return (
         <MainContainer style={{ backgroundColor: '#f2f2f2' }} >
+            <ScrollView>
             <ImageContainer />
             <Container containerStyle={{
                 backgroundColor: "white",
@@ -151,9 +152,10 @@ const ProfileScreen: React.FC<props> = ({
                             }
                         ]
                     );
-
                 }}
             />
+              </ScrollView>
+
         </MainContainer>
     )
 }

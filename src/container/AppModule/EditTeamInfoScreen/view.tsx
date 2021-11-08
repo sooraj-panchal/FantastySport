@@ -30,10 +30,6 @@ const EditTeamInfoScreen: React.FC<EditTeamNav> = ({
     const [teamLogo, setTeamLogo] = useState<string>(route.params?.team_logo || '')
     const [updateTeamDetails, { data: updateTeamData, isLoading: updateTeamDetailLoading }] = useUpdateTeamDetailsMutation<any>()
 
-    // useEffect(() => {
-
-    // }, [])
-
 
     const renderItem: ListRenderItem<MyTeamLogoResponse> = ({ item, index }) => {
         let imageType = item.WikipediaLogoUrl?.split('.').pop() == 'svg';

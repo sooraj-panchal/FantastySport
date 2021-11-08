@@ -87,8 +87,14 @@ const AddPlayerPointScreen: React.FC<AddPlayerProps> = ({
         return <PointAddedPlayerList
             {...item}
             onChangeText={(val) => {
-                const data = [...playerList]
-                data[index]['PredictionPoints'] = val
+                // const data = [...playerList]
+                let data = playerList.map((item, placeIndex) => {
+                    return {
+                        ...item,
+                        PredictionPoints: index == placeIndex ? val : item.PredictionPoints
+                    }
+                })
+                // data[index]['PredictionPoints'] = val
                 setPlayerList(data)
             }}
         // Position={item.isWRTPosition ? 'W/R/T' : item.Position}

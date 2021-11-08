@@ -1,8 +1,10 @@
+import { useNavigation } from '@react-navigation/core';
 import React, { useState } from 'react';
 import { ListRenderItem } from 'react-native';
 import { View } from 'react-native-animatable';
 import { FlatList } from 'react-native-gesture-handler';
 import PagerView from 'react-native-pager-view';
+import { useSelector } from 'react-redux';
 import { MyLeagueList } from '../../../../arrayList';
 import { DarkBlueColor, greenColor, OrangeColor } from '../../../assets/colors';
 import { medium, regular } from '../../../assets/fonts/fonts';
@@ -11,50 +13,38 @@ import Btn from '../../../components/Btn';
 import Container from '../../../components/Container';
 import Img from '../../../components/Img';
 import Label from '../../../components/Label';
+import LiveMatchupRankingItem from '../../../components/LiveMatchupRankingItem';
 import MainContainer from '../../../components/MainContainer';
+import { useLiveMatchupRankingQuery } from '../../../features/league';
+import { RootState } from '../../../store';
+import { homeNavProps, navigationProps } from '../../../types/nav';
 import { screenWidth } from '../../../types/sizes';
 
 
 const LiveMatch: React.FC = ({
 
 }) => {
-    const [page, setPage] = React.useState<Number>(0)
+    const {NFLCurrentWeek} = useSelector((store:RootState)=>store.leaguePlayer)
+    const { data, isLoading, error } = useLiveMatchupRankingQuery({
+        current_week:NFLCurrentWeek
+    })
 
-    const renderItem: ListRenderItem<null> = ({ item, index }) => {
-        return (
-            <Container
-                containerStyle={{
-                    flexDirection: 'row',
-                    alignItems: 'center'
-                }}
-                mpContainer={{ mh: 10 }}
-                height={35}
-            >
-                <Label
-                    labelSize={14}
-                    style={{ color: 'black', fontFamily: medium, flex: 0.35 }}
-                    numberOfLines={1}
-                >John's official team</Label>
-                <Label
-                    labelSize={14}
-                    style={{ color: 'black', fontFamily: medium, flex: 0.35 }}
-                    numberOfLines={1}
-                    mpLabel={{ mh: 20 }}
-                >BBC</Label>
-                <Label
-                    labelSize={14}
-                    style={{ color: 'black', fontFamily: medium, flex: 0.2, textAlign: "center" }}
-                >75 pts</Label>
-                <Label
-                    labelSize={14}
-                    style={{ color: 'black', fontFamily: medium, flex: 0.3, textAlign: 'center' }}
-                >1st</Label>
-            </Container>
-        )
+    
+    console.log('data===>', JSON.stringify(data))
+
+    const navigation = useNavigation<homeNavProps>()
+
+
+    const renderItem: ListRenderItem<any> = ({ item, index }) => {
+        return <LiveMatchupRankingItem
+            {...item}
+        />
     }
 
     return (
-        <Container>
+        <MainContainer
+            loading={isLoading}
+        >
             <Container containerStyle={{
                 flexDirection: "row",
                 alignItems: "center",
@@ -72,6 +62,9 @@ const LiveMatch: React.FC = ({
                     labelSize={16}
                     style={{
                         color: "grey"
+                    }}
+                    onPress={() => {
+                        navigation.navigate('LiveMatchupRankings')
                     }}
                 >View all</Label>
             </Container>
@@ -116,14 +109,14 @@ const LiveMatch: React.FC = ({
                     >Rank</Label>
                 </Container>
                 <FlatList
-                    data={[1, 2, 3, 4]}
+                    data={data}
                     renderItem={renderItem}
                     showsVerticalScrollIndicator={false}
                     scrollEnabled={false}
                     keyExtractor={(_, index) => `livematchRanking${index.toString()}`}
                 />
             </Container>
-        </Container>
+        </MainContainer>
     )
 }
 

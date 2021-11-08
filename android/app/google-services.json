@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "470440487634",
+    "project_id": "fantasysniper-2c1f6",
+    "storage_bucket": "fantasysniper-2c1f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:470440487634:android:8c94978af2894899dedb0b",
+        "android_client_info": {
+          "package_name": "com.fantastysport"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "470440487634-lfs834utcft3oqeov5hc4mtetdhdb7bn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqJLU5hfvacBtzINjSpBRA6GNCubFX74w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "470440487634-lfs834utcft3oqeov5hc4mtetdhdb7bn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

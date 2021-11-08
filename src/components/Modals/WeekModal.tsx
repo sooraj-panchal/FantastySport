@@ -5,15 +5,16 @@ import { BlackColor, PrimaryColor } from '../../assets/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { screenHeight } from '../../utils/styleUtils';
 import { Modalize } from 'react-native-modalize';
-import { ListRenderItem } from 'react-native';
+import { Alert, ListRenderItem } from 'react-native';
 import { Portal } from 'react-native-portalize';
 import { IWeek, WeekArray } from '../../utils/jsonArray';
 import Btn from '../Btn';
 import { useNavigation } from '@react-navigation/core';
 import { homeNavProps, navigationProps } from '../../types/nav';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectedWeekWatcher } from '../../store/slices/selectedLeague';
 import { getCurrentWeek } from '../../store/slices/schedule';
+import { RootState } from '../../store';
 
 interface props {
     closeModal: () => void,
@@ -29,10 +30,11 @@ const WeekModal: React.FC<props> = ({
 }) => {
     const navigation = useNavigation<homeNavProps>()
     const [weekList, setWeekList] = useState<Array<IWeek>>([])
+    const { NFLCurrentWeek } = useSelector((state: RootState) => state.leaguePlayer)
 
     useEffect(() => {
         setWeekList(WeekArray.map((item, index) => {
-            item.isSelected = index ? false : true
+            item.isSelected = item.week == NFLCurrentWeek ? true : false
             return item
         }))
     }, [isSingleWeek])
@@ -50,7 +52,7 @@ const WeekModal: React.FC<props> = ({
             );
             setWeekList(data)
         } else {
-            data[index]['isSelected'] = index ? !data[index]['isSelected'] : true
+            data[index]['isSelected'] = !data[index]['isSelected']
             setWeekList(data)
         }
 
@@ -67,11 +69,16 @@ const WeekModal: React.FC<props> = ({
                     // width:screenWidth*0.15,
                     flex: 0.32,
                     alignItems: "center",
+                    opacity: item.week >= NFLCurrentWeek ? 1 : 0.2
                 }}
                 height={40}
                 mpContainer={{ mt: 10, ml: 15 }}
                 onPress={() => {
-                    selectWeekHandler(item, index)
+                    if (item.week >= NFLCurrentWeek) {
+                        selectWeekHandler(item, index)
+                    } else {
+                        Alert.alert('Fantasy sniper', 'You cannot select previous week')
+                    }
                 }}
             >
                 <Label
@@ -84,7 +91,6 @@ const WeekModal: React.FC<props> = ({
                     item.isSelected ?
                         <Container
                             containerStyle={{
-                                // borderRadius: 30,
                                 position: 'absolute',
                                 right: 0,
                                 justifyContent: "center",
@@ -94,7 +100,6 @@ const WeekModal: React.FC<props> = ({
                                 borderBottomLeftRadius: 10
                             }}
                             width={20} height={20}
-                        // onPress={onPress}
                         >
                             <Ionicons
                                 name="md-checkmark"
@@ -128,9 +133,6 @@ const WeekModal: React.FC<props> = ({
                     >
                         <Label
                             labelSize={18}
-                            style={{
-
-                            }}
                         >Select multi week</Label>
                         <Ionicons
                             name="md-close"
@@ -170,7 +172,6 @@ const WeekModal: React.FC<props> = ({
                     }
                 }}
             />
-
         </Portal>
     )
 }

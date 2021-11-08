@@ -57,6 +57,7 @@ const InputBox: React.FC<Props & TextInputProps> = ({
                 <TextInput
                     style={[{
                         width: "85%",
+                        height:vs(40),
                         // padding: 0,
                         ...mpStyle({ ...mpInput }),
                         fontSize: normalize(textSize || 14),

@@ -84,12 +84,16 @@
         "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/generated/res/react/release/drawable-mdpi/node_modules_reactnavigation_nativestack_node_modules_reactnavigation_elements_src_assets_backicon.png"
     },
     {
+        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/release/drawable-mdpi_src_assets_images_14_notification_logo2.png.flat",
+        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/generated/res/react/release/drawable-mdpi/src_assets_images_14_notification_logo2.png"
+    },
+    {
         "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/release/raw_node_modules_entities_lib_maps_legacy.json.flat",
         "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/generated/res/react/release/raw/node_modules_entities_lib_maps_legacy.json"
     },
     {
-        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/release/drawable-mdpi_src_assets_images_14_notification_logo2.png.flat",
-        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/generated/res/react/release/drawable-mdpi/src_assets_images_14_notification_logo2.png"
+        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/release/raw_node_modules_reactnativeurlpolyfill_package.json.flat",
+        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/generated/res/react/release/raw/node_modules_reactnativeurlpolyfill_package.json"
     },
     {
         "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/release/raw_node_modules_cssselect_lib_procedure.json.flat",
@@ -100,12 +104,12 @@
         "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/res/mipmap-hdpi/fantasy.png"
     },
     {
-        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/release/drawable-mdpi_src_assets_images_1_splash_logo.png.flat",
-        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/generated/res/react/release/drawable-mdpi/src_assets_images_1_splash_logo.png"
-    },
-    {
         "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/release/drawable-xhdpi_node_modules_reactnavigation_nativestack_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
         "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/generated/res/react/release/drawable-xhdpi/node_modules_reactnavigation_nativestack_node_modules_reactnavigation_elements_src_assets_backicon.png"
+    },
+    {
+        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/release/drawable-mdpi_src_assets_images_1_splash_logo.png.flat",
+        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/generated/res/react/release/drawable-mdpi/src_assets_images_1_splash_logo.png"
     },
     {
         "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/release/mipmap-mdpi_fantasy.png.flat",
@@ -172,12 +176,12 @@
         "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/generated/res/react/release/raw/node_modules_reactnativevectoricons_glyphmaps_materialicons.json"
     },
     {
-        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/release/drawable-mdpi_src_assets_images_11_12_13_home_green_logo.png.flat",
-        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/generated/res/react/release/drawable-mdpi/src_assets_images_11_12_13_home_green_logo.png"
-    },
-    {
         "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/release/drawable-mdpi_src_assets_images_39_team_name_public.png.flat",
         "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/generated/res/react/release/drawable-mdpi/src_assets_images_39_team_name_public.png"
+    },
+    {
+        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/release/drawable-mdpi_src_assets_images_11_12_13_home_green_logo.png.flat",
+        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/generated/res/react/release/drawable-mdpi/src_assets_images_11_12_13_home_green_logo.png"
     },
     {
         "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/release/drawable-xxhdpi_node_modules_reactnavigation_bottomtabs_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
