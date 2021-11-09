@@ -31,12 +31,13 @@ const MyGamesScreen: React.FC<props> = ({
         return <MyGameList
             {...item}
             createMatchHandler={() => {
-                // console.log('item', item)
                 dispatch(leagueDetailsWatcher({ ...item }))
                 navigation.navigate('CreateMatch')
             }}
         />
     }
+
+    
 
     // console.log('error', data)
 

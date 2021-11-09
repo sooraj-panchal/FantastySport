@@ -16,9 +16,11 @@ import { scheduleItemTypes, scheduleListTypes } from '../../../types/flatListTyp
 import WeekModal from '../../../components/Modals/WeekModal';
 import { Modalize } from 'react-native-modalize';
 import { useCreateLeagueMutation, useLeagueListQuery } from '../../../features/league';
+
 interface props extends navigationProps {
 
 }
+
 let PointSystemList: Array<string> = ['Standard', 'SNIPER', 'SNIPER+']
 
 const CreateLeagueScreen: React.FC<props> = ({
@@ -41,6 +43,8 @@ const CreateLeagueScreen: React.FC<props> = ({
 
 
     const createLeagueHandler = () => {
+        // console.log('selectedScheduleData',selectedScheduleData[0].start_time)
+
         const mySelectedWeek = selectedWeek.map((item, index) => ({ week: item.week }))
         const leagueTeam = selectedScheduleData.map((item, index) => {
             return {
@@ -414,7 +418,7 @@ const CreateLeagueScreen: React.FC<props> = ({
                 title="Choose game"
                 onPress={() => {
                     if (selectedScheduleData.length) {
-                        navigation.navigate('AddLiveMatches')
+                        navigation.navigate('AddBattleLeague')
                     } else {
                         weekModalRef.current?.open()
                     }
@@ -489,7 +493,6 @@ const CreateLeagueScreen: React.FC<props> = ({
                 }}
                 isSingleWeek={isSingleWeek}
             />
-
         </MainContainer>
     )
 }

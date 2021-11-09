@@ -6,7 +6,6 @@ export const screenHeight = Dimensions.get("window").height;
 export const vs = size => screenHeight * (size / screenHeight)
 export const hs = size => screenWidth * (size / screenWidth)
 
-
 export const mpStyle = (marginPadding) =>
 // let { mt, ml, mb, mr, m, pt, pl, pb, pr, p, pv, mv, ph, mh } = marginPadding
 ({

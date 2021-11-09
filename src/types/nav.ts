@@ -50,7 +50,8 @@ export type unAuthParamList = {
   CreateTeam: { code?: string, week_id?: any,type?:'private'|'public',league_id?:any } | undefined;
   CreateMatch:undefined,
   MyTeam:undefined,
-  PublicLeague:undefined
+  PublicLeague:undefined,
+  AddBattleLeague:undefined
 };
 
 export type tabParamList = {

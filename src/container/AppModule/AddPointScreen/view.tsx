@@ -6,7 +6,7 @@ import { AddPlayerProps } from '../../../types/nav';
 import Label from '../../../components/Label';
 import { PrimaryColor } from '../../../assets/colors';
 import { medium } from '../../../assets/fonts/fonts';
-import { LeaguePlayerTypes, PlayerPositionTypes } from '../../../types/flatListTypes';
+import { LeaguePlayerTypes } from '../../../types/flatListTypes';
 import PointAddedPlayerList from '../../../components/PointAddedPlayerList';
 import { ListRenderItem, FlatList, Alert } from 'react-native';
 import { addToMyPlayerWatcher } from '../../../store/slices/myPlayerList';
@@ -15,22 +15,13 @@ import { RootState } from '../../../types/reduxTypes';
 
 
 const AddPlayerPointScreen: React.FC<AddPlayerProps> = ({
-    navigation, route
+    navigation
 }) => {
     const myPlayerListArray: LeaguePlayerTypes[] = useSelector((state: RootState) => state.myPlayer.data)
     const [playerList, setPlayerList] = useState<Array<LeaguePlayerTypes>>([])
     const dispatch = useDispatch()
     useEffect(() => {
-        // const data = route.params?.myPlayerListArray.map((item, index) => {
-        //     item.PredictionPoints = item.PredictionPoints || ''
-        //     return item
-        // })
-        // // console.log("data", data)
-        // setPlayerList(data)
-        // if (myPlayerListArray.length) {
-        //     console.log(myPlayerListArray)
         setPlayerList(myPlayerListArray)
-        // }
     }, [])
 
     const addPlayerToTeam = () => {
@@ -42,14 +33,12 @@ const AddPlayerPointScreen: React.FC<AddPlayerProps> = ({
                 let C2 = item.FantasyPointsDraftKings
                 return {
                     ...item,
-                    Accuracy: Math.abs(B2 / C2).toFixed(0),
+                    Accuracy: B2 && C2 ? Math.abs(B2 / C2).toFixed(0) : 0,
                     SniperPoints: item.FantasyPointsDraftKings == 0 ? 0 : ((1 - Math.abs((B2 - C2) / C2)) * C2).toFixed(0)
                 }
             })
             dispatch(addToMyPlayerWatcher(data))
-            navigation.navigate('MyTeamTab', {
-                screen: 'MyTeam'
-            })
+            navigation.navigate('CreateMatch')
         } else {
             Alert.alert('Fantasy sniper App', "Please Add All Player's prediction points")
         }

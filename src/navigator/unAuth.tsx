@@ -9,10 +9,8 @@ import { unAuthParamList } from '../types/nav';
 import NotificationScreen from '../container/AppModule/NotificationScreen';
 import CreateOrJoin from '../container/AppModule/CreateOrJoinScreen';
 import CreateLeagueScreen from '../container/AppModule/CreateLeagueScreen/view';
-import AddLiveMatchesTabs from '../container/AppModule/AddLiveMatchesTabs/view';
 import MyTeamBottomTabs from '../container/AppModule/MyTeamBottomTabs';
 import AddPlayerScreen from '../container/AppModule/AddPlayerScreen/view';
-import AddSniperPointScreen from '../container/AppModule/AddLiveMatchesTabs/AddSniperPointScreen/view';
 import InviteFriendScreen from '../container/AppModule/InviteFriendScreen/view';
 import EditTeamInfoScreen from '../container/AppModule/EditTeamInfoScreen/view';
 import EditTeamScreen from '../container/AppModule/EditTeamScreen/view';
@@ -35,6 +33,7 @@ import CreateMatchScreen from '../container/AppModule/CreateMatchScreen';
 import MyTeamScreen from '../container/AppModule/MyTeamBottomTabs/MyTeamScreen';
 import PublicLeagueScreen from '../container/AppModule/PublicLeagueScreen';
 import { useNFLCurrentWeekQuery } from '../features/sportsData';
+import AddBattleLeagueScreen from '../container/AppModule/AddBattleLeagueScreen';
 
 const StackScreen = createNativeStackNavigator<unAuthParamList>()
 
@@ -101,14 +100,6 @@ const AppStackScreen: React.FC = () => {
                 })}
             />
             <StackScreen.Screen
-                name="AddLiveMatches"
-                component={AddLiveMatchesTabs}
-                options={({ navigation }) => ({
-                    headerShown: true,
-                    headerTitle: "Add Battle League"
-                })}
-            />
-            <StackScreen.Screen
                 name="MyTeamTab"
                 component={MyTeamBottomTabs}
                 options={({ navigation }) => ({
@@ -122,14 +113,6 @@ const AppStackScreen: React.FC = () => {
                 options={({ navigation }) => ({
                     headerShown: true,
                     headerTitle: "Players"
-                })}
-            />
-            <StackScreen.Screen
-                name="AddSniperPoint"
-                component={AddSniperPointScreen}
-                options={({ navigation }) => ({
-                    headerShown: true,
-                    headerTitle: "Add sniper point"
                 })}
             />
             <StackScreen.Screen
@@ -308,6 +291,14 @@ const AppStackScreen: React.FC = () => {
                 options={({ navigation }) => ({
                     headerShown: true,
                     headerTitle: "Public Leagues",
+                })}
+            />
+            <StackScreen.Screen
+                name='AddBattleLeague'
+                component={AddBattleLeagueScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Add Battle League",
                 })}
             />
         </StackScreen.Navigator>

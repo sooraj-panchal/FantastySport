@@ -10,7 +10,7 @@ import { Portal } from 'react-native-portalize';
 import { IWeek, WeekArray } from '../../utils/jsonArray';
 import Btn from '../Btn';
 import { useNavigation } from '@react-navigation/core';
-import { homeNavProps, navigationProps } from '../../types/nav';
+import { homeNavProps } from '../../types/nav';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectedWeekWatcher } from '../../store/slices/selectedLeague';
 import { getCurrentWeek } from '../../store/slices/schedule';
@@ -164,7 +164,7 @@ const WeekModal: React.FC<props> = ({
                                 dispatch(selectedWeekWatcher(selectedWeek))
                                 dispatch(getCurrentWeek(selectedWeek[0].week))
                                 closeModal()
-                                navigation.navigate('AddLiveMatches')
+                                navigation.navigate('AddBattleLeague')
                             }}
                             textColor="white"
                             labelSize={16}
