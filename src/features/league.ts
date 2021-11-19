@@ -137,7 +137,7 @@ export const LeagueApi = createApi({
             }
         }),
         liveMatchupRanking: builder.query({
-            query: ({current_week}) => ({
+            query: ({ current_week }) => ({
                 url: `liveMatch?sort=id&order=desc&limit=10&week_no=${current_week}`
             }),
             // providesTags: ['EditTeam'],
@@ -169,7 +169,7 @@ export const LeagueApi = createApi({
             }
         }),
         getPublicLeague: builder.query({
-            query: ({current_week}) => ({
+            query: ({ current_week }) => ({
                 url: `myAllLeague?week_no=${current_week}&type=public`
             }),
             // providesTags: ['EditTeam'],
@@ -179,7 +179,7 @@ export const LeagueApi = createApi({
             }
         }),
         getPrivateLeague: builder.query({
-            query: ({current_week}) => ({
+            query: ({ current_week }) => ({
                 url: `myAllLeague?week_no=${current_week}&type=private`
             }),
             // providesTags: ['EditTeam'],
@@ -189,7 +189,7 @@ export const LeagueApi = createApi({
             }
         }),
         winnerTeamList: builder.query({
-            query: ({current_week}) => ({
+            query: ({ current_week }) => ({
                 url: `winnerTeamList?week_no=${current_week}`
             }),
             // providesTags: ['EditTeam'],
@@ -221,12 +221,22 @@ export const LeagueApi = createApi({
             }
         }),
         myGameList: builder.query({
-            query: ({current_week}) => ({
+            query: ({ current_week }) => ({
                 url: `myjoinLeague?week_no=${current_week}`
             }),
             // providesTags: ['EditTeam'],
             transformResponse: (response: { data: MyLeagueResponse[] }) => {
                 console.log("myGameList Response==>", response)
+                return response.data
+            }
+        }),
+        LeaguesAndGames: builder.query({
+            query: ({ current_week }) => ({
+                url: `userAllLeague`
+            }),
+            // providesTags: ['League'],
+            transformResponse: (response: { data: MyLeagueResponse[] }) => {
+                console.log("LeaguesAndGames res===>", response)
                 return response.data
             }
         }),
@@ -252,6 +262,7 @@ export const {
     useWinnerTeamListQuery,
     useGameDetailsQuery,
     useCreateGameMutation,
-    useMyGameListQuery
+    useMyGameListQuery,
+    useLeaguesAndGamesQuery
 } = LeagueApi
 

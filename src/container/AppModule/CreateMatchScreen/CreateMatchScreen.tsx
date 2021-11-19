@@ -730,7 +730,7 @@ const MyTeamScreen: React.FC<navigationProps> = ({
         } else {
             Alert.alert(
                 "Alert!",
-                "To save a team, you'll need to add prediction points for all players.",
+                "You need to add the fantasy player points prediction.",
                 [
                     {
                         text: "Cancel",

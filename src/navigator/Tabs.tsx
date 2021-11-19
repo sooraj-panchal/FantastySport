@@ -10,9 +10,8 @@ import { tabParamList } from "../types/nav";
 import MyLeagueScreen from "../container/AppModule/MyLeagueScreen/view";
 import WinnerScreen from "../container/AppModule/WinnerScreen/view";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import NewsScreen from "../container/AppModule/NewsScreen/view";
-import { SafeAreaView } from "react-native-safe-area-context";
 import MyGamesScreen from "../container/AppModule/MyGamesScreen";
+import NewsScreen from "../container/AppModule/NewsScreen/view";
 
 const Tab = createBottomTabNavigator<tabParamList>();
 
@@ -73,8 +72,7 @@ const Tabs = () => {
             //     },
             // }}
             />
-
-            <Tab.Screen name='MyGames' component={MyGamesScreen}
+            {/* <Tab.Screen name='MyGames' component={MyGamesScreen}
                 options={{
                     tabBarIcon: ({ color, size }) => {
                         return (
@@ -83,8 +81,7 @@ const Tabs = () => {
                     },
                     tabBarLabel: "My Games"
                 }}
-            />
-
+            /> */}
             <Tab.Screen name="Winners" component={WinnerScreen}
                 options={{
                     tabBarLabel: "Winners",
@@ -99,8 +96,9 @@ const Tabs = () => {
                             />
                         )
                     }
-                }} />
-            {/* <Tab.Screen name="News" component={NewsScreen}
+                }}
+            />
+            <Tab.Screen name="News" component={NewsScreen}
                 options={{
                     tabBarLabel: "News",
                     tabBarIcon: ({ color, size }) => {
@@ -108,7 +106,7 @@ const Tabs = () => {
                             <Ionicons name="md-newspaper" size={size} color={color} />
                         )
                     }
-                }} /> */}
+                }} />
             <Tab.Screen name="ProfileStack" component={ProfileScreen}
                 options={{
                     tabBarLabel: "Profile",

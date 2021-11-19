@@ -23,10 +23,8 @@ const HomeScreen: React.FC<props> = ({
     navigation
 }) => {
 
-    const leagueGameArray: Array<string> = ['Private game', 'Public game']
-
-    
-
+    // const leagueGameArray: Array<string> = ['Private game', 'Public game']
+    const leagueGameArray: Array<string> = ['Public game']
 
     const renderLeague: ListRenderItem<string> = ({ item, index }) => {
         return <Container
@@ -61,11 +59,11 @@ const HomeScreen: React.FC<props> = ({
                     title="Join"
                     onPress={() => {
                         // navigation.navigate("CreateOrJoin")
-                        if (index == 1) {
+                        // if (index == 1) {
                             navigation.navigate('PublicLeague')
-                        } else {
-                            navigation.navigate("JoinLeague")
-                        }
+                        // } else {
+                        //     navigation.navigate("JoinLeague")
+                        // }
                     }}
                     btnHeight={40}
                     btnStyle={[styles.playBtn, { backgroundColor: 'white', borderWidth: 1.2, borderColor: PrimaryColor }]}

@@ -34,6 +34,7 @@ import MyTeamScreen from '../container/AppModule/MyTeamBottomTabs/MyTeamScreen';
 import PublicLeagueScreen from '../container/AppModule/PublicLeagueScreen';
 import { useNFLCurrentWeekQuery } from '../features/sportsData';
 import AddBattleLeagueScreen from '../container/AppModule/AddBattleLeagueScreen';
+import LeagueDetailScreen from '../container/AppModule/LeagueDetailScreen';
 
 const StackScreen = createNativeStackNavigator<unAuthParamList>()
 
@@ -299,6 +300,14 @@ const AppStackScreen: React.FC = () => {
                 options={({ navigation }) => ({
                     headerShown: true,
                     headerTitle: "Add Battle League",
+                })}
+            />
+            <StackScreen.Screen
+                name='LeagueDetail'
+                component={LeagueDetailScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "League Details",
                 })}
             />
         </StackScreen.Navigator>

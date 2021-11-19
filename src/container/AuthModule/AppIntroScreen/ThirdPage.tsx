@@ -89,13 +89,13 @@ const ThirdPage: React.FC = () => {
                     height: screenHeight * 0.50,
                     // resizeMode:'contain'
                 }}
-                mpImage={{mt:20}}
+                mpImage={{ mt: 20 }}
             />
-            <Container mpContainer={{mt:20}} > 
+            <Container mpContainer={{ mt: 20 }} >
                 <Label labelSize={20} style={{
                     textAlign: "center",
                     color: "black",
-                    fontFamily:bold
+                    fontFamily: bold
                 }}
                 >Live match</Label>
                 <Label labelSize={14} style={{

@@ -52,7 +52,9 @@ export interface MyLeagueResponse {
   team_logo?:string,
   is_game_created?:boolean,
   participant_user:number,
-  team_id:number
+  team_id:number,
+  is_your_league?:boolean;
+  you_join_league?:boolean;
 }
 
 export interface MyTeamResponse {

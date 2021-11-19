@@ -1,13 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
-import moment from 'moment';
 import React from 'react';
 import { SvgUri } from 'react-native-svg';
-import { useSelector } from 'react-redux';
-import { bold } from '../assets/fonts/fonts';
+import { useDispatch } from 'react-redux';
+import { OrangeColor } from '../assets/colors';
+import { bold, medium } from '../assets/fonts/fonts';
 import { AppImages } from '../assets/images/map';
-import { RootState } from '../store';
+import useGetMatchStatus from '../hooks/matchStatus';
+import { leagueDetailsWatcher } from '../store/slices/selectedLeague';
 import { homeNavProps } from '../types/nav';
 import { MyLeagueResponse } from '../types/responseTypes';
+import Btn from './Btn';
 import Container from './Container';
 import Img from './Img';
 import Label from './Label';
@@ -20,34 +22,20 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
     league_id,
     week,
     name,
+    participant_user,
+    max_participant,
+    is_your_league,
     team_logo,
     team_name,
     is_game_created,
-    participant_user,
-    max_participant,
-    createMatchHandler
+    you_join_league,
+    createMatchHandler,
+    team_id
 }) => {
-    const { NFLCurrentWeek } = useSelector((store: RootState) => store.leaguePlayer)
+    let imageType = team_logo?.split('.').pop() == 'svg';
+    const dispatch = useDispatch()
     const navigation = useNavigation<homeNavProps>()
-    // let imageType = team_logo?.split('.').pop() == 'svg';
-
-    console.log('week', week[0].schedule)
-    let WeekText = (NFLCurrentWeek == week[0].week_no) ? 'Started' : `Week ${week[0].week_no} Will start soon`
-    let week_start_date = moment(week[0].schedule[0].start_time).format('MMM D, LT')
-    let currentDate = new Date().getTime()
-
-    let nextMatchDate = week[0].schedule.map((item) => {
-        let matchTime = new Date(item.start_time).getTime()
-        console.log(currentDate)
-        if (matchTime > currentDate) {
-            return item.start_time
-        } else {
-            return null
-        }
-    }).filter((item) => item != null)
-
-
-    console.log('match date', nextMatchDate)
+    const { dateText, matchDate, weekText } = useGetMatchStatus(week)
 
 
     return (
@@ -55,63 +43,59 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
             containerStyle={{
                 backgroundColor: 'white',
                 elevation: 4,
-                borderRadius: 10
+                borderRadius: 10,
             }}
-            mpContainer={{ mh: 15, pv: 10, pl: 10 }}
+            mpContainer={{ mh: 15, pt: 5, pb: 10 }}
             onPress={() => {
-                // navigation.navigate('GameDetail')
+                // navigation.navigate('GameDetail', {
+                //     league_id: league_id,
+                //     week_id: week?.[0]?.week_id,
+                //     league_name: name,
+                //     my_team_id: '',
+                //     // fromMyLeague: false
+                // })
                 navigation.navigate('GameDetail', {
                     league_id: league_id,
-                    week_id: week?.[0]?.week_id,
+                    week_id: week[0].week_id,
                     league_name: name,
-                    my_team_id: '',
-                    fromMyLeague: true
+                    my_team_id: team_id
                 })
             }}
         >
+            {
+                is_your_league ?
+                    <Label
+                        labelSize={12}
+                        textColor='grey'
+                        mpLabel={{ pl: 10 }}
+                        style={{ fontFamily: medium }}
+                    >Created by you*</Label> : null
+            }
             <Label
                 labelSize={20}
+                mpLabel={{ pl: 10 }}
+
             >{name}</Label>
             <Label
                 labelSize={14}
-                mpLabel={{ mt: 5 }}
                 style={{ color: 'black' }}
-            >{`Start time: ${week_start_date}`}</Label>
-            {/* <Container
-                containerStyle={{
-                    flexDirection: 'row',
-                    alignItems: "center"
-                }}
-                mpContainer={{ mt: 5 }}
-            >
-                <Label
-                    labelSize={14}
-                >Pick's deadline : </Label>
-                <Label
-                    labelSize={14}
-                >18/06, 2:00 PM</Label>
-            </Container> */}
+                mpLabel={{ pl: 10, mt: 5 }}
+            >{`${dateText}: ${matchDate}`}</Label>
             <Label
                 style={{
                     color: "green",
                 }}
                 labelSize={14}
-                mpLabel={{ mt: 5 }}
-            >{WeekText}</Label>
-            {/* <Label
-                style={{ color: 'green' }}
-                mpLabel={{ mt: 5 }}
-                labelSize={15}
-            >{`Joined ${participant_user} players`}</Label> */}
+                mpLabel={{ mt: 5, pl: 10 }}
+            >{weekText}</Label>
             <Label
                 labelSize={15}
-                // mpLabel={{ mt: 10 }}
                 style={{
                     color: 'black',
                     fontFamily: bold,
                     position: 'absolute',
-                    bottom: 10,
-                    right: 10
+                    top: 60,
+                    right: 12
                 }}
             >{participant_user}/{max_participant}</Label>
             <Img
@@ -121,11 +105,114 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
                     position: 'absolute',
                     right: 15,
                     top: 10,
-                    resizeMode:'contain'
+                    resizeMode: 'contain'
                 }}
             />
+            {
+                you_join_league ?
+                    <Container containerStyle={{
+                        borderWidth: 0.5,
+                        // borderTopWidth: 1,
+                        justifyContent: "center",
+                        borderRadius: 4,
+                        borderColor: 'grey'
+                    }}
+                        height={45}
+                        mpContainer={{ ph: 10, mt: 15, mh: 10 }}
+                        onPress={() => {
+                            navigation.navigate('TeamDetail', {
+                                team_id: team_id
+                            })
+                        }}
+                    >
+                        <Container
+                            containerStyle={{
+                                flexDirection: 'row',
+                                alignItems: "center"
+                            }}
+                        >
+                            {
+                                imageType ?
+                                    <SvgUri
+                                        width={25}
+                                        height={28}
+                                        uri={team_logo || ''}
+                                    />
+                                    :
+                                    <Img
+                                        imgSrc={{ uri: team_logo || '' }}
+                                        imgStyle={{ borderRadius: 25 }}
+                                        width={28} height={28} />
+                            }
+                            <Label
+                                mpLabel={{ ml: 10 }}
+                                labelSize={18}
+                            >{team_name}</Label>
+                        </Container>
+                        {
+                            is_game_created ?
+                                <Label
+                                    style={{
+                                        position: 'absolute',
+                                        right: 10,
+                                        color: "green"
+                                    }}
+                                    labelSize={14}
+                                // onPress={createMatchHandler}
+                                >View</Label>
+                                :
+                                <Label
+                                    style={{
+                                        position: 'absolute',
+                                        right: 10,
+                                        color: "green",
+                                    }}
+                                    labelSize={14}
+                                    mpLabel={{ mt: 5 }}
+                                    onPress={createMatchHandler}
+                                >Create team</Label>
+                        }
+                    </Container>
+                    :
+                    is_your_league && weekText != 'Completed' ?
+                        <Container
+                            containerStyle={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: "center"
+                            }}
+                            mpContainer={{ mt: 5 }}
+                        >
+                            <Label>Want to Join Your League?</Label>
+                            <Btn
+                                title="Create team"
+                                onPress={() => {
+                                    navigation.navigate('CreateTeam', {
+                                        week_id: week[0]?.week_id,
+                                        type: 'public',
+                                        league_id: league_id
+                                    })
+                                    // createMatchHandler()
+                                }}
+                                btnStyle={{
+                                    backgroundColor: 'white',
+                                    borderWidth: 1,
+                                    borderColor: OrangeColor,
+                                    borderRadius: 10,
+                                    // width:100,
+                                    // alignSelf:'center',
+                                    // position:"absolute",
+                                    // top:-10,
+                                    height: 25
+                                }}
+                                mpBtn={{ mh: 10, ph: 10, mt: 2 }}
+                                labelSize={12}
+                                textColor={OrangeColor}
+                            />
+                        </Container>
+                        : null
+            }
         </Container>
-
     )
 }
 export default PublicGameList;

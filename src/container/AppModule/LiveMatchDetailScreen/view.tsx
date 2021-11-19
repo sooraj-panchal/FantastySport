@@ -13,7 +13,7 @@ import * as Progress from 'react-native-progress';
 import { screenWidth } from '../../../types/sizes';
 import Img from '../../../components/Img';
 import { AppImages } from '../../../assets/images/map';
-import { medium } from '../../../assets/fonts/fonts';
+import { medium, regular } from '../../../assets/fonts/fonts';
 import { useTeamMatchDetailsQuery } from '../../../features/league';
 import { TeamMatchDetailsResponse } from '../../../types/responseTypes';
 import { SvgUri } from 'react-native-svg';
@@ -167,7 +167,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                             }}
                         >
 
-                            <Container height={40} width={40}>
+                            {/* <Container height={40} width={40}>
                                 {
                                     imageType ?
                                         <SvgUri
@@ -180,7 +180,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                                             imgSrc={{ uri: `https://chessmafia.com/php/fantasy/public/uploads/${data?.[1].team_logo}` || 'dummy' }}
                                             width={40} height={45} />
                                 }
-                            </Container>
+                            </Container> */}
                             <Label
                                 labelSize={35}
                                 style={{ color: "black" }}
@@ -218,7 +218,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                                 imgSrc={AppImages.green_logo}
                                 mpImage={{ ml: 10 }}
                             /> */}
-                            <Container
+                            {/* <Container
                                 mpContainer={{ ml: 10 }}
                             >
                                 {
@@ -233,7 +233,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                                             imgSrc={{ uri: `https://chessmafia.com/php/fantasy/public/uploads/${data?.[0].team_logo}` || 'dummy' }}
                                             width={40} height={45} />
                                 }
-                            </Container>
+                            </Container> */}
                         </Container>
                     </Container>
                 </Container>
@@ -257,7 +257,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                         style={{ color: 'grey', fontFamily: medium }}
                     >{data?.[0].sniper_points}</Label>
                 </Container>
-                <Container containerStyle={{
+                {/* <Container containerStyle={{
                     flexDirection: 'row',
                     alignItems: "center",
                     justifyContent: 'center'
@@ -276,7 +276,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                         labelSize={16}
                         style={{ color: 'grey', fontFamily: medium }}
                     >3</Label>
-                </Container>
+                </Container> */}
                 <Container containerStyle={{
                     flexDirection: 'row',
                     alignItems: "center",
@@ -307,7 +307,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
 
         let sniperpoints2: any = data?.[0].sniper_points
         let chance2 = sniperpoints2 / 100
-        
+
         return <Container>
             <Label
                 labelSize={15}
@@ -390,7 +390,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                 />
             </Container> */}
             {renderTeamFight()}
-            {renderChance()}
+            {/* {renderChance()} */}
             <Container
                 containerStyle={{
                     borderBottomWidth: 1,
@@ -439,7 +439,14 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                                         <Container>
                                             <Label labelSize={12} style={{ color: "black", fontFamily: medium }} >{item.Name}</Label>
                                             <Container containerStyle={{ flexDirection: 'row', alignItems: "center" }} mpContainer={{ mv: 5 }}  >
-                                                <Label labelSize={15} style={{ color: 'grey', fontFamily: medium }} >38.3</Label>
+                                                <Container containerStyle={{
+                                                    flexDirection: 'row',
+                                                    alignItems: 'center'
+                                                }}
+                                                >
+                                                    <Label labelSize={15} style={{ color: 'green', fontFamily: medium }} >{item.PredictionPoints}</Label>
+                                                    <Label labelSize={12} style={{ color: 'grey', fontFamily: regular }} >({item.SniperPoints})</Label>
+                                                </Container>
                                                 <Label labelSize={12} style={{ color: 'black' }} mpLabel={{ ml: 5 }} >{item.Position}</Label>
                                             </Container>
                                             <Label labelSize={12} style={{ color: "grey" }} >{moment(item.GameDate).format('ddd')} {useTime(item.GameDate)} v {item.Opponent}</Label>
@@ -501,7 +508,14 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                                         <Container>
                                             <Label labelSize={12} style={{ color: "black", fontFamily: medium }} >{item.Name}</Label>
                                             <Container containerStyle={{ flexDirection: 'row', alignItems: "center" }} mpContainer={{ mv: 5 }}  >
-                                                <Label labelSize={15} style={{ color: 'grey', fontFamily: medium }} >38.3</Label>
+                                                <Container containerStyle={{
+                                                    flexDirection: 'row',
+                                                    alignItems: 'center'
+                                                }}
+                                                >
+                                                    <Label labelSize={15} style={{ color: 'grey', fontFamily: medium }} >{item.PredictionPoints}</Label>
+                                                    <Label labelSize={12} style={{ color: 'green', fontFamily: regular }} >({item.SniperPoints})</Label>
+                                                </Container>
                                                 <Label labelSize={12} style={{ color: 'black' }} mpLabel={{ ml: 5 }} >{item.Position}</Label>
                                             </Container>
                                             <Label labelSize={12} style={{ color: "grey" }} >{moment(item.GameDate).format('ddd')} {useTime(item.GameDate)} v {item.Opponent}</Label>

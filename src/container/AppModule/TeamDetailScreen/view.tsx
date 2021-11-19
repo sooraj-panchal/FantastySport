@@ -109,10 +109,11 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                         top: 5
                     }}
                 >
-                    <Label labelSize={16} style={{ fontWeight: "bold" }}  >Act {getMyTeam?.actual_points?.toFixed(2)}</Label>
-                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: OrangeColor }} >Fantasy sniper {getMyTeam?.sniper_points?.toFixed(2)}</Label>
-                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: OrangeColor }} >Points Prediction. {getMyTeam?.prediction_points?.toFixed(2)}</Label>
-                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: greenColor }} >Proj. {getMyTeam?.projection_points?.toFixed(2)}</Label>
+                    <Label labelSize={16} style={{ letterSpacing: 0.5, color: OrangeColor }} >Sniper Pts {getMyTeam?.sniper_points?.toFixed(2)}</Label>
+
+                    <Label labelSize={14} style={{ color: 'black' }} mpLabel={{ mt: 5 }} >Fantasy Pts {getMyTeam?.actual_points?.toFixed(2)}</Label>
+                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: 'black' }} mpLabel={{ mt: 5 }}>Prediction Pts. {getMyTeam?.prediction_points?.toFixed(2)}</Label>
+                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: 'grey' }} mpLabel={{ mt: 5 }}>Projection Pts. {getMyTeam?.projection_points?.toFixed(2)}</Label>
                 </Container>
             </Container>
             {/* <Label 
@@ -138,9 +139,9 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                             <Label labelSize={16} style={{ width: 225 }} >{ }</Label>
                             <Label labelSize={15} style={{ letterSpacing: 0.5, width: 50, textAlign: 'center' }}  >Proj</Label>
                             <Label labelSize={15} style={{ letterSpacing: 0.5, width: 70, textAlign: 'center' }} >Pred</Label>
-                            <Label labelSize={15} style={{ letterSpacing: 0.5, width: 70, textAlign: 'center' }} >Actual</Label>
-                            <Label labelSize={15} style={{ letterSpacing: 0.5, width: 60, textAlign: 'center' }} >Sniper</Label>
-                            <Label labelSize={15} style={{ letterSpacing: 0.5, width: 90, textAlign: 'center' }} >Accuracy</Label>
+                            <Label labelSize={15} style={{ letterSpacing: 0.5, width: 70, textAlign: 'center' }} >FanPts</Label>
+                            <Label labelSize={15} style={{ letterSpacing: 0.5, width: 60, textAlign: 'center' }} >SnPts</Label>
+                            {/* <Label labelSize={15} style={{ letterSpacing: 0.5, width: 90, textAlign: 'center' }} >Accuracy</Label> */}
                         </Container>
                         {getMyTeam?.players.map((item, index) => {
                             let { photoUrl, Name, Position, SniperPoints, PredictionPoints, Accuracy, ProjectionPoints, ActualPoints } = item
@@ -171,7 +172,7 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                                         <Label labelSize={13} style={{ letterSpacing: 0.5, color: "grey" }} >{Position}</Label>
                                     </Container>
                                     <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={90} >
-                                        <Label labelSize={14} style={{ letterSpacing: 0.5, color: greenColor, textAlign: 'center' }}>{ProjectionPoints}</Label>
+                                        <Label labelSize={14} style={{ letterSpacing: 0.5, color: 'black', textAlign: 'center' }}>{ProjectionPoints}</Label>
                                     </Container>
                                     <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={45} >
                                         <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black", textAlign: 'center' }}>{PredictionPoints}</Label>
@@ -180,11 +181,11 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                                         <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black", textAlign: 'center' }}>{ActualPoints}</Label>
                                     </Container>
                                     <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={70} >
-                                        <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black", textAlign: 'center' }}>{SniperPoints}</Label>
+                                        <Label labelSize={14} style={{ letterSpacing: 0.5, color: "green", textAlign: 'center' }}>{`${SniperPoints} (${Accuracy}%)`}</Label>
                                     </Container>
-                                    <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={70} >
+                                    {/* <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={70} >
                                         <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black" }}>{Accuracy}</Label>
-                                    </Container>
+                                    </Container> */}
                                 </Container>
                                 <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />
                             </>

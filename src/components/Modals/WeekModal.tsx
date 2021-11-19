@@ -43,7 +43,7 @@ const WeekModal: React.FC<props> = ({
 
     const selectWeekHandler = (item: IWeek, index: number) => {
         const data = [...weekList]
-        if (isSingleWeek) {
+        // if (isSingleWeek) {
             data.map((value, placeindex) =>
                 placeindex === index
                     ? (data[placeindex]['isSelected'] =
@@ -51,11 +51,10 @@ const WeekModal: React.FC<props> = ({
                     : (data[placeindex]['isSelected'] = false),
             );
             setWeekList(data)
-        } else {
-            data[index]['isSelected'] = !data[index]['isSelected']
-            setWeekList(data)
-        }
-
+        // } else {
+        //     data[index]['isSelected'] = !data[index]['isSelected']
+        //     setWeekList(data)
+        // }
     }
     const renderItem: ListRenderItem<IWeek> = ({ item, index }) => {
         return (

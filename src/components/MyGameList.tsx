@@ -3,12 +3,10 @@ import moment from 'moment';
 import React from 'react';
 import { SvgUri } from 'react-native-svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { PrimaryColor } from '../assets/colors';
 import { AppImages } from '../assets/images/map';
 import { RootState } from '../store';
-import { leagueDetailsWatcher } from '../store/slices/selectedLeague';
 import { homeNavProps } from '../types/nav';
-import { LeagueItemResponse, MyLeagueResponse } from '../types/responseTypes';
+import { MyLeagueResponse } from '../types/responseTypes';
 import Container from './Container';
 import Img from './Img';
 import Label from './Label';
@@ -54,7 +52,7 @@ const MyGameList: React.FC<MyLeagueResponse & props> = (props) => {
     }).filter((item) => item != null)
 
     console.log('match date', nextMatchDate)
-    
+
     return (
         <Container
             containerStyle={{
@@ -145,9 +143,9 @@ const MyGameList: React.FC<MyLeagueResponse & props> = (props) => {
             }}
                 height={45}
                 mpContainer={{ ph: 10, mt: 15, mh: 10 }}
-                onPress={()=>{
-                    navigation.navigate('TeamDetail',{
-                        team_id:team_id
+                onPress={() => {
+                    navigation.navigate('TeamDetail', {
+                        team_id: team_id
                     })
                 }}
             >
@@ -196,7 +194,7 @@ const MyGameList: React.FC<MyLeagueResponse & props> = (props) => {
                             labelSize={14}
                             mpLabel={{ mt: 5 }}
                             onPress={createMatchHandler}
-                        >Create</Label>
+                        >Create team</Label>
                 }
             </Container>
         </Container>

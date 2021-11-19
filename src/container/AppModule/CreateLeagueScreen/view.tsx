@@ -29,7 +29,7 @@ const CreateLeagueScreen: React.FC<props> = ({
     const [selectPointSystem, setSelectPointSystem] = React.useState<string>('')
     const [leagueName, setLeagueName] = React.useState<string>('')
     const [numOfParticipent, setNumOfParticipent] = React.useState<string>('')
-    const [isPrivate, setIsPrivate] = React.useState<boolean>(true)
+    const [isPrivate, setIsPrivate] = React.useState<boolean>(false)
     const [isSingleWeek, setIsSingleWeek] = useState<boolean>(true)
     const selectedScheduleData: Array<scheduleItemTypes> = useSelector((state: RootState) => state.schedule.selectedScheduleData)
     const selectedWeek: Array<{ week: string }> = useSelector((state: RootState) => state.selectedLeague.selectedWeek)
@@ -431,7 +431,7 @@ const CreateLeagueScreen: React.FC<props> = ({
                 labelSize={14}
                 labelStyle={{ color: "white" }}
             />
-            {leagueOption()}
+            {/* {leagueOption()} */}
             {renderLeagueName()}
             {/* {leagueType()} */}
             {participent()}

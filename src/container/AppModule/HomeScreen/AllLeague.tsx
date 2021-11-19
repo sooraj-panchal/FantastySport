@@ -45,7 +45,7 @@ const AllLeague: React.FC = ({
                     style={{
                         fontFamily: medium
                     }}
-                >Public Leagues</Label>
+                >Join Leagues</Label>
                 <Label
                     labelSize={16}
                     style={{
@@ -88,11 +88,16 @@ const AllLeague: React.FC = ({
                                     // navigation.navigate('MyTeamTab', {
                                     //     screen: 'MyTeam'
                                     // })
-                                    navigation.navigate('CreateTeam', {
-                                        week_id: item.week[0]?.week_id,
-                                        type: 'public',
-                                        league_id: item.league_id
+                                    // navigation.navigate('CreateTeam', {
+                                    //     week_id: item.week[0]?.week_id,
+                                    //     type: 'public',
+                                    //     league_id: item.league_id
+                                    // })
+                                    navigation.navigate('LeagueDetail', {
+                                        league_id: item.league_id,
+                                        week_id: item.week?.[0]?.week_id,
                                     })
+                                    // navigation.navigate('LeagueDetail')
                                 }}
                             >
                                 <Label

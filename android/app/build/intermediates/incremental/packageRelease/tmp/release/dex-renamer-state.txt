@@ -1,4 +1,4 @@
-#Tue Nov 09 16:40:41 IST 2021
+#Fri Nov 19 10:15:03 IST 2021
 base.0=/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/dex/release/mergeDexRelease/classes.dex
 path.1=classes2.dex
 renamed.1=classes2.dex
