@@ -240,6 +240,16 @@ export const LeagueApi = createApi({
                 return response.data
             }
         }),
+        leagueDetails: builder.query({
+            query: (league_id) => ({
+                url: `leagueDetail?league_id=${league_id}`
+            }),
+            // providesTags: ['League'],
+            transformResponse: (response: { data: MyLeagueResponse[] }) => {
+                console.log("leagueDetail res===>", response)
+                return response.data[0]
+            }
+        }),
     }),
 })
 
@@ -263,6 +273,7 @@ export const {
     useGameDetailsQuery,
     useCreateGameMutation,
     useMyGameListQuery,
-    useLeaguesAndGamesQuery
+    useLeaguesAndGamesQuery,
+    useLeagueDetailsQuery
 } = LeagueApi
 

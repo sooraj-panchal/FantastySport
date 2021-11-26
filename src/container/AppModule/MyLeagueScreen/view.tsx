@@ -53,7 +53,7 @@ const MyLeagueScreen: React.FC<props> = ({
         />
     }
 
-    console.log('publicLeagueList', JSON.stringify(publicLeagueList))
+    console.log('publicLeagueList error', JSON.stringify(error))
 
     return (
         <MainContainer

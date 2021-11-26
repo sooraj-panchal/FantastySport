@@ -116,6 +116,10 @@
         "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/src/main/res/mipmap-mdpi/fantasy.png"
     },
     {
+        "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/release/drawable-mdpi_src_assets_images_leagueicon.png.flat",
+        "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/generated/res/react/release/drawable-mdpi/src_assets_images_leagueicon.png"
+    },
+    {
         "merged": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/intermediates/res/merged/release/drawable-xxxhdpi_node_modules_reactnavigation_nativestack_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
         "source": "/Users/p/react-native/FantastySport/FantastySportApp/android/app/build/generated/res/react/release/drawable-xxxhdpi/node_modules_reactnavigation_nativestack_node_modules_reactnavigation_elements_src_assets_backicon.png"
     },

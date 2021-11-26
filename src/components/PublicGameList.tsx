@@ -30,7 +30,8 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
     is_game_created,
     you_join_league,
     createMatchHandler,
-    team_id
+    team_id,
+    user_name
 }) => {
     let imageType = team_logo?.split('.').pop() == 'svg';
     const dispatch = useDispatch()
@@ -45,7 +46,7 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
                 elevation: 4,
                 borderRadius: 10,
             }}
-            mpContainer={{ mh: 15, pt: 5, pb: 10 }}
+            mpContainer={{ mh: 15, pv: 10 }}
             onPress={() => {
                 // navigation.navigate('GameDetail', {
                 //     league_id: league_id,
@@ -54,15 +55,19 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
                 //     my_team_id: '',
                 //     // fromMyLeague: false
                 // })
-                navigation.navigate('GameDetail', {
+                // navigation.navigate('GameDetail', {
+                //     league_id: league_id,
+                //     week_id: week[0].week_id,
+                //     league_name: name,
+                //     my_team_id: team_id
+                // })
+                navigation.navigate('LeagueDetail', {
                     league_id: league_id,
-                    week_id: week[0].week_id,
-                    league_name: name,
-                    my_team_id: team_id
+                    week_id: week?.[0]?.week_id,
                 })
             }}
         >
-            {
+            {/* {
                 is_your_league ?
                     <Label
                         labelSize={12}
@@ -70,12 +75,108 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
                         mpLabel={{ pl: 10 }}
                         style={{ fontFamily: medium }}
                     >Created by you*</Label> : null
+            } */}
+            {/* {
+                is_your_league ?
+                    <Container containerStyle={{
+                        flexDirection: 'row',
+                        alignItems: 'center'
+                    }}
+                        mpContainer={{ ml: 5, mt: 5 }}
+                    >
+                        <Img
+                            imgSrc={AppImages.league_icon}
+                            imgStyle={{
+                                width: 25,
+                                height: 18,
+                                resizeMode: 'contain',
+                            }}
+                        />
+                        <Label
+                            labelSize={14}
+                            textColor='grey'
+                            // mpLabel={{ pl: 10 }}
+                            style={{ fontFamily: medium }}
+                        >Created by you</Label>
+                    </Container>
+                    : null
             }
             <Label
                 labelSize={20}
-                mpLabel={{ pl: 10 }}
+                mpLabel={{ pl: 10, mt: 5 }}
 
-            >{name}</Label>
+            >{name}</Label> */}
+            {
+                is_your_league ?
+                    <Container containerStyle={{
+                        flexDirection: 'row'
+                    }}
+                    mpContainer={{ml:5}}
+                    >
+                        <Img
+                            imgSrc={AppImages.league_icon}
+                            imgStyle={{
+                                width: 40,
+                                height: 40,
+                                resizeMode: 'contain',
+                            }}
+                        />
+                        <Container
+                            containerStyle={{
+                                flex: 0.8
+                            }}
+                            mpContainer={{ ml: 5 }}
+                        >
+                            <Label
+                                labelSize={12}
+                                textColor='grey'
+                                // mpLabel={{ pl: 10 }}
+                                style={{ fontFamily: medium }}
+                            >Created by you</Label>
+                            <Label style={{
+                                fontFamily: medium
+                            }}
+                                labelSize={18}
+                                textColor='black'
+                                numberOfLines={2}
+                            >{name}</Label>
+                        </Container>
+                    </Container>
+                    : <Container containerStyle={{
+                        flexDirection: 'row'
+                    }}
+                    mpContainer={{ml:10}}
+                    >
+                        <Img
+                            imgSrc={AppImages.green_logo}
+                            imgStyle={{
+                                width: 30,
+                                height: 40,
+                                resizeMode: 'contain',
+                            }}
+                        />
+                        <Container
+                            containerStyle={{
+                                flex: 0.8
+                            }}
+                            mpContainer={{ ml: 10 }}
+                        >
+                            <Label
+                                labelSize={12}
+                                textColor='grey'
+                                // mpLabel={{ pl: 10 }}
+                                style={{ fontFamily: medium }}
+                            >Created by {user_name}</Label>
+                            <Label style={{
+                                fontFamily: medium
+                            }}
+                                labelSize={18}
+                                textColor='black'
+                                numberOfLines={2}
+                            >{name}</Label>
+                        </Container>
+                    </Container>
+            }
             <Label
                 labelSize={14}
                 style={{ color: 'black' }}
@@ -88,26 +189,40 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
                 labelSize={14}
                 mpLabel={{ mt: 5, pl: 10 }}
             >{weekText}</Label>
-            <Label
-                labelSize={15}
-                style={{
-                    color: 'black',
-                    fontFamily: bold,
-                    position: 'absolute',
-                    top: 60,
-                    right: 12
-                }}
-            >{participant_user}/{max_participant}</Label>
-            <Img
-                imgSrc={AppImages.team}
-                width={30} height={28}
-                imgStyle={{
+
+            <Container
+                containerStyle={{
+                    alignItems: 'flex-end',
                     position: 'absolute',
                     right: 15,
-                    top: 10,
-                    resizeMode: 'contain'
+                    top: 5
                 }}
-            />
+            >
+                <Label
+                    style={{
+                        color: "green"
+                    }}
+                    labelSize={14}
+                // onPress={createMatchHandler}
+                >View detail</Label>
+                <Img
+                    imgSrc={AppImages.team}
+                    width={30} height={28}
+                    imgStyle={{
+                        top: 10,
+                        resizeMode: 'contain'
+                    }}
+                />
+                <Label
+                    labelSize={15}
+                    style={{
+                        color: 'black',
+                        fontFamily: bold,
+                        top: 20,
+                        // right: 12
+                    }}
+                >{participant_user}/{max_participant}</Label>
+            </Container>
             {
                 you_join_league ?
                     <Container containerStyle={{

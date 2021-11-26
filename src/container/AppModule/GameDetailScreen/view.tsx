@@ -16,7 +16,6 @@ const GameDetailScreen: React.FC<GameDetailNav> = ({
         league_id: route.params?.league_id,
         week_id: route.params?.week_id,
     }
-
     const { data, isLoading, error } = useGameDetailsQuery<any>(newData, {
         refetchOnMountOrArgChange: true
     })
@@ -27,17 +26,20 @@ const GameDetailScreen: React.FC<GameDetailNav> = ({
         })
     })
 
+    console.log('data',JSON.stringify(data))
+
     const renderItem: ListRenderItem<any> = ({ item, index }) => {
+        console.log(item)
         return (
             <GamePlayerList
                 {...item}
                 index={index}
                 onPress={() => {
-                    if (route.params?.fromMyLeague) {
-                        navigation.navigate('TeamDetail', {
-                            team_id: item.id
-                        })
-                    } else {
+                    // if (route.params?.fromMyLeague) {
+                    //     navigation.navigate('TeamDetail', {
+                    //         team_id: item.id
+                    //     })
+                    // } else {
                         const WithoutMyTeam = data.filter((item: any) => {
                             return item.id != route.params?.my_team_id
                         })
@@ -45,8 +47,7 @@ const GameDetailScreen: React.FC<GameDetailNav> = ({
                             team_id: route.params?.my_team_id,
                             op_team_id: item.id == route.params?.my_team_id ? WithoutMyTeam[0]?.id : item.id
                         })
-                    }
-
+                    // }
                 }}
             />
         )

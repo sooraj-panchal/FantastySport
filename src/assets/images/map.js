@@ -22,6 +22,7 @@ export const AppImages = {
     change_pos: require('./35_36_edit_team/change.png'),
     team: require('./39_team_name/public.png'),
     newsImg: require('./60_news/img2.png'),
-    profile_bg: require('./62_63_profile/background.png')
+    profile_bg: require('./62_63_profile/background.png'),
+    league_icon:require('./leagueIcon.png'),
 }
 

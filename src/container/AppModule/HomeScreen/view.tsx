@@ -22,7 +22,6 @@ interface props extends navigationProps {
 const HomeScreen: React.FC<props> = ({
     navigation
 }) => {
-
     // const leagueGameArray: Array<string> = ['Private game', 'Public game']
     const leagueGameArray: Array<string> = ['Public game']
 
@@ -60,7 +59,7 @@ const HomeScreen: React.FC<props> = ({
                     onPress={() => {
                         // navigation.navigate("CreateOrJoin")
                         // if (index == 1) {
-                            navigation.navigate('PublicLeague')
+                        navigation.navigate('PublicLeague')
                         // } else {
                         //     navigation.navigate("JoinLeague")
                         // }
@@ -96,6 +95,7 @@ const HomeScreen: React.FC<props> = ({
         </Container>
     }
 
+    
     return (
         <MainContainer style={{ backgroundColor: "#f2f2f2" }}
         >

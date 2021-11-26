@@ -25,6 +25,7 @@ export interface forgotPasswordResponse {
 }
 
 export interface MYLeagueTeam {
+  [x: string]: any;
   team_id: number,
   team_key?: string,
   team_logo?: string,
@@ -43,18 +44,19 @@ export interface MyLeagueResponse {
   week: Array<WeekObject>,
   type?: 'private' | 'public',
   name?: string,
-  user_name:string,
+  user_name: string,
   max_participant?: string | number,
   scoring_system: string,
   league_id?: number,
   unique_code: string,
-  team_name?:string,
-  team_logo?:string,
-  is_game_created?:boolean,
-  participant_user:number,
-  team_id:number,
-  is_your_league?:boolean;
-  you_join_league?:boolean;
+  team_name?: string,
+  team_logo?: string,
+  is_game_created?: boolean,
+  participant_user: number,
+  team_id: number,
+  is_your_league?: boolean;
+  you_join_league?: boolean;
+  id?:number
 }
 
 export interface MyTeamResponse {
@@ -68,8 +70,8 @@ export interface MyTeamResponse {
   accuracy?: number;
   prediction_points?: number;
   sniper_points?: number
-  projection_points?:number,
-  actual_points?:number
+  projection_points?: number,
+  actual_points?: number
 }
 export interface MyTeamLogoResponse {
   WikipediaLogoUrl: string | ''
@@ -103,22 +105,56 @@ export interface LeagueItemResponse {
   team_name?: string,
   team_id?: number,
   team_logo?: string,
-  picks_deadline?:string,
-  isLeagueRunning?:boolean,
-  league_id:number,
-  week_id:number
+  picks_deadline?: string,
+  isLeagueRunning?: boolean,
+  league_id: number,
+  week_id: number
 }
-export interface LiveMatchUpResponse{
-  id:number,
+export interface LiveMatchUpResponse {
+  id: number,
   name: string,
   pts: number,
   rank: number,
-  team_name:string
+  team_name: string
 }
 
-export interface GameDetailResponse{
-  id:number,
+export interface GameDetailResponse {
+  id: number,
   pts: number,
   rank: number,
-  team_name:string
+  team_name: string
+}
+
+// export interface teamItemTypes {
+//   op_team_id: number,
+//   team_name: string,
+//   op_team_name: string,
+//   team_key: string,
+//   op_team_key: string,
+//   team_logo: string,
+//   op_team_logo: string,
+//   start_time: string,
+// }
+
+export interface leagueDetailResponse {
+  week_type?: string,
+  week: Array<{
+    week_id?: number
+    week_no: number,
+    schedule: Array<MYLeagueTeam>
+  }>,
+  type?: 'private' | 'public',
+  name?: string,
+  user_name: string,
+  max_participant?: string | number,
+  scoring_system: string,
+  league_id?: number,
+  unique_code: string,
+  team_name?: string,
+  team_logo?: string,
+  is_game_created?: boolean,
+  participant_user: number,
+  team_id: number,
+  is_your_league?: boolean;
+  you_join_league?: boolean;
 }

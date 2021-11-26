@@ -23,7 +23,6 @@ export const iPhoneX =
   Dimensions.get("window").height === 812 &&
   Dimensions.get("window").width === 375;
 
-
 export const registerUser = 'auth/register'
 export const otp_verify = 'auth/verifyOtp'
 export const loginUser = 'auth/login'

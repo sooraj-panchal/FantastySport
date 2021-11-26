@@ -31,7 +31,7 @@ export type unAuthParamList = {
   MyTeamTab: NavigatorScreenParams<MyTeamtabParamList>,
   AddPlayer: { Position: any, isWRTPosition: boolean };
   AddSniperPoint: undefined;
-  InviteFriend: undefined;
+  InviteFriend: { league_id: any, week_id: any } | undefined;
   EditTeamInfo: { team_id: any, team_name: any, team_logo: any } | undefined;
   EditTeam: undefined;
   JoinLeague: { code?: string | number, week_id?: number } | undefined;
@@ -106,4 +106,5 @@ export type JoinLeagueNav = NativeStackScreenProps<unAuthParamList, 'JoinLeague'
 export type CreateTeamNav = NativeStackScreenProps<unAuthParamList, 'CreateTeam'>;
 export type GameDetailNav = NativeStackScreenProps<unAuthParamList, 'GameDetail'>;
 export type LeagueDetailNav = NativeStackScreenProps<unAuthParamList, 'LeagueDetail'>;
+export type inviteFriendNav = NativeStackScreenProps<unAuthParamList, 'InviteFriend'>;
 
