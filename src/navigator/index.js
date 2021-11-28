@@ -47,7 +47,7 @@ const AppContainer = ( {
                             component={ AppStackScreen }
                         />
                     </>
-            }
+            } 
         </RootStack.Navigator>
     );
 };

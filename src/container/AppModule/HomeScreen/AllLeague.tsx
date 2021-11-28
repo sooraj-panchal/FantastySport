@@ -195,7 +195,7 @@
 
 
 
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { ListRenderItem } from 'react-native';
 import { View } from 'react-native-animatable';

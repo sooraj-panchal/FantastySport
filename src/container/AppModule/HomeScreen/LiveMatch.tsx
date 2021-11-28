@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { ListRenderItem } from 'react-native';
 import { View } from 'react-native-animatable';
@@ -28,12 +28,10 @@ const LiveMatch: React.FC = ({
     const { data, isLoading, error } = useLiveMatchupRankingQuery({
         current_week:NFLCurrentWeek
     })
-
     
     console.log('data===>', JSON.stringify(data))
 
     const navigation = useNavigation<homeNavProps>()
-
 
     const renderItem: ListRenderItem<any> = ({ item, index }) => {
         return <LiveMatchupRankingItem

@@ -36,7 +36,7 @@ const TeamList: React.FC<MYLeagueTeam> = ({
                     justifyContent: "center",
                     alignItems: 'center'
                 }}
-                    width={80}
+                    width={100}
                     height={100}
                 >
                     <Container height={45} >
@@ -58,20 +58,26 @@ const TeamList: React.FC<MYLeagueTeam> = ({
                         labelSize={15}
                         style={{}}
                         mpLabel={{ mt: 5 }}
-                    >{team_key}</Label>
-                    <Label
+                    >{team_name}</Label>
+                    {/* <Label
                         labelSize={12}
                         style={{}}
                         numberOfLines={1}
                         mpLabel={{ mt: 5 }}
-                    >({team_name})</Label>
+                    >({team_name})</Label> */}
+                    <Label
+                        labelSize={12}
+                        style={{}}
+                        numberOfLines={1}
+                        mpLabel={{ mt: 5, ml: 10 }}
+                    >(Home Team)</Label>
                 </Container>
                 <Label labelSize={16} mpLabel={{ mt: 5, mh: 5 }} style={{ color: "grey", letterSpacing: 0.5 }} >VS</Label>
                 <Container containerStyle={{
                     justifyContent: "center",
                     alignItems: 'center'
                 }}
-                    width={80}
+                    width={100}
                     height={100}
                 >
                     <Container height={45} >
@@ -93,13 +99,13 @@ const TeamList: React.FC<MYLeagueTeam> = ({
                         labelSize={15}
                         style={{}}
                         mpLabel={{ mt: 5 }}
-                    >{op_team_key}</Label>
+                    >{op_team_name}</Label>
                     <Label
                         labelSize={12}
                         style={{}}
                         numberOfLines={1}
-                        mpLabel={{ mt: 5 }}
-                    >({op_team_name})</Label>
+                        mpLabel={{ mt: 5, ml: 10 }}
+                    >(Away Team)</Label>
                 </Container>
             </Container>
             <Container containerStyle={{

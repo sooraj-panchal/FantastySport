@@ -235,9 +235,9 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
                         height={45}
                         mpContainer={{ ph: 10, mt: 15, mh: 10 }}
                         onPress={() => {
-                            navigation.navigate('TeamDetail', {
-                                team_id: team_id
-                            })
+                            // navigation.navigate('TeamDetail', {
+                            //     team_id: team_id
+                            // })
                         }}
                     >
                         <Container
@@ -273,7 +273,11 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
                                         color: "green"
                                     }}
                                     labelSize={14}
-                                // onPress={createMatchHandler}
+                                onPress={()=>{
+                                    navigation.navigate('TeamDetail', {
+                                        team_id: team_id
+                                    })
+                                }}
                                 >View</Label>
                                 :
                                 <Label

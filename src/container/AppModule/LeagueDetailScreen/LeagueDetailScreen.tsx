@@ -236,7 +236,7 @@ const LeagueDetailScreen: React.FC<props> = ({
                     <Label
                         mpLabel={{ mt: 5 }}
                         labelSize={15}
-                    >Scope: {LeagueDetails?.week_type == 'singleWeek' ? 'Single Game' : 'Multiple games'}</Label>
+                    >Scope: {LeagueDetails?.week_type == 'singleWeek' ? 'Week #' : 'Multiple games'}</Label>
                     <Label
                         mpLabel={{ mt: 5 }}
                         labelSize={15}
@@ -309,11 +309,11 @@ const LeagueDetailScreen: React.FC<props> = ({
                         }}
                             height={45}
                             mpContainer={{ ph: 10, mt: 10, mh: 15 }}
-                            onPress={() => {
-                                navigation.navigate('TeamDetail', {
-                                    team_id: LeagueDetails?.team_id
-                                })
-                            }}
+                        // onPress={() => {
+                        //     navigation.navigate('TeamDetail', {
+                        //         team_id: LeagueDetails?.team_id
+                        //     })
+                        // }}
                         >
                             <Container
                                 containerStyle={{
@@ -349,8 +349,9 @@ const LeagueDetailScreen: React.FC<props> = ({
                                         }}
                                         labelSize={14}
                                         onPress={() => {
-                                            dispatch(leagueDetailsWatcher({ ...LeagueDetails }))
-                                            navigation.navigate('CreateMatch')
+                                            navigation.navigate('TeamDetail', {
+                                                team_id: LeagueDetails?.team_id
+                                            })
                                         }}
                                     >View</Label>
                                     :
@@ -362,7 +363,10 @@ const LeagueDetailScreen: React.FC<props> = ({
                                         }}
                                         labelSize={14}
                                         mpLabel={{ mt: 5 }}
-                                    // onPress={createMatchHandler}
+                                        onPress={() => {
+                                            dispatch(leagueDetailsWatcher({ ...LeagueDetails }))
+                                            navigation.navigate('CreateMatch')
+                                        }}
                                     >Create team</Label>
                             }
                         </Container>
@@ -406,7 +410,7 @@ const LeagueDetailScreen: React.FC<props> = ({
                 <Label
                     labelSize={20}
                     mpLabel={{ mt: 10, ml: 15, mb: 10 }}
-                >Teams: </Label>
+                >Games: </Label>
                 <FlatList
                     data={LeagueDetails?.week[0]?.schedule}
                     renderItem={({ item }) => {

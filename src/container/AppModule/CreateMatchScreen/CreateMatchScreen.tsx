@@ -513,42 +513,42 @@ const MyTeamScreen: React.FC<navigationProps> = ({
         }
     }
 
-    React.useLayoutEffect(() => {
-        return (
-            navigation.setOptions({
-                headerRight: () => {
-                    return <Container
-                        containerStyle={{
-                            flexDirection: "row",
-                            alignItems: "center"
-                        }}
-                        mpContainer={{ mr: 15, mt: 5 }}
-                    >
-                        <Btn
-                            title="Invite friends"
-                            labelSize={12}
-                            labelStyle={{
-                                color: 'white'
-                            }}
-                            radius={8}
-                            mpBtn={{ ph: 10, mr: 10 }}
-                            btnStyle={{
-                                backgroundColor: OrangeColor
-                            }}
-                            onPress={() => {
-                                navigation.navigate('InviteFriend')
-                            }}
-                        />
-                        <Ionicons
-                            name="ios-settings"
-                            size={22}
-                            color='white'
-                        />
-                    </Container>
-                }
-            })
-        )
-    }, [])
+    // React.useLayoutEffect(() => {
+    //     return (
+    //         navigation.setOptions({
+    //             headerRight: () => {
+    //                 return <Container
+    //                     containerStyle={{
+    //                         flexDirection: "row",
+    //                         alignItems: "center"
+    //                     }}
+    //                     mpContainer={{ mr: 15, mt: 5 }}
+    //                 >
+    //                     <Btn
+    //                         title="Invite friends"
+    //                         labelSize={12}
+    //                         labelStyle={{
+    //                             color: 'white'
+    //                         }}
+    //                         radius={8}
+    //                         mpBtn={{ ph: 10, mr: 10 }}
+    //                         btnStyle={{
+    //                             backgroundColor: OrangeColor
+    //                         }}
+    //                         onPress={() => {
+    //                             navigation.navigate('InviteFriend')
+    //                         }}
+    //                     />
+    //                     <Ionicons
+    //                         name="ios-settings"
+    //                         size={22}
+    //                         color='white'
+    //                     />
+    //                 </Container>
+    //             }
+    //         })
+    //     )
+    // }, [])
 
     const renderItem = (item: PlayerPositionTypes, position: string) => {
         return <MyPlayersList
@@ -624,7 +624,7 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                 }
                 <Container mpContainer={{ ml: 5 }} >
                     <Label labelSize={16} style={{ fontWeight: "bold", letterSpacing: 0.5 }}  > {getMyTeam?.team_name}</Label>
-                    <Label labelSize={14} style={{ letterSpacing: 0.5 }} >4-3-3 | - of 1</Label>
+                    {/* <Label labelSize={14} style={{ letterSpacing: 0.5 }} >4-3-3 | - of 1</Label> */}
                 </Container>
                 <Container
                     containerStyle={{
@@ -633,10 +633,10 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                         right: 10
                     }}
                 >
-                    <Label labelSize={16} style={{ fontWeight: "bold" }}  >Act {totalActualPoints}</Label>
-                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: OrangeColor }} >Fantasy sniper {totalSniperPoints}</Label>
-                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: OrangeColor }} >Points Prediction. {totalPredictionPoints}</Label>
-                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: greenColor }} >Proj. {totalProjectedPoints}</Label>
+                    <Label labelSize={14} style={{ color: greenColor }} >Sniper Pts. {totalSniperPoints}</Label>
+                    <Label labelSize={16} style={{ color: 'black' }}  >Fantasy Pts {totalActualPoints}</Label>
+                    <Label labelSize={14} style={{ color: OrangeColor }} >Prediction Pts. {totalPredictionPoints}</Label>
+                    <Label labelSize={14} style={{ color: 'grey' }} >Projection Pts. {totalProjectedPoints}</Label>
                 </Container>
             </Container>
 

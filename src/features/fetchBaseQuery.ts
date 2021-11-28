@@ -1,9 +1,10 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { RootState } from '../store'
+import { baseUrl } from '../utils/globals'
 
 export const fetchBaseQueryApi = fetchBaseQuery({
 
-  baseUrl: 'https://chessmafia.com/php/fantasy/api/',
+  baseUrl: baseUrl,
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token
     console.log("token", token)

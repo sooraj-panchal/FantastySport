@@ -95,7 +95,7 @@ const HomeScreen: React.FC<props> = ({
         </Container>
     }
 
-    
+
     return (
         <MainContainer style={{ backgroundColor: "#f2f2f2" }}
         >

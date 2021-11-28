@@ -234,11 +234,11 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                         top: 0
                     }}
                 >
-                    <Label labelSize={16} style={{ letterSpacing: 0.5, color: OrangeColor }} >Sniper Pts {getMyTeam?.sniper_points?.toFixed(2)}</Label>
+                    <Label labelSize={15} style={{ color: greenColor }} >Sniper Pts {getMyTeam?.sniper_points?.toFixed(2)}</Label>
 
                     <Label labelSize={14} style={{ color: 'black' }} mpLabel={{ mt: 5 }} >Fantasy Pts {getMyTeam?.actual_points?.toFixed(2)}</Label>
-                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: 'black' }} mpLabel={{ mt: 5 }}>Prediction Pts. {getMyTeam?.prediction_points?.toFixed(2)}</Label>
-                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: 'grey' }} mpLabel={{ mt: 5 }}>Projection Pts. {getMyTeam?.projection_points?.toFixed(2)}</Label>
+                    <Label labelSize={14} style={{ color:OrangeColor }} mpLabel={{ mt: 5 }}>Prediction Pts. {getMyTeam?.prediction_points?.toFixed(2)}</Label>
+                    <Label labelSize={14} style={{ color: 'grey' }} mpLabel={{ mt: 5 }}>Projection Pts. {getMyTeam?.projection_points?.toFixed(2)}</Label>
                 </Container>
             </Container>
             <ScrollView horizontal={true} >
@@ -254,10 +254,10 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                         mpContainer={{ pv: 10, mt: 20 }}
                     >
                         <Label labelSize={14} style={{ width: 160 }} >{ }</Label>
-                        <Label labelSize={14} style={{ width: 50 }}  >Proj</Label>
-                        <Label labelSize={14} style={{ width: 42 }} >Pred</Label>
-                        <Label labelSize={14} style={{ width: 58 }} >FanPts</Label>
-                        <Label labelSize={14} style={{ width: 60 }} >SnPts</Label>
+                        <Label labelSize={12} style={{ width: 55 }}  >SnPts</Label>
+                        <Label labelSize={12} style={{ width: 55 }} >FanPts</Label>
+                        <Label labelSize={12} style={{ width: 50 }} >Pred</Label>
+                        <Label labelSize={12} style={{ width: 60 }} >Proj</Label>
                         {/* <Label labelSize={15} style={{ letterSpacing: 0.5, width: 90, textAlign: 'center' }} >Accuracy</Label> */}
                     </Container>
                     {getMyTeam?.players.map((item, index) => {
@@ -293,22 +293,19 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                                         <Label labelSize={11} style={{ color: "grey" }} mpLabel={{ml:4}}  >{`(${Team})`}</Label>
                                     </Container>
                                 </Container>
-                                <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={50} >
-                                    <Label labelSize={12} style={{ color: 'black', textAlign: 'center' }}>{ProjectionPoints}</Label>
-                                </Container>
-                                <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={45} >
-                                    <Label labelSize={12} style={{ color: "black", textAlign: 'center' }}>{PredictionPoints}</Label>
-                                </Container>
-                                <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={50} >
-                                    <Label labelSize={12} style={{ color: "black", textAlign: 'center' }}>{ActualPoints}</Label>
-                                </Container>
-                                <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={60} >
+                                <Container containerStyle={{ justifyContent: 'center', alignItems: 'center',flexDirection:'row' }} width={60} >
                                     <Label labelSize={12} style={{ color: "green", textAlign: 'center' }}>{SniperPoints}</Label>
                                     <Label labelSize={12} style={{ color: "green", textAlign: 'center' }}>{`(${Accuracy}%)`}</Label>
                                 </Container>
-                                {/* <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={70} >
-                                        <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black" }}>{Accuracy}</Label>
-                                    </Container> */}
+                                <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={50} >
+                                    <Label labelSize={12} style={{ color: 'black', textAlign: 'center' }}>{ActualPoints}</Label>
+                                </Container>
+                                <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={45} >
+                                    <Label labelSize={12} style={{ color: OrangeColor, textAlign: 'center' }}>{PredictionPoints}</Label>
+                                </Container>
+                                <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={50} >
+                                    <Label labelSize={12} style={{ color: "grey", textAlign: 'center' }}>{ProjectionPoints}</Label>
+                                </Container>
                             </Container>
                             <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />
                         </>

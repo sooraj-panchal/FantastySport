@@ -2,12 +2,10 @@ import React, { ReactNode, useEffect } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getStatusBarHeight } from '../utils/globals';
-// import * as globals from '../../utils/globals';
 import Loader from './Loader';
 import ModalLoader from './ModalLoader';
 
 import Toast from 'react-native-simple-toast';
-// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 interface Props {
     children: ReactNode,

@@ -192,7 +192,7 @@
 // export default MyLeague;
 
 
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View } from 'react-native-animatable';
 import PagerView from 'react-native-pager-view';

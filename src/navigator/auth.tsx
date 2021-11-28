@@ -12,14 +12,15 @@ import AuthScreen from '../container/AuthModule/AuthScreen';
 
 const StackScreen = createNativeStackNavigator<RootStackParamList>()
 
-const AuthStackScreen = () => {
+const AuthStackScreen:React.FC = () => {
     return (
         <StackScreen.Navigator
             initialRouteName="AppIntro"
             screenOptions={{
-                headerShown: false,
+                // headerShown: false,
                 animation: 'slide_from_right',
-                headerBackTitleVisible: false
+                headerBackTitleVisible: false,
+                headerShown:false
             }}
         >
             <StackScreen.Screen
@@ -38,7 +39,7 @@ const AuthStackScreen = () => {
                     headerStyle: { backgroundColor: 'transparent' },
                     headerTitle: "",
                     headerShadowVisible: false,
-                    headerTranslucent: true,
+                    headerTransparent: true,
                     headerTintColor: "white"
                 }}
             />
@@ -50,7 +51,7 @@ const AuthStackScreen = () => {
                     headerStyle: { backgroundColor: 'transparent' },
                     headerTitle: "",
                     headerShadowVisible: false,
-                    headerTranslucent: true,
+                    headerTransparent: true,
                     headerTintColor: "white"
                 }}
             />
@@ -62,7 +63,7 @@ const AuthStackScreen = () => {
                     headerStyle: { backgroundColor: 'transparent' },
                     headerTitle: "",
                     headerShadowVisible: false,
-                    headerTranslucent: true,
+                    headerTransparent: true,
                     headerTintColor: "white"
                 }}
             />
@@ -78,7 +79,7 @@ const AuthStackScreen = () => {
                     headerStyle: { backgroundColor: 'transparent' },
                     headerTitle: "",
                     headerShadowVisible: false,
-                    headerTranslucent: true,
+                    headerTransparent: true,
                     headerTintColor: "white"
                 }}
             />
@@ -90,7 +91,7 @@ const AuthStackScreen = () => {
                     headerStyle: { backgroundColor: 'transparent' },
                     headerTitle: "",
                     headerShadowVisible: false,
-                    headerTranslucent: true,
+                    headerTransparent: true,
                     headerTintColor: "white"
                 }}
             />

@@ -9,12 +9,12 @@ import { Alert, ListRenderItem } from 'react-native';
 import { Portal } from 'react-native-portalize';
 import { IWeek, WeekArray } from '../../utils/jsonArray';
 import Btn from '../Btn';
-import { useNavigation } from '@react-navigation/core';
 import { homeNavProps } from '../../types/nav';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectedWeekWatcher } from '../../store/slices/selectedLeague';
 import { getCurrentWeek } from '../../store/slices/schedule';
 import { RootState } from '../../store';
+import { useNavigation } from '@react-navigation/native';
 
 interface props {
     closeModal: () => void,

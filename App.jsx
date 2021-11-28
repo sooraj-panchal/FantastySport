@@ -17,9 +17,9 @@ import { navigate, navigationRef } from './src/utils/NavigationHandler';
 import {NotificationHandler} from './src/utils/NotificationService'
 const App = () => {
 
-    useEffect(()=>{
-        NotificationHandler()
-    },[])
+    // useEffect(()=>{
+    //     NotificationHandler()
+    // },[])
 
     LogBox.ignoreAllLogs( true );
 

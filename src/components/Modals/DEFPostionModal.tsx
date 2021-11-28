@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Modalize } from 'react-native-modalize';
 import { Alert, FlatList, ListRenderItem } from 'react-native';
 import { Portal } from 'react-native-portalize';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 import { homeNavProps } from '../../types/nav';
 import { useDispatch, useSelector } from 'react-redux';
 import { LeaguePlayerTypes, PlayerPositionTypes } from '../../types/flatListTypes';

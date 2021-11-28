@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { AppImages } from '../assets/images/map';
 import { homeNavProps } from '../types/nav';
