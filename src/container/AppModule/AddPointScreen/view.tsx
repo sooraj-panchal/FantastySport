@@ -20,7 +20,9 @@ const AddPlayerPointScreen: React.FC<AddPlayerProps> = ({
     const myPlayerListArray: LeaguePlayerTypes[] = useSelector((state: RootState) => state.myPlayer.data)
     const [playerList, setPlayerList] = useState<Array<LeaguePlayerTypes>>([])
     const dispatch = useDispatch()
-    
+
+    console.log('myPlayerListArray', myPlayerListArray)
+
     useEffect(() => {
         setPlayerList(myPlayerListArray)
     }, [])

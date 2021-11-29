@@ -1,6 +1,6 @@
 import { firebase } from '@react-native-firebase/dynamic-links';
 import React from 'react';
-import { FlatList, ListRenderItem, ScrollView } from 'react-native';
+import { Alert, FlatList, ListRenderItem, ScrollView } from 'react-native';
 import { SvgUri } from 'react-native-svg';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch } from 'react-redux';
@@ -42,7 +42,7 @@ const LeagueDetailScreen: React.FC<props> = ({
         refetchOnMountOrArgChange: true
     })
 
-    const { dateText, matchDate, weekText } = useGetMatchStatus(LeagueDetails?.week)
+    const { dateText, matchDate, weekText, isStarted } = useGetMatchStatus(LeagueDetails?.week, LeagueDetails?.deadline)
 
     const dispatch = useDispatch()
 
@@ -122,7 +122,7 @@ const LeagueDetailScreen: React.FC<props> = ({
 
 
     const renderItem: ListRenderItem<any> = ({ item, index }) => {
-        console.log(item)
+        console.log('parti', item)
         return (
             <ParticipantUserList
                 {...item}
@@ -246,7 +246,6 @@ const LeagueDetailScreen: React.FC<props> = ({
                         labelSize={15}
                         mpLabel={{ mt: 5 }}
                     >Week no: {LeagueDetails?.week[0]?.week_no} Week</Label> */}
-
                     <Label
                         labelSize={14}
                         style={{ color: 'black' }}
@@ -259,32 +258,36 @@ const LeagueDetailScreen: React.FC<props> = ({
                         labelSize={14}
                         mpLabel={{ mt: 5 }}
                     >{weekText}</Label>
-                    {
-                        LeagueDetails?.is_game_created ?
-                            <Btn
-                                title='Match detail'
-                                onPress={() => {
+                    <Btn
+                        title='Match detail'
+                        onPress={() => {
+                            if (LeagueDetails?.is_game_created) {
+                                if (ParticipantUserList.length <= 3) {
+                                    Alert.alert('Fantasy sniper', 'Wait for join other players!')
+                                } else {
                                     navigation.navigate('GameDetail', {
                                         league_id: LeagueDetails?.league_id,
                                         week_id: LeagueDetails?.week[0].week_id,
                                         league_name: LeagueDetails?.name,
                                         my_team_id: LeagueDetails?.team_id
                                     })
-                                }}
-                                btnStyle={{
-                                    backgroundColor: OrangeColor,
-                                    width: 85, height: 30,
-                                    borderRadius: 5,
-                                    elevation: 1,
-                                    position: 'absolute',
-                                    right: 10,
-                                    bottom: 10
-                                }}
-                                textColor="white"
-                                mpBtn={{ ml: 10 }}
-                            />
-                            : null
-                    }
+                                }
+                            } else {
+                                Alert.alert('Fantasy sniper', 'You should join the league to see Match detail!')
+                            }
+                        }}
+                        btnStyle={{
+                            backgroundColor: OrangeColor,
+                            width: 85, height: 30,
+                            borderRadius: 5,
+                            elevation: 1,
+                            position: 'absolute',
+                            right: 10,
+                            bottom: 10,
+                        }}
+                        textColor="white"
+                        mpBtn={{ ml: 10 }}
+                    />
                     <Img
                         imgSrc={AppImages.team}
                         width={40} height={40}
@@ -349,6 +352,7 @@ const LeagueDetailScreen: React.FC<props> = ({
                                         }}
                                         labelSize={14}
                                         onPress={() => {
+                                            dispatch(leagueDetailsWatcher({ ...LeagueDetails }))
                                             navigation.navigate('TeamDetail', {
                                                 team_id: LeagueDetails?.team_id
                                             })

@@ -39,7 +39,7 @@ export type unAuthParamList = {
   LiveMatchDetail: { op_team_id: number, team_id: number | any } | undefined;
   Standing: undefined;
   TeamLevel: undefined;
-  TeamDetail: { team_id: number } | undefined;
+  TeamDetail: { team_id: number |any} | undefined;
   GameDetail: { league_id: any, week_id: any, league_name: any, my_team_id: any, fromMyLeague?: any } | undefined;
   NewsDetail: undefined;
   TermsAndCondition: { title: string };
@@ -52,7 +52,8 @@ export type unAuthParamList = {
   MyTeam: undefined,
   PublicLeague: undefined,
   AddBattleLeague: undefined,
-  LeagueDetail: { league_id?: any, week_id?: any } | undefined
+  LeagueDetail: { league_id?: any, week_id?: any } | undefined,
+  updateTeam:  { team_id: number |any} | undefined;
 };
 
 export type tabParamList = {
@@ -107,4 +108,5 @@ export type CreateTeamNav = NativeStackScreenProps<unAuthParamList, 'CreateTeam'
 export type GameDetailNav = NativeStackScreenProps<unAuthParamList, 'GameDetail'>;
 export type LeagueDetailNav = NativeStackScreenProps<unAuthParamList, 'LeagueDetail'>;
 export type inviteFriendNav = NativeStackScreenProps<unAuthParamList, 'InviteFriend'>;
+export type updateTeamNav = NativeStackScreenProps<unAuthParamList, 'updateTeam'>;
 

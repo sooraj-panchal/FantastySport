@@ -6,7 +6,7 @@ export const myPlayerListSlice = createSlice( {
     initialState: {
         data: [],
         MyTeamList: [],
-        LiveMatchList:[]
+        LiveMatchList: []
     },
     reducers: {
         addToMyPlayerWatcher: ( state, action ) => {
@@ -21,6 +21,9 @@ export const myPlayerListSlice = createSlice( {
         liveMatchWatcher: ( state, action ) => {
             state.LiveMatchList = action.payload;
         },
+        setMyTeamWatcher: ( state, action ) => {
+            state.data = action.payload;
+        }
         // deleteLeagueWatcher: ( state, action ) => {
         //     state.data = state.data.filter( ( item, index ) => item.game_key != action.payload );
         // },
@@ -38,5 +41,5 @@ export const myPlayerListSlice = createSlice( {
     },
 } );
 
-export const { addToMyPlayerWatcher,liveMatchWatcher } = myPlayerListSlice.actions;
+export const { addToMyPlayerWatcher, liveMatchWatcher,setMyTeamWatcher } = myPlayerListSlice.actions;
 export default myPlayerListSlice.reducer;

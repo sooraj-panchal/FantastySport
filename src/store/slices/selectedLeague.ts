@@ -21,6 +21,9 @@ export const selectedLeagueSlice = createSlice({
         selectedWeekWatcher: (state, action) => {
             state.selectedWeek = action.payload;
         },
+        // selectedLeagueTeamList:()=>{
+
+        // },
         leagueDetailsWatcher: (state, action: PayloadAction<MyLeagueResponse>) => {
             const LegueTeamList: any = [];
             action.payload?.week?.map((item) => {

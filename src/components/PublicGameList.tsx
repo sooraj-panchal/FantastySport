@@ -31,13 +31,13 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
     you_join_league,
     createMatchHandler,
     team_id,
-    user_name
+    user_name,
+    deadline
 }) => {
     let imageType = team_logo?.split('.').pop() == 'svg';
     const dispatch = useDispatch()
     const navigation = useNavigation<homeNavProps>()
-    const { dateText, matchDate, weekText } = useGetMatchStatus(week)
-
+    const { dateText, matchDate, weekText } = useGetMatchStatus(week, deadline)
 
     return (
         <Container
@@ -111,7 +111,7 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
                     <Container containerStyle={{
                         flexDirection: 'row'
                     }}
-                    mpContainer={{ml:5}}
+                        mpContainer={{ ml: 5 }}
                     >
                         <Img
                             imgSrc={AppImages.league_icon}
@@ -145,7 +145,7 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
                     : <Container containerStyle={{
                         flexDirection: 'row'
                     }}
-                    mpContainer={{ml:10}}
+                        mpContainer={{ ml: 10 }}
                     >
                         <Img
                             imgSrc={AppImages.green_logo}
@@ -273,11 +273,11 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
                                         color: "green"
                                     }}
                                     labelSize={14}
-                                onPress={()=>{
-                                    navigation.navigate('TeamDetail', {
-                                        team_id: team_id
-                                    })
-                                }}
+                                    onPress={() => {
+                                        navigation.navigate('TeamDetail', {
+                                            team_id: team_id
+                                        })
+                                    }}
                                 >View</Label>
                                 :
                                 <Label

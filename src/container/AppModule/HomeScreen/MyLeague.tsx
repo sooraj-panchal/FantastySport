@@ -221,8 +221,9 @@ const MyLeague: React.FC = ({
     const [page, setPage] = React.useState<Number>(0)
     const { data, isLoading, isFetching } = useLeagueListQuery(null)
     const user: UserResponse = useSelector((store: RootState) => store.auth.user)
-    console.log('data', JSON.stringify(data))
+    console.log('my top league list', JSON.stringify(data))
     const navigation = useNavigation<homeNavProps>()
+
 
     return (
         <MainContainer loading={isLoading || isFetching}  >
@@ -258,7 +259,6 @@ const MyLeague: React.FC = ({
                             <MyLeagueItem
                                 {...item}
                                 createMatchHandler={() => {
-
                                 }}
                             />
                         </View>

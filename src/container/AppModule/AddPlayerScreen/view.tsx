@@ -33,8 +33,9 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
     const [playerByPositionList, setplayerByPositionList] = React.useState<LeaguePlayerTypes[]>([])
     const myPlayerListArray: PlayerPositionTypes[] = useSelector((state: RootState) => state.myPlayer.data)
     const leagueTeamNameList: Array<scheduleListTypes> = useSelector((state: RootState) => state.selectedLeague.leagueTeamNameList)
-    const currentWeek: number = useSelector((state: RootState) => state.schedule.currentWeek)
     const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
+
+    // console.log("myPlayerListArray",myPlayerListArray)
 
     const dispatch = useDispatch()
     React.useLayoutEffect(() => {
@@ -70,7 +71,7 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
                 })
                 let data = await getPlayerImage(response.data?.slice(0, 10))
                 let myPlayers = getMyPlayerList(data)
-
+                // console.log('myPlayers',myPlayers)
                 let getDataByFilterPosition = myPlayers.filter((item, index) => {
                     if (route.params.Position == "W/R/T" && !item.isSelected) {
                         return item.Position == "WR" || item.Position == "RB" || item.Position == "TE"
@@ -86,7 +87,7 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
                     }
                     return item
                 })
-                console.log('getDataByFilterPosition', getDataByFilterPosition)
+                // console.log('getDataByFilterPosition', getDataByFilterPosition)
                 setPlayerList((prev) => [...prev, ...getDataByFilterPosition])
                 setplayerByPositionList((prev) => [...prev, ...myPlayers])
                 setLoading(false)
@@ -131,12 +132,14 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
         if (myPlayerListArray.length) {
             const data = leaguePlayers.map((item, index) => {
                 const data = myPlayerListArray.find((i) => i.PlayerID == item.PlayerID)
+                // console.log('data',data?.PredictionPoints)
                 return {
                     ...item,
                     Position: data?.Position || item.Position,
                     isSelected: data?.isSelected || false,
                     Accuracy: data?.Accuracy || '',
-                    PredictionPoints: data?.PredictionPoints || ''
+                    PredictionPoints: data?.PredictionPoints || '',
+                    ProjectionPoints: item.FantasyPointsDraftKings
                 }
             })
             data.sort((a, b) => Number(b.isSelected) - Number(a.isSelected))
@@ -165,7 +168,17 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
 
     const addPlayerToTeam = () => {
         const data = playerByPositionList.filter((item) => item.isSelected)
-        dispatch(addToMyPlayerWatcher([...myPlayerListArray, ...data]))
+        // console.log(data)
+        // console.log(data)
+        let newArray: any = [...data]
+        myPlayerListArray.forEach((item, index) => {
+            if (item.Position == 'DEF') {
+                newArray.push(item)
+            }
+        })
+        console.log('newArray', newArray)
+        console.log('playerByPositionList', playerByPositionList)
+        dispatch(addToMyPlayerWatcher(newArray))
         navigation.goBack()
     }
 

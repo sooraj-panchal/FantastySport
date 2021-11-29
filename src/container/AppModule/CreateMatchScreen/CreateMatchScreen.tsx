@@ -639,7 +639,6 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                     <Label labelSize={14} style={{ color: 'grey' }} >Projection Pts. {totalProjectedPoints}</Label>
                 </Container>
             </Container>
-
             {
                 myPlayerListArray?.length == 10 ?
                     <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} mpContainer={{ mv: 10, mh: 15 }} /> : null

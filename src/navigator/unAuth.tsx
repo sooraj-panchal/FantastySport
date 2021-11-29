@@ -35,10 +35,11 @@ import PublicLeagueScreen from '../container/AppModule/PublicLeagueScreen';
 import { useNFLCurrentWeekQuery } from '../features/sportsData';
 import AddBattleLeagueScreen from '../container/AppModule/AddBattleLeagueScreen';
 import LeagueDetailScreen from '../container/AppModule/LeagueDetailScreen';
+import UpdateTeamScreen from '../container/AppModule/UpdateTeamScreen';
 
 const StackScreen = createNativeStackNavigator<unAuthParamList>()
 
-const AppStackScreen: React.FC = () => {
+const AppStackScreen: React.ReactNode = () => {
     const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
     const { error } = useNFLCurrentWeekQuery(null)
     // console.log('error from NFL', error)
@@ -242,7 +243,7 @@ const AppStackScreen: React.FC = () => {
                     headerStyle: { backgroundColor: 'transparent' },
                     headerTitle: "",
                     headerShadowVisible: false,
-                    headerTranslucent: true,
+                    headerTransparent: true,
                     headerTintColor: "white"
                 }}
             />
@@ -308,6 +309,14 @@ const AppStackScreen: React.FC = () => {
                 options={({ navigation }) => ({
                     headerShown: true,
                     headerTitle: "League Details",
+                })}
+            />
+            <StackScreen.Screen
+                name='updateTeam'
+                component={UpdateTeamScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Edit team"
                 })}
             />
         </StackScreen.Navigator>

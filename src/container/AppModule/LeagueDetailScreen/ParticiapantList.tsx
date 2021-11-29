@@ -1,17 +1,19 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { SvgUri } from 'react-native-svg';
 import { AppImages } from '../../../assets/images/map';
 import Container from '../../../components/Container';
 import Img from '../../../components/Img';
 import Label from '../../../components/Label';
+import { homeNavProps, navigationProps } from '../../../types/nav';
 import { MYLeagueTeam } from '../../../types/responseTypes';
 const ParticipantUserList: React.FC<MYLeagueTeam | any> = ({
-    team_name, team_logo, rank
+    team_name, team_logo, rank, id
 }) => {
     let imageUrl = team_logo ? `https://chessmafia.com/php/fantasy/public/uploads/${team_logo}` : ''
     let imageType = imageUrl?.split('.').pop() == 'svg';
     // console.log('imageType',imageType)
-
+    const navigation = useNavigation<homeNavProps>()
     return (
         <Container
             containerStyle={{
@@ -20,6 +22,11 @@ const ParticipantUserList: React.FC<MYLeagueTeam | any> = ({
             }}
             mpContainer={{ ph: 10 }}
             height={50}
+            onPress={() => {
+                navigation.navigate('TeamDetail', {
+                    team_id: id
+                })
+            }}
         >
             <Label
                 labelSize={20}

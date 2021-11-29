@@ -5,12 +5,16 @@ import { RootState } from '../store';
 import { MyLeagueResponse } from '../types/responseTypes';
 
 
-const useGetMatchStatus = (week: any) => {
-    console.log('week', week)
+const useGetMatchStatus = (week: any, deadlineDate: Date | any) => {
+
+    console.log('deadlineDate', deadlineDate)
+
     const [data, setData] = useState({
         matchDate: '',
         dateText: '',
-        weekText: ''
+        weekText: '',
+        isStarted: false,
+        isEnded: false
     })
 
     const currentDate = new Date()
@@ -31,23 +35,39 @@ const useGetMatchStatus = (week: any) => {
             setData({
                 dateText: 'End time',
                 matchDate: moment(getMatchEndTime).format('MMM D, LT'),
-                weekText: 'Started'
+                weekText: 'Started',
+                isStarted: true,
+                isEnded: false
             })
         }
         if (matchStartTime > currentDate && week?.[0].week_no > NFLCurrentWeek) {
             console.log('match will start soon at', matchStartTime);
-            setData({
-                dateText: 'Start time',
-                matchDate: moment(getMatchStartTime).format('MMM D, LT'),
-                weekText: `Week ${week?.[0].week_no} Will start soon`
-            })
+            if (new Date(deadlineDate) < matchStartTime) {
+                console.log('hello')
+                setData({
+                    dateText: 'Picks deadline',
+                    matchDate: moment(deadlineDate).format('MMM D, LT'),
+                    weekText: `Week ${week?.[0].week_no} Will start soon`,
+                    isStarted: false,
+                    isEnded: false,
+                })
+            } else {
+                setData({
+                    dateText: 'Start time',
+                    matchDate: moment(getMatchStartTime).format('MMM D, LT'),
+                    weekText: `Week ${week?.[0].week_no} Will start soon`,
+                    isStarted: true,
+                    isEnded: false
+                })
+            }
         }
-
         if (matchEndingTime <= currentDate && week?.[0].week_no <= NFLCurrentWeek) {
             setData({
                 dateText: 'Ended time',
                 matchDate: moment(getMatchEndTime).format('MMM D, LT'),
-                weekText: 'Completed'
+                weekText: 'Completed',
+                isStarted: false,
+                isEnded: true
             })
         }
     }, [week]);

@@ -16,6 +16,7 @@ import { scheduleItemTypes, scheduleListTypes } from '../../../types/flatListTyp
 import WeekModal from '../../../components/Modals/WeekModal';
 import { Modalize } from 'react-native-modalize';
 import { useCreateLeagueMutation, useLeagueListQuery } from '../../../features/league';
+import { AppStack } from '../../../navigator/navActions';
 
 interface props extends navigationProps {
 
@@ -59,12 +60,15 @@ const CreateLeagueScreen: React.FC<props> = ({
                 start_time: item.start_time,
             }
         })
+        // console.log('selectedScheduleData', selectedScheduleData)
+
         const leagueData = selectedWeek.map((item, index) => {
             return {
                 week: item.week,
                 schedule: index == 0 ? leagueTeam : []
             }
         })
+
         const formData = new FormData()
         formData.append('week_type', isSingleWeek ? 'singleWeek' : 'multipleWeek')
         formData.append('week', JSON.stringify(mySelectedWeek))
@@ -73,9 +77,9 @@ const CreateLeagueScreen: React.FC<props> = ({
         formData.append('max_participant', numOfParticipent)
         formData.append('scoring_system', 'SNIPER' || selectPointSystem)
         formData.append('week_detail', JSON.stringify(leagueData))
-        console.log('data', JSON.stringify(formData))
+        console.log('body data ', JSON.stringify(formData))
         createLeague(formData).unwrap().then(() => {
-            navigation.goBack()
+            navigation.dispatch(AppStack)
         })
     }
 

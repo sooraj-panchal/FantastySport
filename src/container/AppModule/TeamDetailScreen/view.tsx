@@ -171,27 +171,70 @@ import { ListRenderItem, View } from 'react-native';
 import PlayerList from '../../../components/MyPlayersList';
 import { AppImages } from '../../../assets/images/map';
 import Img from '../../../components/Img';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useGetMyTeamsQuery, useGetTeamDetailByLeagueQuery } from '../../../features/league';
 import { RootState } from '../../../store';
 import { SvgUri } from 'react-native-svg';
+import { addToMyPlayerWatcher, setMyTeamWatcher } from '../../../store/slices/myPlayerList';
 const TeamDetailScreen: React.FC<TeamDetailNav> = ({
     navigation,
     route
 }) => {
+    const dispatch = useDispatch()
     const { data: getMyTeam, isLoading } = useGetTeamDetailByLeagueQuery(route.params?.team_id)
+    const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
 
     const imageType = useMemo(() => {
         return getMyTeam?.team_logo?.split('.').pop() == 'svg';
     }, [getMyTeam])
 
+    // React.useLayoutEffect(() => {
+    //     return (
+    //         navigation.setOptions({
+    //             headerTitle: getMyTeam?.team_name || ''
+    //         })
+    //     )
+    // }, [getMyTeam])
+
     React.useLayoutEffect(() => {
         return (
             navigation.setOptions({
-                headerTitle: getMyTeam?.team_name || ''
+                headerTitle: getMyTeam?.team_name || '',
+                // headerRight: () => {
+                //     return <Btn
+                //         title="Edit match"
+                //         labelSize={12}
+                //         labelStyle={{
+                //             color: 'white'
+                //         }}
+                //         radius={8}
+                //         mpBtn={{ ph: 10 }}
+                //         btnStyle={{
+                //             backgroundColor: OrangeColor
+                //         }}
+                //         onPress={() => {
+
+                //             let data = getMyTeam?.players?.map((item, index) => {
+                //                 if (item.Position == 'DEF') {
+
+                //                 }
+                //                 return {
+                //                     ...item,
+                //                     isSelected: true
+                //                 }
+                //             })
+                //             // console.log(data)
+                //             dispatch(setMyTeamWatcher(data))
+                //             navigation.navigate('updateTeam', {
+                //                 team_id: route.params?.team_id
+                //             })
+                //         }}
+                //     />
+                // }
             })
         )
     }, [getMyTeam])
+
 
     console.log('getMyTeam', getMyTeam)
 
@@ -200,6 +243,69 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
         loading={isLoading}
     >
         <ScrollView>
+            <Container containerStyle={{ flexDirection: "row", alignItems: "center", justifyContent: 'space-between' }}
+                mpContainer={{ ml: 15, mt: 10 }}
+            >
+                <Container containerStyle={{ flexDirection: "row", alignItems: "center" }} >
+                    <Label labelSize={15}  >Week {leagueDetails.week[0].week_no}</Label>
+                    <Ionicons
+                        name="ios-chevron-forward"
+                        size={20}
+                        color="black"
+                    />
+                </Container>
+                <Container containerStyle={{ flexDirection: 'row', alignItems: 'center' }} >
+                    <Btn
+                        title="Edit Team"
+                        labelSize={12}
+                        labelStyle={{
+                            color: 'white'
+                        }}
+                        radius={8}
+                        mpBtn={{ mr: 10 }}
+                        btnStyle={{
+                            backgroundColor: OrangeColor,
+                            width: 85,
+                        }}
+                        onPress={() => {
+                            navigation.navigate('EditTeamInfo', {
+                                team_id: getMyTeam?.team_id,
+                                team_name: getMyTeam?.team_name,
+                                team_logo: getMyTeam?.team_logo,
+                            })
+                            // navigation.navigate('AddPlayer')
+                        }}
+                    />
+                    <Btn
+                        title="Edit match"
+                        labelSize={12}
+                        labelStyle={{
+                            color: 'white'
+                        }}
+                        radius={8}
+                        mpBtn={{ mr: 10 }}
+                        btnStyle={{
+                            backgroundColor: PrimaryColor,
+                            width: 85,
+                        }}
+                        onPress={() => {
+                            let data = getMyTeam?.players?.map((item, index) => {
+                                if (item.Position == 'DEF') {
+
+                                }
+                                return {
+                                    ...item,
+                                    isSelected: true
+                                }
+                            })
+                            dispatch(setMyTeamWatcher(data))
+                            navigation.navigate('updateTeam', {
+                                team_id: route.params?.team_id
+                            })
+                        }}
+                    />
+                </Container>
+            </Container>
             <Container
                 containerStyle={{
                     flexDirection: "row",
@@ -237,7 +343,7 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                     <Label labelSize={15} style={{ color: greenColor }} >Sniper Pts {getMyTeam?.sniper_points?.toFixed(2)}</Label>
 
                     <Label labelSize={14} style={{ color: 'black' }} mpLabel={{ mt: 5 }} >Fantasy Pts {getMyTeam?.actual_points?.toFixed(2)}</Label>
-                    <Label labelSize={14} style={{ color:OrangeColor }} mpLabel={{ mt: 5 }}>Prediction Pts. {getMyTeam?.prediction_points?.toFixed(2)}</Label>
+                    <Label labelSize={14} style={{ color: OrangeColor }} mpLabel={{ mt: 5 }}>Prediction Pts. {getMyTeam?.prediction_points?.toFixed(2)}</Label>
                     <Label labelSize={14} style={{ color: 'grey' }} mpLabel={{ mt: 5 }}>Projection Pts. {getMyTeam?.projection_points?.toFixed(2)}</Label>
                 </Container>
             </Container>
@@ -261,7 +367,7 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                         {/* <Label labelSize={15} style={{ letterSpacing: 0.5, width: 90, textAlign: 'center' }} >Accuracy</Label> */}
                     </Container>
                     {getMyTeam?.players.map((item, index) => {
-                        let { photoUrl, Name, Position, SniperPoints, PredictionPoints, Accuracy, ProjectionPoints, ActualPoints,Team } = item
+                        let { photoUrl, Name, Position, SniperPoints, PredictionPoints, Accuracy, ProjectionPoints, ActualPoints, Team } = item
                         let imageType = photoUrl?.split('.').pop() == 'svg';
                         return <>
                             <Container
@@ -288,12 +394,12 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                                     containerStyle={{ width: 90 }}
                                 >
                                     <Label labelSize={12} style={{ color: "black" }} >{Name}</Label>
-                                    <Container containerStyle={{ flexDirection: 'row', alignItems: "center",top:2 }} >
+                                    <Container containerStyle={{ flexDirection: 'row', alignItems: "center", top: 2 }} >
                                         <Label labelSize={11} style={{ color: "grey" }} >{Position}</Label>
-                                        <Label labelSize={11} style={{ color: "grey" }} mpLabel={{ml:4}}  >{`(${Team})`}</Label>
+                                        <Label labelSize={11} style={{ color: "grey" }} mpLabel={{ ml: 4 }}  >{`(${Team})`}</Label>
                                     </Container>
                                 </Container>
-                                <Container containerStyle={{ justifyContent: 'center', alignItems: 'center',flexDirection:'row' }} width={60} >
+                                <Container containerStyle={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }} width={60} >
                                     <Label labelSize={12} style={{ color: "green", textAlign: 'center' }}>{SniperPoints}</Label>
                                     <Label labelSize={12} style={{ color: "green", textAlign: 'center' }}>{`(${Accuracy}%)`}</Label>
                                 </Container>

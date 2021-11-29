@@ -1,6 +1,6 @@
 {
   "name": "RNCCheckbox",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "summary": "React Native Checkbox native modules for Android , iOS and Windows",
   "license": "MIT",
   "authors": "Nicholas Lee <nicholaslee119@gmail.com>",

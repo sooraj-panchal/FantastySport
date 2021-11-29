@@ -1,17 +1,14 @@
 import React from 'react';
-import { ListRenderItem } from 'react-native';
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import { ListRenderItem, FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Container from '../../../components/Container';
-import Label from '../../../components/Label';
 import MainContainer from '../../../components/MainContainer';
-import PrivateGameList from '../../../components/PrivateGameList';
 import PublicGameList from '../../../components/PublicGameList';
-import { useGetPrivateLeagueQuery, useGetPublicLeagueQuery, useLeaguesAndGamesQuery } from '../../../features/league';
+import { useLeaguesAndGamesQuery } from '../../../features/league';
 import { RootState } from '../../../store';
 import { leagueDetailsWatcher } from '../../../store/slices/selectedLeague';
 import { navigationProps } from '../../../types/nav';
-import { MyLeagueResponse } from '../../../types/responseTypes';
+
 interface props extends navigationProps { }
 
 const MyLeagueScreen: React.FC<props> = ({
@@ -26,7 +23,7 @@ const MyLeagueScreen: React.FC<props> = ({
     // const { data: publicLeagueList, isLoading: publicLeagueLoading } = useGetPublicLeagueQuery({
     //     current_week: NFLCurrentWeek
     // }, { refetchOnMountOrArgChange: true, pollingInterval: 10000 })
-    const { data: publicLeagueList, isLoading: publicLeagueLoading, error } = useLeaguesAndGamesQuery({
+    const { data: publicLeagueList, isLoading: publicLeagueLoading, isFetching, error, refetch } = useLeaguesAndGamesQuery({
         current_week: NFLCurrentWeek
     }, { refetchOnMountOrArgChange: true })
 
@@ -84,6 +81,10 @@ const MyLeagueScreen: React.FC<props> = ({
                 ListHeaderComponent={() => <Container mpContainer={{ mt: 10 }} />}
                 ListFooterComponent={() => <Container mpContainer={{ mb: 10 }} />}
                 ItemSeparatorComponent={() => <Container mpContainer={{ mt: 10 }} />}
+                refreshing={isFetching}
+                onRefresh={() => {
+                    refetch()
+                }}
             />
             {/* </ScrollView> */}
         </MainContainer>

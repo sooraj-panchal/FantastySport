@@ -24,6 +24,7 @@ const MyLeagueItem: React.FC<MyLeagueResponse & props> = ({
     league_id,
     week,
     name,
+    deadline,
     participant_user,
     max_participant,
     is_your_league,
@@ -32,14 +33,15 @@ const MyLeagueItem: React.FC<MyLeagueResponse & props> = ({
     is_game_created,
     you_join_league,
     createMatchHandler,
-    team_id
+    team_id,
 }) => {
+
     let imageType = team_logo?.split('.').pop() == 'svg';
     const dispatch = useDispatch()
     const navigation = useNavigation<homeNavProps>()
-    const { dateText, matchDate, weekText } = useGetMatchStatus(week)
+    const { dateText, matchDate, weekText } = useGetMatchStatus(week, deadline)
     const user: UserResponse = useSelector((store: RootState) => store.auth.user)
-
+    
     return (
         <Container
             containerStyle={{
@@ -49,7 +51,7 @@ const MyLeagueItem: React.FC<MyLeagueResponse & props> = ({
                 alignSelf: 'center',
                 borderRadius: 10
             }}
-            mpContainer={{ ph: 10,pt:10,pb:15 }}
+            mpContainer={{ ph: 10, pt: 10, pb: 15 }}
             onPress={() => {
                 // console.log(item)
                 // let parsedWeek = JSON.parse(item.week)
@@ -62,13 +64,13 @@ const MyLeagueItem: React.FC<MyLeagueResponse & props> = ({
                     league_id: league_id,
                     week_id: week?.[0]?.week_id,
                 })
-                
+
             }}
         >
             <Container containerStyle={{
                 flexDirection: "row",
             }}
-                // mpContainer={{ mt: 10 }}
+            // mpContainer={{ mt: 10 }}
             >
                 <Img
                     imgSrc={AppImages.league_icon}

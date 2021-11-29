@@ -36,7 +36,6 @@ const HomeScreen: React.FC<props> = ({
             >Fantasy league</Label>
             <Label
                 labelSize={16}
-
                 mpLabel={{ pl: 15, pt: 5 }}
             >{item}</Label>
             <Container

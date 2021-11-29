@@ -56,7 +56,8 @@ export interface MyLeagueResponse {
   team_id: number,
   is_your_league?: boolean;
   you_join_league?: boolean;
-  id?:number
+  id?:number,
+  deadline?:string
 }
 
 export interface MyTeamResponse {

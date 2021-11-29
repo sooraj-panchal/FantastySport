@@ -27,7 +27,7 @@ const PointAddedPlayerList: React.FC<PlayerPositionTypes & props> = ({
     PredictionPoints
 }) => {
     let imageType = photoUrl?.split('.').pop() == 'svg';
-
+    console.log('PredictionPoints', PredictionPoints)
     return <>
         <Container
             containerStyle={{ flexDirection: "row", alignItems: "center", width: screenWidth }}
@@ -75,7 +75,7 @@ const PointAddedPlayerList: React.FC<PlayerPositionTypes & props> = ({
                 onChangeText={(text) => {
                     onChangeText(text)
                 }}
-                value={PredictionPoints}
+                value={String(PredictionPoints)}
                 keyboardType="numeric"
             />
         </Container>

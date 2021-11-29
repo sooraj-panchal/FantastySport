@@ -273,11 +273,11 @@ const AllLeague: React.FC = ({
                         return <View key={index}>
                             <AllLeagueItem
                                 {...item}
-                                // createMatchHandler={() => {
-                                //     // console.log('item',item)
-                                //     dispatch(leagueDetailsWatcher({ ...item }))
-                                //     navigation.navigate('CreateMatch')
-                                // }}
+                            // createMatchHandler={() => {
+                            //     // console.log('item',item)
+                            //     dispatch(leagueDetailsWatcher({ ...item }))
+                            //     navigation.navigate('CreateMatch')
+                            // }}
                             />
                         </View>
                     })

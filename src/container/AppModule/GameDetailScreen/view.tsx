@@ -3,7 +3,7 @@ import Container from '../../../components/Container';
 import Label from '../../../components/Label';
 import MainContainer from '../../../components/MainContainer';
 import { FlatList } from 'react-native-gesture-handler';
-import { ListRenderItem } from 'react-native';
+import { Alert, ListRenderItem } from 'react-native';
 import { GameDetailNav } from '../../../types/nav';
 import GamePlayerList from '../../../components/GamePlayerList';
 import { useGameDetailsQuery } from '../../../features/league';
@@ -26,7 +26,7 @@ const GameDetailScreen: React.FC<GameDetailNav> = ({
         })
     })
 
-    console.log('data',JSON.stringify(data))
+    console.log('data', JSON.stringify(data))
 
     const renderItem: ListRenderItem<any> = ({ item, index }) => {
         console.log(item)
@@ -40,6 +40,8 @@ const GameDetailScreen: React.FC<GameDetailNav> = ({
                     //         team_id: item.id
                     //     })
                     // } else {
+                    console.log('route.params?.my_team_id', route.params?.my_team_id)
+                    if (route.params?.my_team_id) {
                         const WithoutMyTeam = data.filter((item: any) => {
                             return item.id != route.params?.my_team_id
                         })
@@ -47,6 +49,10 @@ const GameDetailScreen: React.FC<GameDetailNav> = ({
                             team_id: route.params?.my_team_id,
                             op_team_id: item.id == route.params?.my_team_id ? WithoutMyTeam[0]?.id : item.id
                         })
+                    } else {
+                        Alert.alert('Fantasy sniper', 'You should Join the league to compare match with others.')
+                    }
+
                     // }
                 }}
             />

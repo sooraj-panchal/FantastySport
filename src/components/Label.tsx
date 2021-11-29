@@ -7,7 +7,6 @@ import { mpStyle, normalize } from '../types/sizes';
 interface Props {
     onPress?: () => void,
     style?: StyleProp<TextStyle>,
-    children: ReactNode,
     labelSize?: number,
     mpLabel?: mpStyle,
     textColor?: string
