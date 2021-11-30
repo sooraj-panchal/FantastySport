@@ -8,6 +8,7 @@ import { useLeaguesAndGamesQuery } from '../../../features/league';
 import { RootState } from '../../../store';
 import { leagueDetailsWatcher } from '../../../store/slices/selectedLeague';
 import { navigationProps } from '../../../types/nav';
+import { MyLeagueResponse } from '../../../types/responseTypes';
 
 interface props extends navigationProps { }
 
@@ -39,13 +40,19 @@ const MyLeagueScreen: React.FC<props> = ({
     //     />
     // }
 
-    const renderPublicGame: ListRenderItem<any> = ({ item, index }) => {
+    const renderPublicGame: ListRenderItem<MyLeagueResponse> = ({ item, index }) => {
         return <PublicGameList
             {...item}
             createMatchHandler={() => {
                 // console.log('item',item)
                 dispatch(leagueDetailsWatcher({ ...item }))
                 navigation.navigate('CreateMatch')
+            }}
+            goToTeamDetail={() => {
+                dispatch(leagueDetailsWatcher({ ...item }))
+                navigation.navigate('TeamDetail', {
+                    team_id: item.team_id
+                })
             }}
         />
     }

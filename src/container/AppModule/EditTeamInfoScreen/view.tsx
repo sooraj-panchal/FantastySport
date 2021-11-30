@@ -18,6 +18,7 @@ import { useGetMyTeamLogoQuery } from '../../../features/sportsData';
 import { SvgUri } from 'react-native-svg';
 import ImagePicker from 'react-native-image-crop-picker';
 import { useUpdateTeamDetailsMutation } from '../../../features/league';
+import { AppStack } from '../../../navigator/navActions';
 
 
 const EditTeamInfoScreen: React.FC<EditTeamNav> = ({
@@ -98,8 +99,8 @@ const EditTeamInfoScreen: React.FC<EditTeamNav> = ({
             formData.append('team_logo', '')
         }
         console.log("data", JSON.stringify(formData))
-        updateTeamDetails(formData).unwrap().then(()=>{
-            navigation.goBack()
+        updateTeamDetails(formData).unwrap().then(() => {
+            navigation.dispatch(AppStack)
         })
         // navigation.navigate('EditTeam')
     }

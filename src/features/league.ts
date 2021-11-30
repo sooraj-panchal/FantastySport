@@ -10,7 +10,7 @@ import { fetchBaseQueryApi } from './fetchBaseQuery'
 export const LeagueApi = createApi({
     reducerPath: 'LeagueApi',
     baseQuery: fetchBaseQueryApi,
-    tagTypes: ['League', 'EditTeam'],
+    tagTypes: ['League', 'EditTeam', 'GetTeam'],
     endpoints: (builder) => ({
         createLeague: builder.mutation<any, any>({
             query: (credentials) => ({
@@ -124,16 +124,6 @@ export const LeagueApi = createApi({
             transformResponse: (response: { data: TeamListResponse[] }) => {
                 console.log("getTeamsByLeague Response==>", response)
                 return response.data;
-            }
-        }),
-        getTeamDetailByLeague: builder.query({
-            query: (team_id) => ({
-                url: `teamDetail/${team_id}`
-            }),
-            // providesTags: ['EditTeam'],
-            transformResponse: (response: { data: MyTeamResponse[] }) => {
-                console.log("getTeamDetailByLeague Response==>", response)
-                return response.data[0]
             }
         }),
         liveMatchupRanking: builder.query({
@@ -250,6 +240,28 @@ export const LeagueApi = createApi({
                 return response.data[0]
             }
         }),
+        getTeamDetailByLeague: builder.query({
+            query: (team_id) => ({
+                url: `teamDetail/${team_id}`
+            }),
+            providesTags: ['GetTeam', 'EditTeam'],
+            transformResponse: (response: { data: MyTeamResponse[] }) => {
+                console.log("getTeamDetailByLeague Response==>", response)
+                return response.data[0]
+            }
+        }),
+        updateGame: builder.mutation<any, any>({
+            query: (credentials) => ({
+                url: 'editGame',
+                method: 'POST',
+                body: credentials
+            }),
+            invalidatesTags: ['GetTeam'],
+            transformResponse: (response) => {
+                console.log("updateGame Response==>", response)
+                return response;
+            }
+        }),
     }),
 })
 
@@ -274,6 +286,7 @@ export const {
     useCreateGameMutation,
     useMyGameListQuery,
     useLeaguesAndGamesQuery,
-    useLeagueDetailsQuery
+    useLeagueDetailsQuery,
+    useUpdateGameMutation
 } = LeagueApi
 

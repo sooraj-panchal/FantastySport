@@ -39,7 +39,7 @@ export type unAuthParamList = {
   LiveMatchDetail: { op_team_id: number, team_id: number | any } | undefined;
   Standing: undefined;
   TeamLevel: undefined;
-  TeamDetail: { team_id: number |any} | undefined;
+  TeamDetail: { team_id: number | any, fromOtherUser?: boolean } | undefined;
   GameDetail: { league_id: any, week_id: any, league_name: any, my_team_id: any, fromMyLeague?: any } | undefined;
   NewsDetail: undefined;
   TermsAndCondition: { title: string };
@@ -53,7 +53,7 @@ export type unAuthParamList = {
   PublicLeague: undefined,
   AddBattleLeague: undefined,
   LeagueDetail: { league_id?: any, week_id?: any } | undefined,
-  updateTeam:  { team_id: number |any} | undefined;
+  updateTeam: { team_id: number | any } | undefined;
 };
 
 export type tabParamList = {

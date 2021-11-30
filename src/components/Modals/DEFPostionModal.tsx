@@ -96,10 +96,10 @@ const DEFPositionModal: React.FC<props> = ({
                                     backgroundColor: OrangeColor
                                 }}
                                 width={30} height={30}
-                                // onPress={() => {
-                                //     Alert.alert('hello')
-                                //     playerSelectedPosition(item, index)
-                                // }}
+                            // onPress={() => {
+                            //     Alert.alert('hello')
+                            //     playerSelectedPosition(item, index)
+                            // }}
                             >
                                 <Ionicons
                                     name="md-checkmark"
@@ -151,7 +151,9 @@ const DEFPositionModal: React.FC<props> = ({
 
     const addPlayerToTeam = () => {
         const data = defensePositionList.filter((item) => item.isSelected)
-        dispatch(addToMyPlayerWatcher([...myPlayerListArray, ...data]))
+        console.log('data', data)
+        let newData = myPlayerListArray.filter((item, index) => item.Position != 'DEF')
+        dispatch(addToMyPlayerWatcher([...newData, ...data]))
         closeModal()
     }
 

@@ -24,9 +24,7 @@ const UpdatePlayerList: React.FC<PlayerPositionTypes> = ({
     FantasyPointsDraftKings,
     GameDate,
     Opponent,
-    PredictionPoints,
-    SniperPoints,
-    ProjectionPoints
+    PredictionPoints
 }) => {
     const navigation = useNavigation<homeNavProps>();
     const defModalRef = useRef<Modalize>(null)
@@ -65,7 +63,7 @@ const UpdatePlayerList: React.FC<PlayerPositionTypes> = ({
                     <Label labelSize={10} style={{ color: "grey" }} mpLabel={{ mt: 2 }} >{moment(GameDate).format('ddd')} {useTime(GameDate)} v {Opponent}</Label>
                 </Container>
                 <Container containerStyle={{ width: screenWidth * 0.12, justifyContent: 'center', alignItems: 'center' }} width={60} >
-                    <Label labelSize={10} style={{ color: "black" }}>{ProjectionPoints}</Label>
+                    <Label labelSize={10} style={{ color: "black" }}>{FantasyPointsDraftKings}</Label>
                 </Container>
                 <Container containerStyle={{ width: screenWidth * 0.16, justifyContent: 'center', alignItems: 'center' }} width={60} >
                     <Label labelSize={10} style={{ color: "black" }}>{PredictionPoints}</Label>
@@ -76,6 +74,7 @@ const UpdatePlayerList: React.FC<PlayerPositionTypes> = ({
                         size={20}
                         color={OrangeColor}
                         onPress={() => {
+                            console.log(Position)
                             if (Position == 'DEF') {
                                 defModalRef.current?.open()
                             } else {
@@ -90,6 +89,12 @@ const UpdatePlayerList: React.FC<PlayerPositionTypes> = ({
                 </Container>
             </Container>
             <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />
+            <DEFPositionModal
+                modalizeRef={defModalRef}
+                closeModal={() => {
+                    defModalRef.current?.close()
+                }}
+            />
         </>
     }
     return renderMyPlayers()

@@ -7,7 +7,7 @@ import { navigationProps } from '../../../types/nav';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Btn from '../../../components/Btn';
 import { greenColor, OrangeColor, PrimaryColor } from '../../../assets/colors';
-import { ListRenderItem, FlatList, ScrollView } from 'react-native';
+import { ListRenderItem, FlatList, ScrollView, Alert } from 'react-native';
 import TeamList from './TeamList';
 import PickerModal from '../../../components/Picker';
 import { useSelector } from 'react-redux';
@@ -45,42 +45,46 @@ const CreateLeagueScreen: React.FC<props> = ({
 
     const createLeagueHandler = () => {
         // console.log('selectedScheduleData',selectedScheduleData[0].start_time)
+        if (leagueName.length && numOfParticipent.length && selectedScheduleData?.length) {
 
-        const mySelectedWeek = selectedWeek.map((item, index) => ({ week: item.week }))
-        const leagueTeam = selectedScheduleData.map((item, index) => {
-            return {
-                team_id: item.homeTeam.team_id,
-                team_key: item.homeTeam.key,
-                team_logo: item.homeTeam.logo,
-                team_name: item.homeTeam.full_name,
-                op_team_id: item.awayTeam.team_id,
-                op_team_key: item.awayTeam.key,
-                op_team_logo: item.awayTeam.logo,
-                op_team_name: item.awayTeam.full_name,
-                start_time: item.start_time,
-            }
-        })
-        // console.log('selectedScheduleData', selectedScheduleData)
+            const mySelectedWeek = selectedWeek.map((item, index) => ({ week: item.week }))
+            const leagueTeam = selectedScheduleData.map((item, index) => {
+                return {
+                    team_id: item.homeTeam.team_id,
+                    team_key: item.homeTeam.key,
+                    team_logo: item.homeTeam.logo,
+                    team_name: item.homeTeam.full_name,
+                    op_team_id: item.awayTeam.team_id,
+                    op_team_key: item.awayTeam.key,
+                    op_team_logo: item.awayTeam.logo,
+                    op_team_name: item.awayTeam.full_name,
+                    start_time: item.start_time,
+                }
+            })
+            // console.log('selectedScheduleData', selectedScheduleData)
 
-        const leagueData = selectedWeek.map((item, index) => {
-            return {
-                week: item.week,
-                schedule: index == 0 ? leagueTeam : []
-            }
-        })
+            const leagueData = selectedWeek.map((item, index) => {
+                return {
+                    week: item.week,
+                    schedule: index == 0 ? leagueTeam : []
+                }
+            })
 
-        const formData = new FormData()
-        formData.append('week_type', isSingleWeek ? 'singleWeek' : 'multipleWeek')
-        formData.append('week', JSON.stringify(mySelectedWeek))
-        formData.append('type', isPrivate ? 'private' : 'public')
-        formData.append('name', leagueName)
-        formData.append('max_participant', numOfParticipent)
-        formData.append('scoring_system', 'SNIPER' || selectPointSystem)
-        formData.append('week_detail', JSON.stringify(leagueData))
-        console.log('body data ', JSON.stringify(formData))
-        createLeague(formData).unwrap().then(() => {
-            navigation.dispatch(AppStack)
-        })
+            const formData = new FormData()
+            formData.append('week_type', isSingleWeek ? 'singleWeek' : 'multipleWeek')
+            formData.append('week', JSON.stringify(mySelectedWeek))
+            formData.append('type', isPrivate ? 'private' : 'public')
+            formData.append('name', leagueName)
+            formData.append('max_participant', numOfParticipent)
+            formData.append('scoring_system', 'SNIPER' || selectPointSystem)
+            formData.append('week_detail', JSON.stringify(leagueData))
+            console.log('body data ', JSON.stringify(formData))
+            createLeague(formData).unwrap().then(() => {
+                navigation.dispatch(AppStack)
+            })
+        } else {
+            Alert.alert("Fantasy sniper", "All Field is required")
+        }
     }
 
     console.log('data', data)

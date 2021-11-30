@@ -12,16 +12,19 @@ import { ListRenderItem, FlatList, Alert } from 'react-native';
 import { addToMyPlayerWatcher } from '../../../store/slices/myPlayerList';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../types/reduxTypes';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
 const AddPlayerPointScreen: React.FC<AddPlayerProps> = ({
     navigation
 }) => {
     const myPlayerListArray: LeaguePlayerTypes[] = useSelector((state: RootState) => state.myPlayer.data)
+    const isFromEdit: boolean = useSelector((state: RootState) => state.myPlayer.isFromEdit)
+
     const [playerList, setPlayerList] = useState<Array<LeaguePlayerTypes>>([])
     const dispatch = useDispatch()
 
-    console.log('myPlayerListArray', myPlayerListArray)
+    console.log('isFromEdit', isFromEdit)
 
     useEffect(() => {
         setPlayerList(myPlayerListArray)
@@ -40,8 +43,13 @@ const AddPlayerPointScreen: React.FC<AddPlayerProps> = ({
                     SniperPoints: item.FantasyPointsDraftKings == 0 ? 0 : ((1 - Math.abs((B2 - C2) / C2)) * C2).toFixed(0)
                 }
             })
+            console.log(data)
             dispatch(addToMyPlayerWatcher(data))
-            navigation.navigate('CreateMatch')
+            if (isFromEdit) {
+                navigation.goBack()
+            } else {
+                navigation.navigate('CreateMatch')
+            }
         } else {
             Alert.alert('Fantasy sniper App', "Please Add All Player's prediction points")
         }
@@ -109,11 +117,17 @@ const AddPlayerPointScreen: React.FC<AddPlayerProps> = ({
             <Label labelSize={15} style={{ letterSpacing: 0.5, width: 45, textAlign: 'center' }}  >Proj</Label>
             <Label labelSize={15} style={{ letterSpacing: 0.5, width: 75, textAlign: 'center' }} >Pred</Label>
         </Container>
-        <FlatList
-            data={playerList}
-            renderItem={renderItem}
-            keyExtractor={(item) => `${item.PlayerID}`}
-        />
+        <KeyboardAwareScrollView
+            extraScrollHeight={100}
+        >
+            <FlatList
+                data={playerList}
+                renderItem={renderItem}
+                keyExtractor={(item) => `${item.PlayerID}`}
+                removeClippedSubviews={true}
+                keyboardShouldPersistTaps='handled'
+            />
+        </KeyboardAwareScrollView>
     </MainContainer >
 }
 export default AddPlayerPointScreen;

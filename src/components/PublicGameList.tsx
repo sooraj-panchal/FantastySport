@@ -15,7 +15,8 @@ import Img from './Img';
 import Label from './Label';
 
 interface props {
-    createMatchHandler: () => void
+    createMatchHandler: () => void,
+    goToTeamDetail:()=>void
 }
 
 const PublicGameList: React.FC<MyLeagueResponse & props> = ({
@@ -32,7 +33,8 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
     createMatchHandler,
     team_id,
     user_name,
-    deadline
+    deadline,
+    goToTeamDetail
 }) => {
     let imageType = team_logo?.split('.').pop() == 'svg';
     const dispatch = useDispatch()
@@ -274,9 +276,7 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
                                     }}
                                     labelSize={14}
                                     onPress={() => {
-                                        navigation.navigate('TeamDetail', {
-                                            team_id: team_id
-                                        })
+                                        goToTeamDetail()
                                     }}
                                 >View</Label>
                                 :

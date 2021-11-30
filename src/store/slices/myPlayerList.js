@@ -6,11 +6,12 @@ export const myPlayerListSlice = createSlice( {
     initialState: {
         data: [],
         MyTeamList: [],
-        LiveMatchList: []
+        LiveMatchList: [],
+        isFromEdit: false
     },
     reducers: {
         addToMyPlayerWatcher: ( state, action ) => {
-            let data = action.payload.filter( ( thing, index, self ) =>
+            let data = action.payload?.filter( ( thing, index, self ) =>
                 index === self.findIndex( ( t ) => {
                     console.log( t.PlayerID === thing.PlayerID );
                     return t.PlayerID === thing.PlayerID;
@@ -22,8 +23,11 @@ export const myPlayerListSlice = createSlice( {
             state.LiveMatchList = action.payload;
         },
         setMyTeamWatcher: ( state, action ) => {
-            state.data = action.payload;
-        }
+            let { data, isFromEdit } = action.payload;
+            state.data = data;
+            state.isFromEdit = isFromEdit;
+        },
+        
         // deleteLeagueWatcher: ( state, action ) => {
         //     state.data = state.data.filter( ( item, index ) => item.game_key != action.payload );
         // },
@@ -41,5 +45,5 @@ export const myPlayerListSlice = createSlice( {
     },
 } );
 
-export const { addToMyPlayerWatcher, liveMatchWatcher,setMyTeamWatcher } = myPlayerListSlice.actions;
+export const { addToMyPlayerWatcher, liveMatchWatcher, setMyTeamWatcher } = myPlayerListSlice.actions;
 export default myPlayerListSlice.reducer;

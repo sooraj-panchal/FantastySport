@@ -24,7 +24,8 @@ const ParticipantUserList: React.FC<MYLeagueTeam | any> = ({
             height={50}
             onPress={() => {
                 navigation.navigate('TeamDetail', {
-                    team_id: id
+                    team_id: id,
+                    fromOtherUser:true
                 })
             }}
         >

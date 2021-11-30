@@ -15,9 +15,10 @@ import { myPlayers, positions, positionsLength } from '../../../utils/jsonArray'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../types/reduxTypes';
 import { screenWidth } from '../../../types/sizes';
-import { useCreateGameMutation, useGetMyTeamsQuery } from '../../../features/league';
+import { useCreateGameMutation, useGetMyTeamsQuery, useUpdateGameMutation } from '../../../features/league';
 import { addToMyPlayerWatcher, setMyTeamWatcher } from '../../../store/slices/myPlayerList';
 import UpdatePlayerList from '../../../components/UpdatePlayerItem';
+import { AppStack } from '../../../navigator/navActions';
 
 const UpdateTeamScreen: React.FC<navigationProps> = ({
     navigation
@@ -25,6 +26,9 @@ const UpdateTeamScreen: React.FC<navigationProps> = ({
     const dispatch = useDispatch()
     const [myPlayerListData, setMyPlayerListData] = React.useState<PlayerPositionTypes[] | any>(myPlayers)
     const myPlayerListArray: PlayerPositionTypes[] = useSelector((state: RootState) => state.myPlayer.data)
+    const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
+
+    const [updateGameWatcher, { isLoading, data, error }] = useUpdateGameMutation()
 
     React.useEffect(() => {
         if (myPlayerListArray.length) {
@@ -63,8 +67,7 @@ const UpdateTeamScreen: React.FC<navigationProps> = ({
                 }
             })
         )
-    }, [])
-
+    }, [myPlayerListData])
 
     const renderItem = (item: PlayerPositionTypes, position: string) => {
         return <UpdatePlayerList
@@ -73,59 +76,69 @@ const UpdateTeamScreen: React.FC<navigationProps> = ({
         />
     }
 
-    console.log('myPlayerListData', JSON.stringify(myPlayerListData))
+    // console.log('myPlayerListData', JSON.stringify(myPlayerListData))
 
     const saveTeamHandler = () => {
-        // const isAllPredictionPointsAdded = myPlayerListArray?.every((item, index) => { return item.PredictionPoints })
-        // console.log('isAllPredictionPointsAdded', isAllPredictionPointsAdded)
-        // if (isAllPredictionPointsAdded) {
-        //     const saveLeaguePlayers = myPlayerListArray.map((item, index) => {
-        //         return {
-        //             PlayerID: item.PlayerID,
-        //             Name: item.Name,
-        //             Position: item.Position,
-        //             Team: item.Team,
-        //             Opponent: item.Opponent,
-        //             Accuracy: item.Accuracy,
-        //             GameDate: item.GameDate,
-        //             photoUrl: item.photoUrl,
-        //             PredictionPoints: item.PredictionPoints,
-        //             SniperPoints: item.SniperPoints,
-        //             FantasyPointsDraftKings: item.FantasyPointsDraftKings
-        //         }
-        //     })
-        //     let data = new FormData()
-        //     data.append('players', JSON.stringify(saveLeaguePlayers))
-        //     data.append('team_id', leagueDetails.team_id)
-        //     createGameWatcher(data).unwrap().then(() => {
-        //         navigation.dispatch(AppStack)
-        //         dispatch(addToMyPlayerWatcher([]))
-        //     })
-        // } else {
-        Alert.alert(
-            "Alert!",
-            "You need to add the fantasy player points prediction.",
-            [
-                {
-                    text: "Cancel",
-                    style: "cancel"
-                },
-                {
-                    text: "ADD POINTS", onPress: () => {
-                        dispatch(setMyTeamWatcher([...myPlayerListArray]))
-                        navigation.navigate('AddPlayerPoint')
-                    }
+        let myPlayerListArray: PlayerPositionTypes[] = []
+        Object.keys(myPlayerListData).map((item, index) => {
+            myPlayerListData[item].map((item: LeaguePlayerTypes) => {
+                myPlayerListArray.push(item)
+            })
+        })
+        // console.log(myPlayerListArray)
+        const isAllPredictionPointsAdded = myPlayerListArray?.every((item, index) => { return item.PredictionPoints })
+        if (isAllPredictionPointsAdded) {
+            const saveLeaguePlayers = myPlayerListArray.map((item, index) => {
+                return {
+                    PlayerID: item.PlayerID,
+                    Name: item.Name,
+                    Position: item.Position,
+                    Team: item.Team,
+                    Opponent: item.Opponent,
+                    Accuracy: item.Accuracy,
+                    GameDate: item.GameDate,
+                    photoUrl: item.photoUrl,
+                    PredictionPoints: item.PredictionPoints,
+                    SniperPoints: item.SniperPoints,
+                    FantasyPointsDraftKings: item.FantasyPointsDraftKings
                 }
-            ]
-        );
-        // }
+            })
+            console.log('saveLeaguePlayers', JSON.stringify(saveLeaguePlayers))
+            let data = new FormData()
+            data.append('players', JSON.stringify(saveLeaguePlayers))
+            data.append('team_id', leagueDetails.team_id)
+            console.log(JSON.stringify(data))
+            updateGameWatcher(data).unwrap().then(() => {
+                navigation.dispatch(AppStack)
+                dispatch(addToMyPlayerWatcher([]))
+            })
+        } else {
+            Alert.alert(
+                "Alert!",
+                "You need to add the fantasy player points prediction.",
+                [
+                    {
+                        text: "Cancel",
+                        style: "cancel"
+                    },
+                    {
+                        text: "ADD POINTS", onPress: () => {
+                            // console.log(myPlayerListArray)
+                            dispatch(setMyTeamWatcher({ data: myPlayerListArray, isFromEdit: true }))
+                            navigation.navigate('AddPlayerPoint')
+                        }
+                    }
+                ]
+            );
+        }
     }
-    console.log('myPlayerListArray', myPlayerListArray)
+
+    // console.log('myPlayerListArray', myPlayerListArray)
 
     return <MainContainer
         style={{ backgroundColor: 'white' }}
-    // absoluteModalLoading={isLoading}
-    // successMessage={data?.message}
+        absoluteModalLoading={isLoading}
+        successMessage={data?.message}
     >
         <Container
             containerStyle={{
