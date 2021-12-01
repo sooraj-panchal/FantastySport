@@ -151,6 +151,9 @@ const LeagueDetailScreen: React.FC<props> = ({
 
     let imageType = LeagueDetails?.team_logo?.split('.').pop() == 'svg';
 
+
+        console.log('GameDetails',JSON.stringify(GameDetails))
+
     return (
         <MainContainer loading={loadingForLeagueDetail || isLoading} >
             <ScrollView
@@ -262,7 +265,7 @@ const LeagueDetailScreen: React.FC<props> = ({
                         title='Match detail'
                         onPress={() => {
                             if (LeagueDetails?.is_game_created) {
-                                if (ParticipantUserList.length <= 3) {
+                                if (LeagueDetails.participant_user <= 3) {
                                     Alert.alert('Fantasy sniper', 'Wait for join other players!')
                                 } else {
                                     navigation.navigate('GameDetail', {
@@ -394,6 +397,11 @@ const LeagueDetailScreen: React.FC<props> = ({
                                 <Btn
                                     title='Join'
                                     onPress={() => {
+                                        // console.log({
+                                        //     week_id: route.params?.week_id,
+                                        //     type: 'public',
+                                        //     league_id: route.params?.league_id
+                                        // })
                                         navigation.navigate('CreateTeam', {
                                             week_id: route.params?.week_id,
                                             type: 'public',

@@ -227,68 +227,74 @@ const MyLeague: React.FC = ({
 
     return (
         <MainContainer loading={isLoading || isFetching}  >
-            <Container containerStyle={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between"
-            }}
-                mpContainer={{ pt: 20, ph: 20 }}
-            >
-                <Label
-                    labelSize={16}
-                    style={{
-                        fontFamily: medium
-                    }}
-                >My Top Leagues</Label>
-            </Container>
-            <PagerView
-                initialPage={0}
-                style={{
-                    height: 150,
-                    marginTop: 10,
-                }}
-                onPageSelected={(event) => {
-                    console.log(event.nativeEvent.position)
-                    setPage(event.nativeEvent.position)
-                }}
-                key={'PagerView'}
-            >
-                {
-                    data?.map((item, index) => {
-                        return <View key={index}>
-                            <MyLeagueItem
-                                {...item}
-                                createMatchHandler={() => {
-                                }}
-                            />
-                        </View>
-                    })
-                }
-            </PagerView>
-            <Container
-                containerStyle={{
-                    flexDirection: "row",
-                    alignSelf: "center"
-                }}
-                mpContainer={{ mt: 5 }}
-            >
-                {data?.map((item, index) => {
-                    return (
-                        <Container key={`paginDot ${index}`}
-                            containerStyle={{
-                                backgroundColor: index == page ? DarkBlueColor : "#f2f2f2",
-                                borderRadius: 40,
-                                elevation: 0.5,
-                                borderWidth: index == page ? 0 : 1,
-                                borderColor: "grey"
-                            }}
-                            mpContainer={{ mh: 2 }}
-                            width={8} height={8}
+            {
+                data?.length ?
+                    <>
+                        <Container containerStyle={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between"
+                        }}
+                            mpContainer={{ pt: 20, ph: 20 }}
                         >
+                            <Label
+                                labelSize={16}
+                                style={{
+                                    fontFamily: medium
+                                }}
+                            >My Top Leagues</Label>
                         </Container>
-                    )
-                })}
-            </Container>
+                        <PagerView
+                            initialPage={0}
+                            style={{
+                                height: 150,
+                                marginTop: 10,
+                            }}
+                            onPageSelected={(event) => {
+                                console.log(event.nativeEvent.position)
+                                setPage(event.nativeEvent.position)
+                            }}
+                            key={'PagerView'}
+                        >
+                            {
+                                data?.map((item, index) => {
+                                    return <View key={index}>
+                                        <MyLeagueItem
+                                            {...item}
+                                            createMatchHandler={() => {
+                                            }}
+                                        />
+                                    </View>
+                                })
+                            }
+                        </PagerView>
+                        <Container
+                            containerStyle={{
+                                flexDirection: "row",
+                                alignSelf: "center"
+                            }}
+                            mpContainer={{ mt: 5 }}
+                        >
+                            {data?.map((item, index) => {
+                                return (
+                                    <Container key={`paginDot ${index}`}
+                                        containerStyle={{
+                                            backgroundColor: index == page ? DarkBlueColor : "#f2f2f2",
+                                            borderRadius: 40,
+                                            elevation: 0.5,
+                                            borderWidth: index == page ? 0 : 1,
+                                            borderColor: "grey"
+                                        }}
+                                        mpContainer={{ mh: 2 }}
+                                        width={8} height={8}
+                                    >
+                                    </Container>
+                                )
+                            })}
+                        </Container>
+                    </>
+                    : null
+            }
         </MainContainer>
     )
 }

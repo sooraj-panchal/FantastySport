@@ -30,10 +30,6 @@ const InstructionList: React.FC<InstructionListProps> = ({
 const SecondPage: React.FC = ({
 
 }) => {
-    // interface renderFacingDataType {
-    //     isSelected: boolean;
-    //     name: string
-    // }
     const renderInstructionListItem: ListRenderItem<{}> = ({ item, index }) => {
         return (
             <InstructionList index={item} />
@@ -65,4 +61,5 @@ const SecondPage: React.FC = ({
         </Container>
     )
 }
+
 export default SecondPage;

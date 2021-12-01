@@ -22,6 +22,7 @@ interface props extends navigationProps {
 const AppIntroScreen: React.FC<props> = ({
     navigation, route
 }) => {
+    
     const [page, setPage] = React.useState(0)
     const viewPagerRef = useRef(null)
 

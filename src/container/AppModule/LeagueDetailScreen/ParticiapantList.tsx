@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
+import { Alert } from 'react-native';
 import { SvgUri } from 'react-native-svg';
 import { AppImages } from '../../../assets/images/map';
 import Container from '../../../components/Container';
@@ -8,7 +9,8 @@ import Label from '../../../components/Label';
 import { homeNavProps, navigationProps } from '../../../types/nav';
 import { MYLeagueTeam } from '../../../types/responseTypes';
 const ParticipantUserList: React.FC<MYLeagueTeam | any> = ({
-    team_name, team_logo, rank, id
+    team_name, team_logo, rank, id,
+    is_game_created
 }) => {
     let imageUrl = team_logo ? `https://chessmafia.com/php/fantasy/public/uploads/${team_logo}` : ''
     let imageType = imageUrl?.split('.').pop() == 'svg';
@@ -23,10 +25,15 @@ const ParticipantUserList: React.FC<MYLeagueTeam | any> = ({
             mpContainer={{ ph: 10 }}
             height={50}
             onPress={() => {
-                navigation.navigate('TeamDetail', {
-                    team_id: id,
-                    fromOtherUser:true
-                })
+                if(is_game_created){
+                    navigation.navigate('TeamDetail', {
+                        team_id: id,
+                        fromOtherUser:true
+                    })
+                }else{
+                    Alert.alert("Fantasy sniper",'This participant user have not created match for league yet.')
+                }
+                
             }}
         >
             <Label

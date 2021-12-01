@@ -21,7 +21,7 @@ export const getDefPositionList = createAsyncThunk(
         const { currentWeek } = state.schedule;
 
         let LeagueTeams = [ ...state.selectedLeague.leagueTeamNameList ];
-        console.log('LeagueTeams',LeagueTeams)
+        console.log( 'LeagueTeams', LeagueTeams );
         for await ( const item of LeagueTeams ) {
             const response = await axios.get( `https://api.sportsdata.io/v3/nfl/stats/json/FantasyDefenseByGameByTeam/2021/${ currentWeek }/${ item }`, {
                 headers: {
@@ -49,6 +49,7 @@ export const getDefPositionList = createAsyncThunk(
                 PredictionPoints: item.PredictionPoints || '',
                 SniperPoints: item.SniperPoints || '',
                 photoUrl: TeamData?.WikipediaLogoUrl || '',
+                HomeOrAway: item.HomeOrAway
             };
         } );
         return newData;

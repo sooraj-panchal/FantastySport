@@ -100,7 +100,7 @@ export const LeagueApi = createApi({
             query: () => ({
                 url: 'allpublicLeague'
             }),
-            // providesTags: ['League'],
+            providesTags: ['League'],
             transformResponse: (response: { data: MyLeagueResponse[] }) => {
                 console.log("allpublicLeague===>", response)
                 return response.data
@@ -153,6 +153,7 @@ export const LeagueApi = createApi({
                 method: 'POST',
                 body: credentials
             }),
+            invalidatesTags: ['League'],
             transformResponse: (response) => {
                 console.log("joinPrivateLeague Response==>", response)
                 return response;

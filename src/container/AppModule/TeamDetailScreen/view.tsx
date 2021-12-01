@@ -36,6 +36,8 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
         )
     }, [getMyTeam])
 
+    console.log('getMyTeam',getMyTeam)
+
     return <MainContainer
         style={{ backgroundColor: 'white' }}
         loading={isLoading}
@@ -99,7 +101,7 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                                     onPress={() => {
                                         let data = getMyTeam?.players?.map((item, index) => {
                                             if (item.Position == 'DEF') {
-
+                                                
                                             }
                                             return {
                                                 ...item,
@@ -178,7 +180,7 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                         {/* <Label labelSize={15} style={{ letterSpacing: 0.5, width: 90, textAlign: 'center' }} >Accuracy</Label> */}
                     </Container>
                     {getMyTeam?.players.map((item, index) => {
-                        let { photoUrl, Name, Position, SniperPoints, PredictionPoints, Accuracy, ProjectionPoints, ActualPoints, Team } = item
+                        let { photoUrl, Name, Position, SniperPoints, PredictionPoints, Accuracy, ProjectionPoints, ActualPoints, Team,HomeOrAway } = item
                         let imageType = photoUrl?.split('.').pop() == 'svg';
                         return <>
                             <Container
@@ -209,6 +211,10 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                                         <Label labelSize={11} style={{ color: "grey" }} >{Position}</Label>
                                         <Label labelSize={11} style={{ color: "grey" }} mpLabel={{ ml: 4 }}  >{`(${Team})`}</Label>
                                     </Container>
+                                    {/* <Container containerStyle={{ flexDirection: 'row', alignItems: "center", top: 2 }} >
+                                        <Label labelSize={11} style={{ color: "grey" }} >{Team}</Label>
+                                        <Label labelSize={11} style={{ color: "grey" }} mpLabel={{ ml: 4 }}  >{`(${HomeOrAway})`}</Label>
+                                    </Container> */}
                                 </Container>
                                 <Container containerStyle={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }} width={60} >
                                     <Label labelSize={12} style={{ color: "green", textAlign: 'center' }}>{SniperPoints}</Label>

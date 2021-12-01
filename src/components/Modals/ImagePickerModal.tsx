@@ -9,15 +9,13 @@ import { StyleSheet } from "react-native";
 
 interface props {
     modalizeRef: React.Ref<Modalize>,
-    onDone: (val:any) => void
+    onDone: (val: any) => void
 }
 
 const ImagePickerModal: React.FC<props> = ({
     modalizeRef,
     onDone
 }) => {
-
-    
 
     const renderChildren = () => {
         return <>
@@ -29,7 +27,7 @@ const ImagePickerModal: React.FC<props> = ({
                     mpBtn={{ mh: 10, mt: 20, pl: 20 }}
                     btnHeight={40}
                     labelSize={18}
-                    btnStyle={{ elevation: 2,backgroundColor:OrangeColor }}
+                    btnStyle={{ elevation: 2, backgroundColor: OrangeColor }}
                     onPress={() => {
                         onDone("camera")
                     }}
@@ -40,12 +38,11 @@ const ImagePickerModal: React.FC<props> = ({
                     mpBtn={{ mt: 20, mh: 10, mb: 30, pl: 20 }}
                     btnHeight={40}
                     labelSize={18}
-                    btnStyle={{ elevation: 2,backgroundColor:OrangeColor }}
-                    onPress={()=>{
+                    btnStyle={{ elevation: 2, backgroundColor: OrangeColor }}
+                    onPress={() => {
                         onDone(null)
                     }}
                     textColor='white'
-
                 />
             </Container>
         </>
@@ -60,14 +57,16 @@ const ImagePickerModal: React.FC<props> = ({
                 handlePosition="inside"
                 modalStyle={styles.modalStyle}
                 childrenStyle={{
-                    paddingBottom:40
+                    paddingBottom: 40
                 }}
+                closeOnOverlayTap={true}
             >
                 {renderChildren()}
             </Modalize>
         </Portal>
     );
 }
+
 export default ImagePickerModal;
 
 const styles = StyleSheet.create({

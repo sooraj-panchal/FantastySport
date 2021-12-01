@@ -11,12 +11,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { DarkBlueColor, OrangeColor, PrimaryColor, } from "../../../assets/colors";
 import { AuthStack } from "../../../navigator/navActions";
-import EditProfileModal from "../../../components/Modals/EditProfileModal";
 import { navigationProps } from "../../../types/nav";
-import { ImageBackground } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../../store/slices/auth";
-import { RootState } from "../../../store";
 import ImageContainer from "./ImageContainer";
 
 interface props extends navigationProps {

@@ -96,6 +96,7 @@ export interface PlayerPositionTypes {
     SniperPoints?: string | any
     isWRTPosition?: boolean,
     ProjectionPoints?: number,
-    ActualPoints?: number
+    ActualPoints?: number,
+    HomeOrAway?:string
 }
 

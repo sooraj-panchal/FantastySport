@@ -715,7 +715,8 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                     photoUrl: item.photoUrl,
                     PredictionPoints: item.PredictionPoints,
                     SniperPoints: item.SniperPoints,
-                    FantasyPointsDraftKings: item.FantasyPointsDraftKings
+                    FantasyPointsDraftKings: item.FantasyPointsDraftKings,
+                    HomeOrAway: item.HomeOrAway
                 }
             })
             let data = new FormData()

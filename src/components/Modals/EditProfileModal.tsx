@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { View } from 'react-native';
 import Container from '../Container';
 import Label from '../Label';
@@ -21,6 +21,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { useUpdateProfileMutation } from '../../features/profile';
 import MainContainer from '../MainContainer';
+import ImagePickerModal from './ImagePickerModal';
+import { Modalize } from 'react-native-modalize';
 
 interface props {
     openModal: boolean,
@@ -41,6 +43,8 @@ const EditProfileModal: React.FC<props> = ({
     closeModal
 }) => {
     const user: UserResponse = useSelector((store: RootState) => store.auth.user)
+    const [profileImage, setProfileImage] = useState('')
+    const ImagePickerModalRef = useRef<Modalize>(null)
     // const [first_name] = useState(user.first_name)
     // const [last_name, setLastName] = useState(user.last_name)
     // const [email, setEmail] = useState(user.email)
@@ -73,7 +77,7 @@ const EditProfileModal: React.FC<props> = ({
                     margin: 0,
                     marginHorizontal: 20
                 }}
-            // deviceHeight={999999999}
+            deviceHeight={999999999}
             >
                 <Container containerStyle={{
                     backgroundColor: "white",
@@ -108,13 +112,33 @@ const EditProfileModal: React.FC<props> = ({
                     }}
                         mpContainer={{ mt: 20 }}
                     >
-                        <Img
+                        {/* <Container
+                            containerStyle={{
+                                borderRadius: 100,
+                                justifyContent: 'center', alignItems: 'center',
+                                overflow: 'hidden',
+                                backgroundColor: 'white',
+                                borderWidth: 3,
+                                borderColor: 'white'
+                            }}
+                            width={90} height={90}
+                            mpContainer={{
+
+                            }}
+                        > */}
+                        <Container
+                            width={120}
+                            height={120}
+                            containerStyle={{ borderRadius: 100 }}
+                        />
+                        {/* </Container> */}
+                        {/* <Img
                             width={120}
                             height={120}
                             imgStyle={{ borderRadius: 100 }}
                             imgSrc={{ uri: AuthImages.profile_image }}
                         // containerStyle={{backgroundColor:"red"}}
-                        />
+                        /> */}
                         <Container
                             containerStyle={{
                                 backgroundColor: 'rgba(0,0,0,0.35)',
@@ -125,6 +149,9 @@ const EditProfileModal: React.FC<props> = ({
                             }}
                             width={120}
                             height={120}
+                            onPress={() => {
+                                // ImagePickerModalRef.current?.open()
+                            }}
                         >
                             <Ionicons
                                 name="ios-camera"
@@ -272,6 +299,13 @@ const EditProfileModal: React.FC<props> = ({
                     </Container>
                 </Container>
             </Modal>
+            <ImagePickerModal
+                modalizeRef={ImagePickerModalRef}
+                onDone={function (val: any): void {
+                    setProfileImage(val)
+                    // throw new Error('Function not implemented.');
+                }}
+            />
         </MainContainer>
 
     )

@@ -40,7 +40,7 @@ const DEFPositionModal: React.FC<props> = ({
         dispatch(getDefPositionList())
     }, [])
 
-    // console.log("myPlayerListArray", myPlayerListArray)
+    console.log("defensePositionList", defensePositionList)
 
 
     const renderItem: ListRenderItem<LeaguePlayerTypes> = ({ item, index }) => {
@@ -169,7 +169,7 @@ const DEFPositionModal: React.FC<props> = ({
                 adjustToContentHeight={true}
                 withHandle={false}
                 childrenStyle={{
-                    paddingBottom: 50
+                    // paddingBottom: 50
                 }}
                 HeaderComponent={() => {
                     return <Container

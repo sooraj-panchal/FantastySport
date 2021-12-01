@@ -47,8 +47,10 @@
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.lifecycle:lifecycle-common:2.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.arch.core:core-common:2.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.annotation:annotation:1.1.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.4.10" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.soloader:annotation:0.9.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.soloader:nativeloader:0.9.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.appcompat:appcompat:1.0.2@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.gms:play-services-tasks:17.0.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.gms:play-services-basement:17.0.0@aar" level="project" />
@@ -91,6 +93,9 @@
     <orderEntry type="library" name="Gradle: com.squareup.okio:okio:1.17.5" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.fbjni:fbjni-java-only:0.0.3" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-annotations:16.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.5.30" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.5.30" level="project" />
     <orderEntry type="library" name="Gradle: ./../node_modules/hermes-engine/android/hermes-debug.aar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.flipper:flipper:0.75.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.react:react-native:0.64.2@aar" level="project" />
@@ -157,13 +162,14 @@
     <orderEntry type="module" module-name="FantastySport.react-native-firebase_app" />
     <orderEntry type="module" module-name="FantastySport.react-native-picker_picker" />
     <orderEntry type="module" module-name="FantastySport.react-native-pager-view" />
+    <orderEntry type="module" module-name="FantastySport.react-native-screens" />
     <orderEntry type="module" module-name="FantastySport.react-native-async-storage_async-storage" />
     <orderEntry type="module" module-name="FantastySport.react-native-community_checkbox" />
     <orderEntry type="module" module-name="FantastySport.react-native-masked-view_masked-view" />
     <orderEntry type="module" module-name="FantastySport.react-native-gesture-handler" />
     <orderEntry type="module" module-name="FantastySport.react-native-image-crop-picker" />
+    <orderEntry type="module" module-name="FantastySport.react-native-push-notification" />
     <orderEntry type="module" module-name="FantastySport.react-native-safe-area-context" />
-    <orderEntry type="module" module-name="FantastySport.react-native-screens" />
     <orderEntry type="module" module-name="FantastySport.react-native-share" />
     <orderEntry type="module" module-name="FantastySport.react-native-svg" />
     <orderEntry type="module" module-name="FantastySport.react-native-vector-icons" />

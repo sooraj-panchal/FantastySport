@@ -10,7 +10,7 @@ import {
 
 import Modal from 'react-native-modal';
 import { PrimaryColor } from '../assets/colors';
-import { hs, vs } from '../types/sizes';
+import { hs, screenHeight, vs } from '../types/sizes';
 
 
 interface Props {
@@ -31,7 +31,7 @@ const ModalLoader: React.FC<Props> = ({
             useNativeDriver={true}
             animationIn="fadeIn"
             animationOut="fadeOut"
-        // deviceHeight={screenHeight}
+            deviceHeight={999999999}
         >
             <View style={{
                 backgroundColor: "white",

@@ -79,56 +79,63 @@ const UpdateTeamScreen: React.FC<navigationProps> = ({
     // console.log('myPlayerListData', JSON.stringify(myPlayerListData))
 
     const saveTeamHandler = () => {
-        let myPlayerListArray: PlayerPositionTypes[] = []
-        Object.keys(myPlayerListData).map((item, index) => {
-            myPlayerListData[item].map((item: LeaguePlayerTypes) => {
-                myPlayerListArray.push(item)
+        if (myPlayerListArray.length == 10) {
+            let playerListByPosition: PlayerPositionTypes[] = []
+            Object.keys(myPlayerListData).map((item, index) => {
+                myPlayerListData[item].map((item: LeaguePlayerTypes) => {
+                    playerListByPosition.push(item)
+                })
             })
-        })
-        // console.log(myPlayerListArray)
-        const isAllPredictionPointsAdded = myPlayerListArray?.every((item, index) => { return item.PredictionPoints })
-        if (isAllPredictionPointsAdded) {
-            const saveLeaguePlayers = myPlayerListArray.map((item, index) => {
-                return {
-                    PlayerID: item.PlayerID,
-                    Name: item.Name,
-                    Position: item.Position,
-                    Team: item.Team,
-                    Opponent: item.Opponent,
-                    Accuracy: item.Accuracy,
-                    GameDate: item.GameDate,
-                    photoUrl: item.photoUrl,
-                    PredictionPoints: item.PredictionPoints,
-                    SniperPoints: item.SniperPoints,
-                    FantasyPointsDraftKings: item.FantasyPointsDraftKings
-                }
-            })
-            console.log('saveLeaguePlayers', JSON.stringify(saveLeaguePlayers))
-            let data = new FormData()
-            data.append('players', JSON.stringify(saveLeaguePlayers))
-            data.append('team_id', leagueDetails.team_id)
-            console.log(JSON.stringify(data))
-            updateGameWatcher(data).unwrap().then(() => {
-                navigation.dispatch(AppStack)
-                dispatch(addToMyPlayerWatcher([]))
-            })
+            const isAllPredictionPointsAdded = playerListByPosition?.every((item, index) => { return item.PredictionPoints })
+            if (isAllPredictionPointsAdded) {
+                const saveLeaguePlayers = playerListByPosition.map((item, index) => {
+                    return {
+                        PlayerID: item.PlayerID,
+                        Name: item.Name,
+                        Position: item.Position,
+                        Team: item.Team,
+                        Opponent: item.Opponent,
+                        Accuracy: item.Accuracy,
+                        GameDate: item.GameDate,
+                        photoUrl: item.photoUrl,
+                        PredictionPoints: item.PredictionPoints,
+                        SniperPoints: item.SniperPoints,
+                        FantasyPointsDraftKings: item.FantasyPointsDraftKings,
+                        HomeOrAway: item.HomeOrAway || ''
+                    }
+                })
+                console.log('saveLeaguePlayers', JSON.stringify(saveLeaguePlayers))
+                let data = new FormData()
+                data.append('players', JSON.stringify(saveLeaguePlayers))
+                data.append('team_id', leagueDetails.team_id)
+                console.log(JSON.stringify(data))
+                updateGameWatcher(data).unwrap().then(() => {
+                    navigation.dispatch(AppStack)
+                    dispatch(addToMyPlayerWatcher([]))
+                })
+            } else {
+                Alert.alert(
+                    "Alert!",
+                    "You need to add the fantasy player points prediction.",
+                    [
+                        {
+                            text: "Cancel",
+                            style: "cancel"
+                        },
+                        {
+                            text: "ADD POINTS", onPress: () => {
+                                // console.log(playerListByPosition)
+                                dispatch(setMyTeamWatcher({ data: playerListByPosition, isFromEdit: true }))
+                                navigation.navigate('AddPlayerPoint')
+                            }
+                        }
+                    ]
+                );
+            }
         } else {
             Alert.alert(
                 "Alert!",
-                "You need to add the fantasy player points prediction.",
-                [
-                    {
-                        text: "Cancel",
-                        style: "cancel"
-                    },
-                    {
-                        text: "ADD POINTS", onPress: () => {
-                            // console.log(myPlayerListArray)
-                            dispatch(setMyTeamWatcher({ data: myPlayerListArray, isFromEdit: true }))
-                            navigation.navigate('AddPlayerPoint')
-                        }
-                    }
-                ]
+                "All Players required.",
             );
         }
     }

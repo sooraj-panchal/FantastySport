@@ -27,11 +27,12 @@ const MyLeagueItem: React.FC<MyLeagueResponse> = ({
     participant_user,
     max_participant,
     team_logo,
-    user_name
+    user_name,
+    deadline
 }) => {
 
     const navigation = useNavigation<homeNavProps>()
-    const { dateText, matchDate, weekText } = useGetMatchStatus(week)
+    const { dateText, matchDate, weekText } = useGetMatchStatus(week,deadline)
 
     return (
         <Container

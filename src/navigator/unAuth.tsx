@@ -36,6 +36,7 @@ import { useNFLCurrentWeekQuery } from '../features/sportsData';
 import AddBattleLeagueScreen from '../container/AppModule/AddBattleLeagueScreen';
 import LeagueDetailScreen from '../container/AppModule/LeagueDetailScreen';
 import UpdateTeamScreen from '../container/AppModule/UpdateTeamScreen';
+import ShowPlayerScreen from '../container/SniperPlus/ShowPlayerScreen';
 
 const StackScreen = createNativeStackNavigator<unAuthParamList>()
 
@@ -317,6 +318,14 @@ const AppStackScreen: React.ReactNode = () => {
                 options={({ navigation }) => ({
                     headerShown: true,
                     headerTitle: "Edit team"
+                })}
+            />
+               <StackScreen.Screen
+                name='ShowPlayer'
+                component={ShowPlayerScreen}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "",
                 })}
             />
         </StackScreen.Navigator>

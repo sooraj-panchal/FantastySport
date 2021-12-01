@@ -898,13 +898,13 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                                             flexDirection: "row",
                                             justifyContent: 'space-between',
                                             alignItems: 'center',
-                                            height: 75
+                                            height: 80
                                         }}
                                         mpContainer={{ mr: 5 }}
                                     >
                                         <Container>
                                             <Label labelSize={12} style={{ color: "black", fontFamily: medium }} >{item.Name}</Label>
-                                            <Container containerStyle={{ flexDirection: 'row', alignItems: "center" }} mpContainer={{ mv: 5 }}  >
+                                            <Container containerStyle={{ flexDirection: 'row', alignItems: "center" }}  >
                                                 <Container containerStyle={{
                                                     flexDirection: 'row',
                                                     alignItems: 'center'
@@ -913,15 +913,19 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                                                     <Label labelSize={15} style={{ color: 'green', fontFamily: medium }} >{item.PredictionPoints}</Label>
                                                     <Label labelSize={12} style={{ color: 'grey', fontFamily: regular }} > ({item.ActualPoints})</Label>
                                                 </Container>
-                                                <Container mpContainer={{
-
-                                                }}
+                                                <Container 
                                                     containerStyle={{ flexDirection: 'row' }}
                                                 >
                                                     <Label labelSize={12} style={{ color: 'black' }} mpLabel={{ ml: 5 }} >{item.Position}</Label>
-                                                    <Label labelSize={12} style={{ color: 'grey' }} mpLabel={{ ml: 5 }} >({item.Team})</Label>
+                                                    {/* <Label labelSize={12} style={{ color: 'grey' }} mpLabel={{ ml: 5 }} >({item.Team})</Label> */}
                                                 </Container>
                                             </Container>
+                                            <Container 
+                                                    containerStyle={{ flexDirection: 'row' }}
+                                                >
+                                                    <Label labelSize={12} style={{ color: 'black' }} >{item.Team}</Label>
+                                                    <Label labelSize={12} style={{ color: 'grey' }} > ({item.HomeOrAway})</Label>
+                                                </Container>
                                             <Label labelSize={12} style={{ color: "grey" }} >{moment(item.GameDate).format('ddd')} {useTime(item.GameDate)} v {item.Opponent}</Label>
                                         </Container>
                                         <Label labelSize={12} style={{ color: 'black', fontFamily: bold, position: 'absolute', right: 10 }}  >{item.SniperPoints}</Label>
@@ -944,7 +948,7 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                                                 backgroundColor: '#f2f2f2',
                                                 alignItems: 'center'
                                             }}
-                                            height={75}
+                                            height={80}
                                         >
                                             <Label
                                                 labelSize={item == 'W/R/T' ? 12 : 15}
@@ -969,14 +973,14 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                                         containerStyle={{
                                             flexDirection: "row",
                                             justifyContent: 'space-between',
-                                            height: 75,
+                                            height: 80,
                                             alignItems: 'center',
                                         }}
                                         mpContainer={{ ml: 10 }}
                                     >
                                         <Container>
                                             <Label labelSize={12} style={{ color: "black", fontFamily: medium }} >{item.Name}</Label>
-                                            <Container containerStyle={{ flexDirection: 'row', alignItems: "center" }} mpContainer={{ mv: 5 }}  >
+                                            <Container containerStyle={{ flexDirection: 'row', alignItems: "center" }} >
                                                 <Container
                                                     containerStyle={{
                                                         flexDirection: 'row',
@@ -986,9 +990,15 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                                                     <Label labelSize={12} style={{ color: 'black', fontFamily: bold }}  >{item.SniperPoints}</Label>
                                                     <Label labelSize={12} style={{ color: 'black' }} mpLabel={{ ml: 10 }} >{item.Position}</Label>
                                                     <Label labelSize={15} style={{ color: 'green' }} mpLabel={{ ml: 10 }} >{item.PredictionPoints}</Label>
-                                                    <Label labelSize={12} style={{ color: 'grey', fontFamily: regular }} > ({item.SniperPoints})</Label>
+                                                    <Label labelSize={12} style={{ color: 'grey', fontFamily: regular }} > ({item.ActualPoints})</Label>
                                                 </Container>
                                             </Container>
+                                            <Container 
+                                                    containerStyle={{ flexDirection: 'row' }}
+                                                >
+                                                    <Label labelSize={12} style={{ color: 'black' }} >{item.Team}</Label>
+                                                    <Label labelSize={12} style={{ color: 'grey' }} > ({item.HomeOrAway})</Label>
+                                                </Container>
                                             <Label labelSize={12} style={{ color: "grey" }} >{moment(item.GameDate).format('ddd')} {useTime(item.GameDate)} v {item.Opponent}</Label>
                                         </Container>
                                     </Container>

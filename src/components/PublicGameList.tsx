@@ -16,7 +16,7 @@ import Label from './Label';
 
 interface props {
     createMatchHandler: () => void,
-    goToTeamDetail:()=>void
+    goToTeamDetail: () => void
 }
 
 const PublicGameList: React.FC<MyLeagueResponse & props> = ({
@@ -34,6 +34,7 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
     team_id,
     user_name,
     deadline,
+    scoring_system,
     goToTeamDetail
 }) => {
     let imageType = team_logo?.split('.').pop() == 'svg';
@@ -50,64 +51,12 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
             }}
             mpContainer={{ mh: 15, pv: 10 }}
             onPress={() => {
-                // navigation.navigate('GameDetail', {
-                //     league_id: league_id,
-                //     week_id: week?.[0]?.week_id,
-                //     league_name: name,
-                //     my_team_id: '',
-                //     // fromMyLeague: false
-                // })
-                // navigation.navigate('GameDetail', {
-                //     league_id: league_id,
-                //     week_id: week[0].week_id,
-                //     league_name: name,
-                //     my_team_id: team_id
-                // })
                 navigation.navigate('LeagueDetail', {
                     league_id: league_id,
                     week_id: week?.[0]?.week_id,
                 })
             }}
         >
-            {/* {
-                is_your_league ?
-                    <Label
-                        labelSize={12}
-                        textColor='grey'
-                        mpLabel={{ pl: 10 }}
-                        style={{ fontFamily: medium }}
-                    >Created by you*</Label> : null
-            } */}
-            {/* {
-                is_your_league ?
-                    <Container containerStyle={{
-                        flexDirection: 'row',
-                        alignItems: 'center'
-                    }}
-                        mpContainer={{ ml: 5, mt: 5 }}
-                    >
-                        <Img
-                            imgSrc={AppImages.league_icon}
-                            imgStyle={{
-                                width: 25,
-                                height: 18,
-                                resizeMode: 'contain',
-                            }}
-                        />
-                        <Label
-                            labelSize={14}
-                            textColor='grey'
-                            // mpLabel={{ pl: 10 }}
-                            style={{ fontFamily: medium }}
-                        >Created by you</Label>
-                    </Container>
-                    : null
-            }
-            <Label
-                labelSize={20}
-                mpLabel={{ pl: 10, mt: 5 }}
-
-            >{name}</Label> */}
             {
                 is_your_league ?
                     <Container containerStyle={{
@@ -306,6 +255,11 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
                             <Btn
                                 title="Create team"
                                 onPress={() => {
+                                    // console.log({
+                                    //     week_id: week[0]?.week_id,
+                                    //     type: 'public',
+                                    //     league_id: league_id
+                                    // })
                                     navigation.navigate('CreateTeam', {
                                         week_id: week[0]?.week_id,
                                         type: 'public',
@@ -331,6 +285,48 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
                         </Container>
                         : null
             }
+            {/* {
+                scoring_system == 'SNIPER+' ?
+                    <Container
+                        containerStyle={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            // justifyContent: "center"
+                        }}
+                        mpContainer={{ mt: 5,pl:10 }}
+                    >
+                        <Label
+                            style={{maxWidth:'75%'}}
+                            labelSize={14}
+                        >SNIPER+ You have not created match yet?.</Label>
+                        <Btn
+                            title="Create"
+                            onPress={() => {
+                                // navigation.navigate('CreateTeam', {
+                                //     week_id: week[0]?.week_id,
+                                //     type: 'public',
+                                //     league_id: league_id
+                                // })
+                                navigation.navigate('ShowPlayer')
+                                // createMatchHandler()
+                            }}
+                            btnStyle={{
+                                backgroundColor: 'white',
+                                borderWidth: 1,
+                                borderColor: OrangeColor,
+                                borderRadius: 10,
+                                // width:100,
+                                // alignSelf:'center',
+                                // position:"absolute",
+                                // top:-10,
+                                height: 25
+                            }}
+                            mpBtn={{ mh: 10, ph: 10, mt: 2 }}
+                            labelSize={12}
+                            textColor={OrangeColor}
+                        />
+                    </Container> : null
+            } */}
         </Container>
     )
 }

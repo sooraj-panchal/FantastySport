@@ -54,7 +54,10 @@ export type unAuthParamList = {
   AddBattleLeague: undefined,
   LeagueDetail: { league_id?: any, week_id?: any } | undefined,
   updateTeam: { team_id: number | any } | undefined;
+  ShowPlayer:undefined
 };
+
+
 
 export type tabParamList = {
   Home: undefined;
@@ -94,7 +97,6 @@ export type navigationProps = {
 export type appProps = {
   route: authRouteProp;
   navigation: homeNavProps;
-
 };
 
 export type AddPlayerProps = NativeStackScreenProps<unAuthParamList, 'AddPlayerPoint'>;

@@ -1,10 +1,12 @@
 import React from "react"
 import { useState } from "react"
 import { ImageBackground } from "react-native"
+import Ionicons from "react-native-vector-icons/Ionicons"
 import { useSelector } from "react-redux"
 import { medium } from "../../../assets/fonts/fonts"
 import { AppImages, AuthImages } from "../../../assets/images/map"
 import Btn from "../../../components/Btn"
+import Container from "../../../components/Container"
 import Img from "../../../components/Img"
 import Label from "../../../components/Label"
 import EditProfileModal from "../../../components/Modals/EditProfileModal"
@@ -18,6 +20,7 @@ const ImageContainer = ({
     console.log("user", user)
 
     const [openModal, setOpenModal] = useState(false)
+    
     return (
         <ImageBackground
             style={{
@@ -25,7 +28,7 @@ const ImageContainer = ({
                 // height: 260,
                 justifyContent: "center",
                 alignItems: "center",
-                paddingVertical:30
+                paddingVertical: 30
             }}
             source={AppImages.profile_bg}
         >
@@ -33,12 +36,33 @@ const ImageContainer = ({
                 openModal={openModal}
                 closeModal={() => setOpenModal(false)}
             />
-            <Img
+            <Container
+                containerStyle={{
+                    borderRadius: 100,
+                    justifyContent: 'center', alignItems: 'center',
+                    overflow: 'hidden',
+                    backgroundColor: 'white',
+                    borderWidth: 3,
+                    borderColor: 'white'
+                }}
+                width={90} height={90}
+                mpContainer={{
+                    
+                }}
+            >
+                <Ionicons
+                    name='person'
+                    size={85}
+                    color='grey'
+                    style={{ top: 5 }}
+                />
+            </Container>
+            {/* <Img
                 width={90}
                 height={90}
                 imgStyle={{ borderRadius: 100, borderWidth: 4, borderColor: 'white' }}
                 imgSrc={{ uri: AuthImages.profile_image }}
-            />
+            /> */}
             <Label
                 style={{ color: "white", fontFamily: medium, letterSpacing: 0.5 }}
                 labelSize={20}

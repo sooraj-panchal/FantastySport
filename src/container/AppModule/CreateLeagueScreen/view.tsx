@@ -22,7 +22,7 @@ interface props extends navigationProps {
 
 }
 
-let PointSystemList: Array<string> = ['Standard', 'SNIPER', 'SNIPER+']
+let PointSystemList: Array<string> = ['SNIPER', 'SNIPER+']
 
 const CreateLeagueScreen: React.FC<props> = ({
     navigation, route
@@ -41,6 +41,7 @@ const CreateLeagueScreen: React.FC<props> = ({
     const onChangeScope = (value: boolean) => {
         setIsSingleWeek(value)
     }
+
 
 
     const createLeagueHandler = () => {
@@ -79,8 +80,12 @@ const CreateLeagueScreen: React.FC<props> = ({
             formData.append('scoring_system', 'SNIPER' || selectPointSystem)
             formData.append('week_detail', JSON.stringify(leagueData))
             console.log('body data ', JSON.stringify(formData))
-            createLeague(formData).unwrap().then(() => {
+            createLeague(formData).unwrap().then((res) => {
+                // if (selectPointSystem == PointSystemList[1]) {
+                //     navigation.navigate('ShowPlayer')
+                // } else {
                 navigation.dispatch(AppStack)
+                // }
             })
         } else {
             Alert.alert("Fantasy sniper", "All Field is required")
@@ -108,7 +113,6 @@ const CreateLeagueScreen: React.FC<props> = ({
                         alignItems: "center"
                     }}
                     onPress={() => onChangeScope(true)}
-
                 >
                     <Container
                         containerStyle={{

@@ -16,35 +16,19 @@ const MyLeagueScreen: React.FC<props> = ({
     navigation
 }) => {
     const { NFLCurrentWeek } = useSelector((store: RootState) => store.leaguePlayer)
-
-    // const { data: privateLeagueList, isLoading: privateLeagueLoading, isFetching, error } = useGetPrivateLeagueQuery({
-    //     current_week: NFLCurrentWeek
-    // }, { refetchOnMountOrArgChange: true, pollingInterval: 10000 })
-
-    // const { data: publicLeagueList, isLoading: publicLeagueLoading } = useGetPublicLeagueQuery({
-    //     current_week: NFLCurrentWeek
-    // }, { refetchOnMountOrArgChange: true, pollingInterval: 10000 })
     const { data: publicLeagueList, isLoading: publicLeagueLoading, isFetching, error, refetch } = useLeaguesAndGamesQuery({
         current_week: NFLCurrentWeek
     }, { refetchOnMountOrArgChange: true })
 
     const dispatch = useDispatch()
 
-    // const renderPrivateGame: ListRenderItem<MyLeagueResponse> = ({ item, index }) => {
-    //     return <PrivateGameList
-    //         {...item}
-    //         createMatchHandler={() => {
-    //             dispatch(leagueDetailsWatcher({ ...item }))
-    //             navigation.navigate('CreateMatch')
-    //         }}
-    //     />
-    // }
 
     const renderPublicGame: ListRenderItem<MyLeagueResponse> = ({ item, index }) => {
         return <PublicGameList
             {...item}
             createMatchHandler={() => {
                 // console.log('item',item)
+                
                 dispatch(leagueDetailsWatcher({ ...item }))
                 navigation.navigate('CreateMatch')
             }}
@@ -57,30 +41,12 @@ const MyLeagueScreen: React.FC<props> = ({
         />
     }
 
-    console.log('publicLeagueList error', JSON.stringify(error))
+    console.log('publicLeagueList', JSON.stringify(publicLeagueList))
 
     return (
         <MainContainer
             loading={publicLeagueLoading}
-        // absoluteLoading={isFetching}
         >
-            {/* <ScrollView> */}
-            {/* <Label
-                    labelSize={18}
-                    mpLabel={{ mt: 15, ml: 20 }}
-                >Private game</Label>
-                <FlatList
-                    data={privateLeagueList}
-                    renderItem={renderPrivateGame}
-                    keyExtractor={(item, index) => `Private game ${index.toString()}`}
-                    ListHeaderComponent={() => <Container mpContainer={{ mt: 10 }} />}
-                    ListFooterComponent={() => <Container mpContainer={{ mb: 10 }} />}
-                    ItemSeparatorComponent={() => <Container mpContainer={{ mt: 10 }} />}
-                /> */}
-            {/* <Label
-                    labelSize={18}
-                    mpLabel={{ mt: 5, ml: 20 }}
-                >Public game</Label> */}
             <FlatList
                 data={publicLeagueList}
                 renderItem={renderPublicGame}
@@ -93,7 +59,6 @@ const MyLeagueScreen: React.FC<props> = ({
                     refetch()
                 }}
             />
-            {/* </ScrollView> */}
         </MainContainer>
     )
 }
