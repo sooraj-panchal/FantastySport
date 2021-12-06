@@ -65,7 +65,8 @@ export type tabParamList = {
   Winners: undefined;
   News: undefined;
   ProfileStack: undefined,
-  MyGames: undefined
+  MyGames: undefined,
+  LeaderBoard:undefined
 };
 
 export type MyTeamtabParamList = {

@@ -15,6 +15,8 @@ import DEFPositionModal from './Modals/DEFPostionModal';
 import { SvgUri } from 'react-native-svg';
 import { medium } from '../assets/fonts/fonts';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import { useDispatch } from 'react-redux';
+import { getDefPositionList } from '../store/slices/defPosition';
 
 const UpdatePlayerList: React.FC<PlayerPositionTypes> = ({
     Position,
@@ -28,7 +30,7 @@ const UpdatePlayerList: React.FC<PlayerPositionTypes> = ({
 }) => {
     const navigation = useNavigation<homeNavProps>();
     const defModalRef = useRef<Modalize>(null)
-
+    const dispatch = useDispatch()
     const renderEmptyPlayers = () => {
         return <>
             <Container
@@ -58,11 +60,12 @@ const UpdatePlayerList: React.FC<PlayerPositionTypes> = ({
                         alignItems: "center",
                         marginHorizontal: 20,
                         position: 'absolute',
-                        right:20
+                        right: 20
                     }}
                     width={30} height={30}
                     onPress={() => {
                         if (Position == 'DEF') {
+                            dispatch(getDefPositionList())
                             defModalRef.current?.open()
                         } else {
                             navigation.navigate('AddPlayer', {
@@ -75,7 +78,7 @@ const UpdatePlayerList: React.FC<PlayerPositionTypes> = ({
                     <Ionicons
                         name="add-sharp"
                         size={25}
-                       
+
                         color={OrangeColor}
                     />
                 </Container>
@@ -137,6 +140,7 @@ const UpdatePlayerList: React.FC<PlayerPositionTypes> = ({
                         onPress={() => {
                             console.log(Position)
                             if (Position == 'DEF') {
+                                dispatch(getDefPositionList())
                                 defModalRef.current?.open()
                             } else {
                                 navigation.navigate('AddPlayer', {
@@ -163,7 +167,6 @@ const UpdatePlayerList: React.FC<PlayerPositionTypes> = ({
     } else {
         return renderEmptyPlayers()
     }
-    return renderMyPlayers()
 
 }
 export default UpdatePlayerList;

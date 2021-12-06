@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View } from 'react-native';
 import Container from '../Container';
 import Label from '../Label';
@@ -23,10 +23,13 @@ import { useUpdateProfileMutation } from '../../features/profile';
 import MainContainer from '../MainContainer';
 import ImagePickerModal from './ImagePickerModal';
 import { Modalize } from 'react-native-modalize';
+import ImagePicker from 'react-native-image-crop-picker';
+import { imageBaseUrl } from '../../utils/globals';
 
 interface props {
     openModal: boolean,
-    closeModal: () => void
+    closeModal: () => void,
+    openModalHandler: () => void
 }
 
 interface props {
@@ -40,7 +43,8 @@ interface formValues {
 
 const EditProfileModal: React.FC<props> = ({
     openModal,
-    closeModal
+    closeModal,
+    openModalHandler
 }) => {
     const user: UserResponse = useSelector((store: RootState) => store.auth.user)
     const [profileImage, setProfileImage] = useState('')
@@ -48,20 +52,63 @@ const EditProfileModal: React.FC<props> = ({
     // const [first_name] = useState(user.first_name)
     // const [last_name, setLastName] = useState(user.last_name)
     // const [email, setEmail] = useState(user.email)
-    const initialState: formValues = { first_name: user.first_name, last_name: user.last_name, email: user.email }
+    const initialState: formValues = {
+        first_name: user.first_name, last_name: user.last_name, email: user.email
+    }
     const [updateProfile, { data, isLoading, error }] = useUpdateProfileMutation<any>()
+
+    useEffect(() => {
+        if (user.image) {
+            setProfileImage(`${imageBaseUrl}${user.image}`)
+        }
+    }, [user])
 
     const updateProfileHandler = (values: formValues) => {
         const data = new FormData()
         data.append('first_name', values.first_name)
         data.append('last_name', values.last_name)
-        data.append('image', '')
+        let file_name = profileImage?.substring(profileImage?.lastIndexOf('/') + 1);
+        if (profileImage) {
+            data.append('image', {
+                uri: profileImage,
+                name: file_name,
+                type: 'image/jpg'
+            });
+        } else {
+            data.append('image', '')
+        }
         console.log('data', data)
         updateProfile(data).unwrap().then(() => closeModal())
     }
 
     console.log('response', data)
     console.log('error', error)
+
+    const PickFromGallery = () => {
+        ImagePicker.openPicker({
+            cropping: true,
+            mediaType: "photo",
+            freeStyleCropEnabled: true
+        }).then(image => {
+            console.log(image);
+            setProfileImage(image.path)
+        }).catch((err) => {
+            console.log(err);
+        });
+    };
+
+    const PickFromCamera = () => {
+        ImagePicker.openCamera({
+            cropping: true,
+            mediaType: "photo",
+            freeStyleCropEnabled: true
+        }).then(image => {
+            console.log(image);
+            setProfileImage(image.path)
+        }).catch((err) => {
+            console.log(err);
+        });
+    };
 
     return (
         <MainContainer
@@ -77,7 +124,7 @@ const EditProfileModal: React.FC<props> = ({
                     margin: 0,
                     marginHorizontal: 20
                 }}
-            deviceHeight={999999999}
+                deviceHeight={999999999}
             >
                 <Container containerStyle={{
                     backgroundColor: "white",
@@ -112,33 +159,21 @@ const EditProfileModal: React.FC<props> = ({
                     }}
                         mpContainer={{ mt: 20 }}
                     >
-                        {/* <Container
-                            containerStyle={{
-                                borderRadius: 100,
-                                justifyContent: 'center', alignItems: 'center',
-                                overflow: 'hidden',
-                                backgroundColor: 'white',
-                                borderWidth: 3,
-                                borderColor: 'white'
-                            }}
-                            width={90} height={90}
-                            mpContainer={{
-
-                            }}
-                        > */}
-                        <Container
-                            width={120}
-                            height={120}
-                            containerStyle={{ borderRadius: 100 }}
-                        />
-                        {/* </Container> */}
-                        {/* <Img
-                            width={120}
-                            height={120}
-                            imgStyle={{ borderRadius: 100 }}
-                            imgSrc={{ uri: AuthImages.profile_image }}
-                        // containerStyle={{backgroundColor:"red"}}
-                        /> */}
+                        {
+                            profileImage ?
+                                <Img
+                                    width={120}
+                                    height={120}
+                                    imgStyle={{ borderRadius: 100 }}
+                                    imgSrc={{ uri: profileImage }}
+                                // containerStyle={{backgroundColor:"red"}}
+                                /> :
+                                <Container
+                                    width={120}
+                                    height={120}
+                                    containerStyle={{ borderRadius: 100 }}
+                                />
+                        }
                         <Container
                             containerStyle={{
                                 backgroundColor: 'rgba(0,0,0,0.35)',
@@ -150,7 +185,8 @@ const EditProfileModal: React.FC<props> = ({
                             width={120}
                             height={120}
                             onPress={() => {
-                                // ImagePickerModalRef.current?.open()
+                                closeModal()
+                                ImagePickerModalRef.current?.open()
                             }}
                         >
                             <Ionicons
@@ -302,8 +338,30 @@ const EditProfileModal: React.FC<props> = ({
             <ImagePickerModal
                 modalizeRef={ImagePickerModalRef}
                 onDone={function (val: any): void {
-                    setProfileImage(val)
+                    openModalHandler()
+                    // setProfileImage(val)
+                    ImagePickerModalRef.current?.close();
+                    if (val == 'camera') {
+                        PickFromCamera();
+                    } else {
+                        PickFromGallery();
+                    }
                     // throw new Error('Function not implemented.');
+                }}
+
+                // onDone={(isFrom) => {
+                //     modalizeRef.current?.close();
+                //     if (isFrom == "camera") {
+                //         PickFromCamera();
+                //     } else {
+                //         PickFromGallery();
+                //     }
+                // }}
+
+                fromProfileUpdate={true}
+                closeModal={() => {
+                    openModalHandler()
+                    ImagePickerModalRef.current?.close()
                 }}
             />
         </MainContainer>

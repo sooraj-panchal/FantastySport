@@ -4,7 +4,7 @@ import Label from '../Label';
 import { BlackColor, OrangeColor, PrimaryColor } from '../../assets/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Modalize } from 'react-native-modalize';
-import { Alert, FlatList, ListRenderItem } from 'react-native';
+import { ActivityIndicator, Alert, FlatList, ListRenderItem } from 'react-native';
 import { Portal } from 'react-native-portalize';
 import { useNavigation } from '@react-navigation/native';
 import { homeNavProps } from '../../types/nav';
@@ -24,7 +24,6 @@ interface props {
     closeModal: () => void,
     // selectedPosition: (position: string) => void,
     modalizeRef: React.Ref<Modalize>,
-
 }
 
 const DEFPositionModal: React.FC<props> = ({
@@ -32,13 +31,15 @@ const DEFPositionModal: React.FC<props> = ({
     modalizeRef
 }) => {
     const defensePositionList: LeaguePlayerTypes[] = useSelector((state: RootState) => state.defPosition.data)
+    const loading: boolean = useSelector((state: RootState) => state.defPosition.loading)
+
     const myPlayerListArray: PlayerPositionTypes[] = useSelector((state: RootState) => state.myPlayer.data)
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getDefPositionList())
-    }, [])
+    // useEffect(() => {
+    //     dispatch(getDefPositionList())
+    // }, [])
 
     console.log("defensePositionList", defensePositionList)
 
@@ -219,6 +220,14 @@ const DEFPositionModal: React.FC<props> = ({
                             textColor="white"
                             labelSize={16}
                         />
+                    },
+                    ListEmptyComponent: () => {
+                        return (
+                            <Container containerStyle={{justifyContent:'center',alignItems:'center'}} height={100}  >
+                                <ActivityIndicator animating={loading} size={30} color={PrimaryColor} />
+                            </Container>
+
+                        )
                     }
                 }}
             />

@@ -226,10 +226,9 @@ const AllLeague: React.FC = ({
     const { data, isLoading, error } = useAllLeagueListQuery(null)
     const user: UserResponse = useSelector((store: RootState) => store.auth.user)
 
-    console.log('data', JSON.stringify(data))
+    console.log('useAllLeagueListQuery', JSON.stringify(data))
 
     const navigation = useNavigation<homeNavProps>()
-
 
     return (
         <MainContainer loading={isLoading} >
@@ -314,7 +313,7 @@ const AllLeague: React.FC = ({
                     : null
             }
 
-       </MainContainer>
+        </MainContainer>
     )
 }
 export default AllLeague;

@@ -22,13 +22,12 @@ const MyLeagueScreen: React.FC<props> = ({
 
     const dispatch = useDispatch()
 
-
     const renderPublicGame: ListRenderItem<MyLeagueResponse> = ({ item, index }) => {
         return <PublicGameList
             {...item}
             createMatchHandler={() => {
                 // console.log('item',item)
-                
+
                 dispatch(leagueDetailsWatcher({ ...item }))
                 navigation.navigate('CreateMatch')
             }}

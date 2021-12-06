@@ -397,9 +397,12 @@ const CreateLeagueScreen: React.FC<props> = ({
                 mpContainer={{ mh: 15, mt: 10, pl: 10 }}
                 textSize={14}
                 containerStyle={{ borderColor: "lightgrey" }}
+                inputStyle={{color:'black'}}
                 inputHeight={45}
+                // value={'10'}
                 value={numOfParticipent}
                 onChangeText={(val) => setNumOfParticipent(val)}
+                // editable={false}
             />
         </>
     }

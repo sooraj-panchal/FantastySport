@@ -232,6 +232,9 @@ const EditTeamInfoScreen: React.FC<CreateTeamNav> = ({
                         PickFromGallery();
                     }
                 }}
+                closeModal={()=>{
+                    modalizeRef.current?.close();
+                }}
                 modalizeRef={modalizeRef}
             />
         </MainContainer>

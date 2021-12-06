@@ -112,6 +112,7 @@ const UpdateTeamScreen: React.FC<navigationProps> = ({
                 updateGameWatcher(data).unwrap().then(() => {
                     navigation.dispatch(AppStack)
                     dispatch(addToMyPlayerWatcher([]))
+                    dispatch(setMyTeamWatcher([]))
                 })
             } else {
                 Alert.alert(

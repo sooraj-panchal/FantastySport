@@ -194,7 +194,8 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
                         <Container
                             containerStyle={{
                                 flexDirection: 'row',
-                                alignItems: "center"
+                                alignItems: "center",
+                                flex:1
                             }}
                         >
                             {
@@ -213,6 +214,8 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
                             <Label
                                 mpLabel={{ ml: 10 }}
                                 labelSize={18}
+                                style={{maxWidth:'60%'}}
+                                numberOfLines={1}
                             >{team_name}</Label>
                         </Container>
                         {
@@ -242,7 +245,7 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
                         }
                     </Container>
                     :
-                    is_your_league && weekText != 'Completed' ?
+                    // is_your_league && weekText != 'Completed' ?
                         <Container
                             containerStyle={{
                                 flexDirection: 'row',
@@ -283,7 +286,7 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
                                 textColor={OrangeColor}
                             />
                         </Container>
-                        : null
+                        // : null
             }
             {/* {
                 scoring_system == 'SNIPER+' ?

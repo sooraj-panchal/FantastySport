@@ -13,6 +13,9 @@ import { useTime } from '../utils/timeZone';
 import { Modalize } from 'react-native-modalize';
 import DEFPositionModal from './Modals/DEFPostionModal';
 import { SvgUri } from 'react-native-svg';
+import { useDispatch } from 'react-redux';
+import { getDefPositionList } from '../store/slices/defPosition';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const MyPlayersList: React.FC<PlayerPositionTypes> = ({
     Position,
@@ -27,25 +30,26 @@ const MyPlayersList: React.FC<PlayerPositionTypes> = ({
 }) => {
     const navigation = useNavigation<homeNavProps>();
     const defModalRef = useRef<Modalize>(null)
+    const dispatch = useDispatch()
     const renderEmptyPlayers = () => {
         return <>
             <Container
                 containerStyle={{ flexDirection: "row", alignItems: "center", width: '100%' }}
-                mpContainer={{ mh: 20 }}
+                mpContainer={{ ml: 10 }}
                 height={55}
             >
-                <Label labelSize={12} style={{ letterSpacing: 0.5, color: 'grey',width:35 }} >{Position}</Label>
+                <Label labelSize={10} style={{  color: 'grey', width: 30 }} >{Position}</Label>
                 <Ionicons
                     name="md-person"
-                    size={52}
+                    size={40}
                     color={'grey'}
                     style={{
                         alignSelf: "flex-end",
-                        marginHorizontal: 20,
+                        marginHorizontal: 10,
                         marginTop: 10
                     }}
                 />
-                <Label labelSize={16} style={{ letterSpacing: 0.5, color: "grey" }} >Empty</Label>
+                <Label labelSize={14} style={{  color: "grey" }} >Empty</Label>
                 <Container
                     containerStyle={{
                         borderWidth: 2,
@@ -56,11 +60,12 @@ const MyPlayersList: React.FC<PlayerPositionTypes> = ({
                         alignItems: "center",
                         marginHorizontal: 20,
                         position: 'absolute',
-                        right: screenWidth * 0.30
+                        right: 10
                     }}
                     width={30} height={30}
-                    onPress={() => {
+                    onPress={() => {    
                         if (Position == 'DEF') {
+                            dispatch(getDefPositionList())
                             defModalRef.current?.open()
                         } else {
                             navigation.navigate('AddPlayer', {
@@ -74,7 +79,7 @@ const MyPlayersList: React.FC<PlayerPositionTypes> = ({
                         name="add-sharp"
                         size={25}
                         style={{
-
+                         
                         }}
                         color={OrangeColor}
                     />
@@ -96,45 +101,75 @@ const MyPlayersList: React.FC<PlayerPositionTypes> = ({
         return <>
             <Container
                 containerStyle={{ flexDirection: "row", alignItems: "center", width: screenWidth }}
-                mpContainer={{ mh: 15 }}
+                mpContainer={{ ml:10 }}
                 height={60}
                 key={`teamheader${PlayerID}`}
             >
-                <Label labelSize={14} style={{ letterSpacing: 0.5, color: OrangeColor, width: screenWidth * 0.08 }} >{Position}</Label>
+                <Label labelSize={12} style={{ color: OrangeColor, width: screenWidth * 0.08 }} >{Position}</Label>
                 {/* <Img
                     imgSrc={{ uri: photoUrl }}
                     width={screenWidth * 0.10} height={40}
                     mpImage={{ mh: 15 }}
                 /> */}
-                <Container height={45} width={45} mpContainer={{ mh: 10 }} >
+                <Container height={40} width={40} mpContainer={{ mh: 5 }} >
                     {
                         imageType ?
                             <SvgUri
-                                width={40}
-                                height={40}
+                                width={35}
+                                height={35}
                                 uri={photoUrl || ''}
                             />
                             :
                             <Img
                                 imgSrc={{ uri: photoUrl || '' }}
-                                width={40} height={45} />
+                                width={35} height={40} />
                     }
                 </Container>
-                <Container containerStyle={{ width: screenWidth * 0.35 }} >
-                    <Label labelSize={14} style={{ letterSpacing: 0.5, color: "black" }} numberOfLines={1} >{Name}</Label>
-                    <Label labelSize={12} style={{ letterSpacing: 0.5, color: "grey" }} mpLabel={{ mt: 2 }} >{moment(GameDate).format('ddd')} {useTime(GameDate)} v {Opponent}</Label>
+                <Container containerStyle={{ width: screenWidth * 0.25 }} >
+                    <Label labelSize={12} style={{  color: "black" }} numberOfLines={1} >{Name}</Label>
+                    <Label labelSize={10} style={{  color: "grey" }} mpLabel={{ mt: 2 }} >{moment(GameDate).format('ddd')} {useTime(GameDate)} v {Opponent}</Label>
                 </Container>
-                <Container containerStyle={{ width: screenWidth * 0.18, justifyContent: 'center', alignItems: 'center' }} width={60} >
-                    <Label labelSize={12} style={{ letterSpacing: 0.5, color: "green" }}>{FantasyPointsDraftKings}</Label>
+                <Container containerStyle={{ width: screenWidth * 0.12, justifyContent: 'center', alignItems: 'center' }} width={50} >
+                    <Label labelSize={10} style={{  color: "green" }}>{FantasyPointsDraftKings}</Label>
+                </Container>
+                <Container containerStyle={{ width: screenWidth * 0.10, justifyContent: 'center', alignItems: 'center' }} width={60} >
+                    <Label labelSize={10} style={{  color: "black" }}>{PredictionPoints}</Label>
                 </Container>
                 <Container containerStyle={{ width: screenWidth * 0.16, justifyContent: 'center', alignItems: 'center' }} width={60} >
-                    <Label labelSize={12} style={{ letterSpacing: 0.5, color: "black" }}>{PredictionPoints}</Label>
+                    <Label labelSize={10} style={{  color: "black" }}>{SniperPoints}</Label>
                 </Container>
-                <Container containerStyle={{ width: screenWidth * 0.20, justifyContent: 'center', alignItems: 'center' }} width={60} >
-                    <Label labelSize={12} style={{ letterSpacing: 0.5, color: "black" }}>{SniperPoints}</Label>
-                </Container>
+                <FontAwesome5
+                    name='exchange-alt'
+                    size={20}
+                    color={OrangeColor}
+                    onPress={() => {
+                        console.log(Position)
+                        if (Position == 'DEF') {
+                            dispatch(getDefPositionList())
+
+                            defModalRef.current?.open()
+                        } else {
+                            navigation.navigate('AddPlayer', {
+                                Position: Position,
+                                isWRTPosition: Position == 'W/R/T' ? true : false
+                            })
+                        }
+                    }}
+                    style={{
+                        width:50,
+                        position:'absolute',
+                        right:0
+                    }}
+                />
+                {/* <Label labelSize={10} style={{ color: "red",fontFamily:medium }}>Change</Label> */}
             </Container>
             <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />
+            <DEFPositionModal
+                modalizeRef={defModalRef}
+                closeModal={() => {
+                    defModalRef.current?.close()
+                }}
+            />
         </>
     }
     if (photoUrl) {

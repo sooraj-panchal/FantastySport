@@ -224,7 +224,6 @@ const MyLeague: React.FC = ({
     console.log('my top league list', JSON.stringify(data))
     const navigation = useNavigation<homeNavProps>()
 
-
     return (
         <MainContainer loading={isLoading || isFetching}  >
             {

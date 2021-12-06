@@ -1,20 +1,16 @@
-import { RouteProp, useRoute } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
-import { ScrollView, Text, TouchableOpacity, StyleSheet, View } from 'react-native'
+import { ScrollView, Text, StyleSheet, View } from 'react-native'
 import {
     CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell,
 } from 'react-native-confirmation-code-field'
 import { useDispatch } from 'react-redux'
-import { DarkBlueColor, OrangeColor, PrimaryColor } from '../../../assets/colors'
+import { DarkBlueColor, OrangeColor } from '../../../assets/colors'
 import { medium, semiBold } from '../../../assets/fonts/fonts'
-import { AuthImages } from '../../../assets/images/map'
 import AuthWrapper from '../../../components/AuthWrapper'
 import Btn from '../../../components/Btn'
-import HeaderBtn from '../../../components/HeaderBtn'
-import Img from '../../../components/Img'
 import Label from '../../../components/Label'
 import MainContainer from '../../../components/MainContainer'
-import { useOtpVerifyMutation } from '../../../features/auth'
+import { useOtpVerifyMutation, useResendOtpMutation } from '../../../features/auth'
 import { AppStack } from '../../../navigator/navActions'
 import { setCredentials } from '../../../store/slices/auth'
 import { navigationProps } from '../../../types/nav'
@@ -27,8 +23,10 @@ const VerificationScreen: React.FC<props> = ({
     navigation,
     route
 }) => {
+
     const dispatch = useDispatch()
-    const [verifyOtp, { isLoading, data = {}, error }] = useOtpVerifyMutation()
+    const [verifyOtp, { isLoading, error }] = useOtpVerifyMutation()
+    const [resendOtp, { isLoading: resendOtPLoading, data, error: resendOtpError }] = useResendOtpMutation()
 
     const CELL_COUNT = 4;
 
@@ -59,10 +57,22 @@ const VerificationScreen: React.FC<props> = ({
         }
     }
 
+
+    const resetOtpHandler = () => {
+        let data = new FormData()
+        data.append('email', route.params?.email)
+        console.log(data)
+        resendOtp(data)
+    }
+
+    // console.log('resendOtpError', resendOtpError)
+    // console.log('data', data)
+
     return (
         <MainContainer
-            absoluteModalLoading={isLoading}
-            errorMessage={error}
+            absoluteModalLoading={isLoading || resendOtPLoading}
+            errorMessage={error || resendOtpError}
+            successMessage={data?.message}
         >
             <AuthWrapper>
                 <ScrollView contentContainerStyle={{ paddingBottom: 100 }} >
@@ -145,6 +155,7 @@ const VerificationScreen: React.FC<props> = ({
                             style={{ color: DarkBlueColor, fontFamily: medium }} mpLabel={{ ml: 10 }}
                             labelSize={20}
                             onPress={() => {
+                                resetOtpHandler()
                                 // navigation.navigate("ResetPassword")
                             }}>Resend</Label>
                     </View>

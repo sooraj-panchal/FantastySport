@@ -26,7 +26,7 @@ const Label: React.FC<Props & TextProps> = ({
             style={[{
                 fontSize: normalize(labelSize || 12),
                 ...mpStyle({ ...mpLabel }),
-                color: textColor,
+                color: textColor || 'black',
                 fontFamily:regular,
             }, style]}
             {...restProps}

@@ -12,6 +12,7 @@ import Label from "../../../components/Label"
 import EditProfileModal from "../../../components/Modals/EditProfileModal"
 import { RootState } from "../../../store"
 import { UserResponse } from "../../../types/responseTypes"
+import { baseUrl, imageBaseUrl } from "../../../utils/globals"
 
 const ImageContainer = ({
 
@@ -20,7 +21,7 @@ const ImageContainer = ({
     console.log("user", user)
 
     const [openModal, setOpenModal] = useState(false)
-    
+    // console.log(`${imageBaseUrl}${user.image}`)
     return (
         <ImageBackground
             style={{
@@ -35,34 +36,36 @@ const ImageContainer = ({
             <EditProfileModal
                 openModal={openModal}
                 closeModal={() => setOpenModal(false)}
+                openModalHandler={() => setOpenModal(true)}
             />
-            <Container
-                containerStyle={{
-                    borderRadius: 100,
-                    justifyContent: 'center', alignItems: 'center',
-                    overflow: 'hidden',
-                    backgroundColor: 'white',
-                    borderWidth: 3,
-                    borderColor: 'white'
-                }}
-                width={90} height={90}
-                mpContainer={{
-                    
-                }}
-            >
-                <Ionicons
-                    name='person'
-                    size={85}
-                    color='grey'
-                    style={{ top: 5 }}
-                />
-            </Container>
-            {/* <Img
-                width={90}
-                height={90}
-                imgStyle={{ borderRadius: 100, borderWidth: 4, borderColor: 'white' }}
-                imgSrc={{ uri: AuthImages.profile_image }}
-            /> */}
+            {
+                user?.image ?
+                    <Img
+                        width={90}
+                        height={90}
+                        imgStyle={{ borderRadius: 100, borderWidth: 4, borderColor: 'white' }}
+                        imgSrc={{ uri: `${imageBaseUrl}${user.image}` }}
+                    />
+                    :
+                    <Container
+                        containerStyle={{
+                            borderRadius: 100,
+                            justifyContent: 'center', alignItems: 'center',
+                            overflow: 'hidden',
+                            backgroundColor: 'white',
+                            borderWidth: 3,
+                            borderColor: 'white'
+                        }}
+                        width={90} height={90}
+                    >
+                        <Ionicons
+                            name='person'
+                            size={85}
+                            color='grey'
+                            style={{ top: 5 }}
+                        />
+                    </Container>
+            }
             <Label
                 style={{ color: "white", fontFamily: medium, letterSpacing: 0.5 }}
                 labelSize={20}

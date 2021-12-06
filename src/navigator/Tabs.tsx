@@ -12,6 +12,7 @@ import WinnerScreen from "../container/AppModule/WinnerScreen/view";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import MyGamesScreen from "../container/AppModule/MyGamesScreen";
 import NewsScreen from "../container/AppModule/NewsScreen/view";
+import LeaderBoardScreen from "../container/AppModule/LeaderBoardScreen";
 
 const Tab = createBottomTabNavigator<tabParamList>();
 
@@ -82,9 +83,25 @@ const Tabs = () => {
                     tabBarLabel: "My Games"
                 }}
             /> */}
-            <Tab.Screen name="Winners" component={WinnerScreen}
+            {/* <Tab.Screen name="Winners" component={WinnerScreen}
                 options={{
                     tabBarLabel: "Winners",
+                    tabBarIcon: ({ color, size }) => {
+                        return (
+                            <FontAwesome5 name="medal" size={size} color={color}
+                                style={{
+                                    transform: [{
+                                        rotate: "180deg"
+                                    }]
+                                }}
+                            />
+                        )
+                    }
+                }}
+            /> */}
+            <Tab.Screen name='LeaderBoard' component={LeaderBoardScreen}
+                options={{
+                    tabBarLabel: "LeaderBoard",
                     tabBarIcon: ({ color, size }) => {
                         return (
                             <FontAwesome5 name="medal" size={size} color={color}

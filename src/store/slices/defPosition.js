@@ -72,7 +72,7 @@ const defPositionSlice = createSlice( {
     extraReducers: builder => {
         builder.addCase( getDefPositionList.pending, ( state, action ) => {
             state.loading = true;
-            // state.data = [];
+            state.data = [];
         } ).addCase( getDefPositionList.fulfilled, ( state, action ) => {
             // console.log( "index", action.meta );
             state.data = action.payload;

@@ -32,6 +32,8 @@ const WinnerScreen: React.FC<props> = ({
     }
 
 
+    console.log("useWinnerTeamListQuery",data)
+
     return <MainContainer
         style={{ backgroundColor: 'white' }}
         loading={isLoading}
@@ -62,10 +64,10 @@ const WinnerScreen: React.FC<props> = ({
                 labelSize={15}
                 style={{
                     position: 'absolute',
-                    right: 15,
+                    right: 5,
                     fontWeight: 'bold'
                 }}
-            >Pf</Label>
+            >FanPts</Label>
         </Container>
         <View>
             <FlatList

@@ -10,7 +10,7 @@ import { fetchBaseQueryApi } from './fetchBaseQuery'
 export const LeagueApi = createApi({
     reducerPath: 'LeagueApi',
     baseQuery: fetchBaseQueryApi,
-    tagTypes: ['League', 'EditTeam', 'GetTeam'],
+    tagTypes: ['League', 'EditTeam', 'GetTeam','UpdateLeague'],
     endpoints: (builder) => ({
         createLeague: builder.mutation<any, any>({
             query: (credentials) => ({
@@ -39,7 +39,7 @@ export const LeagueApi = createApi({
                 method: 'POST',
                 body: credentials
             }),
-            // invalidatesTags: ['League'],
+            invalidatesTags: ['UpdateLeague'],
             transformResponse: (response) => {
                 console.log("createTeam Response==>", response)
                 return response;
@@ -127,8 +127,8 @@ export const LeagueApi = createApi({
             }
         }),
         liveMatchupRanking: builder.query({
-            query: ({ current_week }) => ({
-                url: `liveMatch?sort=id&order=desc&limit=10&week_no=${current_week}`
+            query: ({ current_week, limit }) => ({
+                url: `liveMatch?sort=id&order=desc&limit=${limit}&week_no=${current_week}`
             }),
             // providesTags: ['EditTeam'],
             transformResponse: (response: { data: LiveMatchUpResponse[] }) => {
@@ -153,7 +153,7 @@ export const LeagueApi = createApi({
                 method: 'POST',
                 body: credentials
             }),
-            invalidatesTags: ['League'],
+            invalidatesTags: ['UpdateLeague'],
             transformResponse: (response) => {
                 console.log("joinPrivateLeague Response==>", response)
                 return response;
@@ -205,7 +205,7 @@ export const LeagueApi = createApi({
                 method: 'POST',
                 body: credentials
             }),
-            // invalidatesTags: ['League'],
+            invalidatesTags: ['UpdateLeague'],
             transformResponse: (response) => {
                 console.log("createGame Response==>", response)
                 return response;
@@ -235,7 +235,7 @@ export const LeagueApi = createApi({
             query: (league_id) => ({
                 url: `leagueDetail?league_id=${league_id}`
             }),
-            // providesTags: ['League'],
+            providesTags: ['UpdateLeague'],
             transformResponse: (response: { data: MyLeagueResponse[] }) => {
                 console.log("leagueDetail res===>", response)
                 return response.data[0]

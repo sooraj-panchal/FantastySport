@@ -70,11 +70,11 @@ const ChangePasswordScreen: React.FC<navigationProps> = ({
                         validationSchema={yup.object().shape({
                             oldpassword: yup
                                 .string()
-                                .min(6)
+                                .min(4)
                                 .required("oldpassword is must be required"),
                             password: yup
                                 .string()
-                                .min(6)
+                                .min(4)
                                 .required("Password is must be required"),
                             confirmpassword: yup
                                 .string()

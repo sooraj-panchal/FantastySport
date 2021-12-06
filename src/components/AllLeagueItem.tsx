@@ -33,7 +33,7 @@ const MyLeagueItem: React.FC<MyLeagueResponse> = ({
 
     const navigation = useNavigation<homeNavProps>()
     const { dateText, matchDate, weekText } = useGetMatchStatus(week,deadline)
-
+    
     return (
         <Container
             containerStyle={{

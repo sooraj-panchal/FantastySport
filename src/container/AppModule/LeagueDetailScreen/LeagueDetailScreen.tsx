@@ -38,7 +38,7 @@ const LeagueDetailScreen: React.FC<props> = ({
 
     const { data: LeagueDetails, isLoading: loadingForLeagueDetail, error: leagueDetailError } = useLeagueDetailsQuery(route.params?.league_id)
 
-    const { data: GameDetails, isLoading, error } = useGameDetailsQuery<any>(newData, {
+    const { data: GameDetails, isLoading, error, isFetching } = useGameDetailsQuery<any>(newData, {
         refetchOnMountOrArgChange: true
     })
 
@@ -152,10 +152,13 @@ const LeagueDetailScreen: React.FC<props> = ({
     let imageType = LeagueDetails?.team_logo?.split('.').pop() == 'svg';
 
 
-        console.log('GameDetails',JSON.stringify(GameDetails))
+    console.log('GameDetails', JSON.stringify(GameDetails))
 
     return (
-        <MainContainer loading={loadingForLeagueDetail || isLoading} >
+        <MainContainer
+            loading={loadingForLeagueDetail || isLoading}
+            absoluteLoading={isFetching}
+        >
             <ScrollView
                 contentContainerStyle={{ paddingBottom: 100 }}
             >
@@ -265,7 +268,7 @@ const LeagueDetailScreen: React.FC<props> = ({
                         title='Match detail'
                         onPress={() => {
                             if (LeagueDetails?.is_game_created) {
-                                if (LeagueDetails.participant_user <= 3) {
+                                if (LeagueDetails.participant_user <= 2) {
                                     Alert.alert('Fantasy sniper', 'Wait for join other players!')
                                 } else {
                                     navigation.navigate('GameDetail', {
@@ -378,7 +381,7 @@ const LeagueDetailScreen: React.FC<props> = ({
                             }
                         </Container>
                         :
-                        weekText == 'Completed' ? null :
+                        // weekText == 'Completed' ? null :
                             <Container
                                 mpContainer={{ mt: 10 }}
                                 containerStyle={{

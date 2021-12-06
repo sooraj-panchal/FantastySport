@@ -141,8 +141,9 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                 }
                 <Container
                     mpContainer={{ ml: 10 }}
+                    containerStyle={{flex:1}}
                 >
-                    <Label labelSize={16} style={{ fontWeight: "bold", letterSpacing: 0.5 }}  >{getMyTeam?.team_name}</Label>
+                    <Label labelSize={16} style={{maxWidth:'55%'}}  >{getMyTeam?.team_name}</Label>
                     {/* <Label labelSize={14} style={{ letterSpacing: 0.5 }} >4-3-3 | - of 1</Label> */}
                 </Container>
                 <Container
@@ -160,7 +161,7 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                     <Label labelSize={14} style={{ color: 'grey' }} mpLabel={{ mt: 5 }}>Projection Pts. {getMyTeam?.projection_points?.toFixed(2)}</Label>
                 </Container>
             </Container>
-            <ScrollView horizontal={true} >
+            {/* <ScrollView horizontal={true} > */}
                 <ScrollView>
                     <Container
                         containerStyle={{
@@ -234,7 +235,7 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                         </>
                     })}
                 </ScrollView>
-            </ScrollView>
+            {/* </ScrollView> */}
         </ScrollView>
     </MainContainer>
 }

@@ -17,20 +17,20 @@ import { name as appName } from './app.json';
 //     onNotification: function (notification) {
 //       console.log("NOTIFICATION:", notification);
 
-//       PushNotification.localNotification({
-//         /* Android Only Properties */
-//         channelId: "fantasy_sport_channel", // (required) channelId, if the channel doesn't exist, notification will not trigger.
-//         vibrate: true, // (optional) default: true
-//         priority: "high", // (optional) set notification priority, default: high
-//         ignoreInForeground: false, // (optional) if true, the notification will not be visible when the app is in the foreground (useful for parity with how iOS notifications appear). should be used in combine with `com.dieam.reactnativepushnotification.notification_foreground` setting
-//         shortcutId: "shortcut-id", // (optional) If this notification is duplicative of a Launcher shortcut, sets the id of the shortcut, in case the Launcher wants to hide the shortcut, default undefined
-//         actions: ["Yes", "No"], // (Android only) See the doc for notification actions to know more
-//         /* iOS and Android properties */
-//         title: "My Notification Title", // (optional)
-//         message: "My Notification Message", // (required)
-//         playSound: true, // (optional) default: true
-//         soundName: "default", // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
-//       });
+//     //   PushNotification.localNotification({
+//     //     /* Android Only Properties */
+//     //     channelId: "fantasy_sport_channel", // (required) channelId, if the channel doesn't exist, notification will not trigger.
+//     //     vibrate: true, // (optional) default: true
+//     //     priority: "high", // (optional) set notification priority, default: high
+//     //     ignoreInForeground: false, // (optional) if true, the notification will not be visible when the app is in the foreground (useful for parity with how iOS notifications appear). should be used in combine with `com.dieam.reactnativepushnotification.notification_foreground` setting
+//     //     shortcutId: "shortcut-id", // (optional) If this notification is duplicative of a Launcher shortcut, sets the id of the shortcut, in case the Launcher wants to hide the shortcut, default undefined
+//     //     actions: ["Yes", "No"], // (Android only) See the doc for notification actions to know more
+//     //     /* iOS and Android properties */
+//     //     title: "My Notification Title", // (optional)
+//     //     message: "My Notification Message", // (required)
+//     //     playSound: true, // (optional) default: true
+//     //     soundName: "default", // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
+//     //   });
 
 //       // process the notification
 
@@ -72,8 +72,8 @@ import { name as appName } from './app.json';
 //     requestPermissions: true,
 //   });
 
-//   messaging().setBackgroundMessageHandler(async remoteMessage => {
-//     console.log('Message handled in the background!', remoteMessage);
-//   });
+// //   messaging().setBackgroundMessageHandler(async remoteMessage => {
+// //     console.log('Message handled in the background!', remoteMessage);
+// //   });
 
 AppRegistry.registerComponent( appName, () => App );

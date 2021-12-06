@@ -65,9 +65,17 @@ export const authApi = createApi({
         body: credentials
       })
       // transformResponse: (response: { data: UserResponse }) => response.data
+    }),
+    resendOtp: builder.mutation<any, any>({
+      query: (credentials) => ({
+        url: 'resendOTP',
+        method: 'POST',
+        body: credentials
+      })
+      // transformResponse: (response: { data: UserResponse }) => response.data
     })
   }),
 })
 
-export const { useLoginMutation, useRegisterMutation, useForgotPasswordMutation, useOtpVerifyMutation, useResetPasswordMutation, useChangePasswordMutation } = authApi
+export const { useLoginMutation, useRegisterMutation, useForgotPasswordMutation, useOtpVerifyMutation, useResetPasswordMutation, useChangePasswordMutation,useResendOtpMutation } = authApi
 

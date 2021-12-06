@@ -4,7 +4,7 @@ import { ListRenderItem } from 'react-native';
 import { View } from 'react-native-animatable';
 import { FlatList } from 'react-native-gesture-handler';
 import PagerView from 'react-native-pager-view';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MyLeagueList } from '../../../../arrayList';
 import { DarkBlueColor, greenColor, OrangeColor } from '../../../assets/colors';
 import { medium, regular } from '../../../assets/fonts/fonts';
@@ -17,7 +17,9 @@ import LiveMatchupRankingItem from '../../../components/LiveMatchupRankingItem';
 import MainContainer from '../../../components/MainContainer';
 import { useLiveMatchupRankingQuery } from '../../../features/league';
 import { RootState } from '../../../store';
+import { leagueDetailsWatcher } from '../../../store/slices/selectedLeague';
 import { homeNavProps, navigationProps } from '../../../types/nav';
+import { LiveMatchUpResponse, MyLeagueResponse } from '../../../types/responseTypes';
 import { screenWidth } from '../../../types/sizes';
 
 
@@ -26,16 +28,31 @@ const LiveMatch: React.FC = ({
 }) => {
     const { NFLCurrentWeek } = useSelector((store: RootState) => store.leaguePlayer)
     const { data, isLoading, error } = useLiveMatchupRankingQuery({
-        current_week: NFLCurrentWeek
+        current_week: NFLCurrentWeek,
+        limit: 3
     })
-
-    console.log('data===>', JSON.stringify(data))
+    const dispatch = useDispatch()
+    console.log('LiveMatchupRanking===>', JSON.stringify(data))
 
     const navigation = useNavigation<homeNavProps>()
 
-    const renderItem: ListRenderItem<any> = ({ item, index }) => {
+    const renderItem: ListRenderItem<LiveMatchUpResponse> = ({ item, index }) => {
         return <LiveMatchupRankingItem
             {...item}
+            onPressTeam={() => {
+                let week = []
+                week.push({ week_id: item.week_id, week_no: item.week_no })
+                const data = {
+                    ...item,
+                    week: week
+                }
+                // console.log(data)
+                dispatch(leagueDetailsWatcher({ ...data }))
+                navigation.navigate('TeamDetail', {
+                    team_id: item.id,
+                    fromOtherUser: true
+                })
+            }}
         />
     }
 
@@ -92,18 +109,22 @@ const LiveMatch: React.FC = ({
                                 mpContainer={{ ph: 15 }}
                                 height={45}
                             >
+                                <Container containerStyle={{
+                                    flex: 0.70
+                                }} >
+                                    <Label
+                                        labelSize={10}
+                                        style={{ color: 'white', fontFamily: medium }}
+                                    >League name</Label>
+                                    <Label
+                                        labelSize={14}
+                                        style={{ color: 'white', fontFamily: medium }}
+                                    >Team name</Label>
+                                </Container>
                                 <Label
-                                    labelSize={14}
-                                    style={{ color: 'white', fontFamily: medium, flex: 0.4 }}
-                                >Team</Label>
-                                <Label
-                                    labelSize={14}
-                                    style={{ color: 'white', fontFamily: medium, flex: 0.5 }}
-                                >League</Label>
-                                <Label
-                                    labelSize={14}
-                                    style={{ color: 'white', fontFamily: medium, flex: 0.2 }}
-                                >Pts</Label>
+                                    labelSize={12}
+                                    style={{ color: 'white', fontFamily: medium, flex: 0.3 }}
+                                >FanPts</Label>
                                 <Label
                                     labelSize={14}
                                     style={{ color: 'white', fontFamily: medium, flex: 0.2 }}
@@ -115,6 +136,9 @@ const LiveMatch: React.FC = ({
                                 showsVerticalScrollIndicator={false}
                                 scrollEnabled={false}
                                 keyExtractor={(_, index) => `livematchRanking${index.toString()}`}
+                                ItemSeparatorComponent={() => {
+                                    return <Container height={1} containerStyle={{ backgroundColor: 'lightgrey' }} mpContainer={{ mh: 10 }} />
+                                }}
                             />
                         </Container>
                     </>

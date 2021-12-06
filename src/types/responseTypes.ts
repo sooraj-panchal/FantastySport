@@ -116,7 +116,9 @@ export interface LiveMatchUpResponse {
   name: string,
   pts: number,
   rank: number,
-  team_name: string
+  team_name: string,
+  week_id?:number,
+  week_no?:number
 }
 
 export interface GameDetailResponse {

@@ -15,7 +15,7 @@ import { MyTeamLogoResponse, UserResponse } from '../../../types/responseTypes';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 import { useGetMyTeamLogoQuery } from '../../../features/sportsData';
-import { SvgUri } from 'react-native-svg';
+import { SvgCssUri, SvgUri } from 'react-native-svg';
 import ImagePicker from 'react-native-image-crop-picker';
 import { useUpdateTeamDetailsMutation } from '../../../features/league';
 import { AppStack } from '../../../navigator/navActions';
@@ -63,11 +63,11 @@ const EditTeamInfoScreen: React.FC<EditTeamNav> = ({
             <Container height={40} width={40} mpContainer={{ mh: 10 }}
             >
                 {imageType ?
-                    <SvgUri
-                        width={40}
-                        height={40}
-                        uri={item.WikipediaLogoUrl || ''}
-                    />
+                     <SvgCssUri
+                     width="100%"
+                     height="100%"
+                     uri={item.WikipediaLogoUrl || ''}
+                 />
                     :
                     <Img
                         imgStyle={{}}

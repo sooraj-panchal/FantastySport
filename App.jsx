@@ -14,7 +14,9 @@ import { PersistGate } from 'redux-persist/integration/react';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 import { URL, URLSearchParams } from 'react-native-url-polyfill';
 import { navigate, navigationRef } from './src/utils/NavigationHandler';
-import {NotificationHandler} from './src/utils/NotificationService'
+import { NotificationHandler } from './src/utils/NotificationService';
+import { SvgCssUri } from 'react-native-svg';
+
 const App = () => {
 
     // useEffect(()=>{
@@ -72,10 +74,10 @@ const App = () => {
                 console.log( 'week_id', week_id );
                 console.log( 'league_id', league_id );
                 // setTimeout( () => {
-                    navigate( 'LeagueDetail', {
-                        league_id: league_id,
-                        week_id: week_id,
-                    } );
+                navigate( 'LeagueDetail', {
+                    league_id: league_id,
+                    week_id: week_id,
+                } );
                 // },1000);
             }
         }
@@ -124,7 +126,7 @@ const App = () => {
                             league_id: league_id,
                             week_id: week_id,
                         } );
-                    }, 1000);
+                    }, 1000 );
                 }
             } );
     }, [] );
@@ -144,6 +146,12 @@ const App = () => {
                 </PersistGate>
             </Provider>
         </SafeAreaProvider>
+
+        // <SvgCssUri
+        //     width="100%"
+        //     height="100%"
+        //     uri="https://upload.wikimedia.org/wikipedia/en/d/d9/Cleveland_Browns_logo.svg"
+        // />
     );
 };
 

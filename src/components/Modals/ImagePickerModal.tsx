@@ -6,21 +6,39 @@ import Label from "../Label";
 import { Modalize } from 'react-native-modalize';
 import { Portal } from 'react-native-portalize';
 import { StyleSheet } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 interface props {
     modalizeRef: React.Ref<Modalize>,
-    onDone: (val: any) => void
+    onDone: (val: any) => void,
+    fromProfileUpdate?: boolean,
+    closeModal: () => void ;
 }
 
 const ImagePickerModal: React.FC<props> = ({
     modalizeRef,
-    onDone
+    onDone,
+    fromProfileUpdate,
+    closeModal
 }) => {
 
     const renderChildren = () => {
         return <>
             <Label labelSize={16} style={styles.selectPhotoText} mpLabel={{ mt: 10, pl: 10 }}
             >{'Select Photo'}</Label>
+            <Ionicons
+                name='ios-close'
+                size={30}
+                color='black'
+                style={{
+                    position: 'absolute',
+                    right: 10,
+                    top: 5
+                }}
+                onPress={() => {
+                closeModal()
+                }}
+            />
             <Container>
                 <Btn
                     title={'Take photo'}
@@ -44,6 +62,7 @@ const ImagePickerModal: React.FC<props> = ({
                     }}
                     textColor='white'
                 />
+    
             </Container>
         </>
     }
@@ -59,7 +78,8 @@ const ImagePickerModal: React.FC<props> = ({
                 childrenStyle={{
                     paddingBottom: 40
                 }}
-                closeOnOverlayTap={true}
+                // closeOnOverlayTap={true}
+                // withReactModal={fromProfileUpdate || false}
             >
                 {renderChildren()}
             </Modalize>
@@ -76,6 +96,6 @@ const styles = StyleSheet.create({
     },
     selectPhotoText: {
         letterSpacing: 0.7,
-        color: GrayColor
+        color: 'black'
     }
 })
