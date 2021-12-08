@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { ListRenderItem, ScrollView, View } from 'react-native';
+import { Alert, ListRenderItem, ScrollView, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Container from '../../../components/Container';
 import InputBox from '../../../components/InputBox';
@@ -83,6 +83,8 @@ const EditTeamInfoScreen: React.FC<CreateTeamNav> = ({
     }
 
     const saveDataHandler = () => {
+        if(teamName.length){
+
         let WikipediaLogoUrl = data?.find((item, index) => index == teamIndex)?.WikipediaLogoUrl
         let logo = teamLogo || WikipediaLogoUrl
 
@@ -108,6 +110,9 @@ const EditTeamInfoScreen: React.FC<CreateTeamNav> = ({
         joinLeagueWatcher(formData).unwrap().then(() => {
             navigation.dispatch(AppStack)
         })
+    }else{
+        Alert.alert('Fantasy Sniper','Team name is required field.')
+    }
     }
 
     const PickFromGallery = () => {
@@ -160,7 +165,7 @@ const EditTeamInfoScreen: React.FC<CreateTeamNav> = ({
                     value={teamName}
                     onChangeText={(v) => setTeamName(v)}
                 />
-                <Label
+                {/* <Label
                     mpLabel={{ ml: 15, mt: 10 }}
                     labelSize={20}
                 >Select team logo</Label>
@@ -175,7 +180,7 @@ const EditTeamInfoScreen: React.FC<CreateTeamNav> = ({
                 <Label
                     mpLabel={{ ml: 15, mt: 20 }}
                     labelSize={20}
-                >OR</Label>
+                >OR</Label> */}
                 <Label
                     mpLabel={{ ml: 15, mt: 20 }}
                     labelSize={18}

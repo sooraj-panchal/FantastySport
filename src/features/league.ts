@@ -10,7 +10,7 @@ import { fetchBaseQueryApi } from './fetchBaseQuery'
 export const LeagueApi = createApi({
     reducerPath: 'LeagueApi',
     baseQuery: fetchBaseQueryApi,
-    tagTypes: ['League', 'EditTeam', 'GetTeam','UpdateLeague'],
+    tagTypes: ['League', 'EditTeam', 'GetTeam'],
     endpoints: (builder) => ({
         createLeague: builder.mutation<any, any>({
             query: (credentials) => ({
@@ -39,7 +39,7 @@ export const LeagueApi = createApi({
                 method: 'POST',
                 body: credentials
             }),
-            invalidatesTags: ['UpdateLeague'],
+            invalidatesTags: ['League'],
             transformResponse: (response) => {
                 console.log("createTeam Response==>", response)
                 return response;
@@ -49,7 +49,7 @@ export const LeagueApi = createApi({
             query: ({ league_id, week_id }) => ({
                 url: `teamList/${league_id}/${week_id}`
             }),
-            providesTags: ['EditTeam'],
+            providesTags: ['EditTeam','League'],
             transformResponse: (response: { data: MyTeamResponse[] }) => {
                 console.log("teamList Response==>", response)
                 return response.data[0];
@@ -61,7 +61,7 @@ export const LeagueApi = createApi({
                 method: 'POST',
                 body: credentials
             }),
-            invalidatesTags: ['EditTeam'],
+            invalidatesTags: ['EditTeam','League'],
             transformResponse: (response) => {
                 console.log("response Response==>", response)
                 return response;
@@ -110,7 +110,7 @@ export const LeagueApi = createApi({
             query: ({ team_id, op_team_id }) => ({
                 url: `matchDetail/${team_id}/${op_team_id}`
             }),
-            // providesTags: ['League'],
+            providesTags: ['League'],
             transformResponse: (response: { data: TeamMatchDetailsResponse[] }) => {
                 console.log("matchDetail===>", JSON.stringify(response))
                 return response.data
@@ -120,7 +120,7 @@ export const LeagueApi = createApi({
             query: (league_id) => ({
                 url: `allTeamByLeague/${league_id}`
             }),
-            // providesTags: ['EditTeam'],
+            providesTags: ['League'],
             transformResponse: (response: { data: TeamListResponse[] }) => {
                 console.log("getTeamsByLeague Response==>", response)
                 return response.data;
@@ -153,7 +153,7 @@ export const LeagueApi = createApi({
                 method: 'POST',
                 body: credentials
             }),
-            invalidatesTags: ['UpdateLeague'],
+            invalidatesTags: ['League'],
             transformResponse: (response) => {
                 console.log("joinPrivateLeague Response==>", response)
                 return response;
@@ -193,7 +193,7 @@ export const LeagueApi = createApi({
             query: ({ league_id, week_id }) => ({
                 url: `gameDetail?league_id=${league_id}&week_id=${week_id}`
             }),
-            // providesTags: ['EditTeam'],
+            providesTags: ['League'],
             transformResponse: (response: { data: GameDetailResponse[] }) => {
                 console.log("gameDetails Response==>", response)
                 return response.data
@@ -205,7 +205,7 @@ export const LeagueApi = createApi({
                 method: 'POST',
                 body: credentials
             }),
-            invalidatesTags: ['UpdateLeague'],
+            invalidatesTags: ['League'],
             transformResponse: (response) => {
                 console.log("createGame Response==>", response)
                 return response;
@@ -215,7 +215,7 @@ export const LeagueApi = createApi({
             query: ({ current_week }) => ({
                 url: `myjoinLeague?week_no=${current_week}`
             }),
-            // providesTags: ['EditTeam'],
+            providesTags: ['League'],
             transformResponse: (response: { data: MyLeagueResponse[] }) => {
                 console.log("myGameList Response==>", response)
                 return response.data
@@ -225,7 +225,7 @@ export const LeagueApi = createApi({
             query: ({ current_week }) => ({
                 url: `userAllLeague`
             }),
-            // providesTags: ['League'],
+            providesTags: ['League'],
             transformResponse: (response: { data: MyLeagueResponse[] }) => {
                 console.log("LeaguesAndGames res===>", response)
                 return response.data
@@ -235,7 +235,7 @@ export const LeagueApi = createApi({
             query: (league_id) => ({
                 url: `leagueDetail?league_id=${league_id}`
             }),
-            providesTags: ['UpdateLeague'],
+            providesTags: ['League'],
             transformResponse: (response: { data: MyLeagueResponse[] }) => {
                 console.log("leagueDetail res===>", response)
                 return response.data[0]
@@ -245,7 +245,7 @@ export const LeagueApi = createApi({
             query: (team_id) => ({
                 url: `teamDetail/${team_id}`
             }),
-            providesTags: ['GetTeam', 'EditTeam'],
+            providesTags: ['GetTeam', 'EditTeam','League'],
             transformResponse: (response: { data: MyTeamResponse[] }) => {
                 console.log("getTeamDetailByLeague Response==>", response)
                 return response.data[0]
@@ -257,7 +257,7 @@ export const LeagueApi = createApi({
                 method: 'POST',
                 body: credentials
             }),
-            invalidatesTags: ['GetTeam'],
+            invalidatesTags: ['GetTeam','League'],
             transformResponse: (response) => {
                 console.log("updateGame Response==>", response)
                 return response;

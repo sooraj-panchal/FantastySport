@@ -6,7 +6,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import { ListRenderItem, View } from 'react-native';
 import { navigationProps } from '../../../types/nav';
 import WinnerList from '../../../components/WinnerList';
-import { useGameDetailsQuery, useLeagueListQuery, useWinnerTeamListQuery } from '../../../features/league';
+import { useGameDetailsQuery, useLeagueDetailsQuery, useLeagueListQuery, useWinnerTeamListQuery } from '../../../features/league';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -14,6 +14,9 @@ import { Modalize } from 'react-native-modalize';
 import LeagueListModal from '../../../components/Modals/LeagueListModal';
 import GamePlayerList from '../../../components/GamePlayerList';
 import { leagueUpdateWatcher } from '../../../store/slices/selectedLeague';
+import Img from '../../../components/Img';
+import { AppImages } from '../../../assets/images/map';
+import { medium } from '../../../assets/fonts/fonts';
 interface props extends navigationProps {
 
 }
@@ -28,15 +31,17 @@ const LeaderBoardScreen: React.FC<props> = ({
     const { data: leagueList, isLoading: loadingForLeague } = useLeagueListQuery(null)
 
     useEffect(() => {
-        dispatch(leagueUpdateWatcher({
-            league_id: leagueList?.[0]?.league_id,
-            week_id: leagueList?.[0]?.week[0]?.week_id
-        }))
+        if (leagueList?.length) {
+            dispatch(leagueUpdateWatcher({
+                league_id: leagueList?.[0]?.league_id,
+                week_id: leagueList?.[0]?.week[0]?.week_id
+            }))
+        }
     }, [])
 
     // console.log("leagueData", leagueData ? leagueData : { league_id: leagueList?.[0]?.league_id, week_id: leagueList?.[0]?.week[0]?.week_id })
 
-    console.log('leagueList', leagueList)
+    console.log('leagueData', leagueData)
 
     // let newData = {
     //     league_id: leagueList?.[0]?.league_id,
@@ -46,6 +51,7 @@ const LeaderBoardScreen: React.FC<props> = ({
     const { data, isLoading, error, isFetching } = useGameDetailsQuery<any>(leagueData, {
         refetchOnMountOrArgChange: true,
     })
+    const { data: LeagueDetails, isLoading: loadingForLeagueDetail, error: leagueDetailError } = useLeagueDetailsQuery(leagueData?.league_id)
 
     // const { data, isLoading } = useWinnerTeamListQuery({
     //     current_week: NFLCurrentWeek
@@ -114,48 +120,170 @@ const LeaderBoardScreen: React.FC<props> = ({
     }
 
     // console.log("useWinnerTeamListQuery", data)
+    // let imageType = LeagueDetails?.team_logo?.split('.').pop() == 'svg';
 
     return <MainContainer
         style={{ backgroundColor: 'white' }}
-        loading={isLoading}
+        loading={isLoading || loadingForLeagueDetail}
         absoluteLoading={isFetching}
     >
-        <Container
-            containerStyle={{
-                flexDirection: 'row',
-                alignItems: 'center',
-            }}
-            mpContainer={{ mh: 10, mt: 15, mb: 5 }}
-        >
-            <Label
-                labelSize={16}
-                mpLabel={{ ml: 10 }}
-                numberOfLines={1}
-                style={{
-                    fontWeight: 'bold'
-                }}
-            >Rank</Label>
-            <Label
-                labelSize={15}
-                mpLabel={{ ml: 20 }}
-                style={{
-                    fontWeight: 'bold'
-                }}
-            >Team</Label>
-            <Label
-                labelSize={15}
-                style={{
-                    position: 'absolute',
-                    right: 5,
-                    fontWeight: 'bold'
-                }}
-            >FanPts</Label>
-        </Container>
+        {
+            leagueList?.length ?
+                <Container
+                    containerStyle={{
+                        backgroundColor: 'white',
+                        marginTop: 10,
+                        marginHorizontal: 15,
+                        borderRadius: 5
+                    }}
+                    mpContainer={{ pv: 10, ph: 10 }}
+                >
+                    {
+                        LeagueDetails?.is_your_league ?
+                            <Container containerStyle={{
+                                flexDirection: 'row'
+                            }}>
+                                <Img
+                                    imgSrc={AppImages.league_icon}
+                                    imgStyle={{
+                                        width: 40,
+                                        height: 40,
+                                        resizeMode: 'contain',
+                                    }}
+                                />
+                                <Container
+                                    containerStyle={{
+                                        flex: 0.8
+                                    }}
+                                    mpContainer={{ ml: 10 }}
+                                >
+                                    <Label
+                                        labelSize={12}
+                                        textColor='grey'
+                                        // mpLabel={{ pl: 10 }}
+                                        style={{ fontFamily: medium }}
+                                    >Created by you</Label>
+                                    <Label style={{
+                                        fontFamily: medium
+                                    }}
+                                        labelSize={18}
+                                        textColor='black'
+                                        numberOfLines={2}
+                                    >{LeagueDetails?.name}</Label>
+                                </Container>
+                            </Container>
+                            : <Container containerStyle={{
+                                flexDirection: 'row'
+                            }}>
+                                <Img
+                                    imgSrc={AppImages.green_logo}
+                                    imgStyle={{
+                                        width: 40,
+                                        height: 40,
+                                        resizeMode: 'contain',
+                                    }}
+                                />
+                                <Container
+                                    containerStyle={{
+                                        flex: 0.8
+                                    }}
+                                    mpContainer={{ ml: 10 }}
+                                >
+                                    <Label
+                                        labelSize={12}
+                                        textColor='grey'
+                                        // mpLabel={{ pl: 10 }}
+                                        style={{ fontFamily: medium }}
+                                    >Created by {LeagueDetails?.user_name}</Label>
+                                    <Label style={{
+                                        fontFamily: medium
+                                    }}
+                                        labelSize={18}
+                                        textColor='black'
+                                        numberOfLines={2}
+                                    >{LeagueDetails?.name}</Label>
+                                </Container>
+                            </Container>
+                    }
+                    <Label
+                        mpLabel={{ mt: 5 }}
+                        labelSize={15}
+                    >Scope: {LeagueDetails?.week_type == 'singleWeek' ? 'Week #' : 'Multiple games'}</Label>
+                    <Label
+                        mpLabel={{ mt: 5 }}
+                        labelSize={15}
+                    >No. of Participant: {!LeagueDetails?.participant_user ? 0 : LeagueDetails?.participant_user}/{LeagueDetails?.max_participant}</Label>
+                    {/* <Label>No. of. week: 4 Week</Label> */}
+                    {/* <Label
+                        labelSize={15}
+                        mpLabel={{ mt: 5 }}
+                    >Week no: {LeagueDetails?.week[0]?.week_no} Week</Label> */}
+                    <Img
+                        imgSrc={AppImages.team}
+                        width={40} height={40}
+                        imgStyle={{
+                            top: 10,
+                            resizeMode: 'contain',
+                            position: 'absolute',
+                            right: 10
+                        }}
+                    />
+                </Container> : null
+        }
+        {
+            leagueList?.length ?
+                <Container
+                    containerStyle={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                    }}
+                    mpContainer={{ mh: 10, mt: 5, mb: 5 }}
+                >
+                    <Label
+                        labelSize={16}
+                        mpLabel={{ ml: 10 }}
+                        numberOfLines={1}
+                        style={{
+                            fontWeight: 'bold'
+                        }}
+                    >Rank</Label>
+                    <Label
+                        labelSize={15}
+                        mpLabel={{ ml: 20 }}
+                        style={{
+                            fontWeight: 'bold'
+                        }}
+                    >Team</Label>
+                    <Label
+                        labelSize={15}
+                        style={{
+                            position: 'absolute',
+                            right: 5,
+                            fontWeight: 'bold'
+                        }}
+                    >FanPts</Label>
+                </Container> : null
+        }
         <View>
             <FlatList
                 data={data}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => `Winners${index.toString()}`}
+                ListEmptyComponent={() => {
+                    return <Container
+                        containerStyle={{
+                            flex: 1,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                        height={300}
+                    >
+                        <Label
+                            labelSize={20}
+
+                        >No Data found..</Label>
+                    </Container>
+                }}
             />
         </View>
         <LeagueListModal

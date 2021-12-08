@@ -304,7 +304,6 @@ const LeagueDetailScreen: React.FC<props> = ({
                             right: 10
                         }}
                     />
-
                 </Container>
                 {
                     LeagueDetails?.you_join_league ?

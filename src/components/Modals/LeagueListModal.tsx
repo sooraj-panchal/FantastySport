@@ -24,8 +24,8 @@ import { useLeagueListQuery } from '../../features/league';
 import { MyLeagueResponse } from '../../types/responseTypes';
 
 interface props {
-    closeModal: (league_id:any,week_id:any) => void,
-    modalizeRef: React.Ref<Modalize>
+    closeModal: (league_id: any, week_id: any) => void,
+    modalizeRef: React.Ref<Modalize> | any
 }
 
 
@@ -43,9 +43,9 @@ const LeagueListModal: React.FC<props> = ({
             <Container
                 containerStyle={{
                     justifyContent: 'center',
-                    backgroundColor:  'white'
+                    backgroundColor: 'white'
                 }}
-                height={50}
+                height={40}
                 mpContainer={{ pl: 20 }}
                 onPress={() => {
                     closeModal(item.league_id, item.week[0]?.week_id)
@@ -59,7 +59,7 @@ const LeagueListModal: React.FC<props> = ({
                 >{item.name}</Label>
                 {/* {
                     index == 1 ? */}
-                <Container
+                {/* <Container
                     containerStyle={{
                         borderRadius: 30,
                         position: 'absolute',
@@ -79,7 +79,7 @@ const LeagueListModal: React.FC<props> = ({
                         }}
                         color={'white'}
                     />
-                </Container>
+                </Container> */}
                 {/* : null */}
                 {/* } */}
             </Container>
@@ -89,8 +89,8 @@ const LeagueListModal: React.FC<props> = ({
         <Portal>
             <Modalize ref={modalizeRef}
                 modalStyle={{
-                    borderTopLeftRadius: 20,
-                    borderTopRightRadius: 20,
+                    borderTopLeftRadius: 10,
+                    borderTopRightRadius: 10,
                 }}
                 childrenStyle={{
                     paddingBottom: 40
@@ -103,6 +103,25 @@ const LeagueListModal: React.FC<props> = ({
                     renderItem: renderItem,
                     keyExtractor: (item, index) => `renderPosition${index.toString()}`,
                     showsVerticalScrollIndicator: false,
+                    ListHeaderComponent: () => {
+                        return <Container>
+                            <Label
+                                labelSize={20}
+                                mpLabel={{ mh: 20, mv: 10 }}
+                            >League List</Label>
+                            <Ionicons
+                                name='md-close'
+                                size={30}
+                                style={{
+                                    position: 'absolute',
+                                    right: 15, top: 10
+                                }}
+                                onPress={() => {
+                                    modalizeRef?.current?.close()
+                                }}
+                            />
+                        </Container>
+                    }
                 }}
             />
         </Portal>

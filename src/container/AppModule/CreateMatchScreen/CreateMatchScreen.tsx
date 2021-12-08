@@ -461,7 +461,6 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                     />
                 </Container> : null
         }
-
         <ScrollView>
             <Container
                 containerStyle={{

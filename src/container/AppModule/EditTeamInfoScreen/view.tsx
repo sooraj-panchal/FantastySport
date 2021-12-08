@@ -63,11 +63,11 @@ const EditTeamInfoScreen: React.FC<EditTeamNav> = ({
             <Container height={40} width={40} mpContainer={{ mh: 10 }}
             >
                 {imageType ?
-                     <SvgCssUri
-                     width="100%"
-                     height="100%"
-                     uri={item.WikipediaLogoUrl || ''}
-                 />
+                    <SvgCssUri
+                        width="100%"
+                        height="100%"
+                        uri={item.WikipediaLogoUrl || ''}
+                    />
                     :
                     <Img
                         imgStyle={{}}
@@ -138,7 +138,7 @@ const EditTeamInfoScreen: React.FC<EditTeamNav> = ({
                     value={teamName}
                     onChangeText={(v) => setTeamName(v)}
                 />
-                <Label
+                {/* <Label
                     mpLabel={{ ml: 15, mt: 10 }}
                     labelSize={20}
                 >Select team logo</Label>
@@ -153,7 +153,7 @@ const EditTeamInfoScreen: React.FC<EditTeamNav> = ({
                 <Label
                     mpLabel={{ ml: 15, mt: 20 }}
                     labelSize={20}
-                >OR</Label>
+                >OR</Label> */}
                 <Label
                     mpLabel={{ ml: 15, mt: 20 }}
                     labelSize={18}
