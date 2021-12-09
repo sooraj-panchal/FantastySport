@@ -34,7 +34,7 @@ const ScheduleTeamItem: React.FC<scheduleItemTypes & other> = ({
                 borderRadius: 5,
                 justifyContent: "center",
                 alignItems: "flex-start",
-                // opacity: canSelectSchedule ? 1 : 0.5
+                opacity: canSelectSchedule ? 1 : 0.5
             }}
             mpContainer={{ mh: 15 }}
         >
@@ -168,11 +168,11 @@ const ScheduleTeamItem: React.FC<scheduleItemTypes & other> = ({
                         }}
                         width={35} height={35}
                         onPress={() => {
-                            // if (canSelectSchedule) {
+                            if (canSelectSchedule) {
                                 onPress()
-                            // } else {
-                            //     Alert.alert('Fantasy sniper', 'You cannot select this schedule')
-                            // }
+                            } else {
+                                Alert.alert('Fantasy sniper', 'You cannot select this schedule')
+                            }
                         }}
                     >
                         <Ionicons

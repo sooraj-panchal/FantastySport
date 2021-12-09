@@ -1,18 +1,16 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import Container from '../../../components/Container';
 import MainContainer from '../../../components/MainContainer';
 import { navigationProps } from '../../../types/nav';
 import { FlatList } from 'react-native-gesture-handler';
 import { ListRenderItem, View } from 'react-native';
-import { scheduleItemTypes, scheduleListTypes } from '../../../types/flatListTypes';
+import { scheduleItemTypes } from '../../../types/flatListTypes';
 import { useDispatch, useSelector } from 'react-redux';
 import { getScheduleListWatcher, selectedScheduleList, selecteSchedule, updateWeek } from '../../../store/slices/schedule';
 import { RootState } from '../../../types/reduxTypes';
 import Label from '../../../components/Label';
 import { IWeek } from '../../../utils/jsonArray';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useCreateLeagueMutation } from '../../../features/league';
-import { screenWidth } from '../../../types/sizes';
 import ScheduleTeamItem from '../../../components/ScheduleTeamItem';
 interface props extends navigationProps { }
 
@@ -90,6 +88,7 @@ const HeadToHeadTab: React.FC<props> = ({
         offset: 140 * index,
         index
     }), [])
+
     const renderSelectedWeekItem: ListRenderItem<IWeek> = ({ item, index }) => {
         let isCurrentWeek = item.week == currentWeek;
         return <Container

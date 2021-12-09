@@ -41,13 +41,17 @@ const CreateLeagueScreen: React.FC<props> = ({
     const onChangeScope = (value: boolean) => {
         setIsSingleWeek(value)
     }
-
-
+    
 
     const createLeagueHandler = () => {
         // console.log('selectedScheduleData',selectedScheduleData[0].start_time)
-        if (leagueName.length && numOfParticipent.length && selectedScheduleData?.length) {
-
+        if (!selectedScheduleData?.length) {
+            Alert.alert("Fantasy sniper", "Please select atleast 1 game.")
+        } else if (!leagueName.length) {
+            Alert.alert("Fantasy sniper", "League name should not be empty.")
+        } else if (parseInt(numOfParticipent) < 5) {
+            Alert.alert("Fantasy sniper", "Participent should be minimum 5")
+        } else {
             const mySelectedWeek = selectedWeek.map((item, index) => ({ week: item.week }))
             const leagueTeam = selectedScheduleData.map((item, index) => {
                 return {
@@ -87,8 +91,6 @@ const CreateLeagueScreen: React.FC<props> = ({
                 navigation.dispatch(AppStack)
                 // }
             })
-        } else {
-            Alert.alert("Fantasy sniper", "All Field is required")
         }
     }
 
@@ -397,12 +399,14 @@ const CreateLeagueScreen: React.FC<props> = ({
                 mpContainer={{ mh: 15, mt: 10, pl: 10 }}
                 textSize={14}
                 containerStyle={{ borderColor: "lightgrey" }}
-                inputStyle={{color:'black'}}
+                inputStyle={{ color: 'black' }}
                 inputHeight={45}
                 // value={'10'}
                 value={numOfParticipent}
                 onChangeText={(val) => setNumOfParticipent(val)}
-                // editable={false}
+                maxLength={2}
+                keyboardType='numeric'
+            // editable={false}
             />
         </>
     }
