@@ -782,11 +782,13 @@
     <string name="common_open_on_phone">Open on phone</string>
     <string name="common_signin_button_text">Sign in</string>
     <string name="common_signin_button_text_long">Sign in with Google</string>
+    <string name="default_notification_channel_id">fantasysniper</string>
     <string name="default_web_client_id" translatable="false">470440487634-lfs834utcft3oqeov5hc4mtetdhdb7bn.apps.googleusercontent.com</string>
     <string name="error_icon_content_description">Error</string>
     <string name="exposed_dropdown_menu_content_description">Show dropdown menu</string>
     <string name="fab_transformation_scrim_behavior" translatable="false">com.google.android.material.transformation.FabTransformationScrimBehavior</string>
     <string name="fab_transformation_sheet_behavior" translatable="false">com.google.android.material.transformation.FabTransformationSheetBehavior</string>
+    <string name="fcm_fallback_notification_channel_label">Miscellaneous</string>
     <string name="gcm_defaultSenderId" translatable="false">470440487634</string>
     <string name="google_api_key" translatable="false">AIzaSyDqJLU5hfvacBtzINjSpBRA6GNCubFX74w</string>
     <string name="google_app_id" translatable="false">1:470440487634:android:8c94978af2894899dedb0b</string>

@@ -29,6 +29,8 @@ import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 // react-native-pager-view
 import com.reactnativepagerview.PagerViewPackage;
+// react-native-push-notification
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 // react-native-reanimated
 import com.swmansion.reanimated.ReanimatedPackage;
 // react-native-safe-area-context
@@ -95,6 +97,7 @@ public class PackageList {
       new RNGestureHandlerPackage(),
       new PickerPackage(),
       new PagerViewPackage(),
+      new ReactNativePushNotificationPackage(),
       new ReanimatedPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage(),
