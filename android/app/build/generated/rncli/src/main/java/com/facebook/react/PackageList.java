@@ -19,8 +19,6 @@ import com.reactnativecommunity.checkbox.ReactCheckBoxPackage;
 import io.invertase.firebase.app.ReactNativeFirebaseAppPackage;
 // @react-native-firebase/dynamic-links
 import io.invertase.firebase.dynamiclinks.ReactNativeFirebaseDynamicLinksPackage;
-// @react-native-firebase/messaging
-import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;
 // @react-native-masked-view/masked-view
 import org.reactnative.maskedview.RNCMaskedViewPackage;
 // @react-native-picker/picker
@@ -31,8 +29,6 @@ import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 // react-native-pager-view
 import com.reactnativepagerview.PagerViewPackage;
-// react-native-push-notification
-import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 // react-native-reanimated
 import com.swmansion.reanimated.ReanimatedPackage;
 // react-native-safe-area-context
@@ -94,13 +90,11 @@ public class PackageList {
       new ReactCheckBoxPackage(),
       new ReactNativeFirebaseAppPackage(),
       new ReactNativeFirebaseDynamicLinksPackage(),
-      new ReactNativeFirebaseMessagingPackage(),
       new RNCMaskedViewPackage(),
       new RNCPickerPackage(),
       new RNGestureHandlerPackage(),
       new PickerPackage(),
       new PagerViewPackage(),
-      new ReactNativePushNotificationPackage(),
       new ReanimatedPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage(),

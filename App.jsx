@@ -14,11 +14,17 @@ import { PersistGate } from 'redux-persist/integration/react';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 import { URL, URLSearchParams } from 'react-native-url-polyfill';
 import { navigate, navigationRef } from './src/utils/NavigationHandler';
-import { NotificationHandler } from './src/utils/NotificationService';
-import { SvgCssUri } from 'react-native-svg';
 
 const App = () => {
 
+    // useEffect(() => {
+    //     const unsubscribe = messaging().onMessage(async remoteMessage => {
+    //       Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    //     });
+    
+    //     return unsubscribe;
+    //   }, []);
+    
     // useEffect(()=>{
     //     NotificationHandler()
     // },[])
