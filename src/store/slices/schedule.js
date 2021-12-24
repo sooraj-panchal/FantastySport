@@ -77,8 +77,14 @@ const scheduleSlice = createSlice( {
             state.currentWeek = action.payload;
         },
         selecteSchedule: ( state, action ) => {
-            state.data[ action.payload ][ 'isSelected' ] = !state.data[ action.payload ][ 'isSelected' ];
-            state.data = state.data;
+            let data = state.data.map((item, placeIndex) => {
+                return {
+                    ...item,
+                    isSelected: action.payload == placeIndex ? true : false
+                }
+            })
+            // state.data[ action.payload ][ 'isSelected' ] = !state.data[ action.payload ][ 'isSelected' ];
+            state.data = data;
         },
         selectedScheduleList: ( state, action ) => {
             state.selectedScheduleData = action.payload;

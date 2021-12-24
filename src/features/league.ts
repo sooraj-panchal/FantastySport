@@ -1,10 +1,8 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
 import axios from 'axios'
-import { AnyMessageParams } from 'yup/lib/types'
-import { mainUrl } from '../services/apiPaths'
 import { RootState } from '../store'
 import { liveMatchWatcher } from '../store/slices/myPlayerList'
-import { forgotPasswordResponse, GameDetailResponse, LeagueItemResponse, LiveMatchUpResponse, MyLeagueResponse, MyTeamResponse, TeamListResponse, TeamMatchDetailsResponse, UserResponse } from '../types/responseTypes'
+import { GameDetailResponse, LeagueItemResponse, LiveMatchUpResponse, MyLeagueResponse, MyTeamResponse, teamDetailResponse, TeamListResponse, TeamMatchDetailsResponse, UserResponse } from '../types/responseTypes'
 import { fetchBaseQueryApi } from './fetchBaseQuery'
 
 export const LeagueApi = createApi({
@@ -49,7 +47,7 @@ export const LeagueApi = createApi({
             query: ({ league_id, week_id }) => ({
                 url: `teamList/${league_id}/${week_id}`
             }),
-            providesTags: ['EditTeam','League'],
+            providesTags: ['EditTeam', 'League'],
             transformResponse: (response: { data: MyTeamResponse[] }) => {
                 console.log("teamList Response==>", response)
                 return response.data[0];
@@ -57,11 +55,11 @@ export const LeagueApi = createApi({
         }),
         updateTeamDetails: builder.mutation<any, any>({
             query: (credentials) => ({
-                url: 'editTeam',
+                url: 'updateTeam',
                 method: 'POST',
                 body: credentials
             }),
-            invalidatesTags: ['EditTeam','League'],
+            invalidatesTags: ['EditTeam', 'League'],
             transformResponse: (response) => {
                 console.log("response Response==>", response)
                 return response;
@@ -245,7 +243,7 @@ export const LeagueApi = createApi({
             query: (team_id) => ({
                 url: `teamDetail/${team_id}`
             }),
-            providesTags: ['GetTeam', 'EditTeam','League'],
+            providesTags: ['GetTeam', 'EditTeam', 'League'],
             transformResponse: (response: { data: MyTeamResponse[] }) => {
                 console.log("getTeamDetailByLeague Response==>", response)
                 return response.data[0]
@@ -257,10 +255,20 @@ export const LeagueApi = createApi({
                 method: 'POST',
                 body: credentials
             }),
-            invalidatesTags: ['GetTeam','League'],
+            invalidatesTags: ['GetTeam', 'League'],
             transformResponse: (response) => {
                 console.log("updateGame Response==>", response)
                 return response;
+            }
+        }),
+        getTeamDetails: builder.query({
+            query: (team_id) => ({
+                url: `getTeamDetail`
+            }),
+            providesTags: ['GetTeam', 'EditTeam', 'League'],
+            transformResponse: (response: { data: teamDetailResponse }) => {
+                console.log("getTeamDetail Response==>", response)
+                return response.data
             }
         }),
     }),
@@ -288,6 +296,7 @@ export const {
     useMyGameListQuery,
     useLeaguesAndGamesQuery,
     useLeagueDetailsQuery,
-    useUpdateGameMutation
+    useUpdateGameMutation,
+    useGetTeamDetailsQuery
 } = LeagueApi
 

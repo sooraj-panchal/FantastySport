@@ -37,10 +37,16 @@ const AddPlayerPointScreen: React.FC<AddPlayerProps> = ({
             const data = playerList.map((item, index) => {
                 let B2 = item.PredictionPoints
                 let C2 = item.FantasyPointsDraftKings
+                let sniper;
+                if (B2 > C2) {
+                    sniper = 0
+                } else {
+                    sniper = (B2 / C2) * B2
+                }
                 return {
                     ...item,
                     Accuracy: B2 && C2 ? Math.abs(B2 / C2).toFixed(0) : 0,
-                    SniperPoints: item.FantasyPointsDraftKings == 0 ? 0 : ((1 - Math.abs((B2 - C2) / C2)) * C2).toFixed(0)
+                    SniperPoints: sniper.toFixed(2)
                 }
             })
             console.log(data)

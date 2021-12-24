@@ -1,11 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
+import moment from 'moment';
 import React from 'react';
 import { SvgUri } from 'react-native-svg';
 import { useDispatch } from 'react-redux';
-import { OrangeColor } from '../assets/colors';
+import { OrangeColor, PrimaryColor } from '../assets/colors';
 import { bold, medium } from '../assets/fonts/fonts';
 import { AppImages } from '../assets/images/map';
+import { useJoinPrivateLeagueMutation } from '../features/league';
 import useGetMatchStatus from '../hooks/matchStatus';
+import { AppStack } from '../navigator/navActions';
 import { leagueDetailsWatcher } from '../store/slices/selectedLeague';
 import { homeNavProps } from '../types/nav';
 import { MyLeagueResponse } from '../types/responseTypes';
@@ -16,7 +19,9 @@ import Label from './Label';
 
 interface props {
     createMatchHandler: () => void,
-    goToTeamDetail: () => void
+    goToTeamDetail: () => void,
+    joinLeagueHandler: () => void
+
 }
 
 const PublicGameList: React.FC<MyLeagueResponse & props> = ({
@@ -30,18 +35,19 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
     team_name,
     is_game_created,
     you_join_league,
-    createMatchHandler,
     team_id,
     user_name,
     deadline,
     scoring_system,
-    goToTeamDetail
+    league_flag,
+    createMatchHandler,
+    goToTeamDetail,
+    joinLeagueHandler
 }) => {
     let imageType = team_logo?.split('.').pop() == 'svg';
     const dispatch = useDispatch()
     const navigation = useNavigation<homeNavProps>()
-    const { dateText, matchDate, weekText } = useGetMatchStatus(week, deadline)
-
+    // const { dateText, matchDate, weekText } = useGetMatchStatus(week, deadline)
     return (
         <Container
             containerStyle={{
@@ -132,30 +138,23 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
                 labelSize={14}
                 style={{ color: 'black' }}
                 mpLabel={{ pl: 10, mt: 5 }}
-            >{`${dateText}: ${matchDate}`}</Label>
+            >{`${league_flag.dateText}: ${moment(league_flag?.matchDate).format('MMM D, LT')}`}</Label>
             <Label
                 style={{
                     color: "green",
                 }}
                 labelSize={14}
                 mpLabel={{ mt: 5, pl: 10 }}
-            >{weekText}</Label>
+            >{league_flag?.weekText}</Label>
 
             <Container
                 containerStyle={{
                     alignItems: 'flex-end',
                     position: 'absolute',
-                    right: 15,
-                    top: 5
+                    right: 10,
+                    top: 0
                 }}
             >
-                <Label
-                    style={{
-                        color: "green"
-                    }}
-                    labelSize={14}
-                // onPress={createMatchHandler}
-                >View detail</Label>
                 <Img
                     imgSrc={AppImages.team}
                     width={30} height={28}
@@ -175,119 +174,162 @@ const PublicGameList: React.FC<MyLeagueResponse & props> = ({
                 >{participant_user}/{max_participant}</Label>
             </Container>
             {
-                you_join_league ?
-                    <Container containerStyle={{
-                        borderWidth: 0.5,
-                        // borderTopWidth: 1,
-                        justifyContent: "center",
-                        borderRadius: 4,
-                        borderColor: 'grey'
-                    }}
-                        height={45}
-                        mpContainer={{ ph: 10, mt: 15, mh: 10 }}
-                        onPress={() => {
-                            // navigation.navigate('TeamDetail', {
-                            //     team_id: team_id
-                            // })
-                        }}
-                    >
-                        <Container
-                            containerStyle={{
-                                flexDirection: 'row',
-                                alignItems: "center",
-                                flex:1
-                            }}
-                        >
-                            {
-                                imageType ?
-                                    <SvgUri
-                                        width={25}
-                                        height={28}
-                                        uri={team_logo || ''}
-                                    />
-                                    :
-                                    <Img
-                                        imgSrc={{ uri: team_logo || '' }}
-                                        imgStyle={{ borderRadius: 25 }}
-                                        width={28} height={28} />
-                            }
-                            <Label
-                                mpLabel={{ ml: 10 }}
-                                labelSize={18}
-                                style={{maxWidth:'60%'}}
-                                numberOfLines={1}
-                            >{team_name}</Label>
-                        </Container>
-                        {
-                            is_game_created ?
-                                <Label
-                                    style={{
-                                        position: 'absolute',
-                                        right: 10,
-                                        color: "green"
-                                    }}
-                                    labelSize={14}
-                                    onPress={() => {
-                                        goToTeamDetail()
-                                    }}
-                                >View</Label>
-                                :
-                                <Label
-                                    style={{
-                                        position: 'absolute',
-                                        right: 10,
-                                        color: "green",
-                                    }}
-                                    labelSize={14}
-                                    mpLabel={{ mt: 5 }}
-                                    onPress={createMatchHandler}
-                                >Create team</Label>
-                        }
-                    </Container>
+                you_join_league ? null
+                    // <Container containerStyle={{
+                    //     borderWidth: 0.5,
+                    //     // borderTopWidth: 1,
+                    //     justifyContent: "center",
+                    //     borderRadius: 4,
+                    //     borderColor: 'grey'
+                    // }}
+                    //     height={45}
+                    //     mpContainer={{ ph: 10, mt: 15, mh: 10 }}
+                    //     onPress={() => {
+                    //         // navigation.navigate('TeamDetail', {
+                    //         //     team_id: team_id
+                    //         // })
+                    //     }}
+                    // >
+                    //     {/* <Container
+                    //         containerStyle={{
+                    //             flexDirection: 'row',
+                    //             alignItems: "center",
+                    //             flex: 1
+                    //         }}
+                    //     >
+                    //         {
+                    //             imageType ?
+                    //                 <SvgUri
+                    //                     width={25}
+                    //                     height={28}
+                    //                     uri={team_logo || ''}
+                    //                 />
+                    //                 :
+                    //                 <Img
+                    //                     imgSrc={{ uri: team_logo || '' }}
+                    //                     imgStyle={{ borderRadius: 25 }}
+                    //                     width={28} height={28} />
+                    //         }
+                    //         <Label
+                    //             mpLabel={{ ml: 10 }}
+                    //             labelSize={18}
+                    //             style={{ maxWidth: '60%' }}
+                    //             numberOfLines={1}
+                    //         >{team_name}</Label>
+                    //     </Container> */}
+                    //     {
+                    //         is_game_created ?
+                    //             <Label
+                    //                 style={{
+                    //                     position: 'absolute',
+                    //                     right: 10,
+                    //                     color: "green"
+                    //                 }}
+                    //                 labelSize={14}
+                    //                 onPress={() => {
+                    //                     goToTeamDetail()
+                    //                 }}
+                    //             >View</Label>
+                    //             :
+                    //             <Label
+                    //                 style={{
+                    //                     position: 'absolute',
+                    //                     right: 10,
+                    //                     color: "green",
+                    //                 }}
+                    //                 labelSize={14}
+                    //                 mpLabel={{ mt: 5 }}
+                    //                 onPress={createMatchHandler}
+                    //             >Create team</Label>
+                    //     }
+                    // </Container>
                     :
                     // is_your_league && weekText != 'Completed' ?
-                        <Container
-                            containerStyle={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: "center"
+                    <Container
+                        containerStyle={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: "center"
+                        }}
+                        mpContainer={{ mt: 5 }}
+                    >
+                        <Label>Want to Join Your League?</Label>
+                        <Btn
+                            title="Join"
+                            onPress={() => {
+                                // console.log({
+                                //     week_id: week[0]?.week_id,
+                                //     type: 'public',
+                                //     league_id: league_id
+                                // })
+                                joinLeagueHandler()
+                                // navigation.navigate('CreateTeam', {
+                                //     week_id: week[0]?.week_id,
+                                //     type: 'public',
+                                //     league_id: league_id
+                                // })
+                                // createMatchHandler()
                             }}
-                            mpContainer={{ mt: 5 }}
-                        >
-                            <Label>Want to Join Your League?</Label>
-                            <Btn
-                                title="Create team"
-                                onPress={() => {
-                                    // console.log({
-                                    //     week_id: week[0]?.week_id,
-                                    //     type: 'public',
-                                    //     league_id: league_id
-                                    // })
-                                    navigation.navigate('CreateTeam', {
-                                        week_id: week[0]?.week_id,
-                                        type: 'public',
-                                        league_id: league_id
-                                    })
-                                    // createMatchHandler()
-                                }}
-                                btnStyle={{
-                                    backgroundColor: 'white',
-                                    borderWidth: 1,
-                                    borderColor: OrangeColor,
-                                    borderRadius: 10,
-                                    // width:100,
-                                    // alignSelf:'center',
-                                    // position:"absolute",
-                                    // top:-10,
-                                    height: 25
-                                }}
-                                mpBtn={{ mh: 10, ph: 10, mt: 2 }}
-                                labelSize={12}
-                                textColor={OrangeColor}
-                            />
-                        </Container>
-                        // : null
+                            btnStyle={{
+                                backgroundColor: 'white',
+                                borderWidth: 1,
+                                borderColor: OrangeColor,
+                                borderRadius: 10,
+                                // width:100,
+                                // alignSelf:'center',
+                                // position:"absolute",
+                                // top:-10,
+                                height: 25
+                            }}
+                            mpBtn={{ mh: 10, ph: 10, mt: 2 }}
+                            labelSize={12}
+                            textColor={OrangeColor}
+                        />
+                    </Container>
+                // : null
             }
+            {
+                is_game_created ?
+                    <Btn
+                        title='View team'
+                        onPress={() => {
+                            goToTeamDetail()
+                        }}
+                        btnStyle={{
+                            backgroundColor: 'white',
+                            borderWidth: 1,
+                            borderColor:PrimaryColor,
+                            borderRadius: 10,
+                            position: "absolute",
+                            right: 10,
+                            bottom: 6
+                        }}
+                        btnHeight={25}
+                        textColor={PrimaryColor}
+                        labelSize={10}
+                        mpBtn={{ ph: 10 }}
+                    /> :
+                    <Btn
+                        title='Create team'
+                        onPress={() => {
+                            createMatchHandler()
+                        }}
+                        btnStyle={{
+                            backgroundColor: 'white',
+                            borderWidth: 1,
+                            borderColor: 'green',
+                            borderRadius: 10,
+                            position: "absolute",
+                            right: 10,
+                            bottom: 6
+                        }}
+                        btnHeight={25}
+                        textColor='green'
+                        labelSize={10}
+                        mpBtn={{ ph: 10 }}
+                    />
+            }
+
             {/* {
                 scoring_system == 'SNIPER+' ?
                     <Container

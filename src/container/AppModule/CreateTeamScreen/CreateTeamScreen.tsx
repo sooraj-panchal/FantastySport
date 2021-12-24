@@ -1,118 +1,68 @@
-import React, { useRef, useState } from 'react';
-import { Alert, ListRenderItem, ScrollView, View } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import React, { useEffect, useRef, useState } from 'react';
+import { Alert, ScrollView } from 'react-native';
 import Container from '../../../components/Container';
 import InputBox from '../../../components/InputBox';
 import Label from '../../../components/Label';
 import MainContainer from '../../../components/MainContainer';
 import { CreateTeamNav } from '../../../types/nav';
-import { screenWidth } from '../../../types/sizes';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Btn from '../../../components/Btn';
 import Img from '../../../components/Img';
 import { OrangeColor } from '../../../assets/colors';
-import { MyTeamLogoResponse } from '../../../types/responseTypes';
-import { useGetMyTeamLogoQuery } from '../../../features/sportsData';
-import { SvgUri } from 'react-native-svg';
-import { useJoinPrivateLeagueMutation } from '../../../features/league';
+import { useGetTeamDetailsQuery, useUpdateTeamDetailsMutation } from '../../../features/league';
 import { AppStack } from '../../../navigator/navActions';
 import ImagePickerModal from '../../../components/Modals/ImagePickerModal';
 import { Modalize } from 'react-native-modalize';
 import ImagePicker from 'react-native-image-crop-picker';
+import { imageBaseUrl } from '../../../utils/globals';
 
 
 const EditTeamInfoScreen: React.FC<CreateTeamNav> = ({
     navigation, route
 }) => {
     const modalizeRef = useRef<Modalize>(null)
+    const { data: getTeamDetails, isLoading: teamDetailLoading } = useGetTeamDetailsQuery(null)
 
-    const [teamName, setTeamName] = useState('')
-    const { data, isLoading } = useGetMyTeamLogoQuery('')
-    const [teamIndex, setTeamIndex] = useState<number>(-1)
+    const [teamName, setTeamName] = useState<string>('')
+    // const { data, isLoading } = useGetMyTeamLogoQuery('')
+    // const [teamIndex, setTeamIndex] = useState<number>(-1)
     const [teamLogo, setTeamLogo] = useState<string>('')
-    const [joinLeagueWatcher, { data: joinLeagueRes, isLoading: joinLeagueLoading, error }] = useJoinPrivateLeagueMutation<any>()
 
-    console.log('joinLeague err=>', error)
-    console.log('joinLeagueRes=>', joinLeagueRes)
+    const [updateTeamDetails, { data: updateTeamData, isLoading: updateTeamDetailLoading, error }] = useUpdateTeamDetailsMutation<any>()
 
-    const renderItem: ListRenderItem<MyTeamLogoResponse> = ({ item, index }) => {
-        let imageType = item.WikipediaLogoUrl?.split('.').pop() == 'svg';
-        return <Container
-            containerStyle={{
-                flexDirection: 'row', alignItems: 'center',
-                width: screenWidth * 0.30,
-                justifyContent: 'center'
-            }}
-            mpContainer={{ mt: 10, ml: 10 }}
-            onPress={() => {
-                setTeamIndex(index)
-                setTeamLogo('')
-            }}
-        >
-            <Container containerStyle={{
-                borderWidth: 1.5, borderColor: 'black',
-                borderRadius: 30,
-                justifyContent: 'center',
-                alignItems: 'center'
-            }} height={20} width={20} >
-                {
-                    index == teamIndex ?
-                        <Container
-                            containerStyle={{ backgroundColor: 'black', borderRadius: 30 }}
-                            width={10} height={10}
-                        /> : null
-                }
-            </Container>
-            <Container height={40} width={40} mpContainer={{ mh: 10 }}
-            >
-                {imageType ?
-                    <SvgUri
-                        width={40}
-                        height={40}
-                        uri={item.WikipediaLogoUrl || ''}
-                    />
-                    :
-                    <Img
-                        imgStyle={{}}
-                        width={40} height={40}
-                        mpImage={{ ml: 15 }}
-                        imgSrc={{ uri: item.WikipediaLogoUrl || ' dummy' }} />
-                }
-            </Container>
-        </Container>
-    }
+    console.log('getTeamDetails=>', getTeamDetails)
+
+    useEffect(() => {
+        if (getTeamDetails != undefined)
+            setTeamName(getTeamDetails?.team_name || '')
+        setTeamLogo(getTeamDetails?.team_logo ? `${imageBaseUrl}/${getTeamDetails?.team_logo}` : '')
+
+    }, [getTeamDetails])
 
     const saveDataHandler = () => {
-        if(teamName.length){
-
-        let WikipediaLogoUrl = data?.find((item, index) => index == teamIndex)?.WikipediaLogoUrl
-        let logo = teamLogo || WikipediaLogoUrl
-
-        console.log('WikipediaLogoUrl', WikipediaLogoUrl)
-        let formData = new FormData()
-        formData.append('unique_code', route.params?.code || '')
-        formData.append('team_name', teamName)
-        formData.append('week_id', route.params?.week_id)
-        formData.append('type', route.params?.type)
-        formData.append('league_id', route.params?.league_id || '')
-        let file_name = logo?.substring(logo?.lastIndexOf('/') + 1);
-        let extension = logo?.split('.').pop();
-        if (logo) {
-            formData.append('team_logo', {
-                uri: logo,
-                name: file_name,
-                type: extension == 'svg' ? 'image/svg' : 'image/jpg'
-            });
+        if (teamName.length) {
+            let formData = new FormData()
+            formData.append('team_name', teamName)
+            // formData.append('team_id', route.params?.team_id)
+            let file_name = teamLogo?.substring(teamLogo?.lastIndexOf('/') + 1);
+            let extension = teamLogo?.split('.').pop();
+            if (teamLogo) {
+                formData.append('team_logo', {
+                    uri: teamLogo,
+                    name: file_name,
+                    type: extension == 'svg' ? 'image/svg' : 'image/jpg'
+                });
+            } else {
+                formData.append('team_logo', '')
+            }
+            console.log("data", JSON.stringify(formData))
+            updateTeamDetails(formData).unwrap().then(() => {
+                navigation.dispatch(AppStack)
+            })
+            // navigation.navigate('EditTeam')
         } else {
-            formData.append('team_logo', '')
+            Alert.alert('Fantasy Sniper', 'Team name is required field.')
         }
-        console.log("data", JSON.stringify(formData))
-        joinLeagueWatcher(formData).unwrap().then(() => {
-            navigation.dispatch(AppStack)
-        })
-    }else{
-        Alert.alert('Fantasy Sniper','Team name is required field.')
-    }
     }
 
     const PickFromGallery = () => {
@@ -123,7 +73,7 @@ const EditTeamInfoScreen: React.FC<CreateTeamNav> = ({
         }).then(image => {
             console.log(image);
             setTeamLogo(image.path)
-            setTeamIndex(-1)
+            // setTeamIndex(-1)
         }).catch((err) => {
             console.log(err);
         });
@@ -137,7 +87,7 @@ const EditTeamInfoScreen: React.FC<CreateTeamNav> = ({
         }).then(image => {
             console.log(image);
             setTeamLogo(image.path)
-            setTeamIndex(-1)
+            // setTeamIndex(-1)
         }).catch((err) => {
             console.log(err);
         });
@@ -145,9 +95,9 @@ const EditTeamInfoScreen: React.FC<CreateTeamNav> = ({
 
     return (
         <MainContainer
-            loading={isLoading}
-            absoluteModalLoading={joinLeagueLoading}
-            successMessage={joinLeagueRes?.message}
+            loading={teamDetailLoading}
+            absoluteModalLoading={updateTeamDetailLoading}
+            successMessage={updateTeamData?.message}
             errorMessage={error}
         >
             <ScrollView
@@ -214,13 +164,13 @@ const EditTeamInfoScreen: React.FC<CreateTeamNav> = ({
                     }
                 </Container>
                 <Btn
-                    title="SAVE"
+                    title="Save And Update"
                     btnStyle={{
                         backgroundColor: OrangeColor,
                         width: "90%",
                         alignSelf: 'center'
                     }}
-                    labelSize={18}
+                    labelSize={16}
                     labelStyle={{ color: "white" }}
                     onPress={saveDataHandler}
                     btnHeight={45}
@@ -237,7 +187,7 @@ const EditTeamInfoScreen: React.FC<CreateTeamNav> = ({
                         PickFromGallery();
                     }
                 }}
-                closeModal={()=>{
+                closeModal={() => {
                     modalizeRef.current?.close();
                 }}
                 modalizeRef={modalizeRef}

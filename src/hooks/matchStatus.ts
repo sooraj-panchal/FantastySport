@@ -127,6 +127,7 @@ const useGetMatchStatus = (week: any, deadlineDate: Date | any) => {
                 })
             }
         }
+        
         if (matchStartTime > currentDate && week?.[0].week_no >= NFLCurrentWeek) {
             console.log('match will start soon at', matchStartTime);
             if (new Date(deadlineDate) < matchStartTime) {
@@ -139,16 +140,6 @@ const useGetMatchStatus = (week: any, deadlineDate: Date | any) => {
                     isEnded: false,
                 })
             } else {
-                // if (matchEndingTime > currentDate && week?.[0].week_no == NFLCurrentWeek) {
-                // console.log('matchEndingTime', matchEndingTime);
-                // setData({
-                //     dateText: 'End time',
-                //     matchDate: moment(getMatchEndTime).format('MMM D, LT'),
-                //     weekText: 'Started',
-                //     isStarted: true,
-                //     isEnded: false
-                // })
-                // } else {
                 setData({
                     dateText: 'Start time',
                     matchDate: moment(getMatchStartTime).format('MMM D, LT'),
@@ -156,11 +147,10 @@ const useGetMatchStatus = (week: any, deadlineDate: Date | any) => {
                     isStarted: true,
                     isEnded: false
                 })
-                // }
             }
         }
 
-    }, [week,NFLCurrentWeek]);
+    }, [week, NFLCurrentWeek]);
     return { ...data }
 };
 

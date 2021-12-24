@@ -101,7 +101,7 @@ const HeadToHeadTab: React.FC<props> = ({
                 // width: screenWidth * 0.30,
                 flex: 0.32,
                 alignItems: "center",
-                opacity: isCurrentWeek ? 1 : 0.3
+                // opacity: isCurrentWeek ? 1 : 0.3
             }}
             height={40}
             mpContainer={{ mt: 10, ml: 15 }}

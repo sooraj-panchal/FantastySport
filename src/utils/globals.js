@@ -8,6 +8,6 @@ export function getStatusBarHeight(val = 0) {
 
 export const baseUrl = "https://chessmafia.com/php/fantasy/api/"
 export const imageBaseUrl = 'https://chessmafia.com/php/fantasy/public/uploads/'
-// export const fcmToken = '';
+export const fcmToken = '';
 
 

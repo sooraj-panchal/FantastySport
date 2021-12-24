@@ -70,20 +70,20 @@ const LiveMatchupRankings: React.FC<navigationProps> = ({
                         borderRadius: 10,
                         elevation: 5
                     }}
-                    mpContainer={{ ph: 15 }}
+                    mpContainer={{ ph: 10 }}
                     height={45}
                 >
                     <Container containerStyle={{
                         flex: 0.70
                     }} >
                         <Label
-                            labelSize={10}
-                            style={{ color: 'white', fontFamily: medium }}
-                        >League name</Label>
-                        <Label
                             labelSize={14}
                             style={{ color: 'white', fontFamily: medium }}
-                        >Team name</Label>
+                        >League name</Label>
+                        {/* <Label
+                            labelSize={14}
+                            style={{ color: 'white', fontFamily: medium }}
+                        >Team name</Label> */}
                     </Container>
                     <Label
                         labelSize={12}

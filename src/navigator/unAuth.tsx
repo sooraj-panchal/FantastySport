@@ -163,7 +163,7 @@ const AppStackScreen: React.ReactNode = () => {
                 component={CreateTeamScreen}
                 options={({ navigation }) => ({
                     headerShown: true,
-                    headerTitle: "Create team"
+                    headerTitle: "Team Details"
                 })}
             />
             <StackScreen.Screen

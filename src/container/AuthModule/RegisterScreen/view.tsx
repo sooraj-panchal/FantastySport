@@ -18,6 +18,7 @@ import AuthWrapper from '../../../components/AuthWrapper'
 import { useRegisterMutation } from '../../../features/auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../store'
+import { fcmToken } from '../../../utils/globals'
 
 
 interface props extends navigationProps {
@@ -50,20 +51,16 @@ const RegisterScreen: React.FC<props> = ({
         data.append('password', values.password)
         data.append('google_id', '')
         data.append('facebook_id', '')
-        data.append('fcm_token', '')
-        // data.append('fcm_id', '')
-        // console.log(data)
+        data.append('fcm_token', fcmToken)
         try {
             const user = await register(data).unwrap()
-            console.log(user)
-            // dispatch(setCredentials({ user: user }))
+            // console.log(user)
             navigation.navigate('Verification', {
                 email: user.email,
             })
         } catch (err) {
             console.log('err', err)
         }
-        // register(data)
     }
 
     return (

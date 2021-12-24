@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import Container from '../../../components/Container';
 import MainContainer from '../../../components/MainContainer';
 import PublicGameList from '../../../components/PublicGameList';
-import { useLeaguesAndGamesQuery } from '../../../features/league';
+import { useJoinPrivateLeagueMutation, useLeaguesAndGamesQuery } from '../../../features/league';
+import { AppStack } from '../../../navigator/navActions';
 import { RootState } from '../../../store';
+import { addToMyPlayerWatcher, setMyTeamWatcher } from '../../../store/slices/myPlayerList';
 import { leagueDetailsWatcher } from '../../../store/slices/selectedLeague';
 import { navigationProps } from '../../../types/nav';
 import { MyLeagueResponse } from '../../../types/responseTypes';
@@ -19,6 +21,7 @@ const MyLeagueScreen: React.FC<props> = ({
     const { data: publicLeagueList, isLoading: publicLeagueLoading, isFetching, error, refetch } = useLeaguesAndGamesQuery({
         current_week: NFLCurrentWeek
     }, { refetchOnMountOrArgChange: true })
+    const [joinLeagueWatcher, { data: joinLeagueRes, isLoading: joinLeagueLoading }] = useJoinPrivateLeagueMutation<any>()
 
     const dispatch = useDispatch()
 
@@ -27,8 +30,9 @@ const MyLeagueScreen: React.FC<props> = ({
             {...item}
             createMatchHandler={() => {
                 // console.log('item',item)
-
                 dispatch(leagueDetailsWatcher({ ...item }))
+                dispatch(addToMyPlayerWatcher([]))
+                dispatch(setMyTeamWatcher([]))
                 navigation.navigate('CreateMatch')
             }}
             goToTeamDetail={() => {
@@ -37,19 +41,32 @@ const MyLeagueScreen: React.FC<props> = ({
                     team_id: item.team_id
                 })
             }}
+            joinLeagueHandler={() => {
+                let formData = new FormData()
+                formData.append('unique_code', '')
+                formData.append('week_id', item.week[0]?.week_id)
+                formData.append('type', 'public')
+                formData.append('league_id', item.league_id)
+                console.log("data", JSON.stringify(formData))
+                joinLeagueWatcher(formData).unwrap().then(() => {
+                    navigation.dispatch(AppStack)
+                })
+            }}
         />
     }
 
-    console.log('publicLeagueList', JSON.stringify(publicLeagueList))
+    console.log('publicLeagueList error', JSON.stringify(error))
 
     return (
         <MainContainer
             loading={publicLeagueLoading}
+            absoluteModalLoading={joinLeagueLoading}
+            successMessage={joinLeagueRes?.message}
         >
             <FlatList
                 data={publicLeagueList}
                 renderItem={renderPublicGame}
-                keyExtractor={(item, index) => `Public game ${index.toString()}`}
+                keyExtractor={(item, index) => `${index.toString()}`}
                 ListHeaderComponent={() => <Container mpContainer={{ mt: 10 }} />}
                 ListFooterComponent={() => <Container mpContainer={{ mb: 10 }} />}
                 ItemSeparatorComponent={() => <Container mpContainer={{ mt: 10 }} />}

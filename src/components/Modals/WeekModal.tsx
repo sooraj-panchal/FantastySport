@@ -61,25 +61,24 @@ const WeekModal: React.FC<props> = ({
             <Container
                 containerStyle={{
                     justifyContent: 'center',
-                    backgroundColor: item.isSelected ? '#f7dfd2' : 'white',
                     // backgroundColor: item.isSelected ? '#f7dfd2' : 'white',
+                    backgroundColor: item.isSelected ? '#f7dfd2' : 'white',
                     borderWidth: 1,
                     borderColor: "grey",
                     borderRadius: 4,
                     // width:screenWidth*0.15,
                     flex: 0.32,
                     alignItems: "center",
-                    opacity: item.week >= NFLCurrentWeek ? 1 : 0.2,
-
+                    // opacity: item.week >= NFLCurrentWeek ? 1 : 0.2,
                 }}
                 height={40}
                 mpContainer={{ mt: 10, ml: 15 }}
                 onPress={() => {
-                    if (item.week >= NFLCurrentWeek) {
+                    // if (item.week >= NFLCurrentWeek) {
                         selectWeekHandler(item, index)
-                    } else {
-                        Alert.alert('Fantasy sniper', 'You cannot select previous week')
-                    }
+                    // } else {
+                    //     Alert.alert('Fantasy sniper', 'You cannot select previous week')
+                    // }
                 }}
             >
                 <Label

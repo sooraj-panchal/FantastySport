@@ -208,7 +208,7 @@ const LeaderBoardScreen: React.FC<props> = ({
                     <Label
                         mpLabel={{ mt: 5 }}
                         labelSize={15}
-                    >Scope: {LeagueDetails?.week_type == 'singleWeek' ? 'Week #' : 'Multiple games'}</Label>
+                    >Scope: {LeagueDetails?.week_type == 'singleWeek' ? `Week #${LeagueDetails.week[0]?.week_no}` : 'Multiple games'}</Label>
                     <Label
                         mpLabel={{ mt: 5 }}
                         labelSize={15}

@@ -13,7 +13,7 @@ export const myPlayerListSlice = createSlice( {
         addToMyPlayerWatcher: ( state, action ) => {
             let data = action.payload?.filter( ( thing, index, self ) =>
                 index === self.findIndex( ( t ) => {
-                    console.log( t.PlayerID === thing.PlayerID );
+                    // console.log( t.PlayerID === thing.PlayerID );
                     return t.PlayerID === thing.PlayerID;
                 } )
             );
@@ -24,7 +24,7 @@ export const myPlayerListSlice = createSlice( {
         },
         setMyTeamWatcher: ( state, action ) => {
             let { data, isFromEdit } = action.payload;
-            state.data = data;
+            state.data = data == undefined ? [] : data;
             state.isFromEdit = isFromEdit;
         },
         

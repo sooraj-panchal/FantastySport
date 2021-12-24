@@ -38,7 +38,7 @@ const MyPlayersList: React.FC<PlayerPositionTypes> = ({
                 mpContainer={{ ml: 10 }}
                 height={55}
             >
-                <Label labelSize={10} style={{  color: 'grey', width: 30 }} >{Position}</Label>
+                <Label labelSize={10} style={{ color: 'grey', width: 30 }} >{Position}</Label>
                 <Ionicons
                     name="md-person"
                     size={40}
@@ -49,7 +49,7 @@ const MyPlayersList: React.FC<PlayerPositionTypes> = ({
                         marginTop: 10
                     }}
                 />
-                <Label labelSize={14} style={{  color: "grey" }} >Empty</Label>
+                <Label labelSize={14} style={{ color: "grey" }} >Empty</Label>
                 <Container
                     containerStyle={{
                         borderWidth: 2,
@@ -63,7 +63,7 @@ const MyPlayersList: React.FC<PlayerPositionTypes> = ({
                         right: 10
                     }}
                     width={30} height={30}
-                    onPress={() => {    
+                    onPress={() => {
                         if (Position == 'DEF') {
                             dispatch(getDefPositionList())
                             defModalRef.current?.open()
@@ -79,7 +79,7 @@ const MyPlayersList: React.FC<PlayerPositionTypes> = ({
                         name="add-sharp"
                         size={25}
                         style={{
-                         
+
                         }}
                         color={OrangeColor}
                     />
@@ -101,7 +101,7 @@ const MyPlayersList: React.FC<PlayerPositionTypes> = ({
         return <>
             <Container
                 containerStyle={{ flexDirection: "row", alignItems: "center", width: screenWidth }}
-                mpContainer={{ ml:10 }}
+                mpContainer={{ ml: 10 }}
                 height={60}
                 key={`teamheader${PlayerID}`}
             >
@@ -126,17 +126,17 @@ const MyPlayersList: React.FC<PlayerPositionTypes> = ({
                     }
                 </Container>
                 <Container containerStyle={{ width: screenWidth * 0.25 }} >
-                    <Label labelSize={12} style={{  color: "black" }} numberOfLines={1} >{Name}</Label>
-                    <Label labelSize={10} style={{  color: "grey" }} mpLabel={{ mt: 2 }} >{moment(GameDate).format('ddd')} {useTime(GameDate)} v {Opponent}</Label>
+                    <Label labelSize={12} style={{ color: "black" }} numberOfLines={1} >{Name}</Label>
+                    <Label labelSize={10} style={{ color: "grey" }} mpLabel={{ mt: 2 }} >{moment(GameDate).format('ddd')} {useTime(GameDate)} v {Opponent}</Label>
                 </Container>
                 <Container containerStyle={{ width: screenWidth * 0.12, justifyContent: 'center', alignItems: 'center' }} width={50} >
-                    <Label labelSize={10} style={{  color: "green" }}>{FantasyPointsDraftKings}</Label>
+                    <Label labelSize={10} style={{ color: "green" }}>{FantasyPointsDraftKings}</Label>
                 </Container>
                 <Container containerStyle={{ width: screenWidth * 0.10, justifyContent: 'center', alignItems: 'center' }} width={60} >
-                    <Label labelSize={10} style={{  color: "black" }}>{PredictionPoints}</Label>
+                    <Label labelSize={10} style={{ color: "black" }}>{PredictionPoints}</Label>
                 </Container>
                 <Container containerStyle={{ width: screenWidth * 0.16, justifyContent: 'center', alignItems: 'center' }} width={60} >
-                    <Label labelSize={10} style={{  color: "black" }}>{SniperPoints}</Label>
+                    <Label labelSize={10} style={{ color: "black" }}>{SniperPoints}</Label>
                 </Container>
                 <FontAwesome5
                     name='exchange-alt'
@@ -145,8 +145,10 @@ const MyPlayersList: React.FC<PlayerPositionTypes> = ({
                     onPress={() => {
                         console.log(Position)
                         if (Position == 'DEF') {
+                            // const data = {
+                            //     league_week = 
+                            // }
                             dispatch(getDefPositionList())
-
                             defModalRef.current?.open()
                         } else {
                             navigation.navigate('AddPlayer', {
@@ -156,9 +158,9 @@ const MyPlayersList: React.FC<PlayerPositionTypes> = ({
                         }
                     }}
                     style={{
-                        width:50,
-                        position:'absolute',
-                        right:0
+                        width: 50,
+                        position: 'absolute',
+                        right: 0
                     }}
                 />
                 {/* <Label labelSize={10} style={{ color: "red",fontFamily:medium }}>Change</Label> */}

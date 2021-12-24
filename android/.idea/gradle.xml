@@ -17,7 +17,6 @@
             <option value="$PROJECT_DIR$/../node_modules/@react-native-community/checkbox/android" />
             <option value="$PROJECT_DIR$/../node_modules/@react-native-firebase/app/android" />
             <option value="$PROJECT_DIR$/../node_modules/@react-native-firebase/dynamic-links/android" />
-            <option value="$PROJECT_DIR$/../node_modules/@react-native-firebase/messaging/android" />
             <option value="$PROJECT_DIR$/../node_modules/@react-native-masked-view/masked-view/android" />
             <option value="$PROJECT_DIR$/../node_modules/@react-native-picker/picker/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-gesture-handler/android" />

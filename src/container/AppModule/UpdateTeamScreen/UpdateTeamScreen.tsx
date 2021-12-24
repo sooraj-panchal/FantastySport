@@ -19,6 +19,7 @@ import { useCreateGameMutation, useGetMyTeamsQuery, useUpdateGameMutation } from
 import { addToMyPlayerWatcher, setMyTeamWatcher } from '../../../store/slices/myPlayerList';
 import UpdatePlayerList from '../../../components/UpdatePlayerItem';
 import { AppStack } from '../../../navigator/navActions';
+import { medium } from '../../../assets/fonts/fonts';
 
 const UpdateTeamScreen: React.FC<navigationProps> = ({
     navigation
@@ -48,6 +49,7 @@ const UpdateTeamScreen: React.FC<navigationProps> = ({
     React.useLayoutEffect(() => {
         return (
             navigation.setOptions({
+                headerTitle: 'Edit Lineup',
                 headerRight: () => {
                     return <Btn
                         title="Save"
@@ -79,6 +81,23 @@ const UpdateTeamScreen: React.FC<navigationProps> = ({
     // console.log('myPlayerListData', JSON.stringify(myPlayerListData))
 
     const saveTeamHandler = () => {
+        // Alert.alert(
+        //     "Alert!",
+        //     "Do you want to edit your prediction points for Line up.",
+        //     [
+        //         {
+        //             text: "No",
+        //             style: 'destructive'
+        //         },
+        //         {
+        //             text: 'Yes', onPress: () => {
+        //                 // console.log(playerListByPosition)
+        //                 dispatch(setMyTeamWatcher({ data: playerListByPosition, isFromEdit: true }))
+        //                 navigation.navigate('AddPlayerPoint')
+        //             }
+        //         }
+        //     ]
+        // );
         if (myPlayerListArray.length == 10) {
             let playerListByPosition: PlayerPositionTypes[] = []
             Object.keys(myPlayerListData).map((item, index) => {
@@ -148,6 +167,51 @@ const UpdateTeamScreen: React.FC<navigationProps> = ({
         absoluteModalLoading={isLoading}
         successMessage={data?.message}
     >
+        <Container containerStyle={{
+            flexDirection: 'row',
+            alignItems: "center"
+        }}
+            mpContainer={{ mt: 5, ml: 15 }}
+        >
+            <Label
+                labelSize={12}
+                textColor={greenColor}
+                style={{ fontFamily: medium, textAlign: 'center', }}
+            >Do you want to edit your line up PredPts.</Label>
+            <Label
+                labelSize={14}
+                textColor={OrangeColor}
+                mpLabel={{ ml: 10 }}
+                style={{ fontFamily: medium, textAlign: 'center', }}
+                onPress={() => {
+                    let playerListByPosition: PlayerPositionTypes[] = []
+                    Object.keys(myPlayerListData).map((item, index) => {
+                        myPlayerListData[item].map((item: LeaguePlayerTypes) => {
+                            playerListByPosition.push(item)
+                        })
+                    })
+                    dispatch(setMyTeamWatcher({ data: playerListByPosition, isFromEdit: true }))
+                    navigation.navigate('AddPlayerPoint')
+
+                }}
+            >Edit</Label>
+        </Container>
+
+        {/* <Btn
+            title="Save"
+            labelSize={14}
+            labelStyle={{
+                color: 'white'
+            }}
+            radius={8}
+            mpBtn={{ mt: 5 }}
+            btnStyle={{
+                backgroundColor: OrangeColor,
+                width: 85,
+                alignSelf: "flex-end",
+            }}
+            // onPress={saveTeamHandler}
+        /> */}
         <Container
             containerStyle={{
                 borderBottomWidth: 1,

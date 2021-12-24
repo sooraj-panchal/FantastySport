@@ -10,7 +10,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { ListRenderItem, View, Alert } from 'react-native';
 import MyPlayersList from '../../../components/MyPlayersList';
 import Img from '../../../components/Img';
-import { AppImages } from '../../../assets/images/map';
 import { LeaguePlayerTypes, PlayerPositionTypes } from '../../../types/flatListTypes';
 import { IWeek, myPlayers, positions, positionsLength } from '../../../utils/jsonArray'
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,6 +20,7 @@ import { addToMyPlayerWatcher, setMyTeamWatcher } from '../../../store/slices/my
 import { UserResponse } from '../../../types/responseTypes';
 import { SvgUri } from 'react-native-svg';
 import { AppStack } from '../../../navigator/navActions';
+import { medium } from '../../../assets/fonts/fonts';
 
 const MyTeamScreen: React.FC<navigationProps> = ({
     navigation
@@ -50,7 +50,9 @@ const MyTeamScreen: React.FC<navigationProps> = ({
     // useEffect(() => {
     //     refetch()
     // }, [])
-    // console.log('haveData', JSON.stringify(myPlayerListArray))
+    console.log('getMyTeam', JSON.stringify(getMyTeam))
+
+
 
     useEffect(() => {
 
@@ -88,7 +90,7 @@ const MyTeamScreen: React.FC<navigationProps> = ({
     }, [getMyTeam])
 
     React.useEffect(() => {
-        if (myPlayerListArray.length) {
+        if (myPlayerListArray?.length) {
             // let newModifiedData = myPlayerListArray.map((item, index) => {
             //     let B2 = item.PredictionPoints
             //     let C2 = item.FantasyPointsDraftKings
@@ -100,7 +102,14 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                 groupedPlayers[position] = myPlayerListArray.map((item, index) => {
                     let B2 = item.PredictionPoints
                     let C2 = item.FantasyPointsDraftKings
-                    item.SniperPoints = item.FantasyPointsDraftKings == 0 ? 0 : ((1 - Math.abs((B2 - C2) / C2)) * C2).toFixed(0)
+                    console.log('B2', B2)
+                    console.log('C2', C2)
+
+                    if (B2 > C2) {
+                        item.SniperPoints = 0
+                    } else {
+                        item.SniperPoints = C2 <= 0 ? 0 : ((B2 / C2) * B2).toFixed()
+                    }
                     return item;
                 }).filter((i) => {
                     return i.Position == position
@@ -134,42 +143,36 @@ const MyTeamScreen: React.FC<navigationProps> = ({
         }
     }
 
-    // React.useLayoutEffect(() => {
-    //     return (
-    //         navigation.setOptions({
-    //             headerRight: () => {
-    //                 return <Container
-    //                     containerStyle={{
-    //                         flexDirection: "row",
-    //                         alignItems: "center"
-    //                     }}
-    //                     mpContainer={{ mr: 15, mt: 5 }}
-    //                 >
-    //                     <Btn
-    //                         title="Invite friends"
-    //                         labelSize={12}
-    //                         labelStyle={{
-    //                             color: 'white'
-    //                         }}
-    //                         radius={8}
-    //                         mpBtn={{ ph: 10, mr: 10 }}
-    //                         btnStyle={{
-    //                             backgroundColor: OrangeColor
-    //                         }}
-    //                         onPress={() => {
-    //                             navigation.navigate('InviteFriend')
-    //                         }}
-    //                     />
-    //                     <Ionicons
-    //                         name="ios-settings"
-    //                         size={22}
-    //                         color='white'
-    //                     />
-    //                 </Container>
-    //             }
-    //         })
-    //     )
-    // }, [])
+
+    React.useLayoutEffect(() => {
+        return (
+            navigation.setOptions({
+                headerTitle: leagueDetails.name,
+                headerRight: () => {
+                    // if (myPlayerListArray?.length == 10) {
+                    return <Btn
+                        title="Save"
+                        labelSize={14}
+                        labelStyle={{
+                            color: 'white'
+                        }}
+                        radius={8}
+                        mpBtn={{ mt: 5 }}
+                        btnStyle={{
+                            backgroundColor: OrangeColor,
+                            width: 85,
+                            opacity: myPlayerListArray?.length == 10 ? 1 : 0.4
+                        }}
+                        onPress={saveTeamHandler}
+                        disabled={myPlayerListArray?.length == 10 ? false : true}
+                    />
+                    // } else {
+                    //     return null
+                    // }
+                }
+            })
+        )
+    }, [leagueDetails,myPlayerListArray,myPlayerListData])
 
     const renderItem = (item: PlayerPositionTypes, position: string) => {
         return <MyPlayersList
@@ -189,39 +192,37 @@ const MyTeamScreen: React.FC<navigationProps> = ({
             <Container containerStyle={{ flexDirection: "row", alignItems: "center", justifyContent: 'space-between' }}
                 mpContainer={{ ml: 15, mt: 10 }}
             >
-                <Container containerStyle={{ flexDirection: "row", alignItems: "center" }} >
-                    <Label labelSize={15}  >Week {leagueDetails.week[0].week_no}</Label>
-                    <Ionicons
-                        name="ios-chevron-forward"
-                        size={20}
-                        color="black"
-                    />
-                </Container>
-                <Btn
-                    title="Edit Team"
-                    labelSize={14}
-                    labelStyle={{
-                        color: 'white'
-                    }}
-                    radius={8}
-                    mpBtn={{ mr: 10 }}
-                    btnStyle={{
-                        backgroundColor: PrimaryColor,
-                        width: 85,
-                        alignSelf: "flex-end",
-                        display: getMyTeam?.team_id ? 'flex' : 'none'
-                    }}
-                    onPress={() => {
-                        navigation.navigate('EditTeamInfo', {
-                            team_id: getMyTeam?.team_id,
-                            team_name: getMyTeam?.team_name,
-                            team_logo: getMyTeam?.team_logo,
-                        })
-                        // navigation.navigate('AddPlayer')
-                    }}
-                />
+
+                {/* {
+                    myPlayerListArray?.length == 10 ?
+                        <Btn
+                            title="Save"
+                            labelSize={14}
+                            labelStyle={{
+                                color: 'white'
+                            }}
+                            radius={8}
+                            mpBtn={{ mr: 10 }}
+                            btnStyle={{
+                                backgroundColor: PrimaryColor,
+                                width: 85,
+                                alignSelf: "flex-end",
+                                display: getMyTeam?.team_id ? 'flex' : 'none'
+                            }}
+                            // onPress={() => {
+                            //     navigation.navigate('EditTeamInfo', {
+                            //         team_id: getMyTeam?.team_id,
+                            //         team_name: getMyTeam?.team_name,
+                            //         team_logo: getMyTeam?.team_logo,
+                            //     })
+                            //     // navigation.navigate('AddPlayer')
+                            // }}
+                            onPress={saveTeamHandler}
+                        />
+                        : null
+                } */}
             </Container>
-            <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} mpContainer={{ mv: 10, mh: 15 }} />
+            {/* <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} mpContainer={{ mv: 10, mh: 15 }} /> */}
             <Container
                 containerStyle={{
                     flexDirection: "row",
@@ -237,15 +238,35 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                         uri={`https://chessmafia.com/php/fantasy/public/uploads/${getMyTeam?.team_logo}` || 'dummy'}
                     />
                     :
-                    <Img
-                        imgStyle={{}}
+                    <Container
+                        containerStyle={{
+                            borderWidth: 1,
+                            borderColor: '#f2f2f2',
+                            borderRadius: 40,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            overflow: 'hidden'
+                        }}
                         width={40} height={40}
-                        mpImage={{ ml: 15 }}
-                        imgSrc={{ uri: `https://chessmafia.com/php/fantasy/public/uploads/${getMyTeam?.team_logo}` || 'dummy' }} />
+                    // mpContainer={{}}
+                    >
+                        <Img
+                            width={40} height={40}
+                            imgSrc={{ uri: `https://chessmafia.com/php/fantasy/public/uploads/${getMyTeam?.team_logo}` || 'dummy' }} />
+
+                    </Container>
                 }
-                <Container mpContainer={{ ml: 5 }} >
-                    <Label labelSize={16} style={{ fontWeight: "bold", letterSpacing: 0.5 }}  > {getMyTeam?.team_name}</Label>
+                <Container mpContainer={{ ml: 10 }} >
+                    <Label labelSize={16} style={{ fontFamily: medium }}  > {getMyTeam?.team_name}</Label>
                     {/* <Label labelSize={14} style={{ letterSpacing: 0.5 }} >4-3-3 | - of 1</Label> */}
+                    <Container containerStyle={{ flexDirection: "row", alignItems: "center" }} mpContainer={{ ml: 5 }} >
+                        <Label labelSize={12}  >Week {leagueDetails.week[0].week_no}</Label>
+                        <Ionicons
+                            name="ios-chevron-forward"
+                            size={16}
+                            color="black"
+                        />
+                    </Container>
                 </Container>
                 <Container
                     containerStyle={{
@@ -437,8 +458,8 @@ const MyTeamScreen: React.FC<navigationProps> = ({
         absoluteLoading={getMyTeamFetching}
     >
         {renderListHeader()}
-        {
-            myPlayerListArray.length == 10 ?
+        {/* {
+            myPlayerListArray?.length == 10 ?
                 <Container containerStyle={{
                     flexDirection: 'row',
                     alignItems: 'center',
@@ -460,7 +481,7 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                         onPress={saveTeamHandler}
                     />
                 </Container> : null
-        }
+        } */}
         <ScrollView>
             <Container
                 containerStyle={{

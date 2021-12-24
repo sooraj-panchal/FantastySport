@@ -56,8 +56,15 @@ export interface MyLeagueResponse {
   team_id: number,
   is_your_league?: boolean;
   you_join_league?: boolean;
-  id?:number,
-  deadline?:string
+  id?: number,
+  deadline?: string,
+  league_flag: {
+    dateText: string,
+    matchDate: Date,
+    weekText: string,
+    isStarted: boolean,
+    isEnded: boolean
+  }
 }
 
 export interface MyTeamResponse {
@@ -74,6 +81,7 @@ export interface MyTeamResponse {
   projection_points?: number,
   actual_points?: number
 }
+
 export interface MyTeamLogoResponse {
   WikipediaLogoUrl: string | ''
 }
@@ -117,8 +125,8 @@ export interface LiveMatchUpResponse {
   pts: number,
   rank: number,
   team_name: string,
-  week_id?:number,
-  week_no?:number
+  week_id?: number,
+  week_no?: number
 }
 
 export interface GameDetailResponse {
@@ -160,4 +168,9 @@ export interface leagueDetailResponse {
   team_id: number,
   is_your_league?: boolean;
   you_join_league?: boolean;
+}
+
+export interface teamDetailResponse {
+  team_name: string,
+  team_logo: string,
 }

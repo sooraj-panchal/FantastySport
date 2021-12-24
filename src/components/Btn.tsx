@@ -16,7 +16,8 @@ interface Props {
     mpLabel?: mpStyle,
     textColor?: string,
     leftIcon?: () => void,
-    rightIcon?: () => void
+    rightIcon?: () => void,
+    disabled?:boolean
 }
 
 const Btn: React.FC<Props> = ({
@@ -32,6 +33,7 @@ const Btn: React.FC<Props> = ({
     textColor,
     leftIcon,
     rightIcon,
+    disabled,
     ...restProps
 }) => {
 
@@ -47,7 +49,7 @@ const Btn: React.FC<Props> = ({
                 backgroundColor:PrimaryColor,
                 flexDirection: "row"
             }, btnStyle]}
-
+            disabled={disabled}
             {...restProps}
         >
             {leftIcon ? leftIcon() : null}

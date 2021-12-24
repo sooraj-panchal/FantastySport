@@ -158,17 +158,16 @@
     <orderEntry type="library" name="Gradle: com.facebook.fresco:imagepipeline-okhttp3:2.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: artifacts:react-native-reanimated:unspecified" level="project" />
     <orderEntry type="module" module-name="FantastySport.react-native-firebase_dynamic-links" />
-    <orderEntry type="module" module-name="FantastySport.react-native-firebase_messaging" />
     <orderEntry type="module" module-name="FantastySport.react-native-firebase_app" />
     <orderEntry type="module" module-name="FantastySport.react-native-picker_picker" />
     <orderEntry type="module" module-name="FantastySport.react-native-pager-view" />
     <orderEntry type="module" module-name="FantastySport.react-native-screens" />
+    <orderEntry type="module" module-name="FantastySport.react-native-push-notification" />
     <orderEntry type="module" module-name="FantastySport.react-native-async-storage_async-storage" />
     <orderEntry type="module" module-name="FantastySport.react-native-community_checkbox" />
     <orderEntry type="module" module-name="FantastySport.react-native-masked-view_masked-view" />
     <orderEntry type="module" module-name="FantastySport.react-native-gesture-handler" />
     <orderEntry type="module" module-name="FantastySport.react-native-image-crop-picker" />
-    <orderEntry type="module" module-name="FantastySport.react-native-push-notification" />
     <orderEntry type="module" module-name="FantastySport.react-native-safe-area-context" />
     <orderEntry type="module" module-name="FantastySport.react-native-share" />
     <orderEntry type="module" module-name="FantastySport.react-native-svg" />

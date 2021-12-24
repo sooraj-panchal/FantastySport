@@ -10,7 +10,8 @@ export interface initialState {
     leagueData: {
         league_id?: number,
         week_id?: number
-    }
+    },
+    league_week: number
 }
 
 export const selectedLeagueSlice = createSlice({
@@ -23,15 +24,16 @@ export const selectedLeagueSlice = createSlice({
         leagueData: {
             league_id: 0,
             week_id: 0
-        }
+        },
+        league_week: 0
     } as initialState,
     reducers: {
         selectedWeekWatcher: (state, action) => {
             state.selectedWeek = action.payload;
         },
         leagueUpdateWatcher: (state, action: PayloadAction<{ league_id?: number, week_id?: number }>) => {
-            console.log('action',action)
-            state.leagueData = {...action.payload};
+            console.log('action', action)
+            state.leagueData = { ...action.payload };
         },
         // selectedLeagueTeamList:()=>{
 
@@ -50,9 +52,10 @@ export const selectedLeagueSlice = createSlice({
             })
             state.leagueDetails = action.payload;
             state.leagueTeamNameList = LegueTeamList;
+            state.league_week = action.payload?.week[0]?.week_no
         },
     }
 });
 
-export const { selectedWeekWatcher, leagueDetailsWatcher,leagueUpdateWatcher } = selectedLeagueSlice.actions;
+export const { selectedWeekWatcher, leagueDetailsWatcher, leagueUpdateWatcher } = selectedLeagueSlice.actions;
 export default selectedLeagueSlice.reducer;

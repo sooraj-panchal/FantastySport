@@ -37,19 +37,19 @@ const LiveMatchupRankingItem: React.FC<LiveMatchUpResponse & props> = ({
         >
             <Container containerStyle={{ flex: 0.65 }} >
                 <Label
-                    labelSize={10}
+                    labelSize={14}
                     style={{ color: 'grey', fontFamily: medium }}
                     numberOfLines={1}
                 // mpLabel={{ mh: 20 }}
                 >{name}</Label>
-                <Label
+                {/* <Label
                     labelSize={14}
                     style={{ color: 'black', fontFamily: medium }}
                     numberOfLines={1}
-                >{team_name}</Label>
+                >{team_name}</Label> */}
             </Container>
             <Label
-                labelSize={10}
+                labelSize={14}
                 style={{ color: 'green', fontFamily: medium, flex: 0.2, textAlign: "center" }}
             >{pts}</Label>
             <Label

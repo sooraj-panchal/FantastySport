@@ -35,7 +35,7 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
     const leagueTeamNameList: Array<scheduleListTypes> = useSelector((state: RootState) => state.selectedLeague.leagueTeamNameList)
     const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
 
-    // console.log("myPlayerListArray",myPlayerListArray)
+    console.log("myPlayerListArray",myPlayerListArray)
 
     const dispatch = useDispatch()
     React.useLayoutEffect(() => {
@@ -59,9 +59,10 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
     React.useEffect(() => getLeaguePlayers(), [])
 
     const getLeaguePlayers = () => {
-        console.log('leagueTeamNameList==>', leagueTeamNameList)
+        // console.log('leagueTeamNameList==>', leagueTeamNameList)
         leagueTeamNameList.map(async (item, index) => {
             try {
+                // https://api.sportsdata.io/v3/nfl/scores/json/Players/{team}
                 const response: AxiosResponse<LeaguePlayerTypes[]> = await axios.get(`https://api.sportsdata.io/v3/nfl/projections/json/PlayerGameProjectionStatsByTeam/2021REG/${leagueDetails?.week[0].week_no}/${item}`, {
                     headers: {
                         'Accept': 'application/json',
@@ -69,7 +70,8 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
                         "Ocp-Apim-Subscription-Key": '881199c7a4104d75876bd87860a231a8'
                     }
                 })
-                let data = await getPlayerImage(response.data?.slice(0, 10))
+                // console.log("players data",response.data)
+                let data = await getPlayerImage(response.data?.filter((item)=>item.Activated == 1))
                 let myPlayers = getMyPlayerList(data)
                 // console.log('myPlayers',myPlayers)
                 let getDataByFilterPosition = myPlayers.filter((item, index) => {
@@ -176,8 +178,8 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
                 newArray.push(item)
             }
         })
-        console.log('newArray', newArray)
-        console.log('playerByPositionList', playerByPositionList)
+        // console.log('newArray', newArray)
+        // console.log('playerByPositionList', playerByPositionList)
         dispatch(addToMyPlayerWatcher(newArray))
         navigation.goBack()
     }
@@ -297,8 +299,8 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
             }), [])}
             showsVerticalScrollIndicator={false}
             removeClippedSubviews={true} // Unmount components when outside of window 
-            initialNumToRender={2} // Reduce initial render amount
-            maxToRenderPerBatch={1} // Reduce number in each render batch
+            initialNumToRender={4} // Reduce initial render amount
+            maxToRenderPerBatch={4} // Reduce number in each render batch
             updateCellsBatchingPeriod={100} // Increase time between renders
             windowSize={7}
         />

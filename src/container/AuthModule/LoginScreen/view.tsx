@@ -20,6 +20,7 @@ import AuthWrapper from '../../../components/AuthWrapper';
 import { useLoginMutation } from '../../../features/auth';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../../../store/slices/auth';
+import { fcmToken } from '../../../utils/globals';
 
 interface props extends navigationProps {
     loginLoading: boolean,
@@ -38,16 +39,17 @@ const LoginScreen: React.FC<props> = ({
     const dispatch = useDispatch()
     // const getStore = useStore()
     // console.log("getState",getStore.getState())
+    
     const [login, { isLoading, error }] = useLoginMutation()
     const initialState: formValues = { email: '', password: '' }
+
+    console.log('globals.fcmToken', fcmToken)
 
     const onLoginHandle = async (values: formValues) => {
         const data = new FormData();
         data.append('email', values.email)
         data.append('password', values.password)
-        data.append('fcm_token', values.fcm_token || '')
-        // console.log(data)
-        // login(data)
+        data.append('fcm_token', fcmToken)
         try {
             const user = await login(data).unwrap()
             console.log("login response ==>", user)

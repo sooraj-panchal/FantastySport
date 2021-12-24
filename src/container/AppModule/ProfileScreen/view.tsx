@@ -66,92 +66,98 @@ const ProfileScreen: React.FC<props> = ({
     return (
         <MainContainer style={{ backgroundColor: '#f2f2f2' }} >
             <ScrollView>
-            <ImageContainer />
-            <Container containerStyle={{
-                backgroundColor: "white",
-                elevation: 1,
-            }}
-                mpContainer={{ mt: 10 }}
-            >
-                <ListContainer
-                    name="About us"
-                    onPress={() => {
-                        navigation.navigate("TermsAndCondition", {
-                            title: 'About us'
-                        })
-                    }}
-                />
-                <ListContainer
-                    name="Change password"
-                    onPress={() => {
-                        navigation.navigate("ChangePassword")
-                    }}
-                />
-                <ListContainer
-                    name="Privacy policy"
-                    onPress={() => {
-                        navigation.navigate("TermsAndCondition", {
-                            title: 'Privacy policy'
-                        })
-                    }}
-                />
-                <ListContainer
-                    name="Terms & conditions"
-                    onPress={() => {
-                        navigation.navigate("TermsAndCondition", {
-                            title: 'Terms & conditions'
-                        })
-                    }}
-                />
-                <ListContainer
-                    name="Contact us"
-                    onPress={() => {
-                        navigation.navigate("TermsAndCondition", {
-                            title: 'Contact us'
-                        })
-                    }}
-                />
-            </Container>
-            <Btn
-                btnStyle={{
+                <ImageContainer />
+                <Container containerStyle={{
                     backgroundColor: "white",
-                    borderWidth: 0,
-                    borderRadius: 5,
                     elevation: 1,
-                    justifyContent: "flex-start"
                 }}
-                title="Logout"
-                labelSize={14}
-                labelStyle={{
-                    color: "black",
-                }}
-                btnHeight={40}
-                mpBtn={{ mt: 10, pl: 25 }}
-                rightIcon={() => {
-                    return <MaterialIcons
-                        name="logout"
-                        size={25}
-                        color={OrangeColor}
-                        style={{ position: "absolute", right: 15 }}
+                    mpContainer={{ mt: 10 }}
+                >
+                    <ListContainer
+                        name="Your Team"
+                        onPress={() => {
+                            navigation.navigate('CreateTeam')
+                        }}
                     />
-                }}
-                onPress={() => {
-                    Alert.alert(
-                        "Fantasy sniper",
-                        "You really want to logout?",
-                        [
-                            {
-                                text: "Cancel",
-                                style: "cancel"
-                            },
-                            {
-                                text: "OK", onPress: logoutHandler
-                            }
-                        ]
-                    );
-                }}
-            />
-              </ScrollView>
+                    <ListContainer
+                        name="About us"
+                        onPress={() => {
+                            navigation.navigate("TermsAndCondition", {
+                                title: 'About us'
+                            })
+                        }}
+                    />
+                    <ListContainer
+                        name="Change password"
+                        onPress={() => {
+                            navigation.navigate("ChangePassword")
+                        }}
+                    />
+                    <ListContainer
+                        name="Privacy policy"
+                        onPress={() => {
+                            navigation.navigate("TermsAndCondition", {
+                                title: 'Privacy policy'
+                            })
+                        }}
+                    />
+                    <ListContainer
+                        name="Terms & conditions"
+                        onPress={() => {
+                            navigation.navigate("TermsAndCondition", {
+                                title: 'Terms & conditions'
+                            })
+                        }}
+                    />
+                    <ListContainer
+                        name="Contact us"
+                        onPress={() => {
+                            navigation.navigate("TermsAndCondition", {
+                                title: 'Contact us'
+                            })
+                        }}
+                    />
+                </Container>
+                <Btn
+                    btnStyle={{
+                        backgroundColor: "white",
+                        borderWidth: 0,
+                        borderRadius: 5,
+                        elevation: 1,
+                        justifyContent: "flex-start"
+                    }}
+                    title="Logout"
+                    labelSize={14}
+                    labelStyle={{
+                        color: "black",
+                    }}
+                    btnHeight={40}
+                    mpBtn={{ mt: 10, pl: 25 }}
+                    rightIcon={() => {
+                        return <MaterialIcons
+                            name="logout"
+                            size={25}
+                            color={OrangeColor}
+                            style={{ position: "absolute", right: 15 }}
+                        />
+                    }}
+                    onPress={() => {
+                        Alert.alert(
+                            "Fantasy sniper",
+                            "You really want to logout?",
+                            [
+                                {
+                                    text: "Cancel",
+                                    style: "cancel"
+                                },
+                                {
+                                    text: "OK", onPress: logoutHandler
+                                }
+                            ]
+                        );
+                    }}
+                />
+            </ScrollView>
 
         </MainContainer>
     )

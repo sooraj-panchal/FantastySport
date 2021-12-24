@@ -77,7 +77,7 @@ const PointAddedPlayerList: React.FC<PlayerPositionTypes & props> = ({
                 }}
                 value={String(PredictionPoints)}
                 keyboardType="numeric"
-                maxLength={3}
+                maxLength={4}
             />
         </Container>
         <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />

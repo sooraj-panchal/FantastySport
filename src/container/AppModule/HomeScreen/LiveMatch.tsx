@@ -32,7 +32,7 @@ const LiveMatch: React.FC = ({
         limit: 3
     })
     const dispatch = useDispatch()
-    console.log('LiveMatchupRanking===>', JSON.stringify(data))
+    console.log('LiveMatchupRanking===>', JSON.stringify(error))
 
     const navigation = useNavigation<homeNavProps>()
 
@@ -106,20 +106,20 @@ const LiveMatch: React.FC = ({
                                     borderRadius: 10,
                                     elevation: 5
                                 }}
-                                mpContainer={{ ph: 15 }}
+                                mpContainer={{ ph: 10 }}
                                 height={45}
                             >
                                 <Container containerStyle={{
                                     flex: 0.70
                                 }} >
                                     <Label
-                                        labelSize={10}
+                                        labelSize={15}
                                         style={{ color: 'white', fontFamily: medium }}
                                     >League name</Label>
-                                    <Label
+                                    {/* <Label
                                         labelSize={14}
                                         style={{ color: 'white', fontFamily: medium }}
-                                    >Team name</Label>
+                                    >Team name</Label> */}
                                 </Container>
                                 <Label
                                     labelSize={12}

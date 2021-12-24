@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
-    StatusBar, Platform, LogBox
+    StatusBar, Platform, LogBox, Button
 } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { DarkBlueColor } from './src/assets/colors';
@@ -14,19 +14,24 @@ import { PersistGate } from 'redux-persist/integration/react';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 import { URL, URLSearchParams } from 'react-native-url-polyfill';
 import { navigate, navigationRef } from './src/utils/NavigationHandler';
+import DeadlineModal from './src/components/Modals/DeadlineModal';
 
 const App = () => {
-
+    const deadlineModalRef = useRef( null );
     // useEffect(() => {
     //     const unsubscribe = messaging().onMessage(async remoteMessage => {
     //       Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
     //     });
-    
+
     //     return unsubscribe;
     //   }, []);
-    
+
     // useEffect(()=>{
     //     NotificationHandler()
+    // },[])
+
+    // useEffect(()=>{
+    //     deadlineModalRef.current?.open()
     // },[])
 
     LogBox.ignoreAllLogs( true );
@@ -44,7 +49,6 @@ const App = () => {
             </>;
         }
     };
-
     const handleDynamicLink = link => {
         // Handle dynamic link inside your own application
         if ( link ) {
@@ -147,12 +151,16 @@ const App = () => {
                     >
                         <Host>
                             { _renderStatusBar() }
+                            <DeadlineModal
+                                modalizeRef={ deadlineModalRef }
+                            />
                         </Host>
                     </NavigationContainer>
                 </PersistGate>
             </Provider>
-        </SafeAreaProvider>
+            {/* <Button title='helo' onPress={ () => { deadlineModalRef.current.open(); } } /> */ }
 
+        </SafeAreaProvider>
         // <SvgCssUri
         //     width="100%"
         //     height="100%"

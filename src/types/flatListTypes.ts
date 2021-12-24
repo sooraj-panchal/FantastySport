@@ -67,6 +67,7 @@ export interface LeaguePlayerTypes {
     Name: string,
     Position: string,
     FantasyPosition?: string,
+    Activated?:Number,   
     FantasyPointsFantasyDraft?: string | any,
     FantasyPointsDraftKings?: string | any,
     photoUrl?: string;

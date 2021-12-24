@@ -2,7 +2,6 @@ import { firebase } from '@react-native-firebase/dynamic-links';
 import React from 'react';
 import { Alert, FlatList, ListRenderItem, ScrollView } from 'react-native';
 import { SvgUri } from 'react-native-svg';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch } from 'react-redux';
 import { greenColor, OrangeColor } from '../../../assets/colors';
 import { medium, semiBold } from '../../../assets/fonts/fonts';
@@ -12,13 +11,14 @@ import Container from '../../../components/Container';
 import Img from '../../../components/Img';
 import Label from '../../../components/Label';
 import MainContainer from '../../../components/MainContainer';
-import { useGameDetailsQuery, useLeagueDetailsQuery } from '../../../features/league';
-import useGetMatchStatus from '../../../hooks/matchStatus';
+import { useGameDetailsQuery, useJoinPrivateLeagueMutation, useLeagueDetailsQuery } from '../../../features/league';
 import { leagueDetailsWatcher } from '../../../store/slices/selectedLeague';
 import { LeagueDetailNav } from '../../../types/nav';
 import ParticipantUserList from './ParticiapantList';
 import TeamList from './TeamList';
 import Share from 'react-native-share'
+import moment from 'moment';
+import { AppStack } from '../../../navigator/navActions';
 
 
 interface props extends LeagueDetailNav {
@@ -34,21 +34,21 @@ const LeagueDetailScreen: React.FC<props> = ({
         league_id: route.params?.league_id,
         week_id: route.params?.week_id,
     }
-
+    console.log('newData', newData)
 
     const { data: LeagueDetails, isLoading: loadingForLeagueDetail, error: leagueDetailError } = useLeagueDetailsQuery(route.params?.league_id)
 
     const { data: GameDetails, isLoading, error, isFetching } = useGameDetailsQuery<any>(newData, {
         refetchOnMountOrArgChange: true
     })
+    const [joinLeagueWatcher, { data: joinLeagueRes, isLoading: joinLeagueLoading }] = useJoinPrivateLeagueMutation<any>()
 
-    const { dateText, matchDate, weekText, isStarted } = useGetMatchStatus(LeagueDetails?.week, LeagueDetails?.deadline)
+    // const { dateText, matchDate, weekText, isStarted } = useGetMatchStatus(LeagueDetails?.week, LeagueDetails?.deadline)
 
     const dispatch = useDispatch()
 
     // console.log('leagueDetailError', leagueDetailError)
     console.log('LeagueDetails', JSON.stringify(LeagueDetails))
-
 
     React.useLayoutEffect(() => {
         return (
@@ -154,10 +154,24 @@ const LeagueDetailScreen: React.FC<props> = ({
 
     console.log('GameDetails', JSON.stringify(GameDetails))
 
+    const JoinLeagueHandler = () => {
+        let formData = new FormData()
+        formData.append('unique_code', '')
+        formData.append('week_id', route.params?.week_id)
+        formData.append('type', 'public')
+        formData.append('league_id', route.params?.league_id)
+        console.log("data", JSON.stringify(formData))
+        joinLeagueWatcher(formData).unwrap().then(() => {
+            navigation.dispatch(AppStack)
+        })
+    }
+
+
+    // const { dateText, matchDate, weekText } = LeagueDetails?.league_flag
     return (
         <MainContainer
             loading={loadingForLeagueDetail || isLoading}
-            absoluteLoading={isFetching}
+            absoluteLoading={isFetching || joinLeagueLoading}
         >
             <ScrollView
                 contentContainerStyle={{ paddingBottom: 100 }}
@@ -242,7 +256,7 @@ const LeagueDetailScreen: React.FC<props> = ({
                     <Label
                         mpLabel={{ mt: 5 }}
                         labelSize={15}
-                    >Scope: {LeagueDetails?.week_type == 'singleWeek' ? 'Week #' : 'Multiple games'}</Label>
+                    >Scope: {LeagueDetails?.week_type == 'singleWeek' ? `Week #${LeagueDetails.week[0]?.week_no}` : 'Multiple games'}</Label>
                     <Label
                         mpLabel={{ mt: 5 }}
                         labelSize={15}
@@ -256,14 +270,14 @@ const LeagueDetailScreen: React.FC<props> = ({
                         labelSize={14}
                         style={{ color: 'black' }}
                         mpLabel={{ mt: 5 }}
-                    >{`${dateText}: ${matchDate}`}</Label>
+                    >{`${LeagueDetails?.league_flag?.dateText}: ${moment(LeagueDetails?.league_flag?.matchDate).format('MMM D, LT')}`}</Label>
                     <Label
                         style={{
                             color: "green",
                         }}
                         labelSize={14}
                         mpLabel={{ mt: 5 }}
-                    >{weekText}</Label>
+                    >{LeagueDetails?.league_flag?.weekText}</Label>
                     <Btn
                         title='Match detail'
                         onPress={() => {
@@ -381,45 +395,46 @@ const LeagueDetailScreen: React.FC<props> = ({
                         </Container>
                         :
                         // weekText == 'Completed' ? null :
-                            <Container
-                                mpContainer={{ mt: 10 }}
-                                containerStyle={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    justifyContent: "center"
+                        <Container
+                            mpContainer={{ mt: 10 }}
+                            containerStyle={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: "center"
+                            }}
+                        >
+                            <Label
+                                labelSize={15}
+                                style={{
+                                    color: 'black',
+                                    fontFamily: semiBold
                                 }}
-                            >
-                                <Label
-                                    labelSize={15}
-                                    style={{
-                                        color: 'black',
-                                        fontFamily: semiBold
-                                    }}
-                                >Do you want to join League ? </Label>
-                                <Btn
-                                    title='Join'
-                                    onPress={() => {
-                                        // console.log({
-                                        //     week_id: route.params?.week_id,
-                                        //     type: 'public',
-                                        //     league_id: route.params?.league_id
-                                        // })
-                                        navigation.navigate('CreateTeam', {
-                                            week_id: route.params?.week_id,
-                                            type: 'public',
-                                            league_id: route.params?.league_id
-                                        })
-                                    }}
-                                    btnStyle={{
-                                        backgroundColor: greenColor,
-                                        width: 60, height: 30,
-                                        borderRadius: 20,
-                                        elevation: 1
-                                    }}
-                                    textColor="white"
-                                    mpBtn={{ ml: 10 }}
-                                />
-                            </Container>
+                            >Do you want to join League ? </Label>
+                            <Btn
+                                title='Join'
+                                onPress={() => {
+                                    // console.log({
+                                    //     week_id: route.params?.week_id,
+                                    //     type: 'public',
+                                    //     league_id: route.params?.league_id
+                                    // })
+                                    JoinLeagueHandler()
+                                    // navigation.navigate('CreateTeam', {
+                                    //     week_id: route.params?.week_id,
+                                    //     type: 'public',
+                                    //     league_id: route.params?.league_id
+                                    // })
+                                }}
+                                btnStyle={{
+                                    backgroundColor: greenColor,
+                                    width: 60, height: 30,
+                                    borderRadius: 20,
+                                    elevation: 1
+                                }}
+                                textColor="white"
+                                mpBtn={{ ml: 10 }}
+                            />
+                        </Container>
                 }
                 <Label
                     labelSize={20}
