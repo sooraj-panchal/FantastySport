@@ -43,21 +43,19 @@ const GameDetailScreen: React.FC<GameDetailNav> = ({
                     console.log('route.params?.my_team_id', route.params?.my_team_id)
                     if (route.params?.my_team_id) {
                         const WithoutMyTeam = data.filter((item: any) => {
-                            return item.id != route.params?.my_team_id
+                            return item.team_id != route.params?.my_team_id
                         })
-                        if(item.is_game_created){
+                        if (item.is_game_created) {
                             navigation.navigate('LiveMatchDetail', {
                                 team_id: route.params?.my_team_id,
-                                op_team_id: item.id == route.params?.my_team_id ? WithoutMyTeam[0]?.id : item.id
+                                op_team_id: item.team_id == route.params?.my_team_id ? WithoutMyTeam[0]?.team_id : item.team_id
                             })
-                        }else{
-                            Alert.alert("Fantasy sniper",'This participant user have not created match for league yet.')
+                        } else {
+                            Alert.alert("Fantasy sniper", 'This participant user have not created match for league yet.')
                         }
-                        
                     } else {
                         Alert.alert('Fantasy sniper', 'You should Join the league to compare match with others.')
                     }
-
                     // }
                 }}
             />

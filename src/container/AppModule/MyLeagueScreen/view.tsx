@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListRenderItem, FlatList } from 'react-native';
+import { ListRenderItem, FlatList, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Container from '../../../components/Container';
 import MainContainer from '../../../components/MainContainer';
@@ -10,7 +10,7 @@ import { RootState } from '../../../store';
 import { addToMyPlayerWatcher, setMyTeamWatcher } from '../../../store/slices/myPlayerList';
 import { leagueDetailsWatcher } from '../../../store/slices/selectedLeague';
 import { navigationProps } from '../../../types/nav';
-import { MyLeagueResponse } from '../../../types/responseTypes';
+import { MyLeagueResponse, UserResponse } from '../../../types/responseTypes';
 
 interface props extends navigationProps { }
 
@@ -22,26 +22,56 @@ const MyLeagueScreen: React.FC<props> = ({
         current_week: NFLCurrentWeek
     }, { refetchOnMountOrArgChange: true })
     const [joinLeagueWatcher, { data: joinLeagueRes, isLoading: joinLeagueLoading }] = useJoinPrivateLeagueMutation<any>()
+    const user: UserResponse = useSelector((store: RootState) => store.auth.user)
 
     const dispatch = useDispatch()
+
+    console.log("error", error)
 
     const renderPublicGame: ListRenderItem<MyLeagueResponse> = ({ item, index }) => {
         return <PublicGameList
             {...item}
             createMatchHandler={() => {
-                // console.log('item',item)
-                dispatch(leagueDetailsWatcher({ ...item }))
-                dispatch(addToMyPlayerWatcher([]))
-                dispatch(setMyTeamWatcher([]))
-                navigation.navigate('CreateMatch')
+                if (item.scoring_system == 'SNIPER+') {
+                    dispatch(leagueDetailsWatcher({ ...item }))
+                    dispatch(addToMyPlayerWatcher([]))
+                    dispatch(setMyTeamWatcher([]))
+                    navigation.navigate("JoinSniperPlusLeague")
+                } else {
+                    // console.log('item',item)
+                    dispatch(leagueDetailsWatcher({ ...item }))
+                    dispatch(addToMyPlayerWatcher([]))
+                    dispatch(setMyTeamWatcher([]))
+                    navigation.navigate('CreateMatch')
+                }
             }}
             goToTeamDetail={() => {
                 dispatch(leagueDetailsWatcher({ ...item }))
                 navigation.navigate('TeamDetail', {
-                    team_id: item.team_id
+                    team_id: item.team_id,
+                    user_id: user.id
                 })
             }}
             joinLeagueHandler={() => {
+                // if (item.scoring_system == 'SNIPER+') {
+                //     navigation.navigate("JoinSniperPlusLeague")
+                //     // Alert.alert(
+                //     //     "Alert Title",
+                //     //     "My Alert Msg",
+                //     //     [
+                //     //         {
+                //     //             text: "Ask me later",
+                //     //             onPress: () => console.log("Ask me later pressed")
+                //     //         },
+                //     //         {
+                //     //             text: "Cancel",
+                //     //             onPress: () => console.log("Cancel Pressed"),
+                //     //             style: "cancel"
+                //     //         },
+                //     //         { text: "OK", onPress: () => console.log("OK Pressed") }
+                //     //     ]
+                //     // );
+                // } else {
                 let formData = new FormData()
                 formData.append('unique_code', '')
                 formData.append('week_id', item.week[0]?.week_id)
@@ -49,13 +79,21 @@ const MyLeagueScreen: React.FC<props> = ({
                 formData.append('league_id', item.league_id)
                 console.log("data", JSON.stringify(formData))
                 joinLeagueWatcher(formData).unwrap().then(() => {
-                    navigation.dispatch(AppStack)
+                    // navigation.dispatch(AppStack)
+                    refetch()
                 })
+                // }
+            }}
+            createPlayersHandler={() => {
+                dispatch(leagueDetailsWatcher({ ...item }))
+                dispatch(addToMyPlayerWatcher([]))
+                dispatch(setMyTeamWatcher([]))
+                navigation.navigate('ShowPlayer')
             }}
         />
     }
 
-    console.log('publicLeagueList error', JSON.stringify(error))
+    // console.log('publicLeagueList error', JSON.stringify(error))
 
     return (
         <MainContainer

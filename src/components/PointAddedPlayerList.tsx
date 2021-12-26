@@ -24,7 +24,8 @@ const PointAddedPlayerList: React.FC<PlayerPositionTypes & props> = ({
     GameDate,
     Opponent,
     onChangeText,
-    PredictionPoints
+    PredictionPoints,
+    ProjectionPoints
 }) => {
     let imageType = photoUrl?.split('.').pop() == 'svg';
     console.log('PredictionPoints', PredictionPoints)
@@ -60,7 +61,7 @@ const PointAddedPlayerList: React.FC<PlayerPositionTypes & props> = ({
                 <Label labelSize={12} style={{ letterSpacing: 0.5, color: "grey" }} mpLabel={{ mt: 2 }} >{moment(GameDate).format('ddd')} {useTime(GameDate)} v {Opponent}</Label>
             </Container>
             <Container containerStyle={{ width: screenWidth * 0.14, justifyContent: 'center', alignItems: 'center' }} width={60} >
-                <Label labelSize={12} style={{ letterSpacing: 0.5, color: "green" }}>{FantasyPointsDraftKings}</Label>
+                <Label labelSize={12} style={{ letterSpacing: 0.5, color: "green" }}>{FantasyPointsDraftKings || ProjectionPoints}</Label>
             </Container>
             <InputBox
                 placeholder="0.00"

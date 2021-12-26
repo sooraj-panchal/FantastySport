@@ -41,7 +41,11 @@ const CreateLeagueScreen: React.FC<props> = ({
     const onChangeScope = (value: boolean) => {
         setIsSingleWeek(value)
     }
-    
+
+    // useEffect(()=>{
+    //     if(data?.success)
+    // },[data])
+
 
     const createLeagueHandler = () => {
         // console.log('selectedScheduleData',selectedScheduleData[0].start_time)
@@ -81,14 +85,20 @@ const CreateLeagueScreen: React.FC<props> = ({
             formData.append('type', isPrivate ? 'private' : 'public')
             formData.append('name', leagueName)
             formData.append('max_participant', numOfParticipent)
-            formData.append('scoring_system', 'SNIPER' || selectPointSystem)
+            formData.append('scoring_system', selectPointSystem)
             formData.append('week_detail', JSON.stringify(leagueData))
             console.log('body data ', JSON.stringify(formData))
             createLeague(formData).unwrap().then((res) => {
                 // if (selectPointSystem == PointSystemList[1]) {
                 //     navigation.navigate('ShowPlayer')
                 // } else {
-                navigation.dispatch(AppStack)
+                    // navigation.navigate(''
+                    
+                    // dispatch(leagueDetailsWatcher({ ...item }))
+                    // dispatch(addToMyPlayerWatcher([]))
+                    // dispatch(setMyTeamWatcher([]))
+                    // navigation.navigate('ShowPlayer'))
+                navigation.navigate("MyLeague")
                 // }
             })
         }
@@ -454,7 +464,7 @@ const CreateLeagueScreen: React.FC<props> = ({
             {renderLeagueName()}
             {/* {leagueType()} */}
             {participent()}
-            {/* {pointScoring()} */}
+            {pointScoring()}
             <Btn
                 title="CREATE"
                 mpBtn={{ mh: 20, mt: 15 }}

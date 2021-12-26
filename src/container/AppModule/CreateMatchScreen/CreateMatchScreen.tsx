@@ -46,14 +46,11 @@ const MyTeamScreen: React.FC<navigationProps> = ({
         pollingInterval: havePlayers?.length == 10 ? 300000 : 0,
         refetchOnMountOrArgChange: true
     })
-
     // useEffect(() => {
     //     refetch()
     // }, [])
     console.log('getMyTeam', JSON.stringify(getMyTeam))
-
-
-
+    
     useEffect(() => {
 
         if (getMyTeam?.players?.length) {
@@ -172,7 +169,7 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                 }
             })
         )
-    }, [leagueDetails,myPlayerListArray,myPlayerListData])
+    }, [leagueDetails, myPlayerListArray, myPlayerListData])
 
     const renderItem = (item: PlayerPositionTypes, position: string) => {
         return <MyPlayersList

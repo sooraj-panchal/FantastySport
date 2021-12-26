@@ -37,6 +37,7 @@ import AddBattleLeagueScreen from '../container/AppModule/AddBattleLeagueScreen'
 import LeagueDetailScreen from '../container/AppModule/LeagueDetailScreen';
 import UpdateTeamScreen from '../container/AppModule/UpdateTeamScreen';
 import ShowPlayerScreen from '../container/SniperPlus/ShowPlayerScreen';
+import JoinSniperPlusLeague from '../container/SniperPlus/JoinSniperPlusLeague';
 
 const StackScreen = createNativeStackNavigator<unAuthParamList>()
 
@@ -326,6 +327,14 @@ const AppStackScreen: React.ReactNode = () => {
                 options={({ navigation }) => ({
                     headerShown: true,
                     headerTitle: "",
+                })}
+            />
+              <StackScreen.Screen
+                name='JoinSniperPlusLeague'
+                component={JoinSniperPlusLeague}
+                options={({ navigation }) => ({
+                    headerShown: true,
+                    headerTitle: "Join league",
                 })}
             />
         </StackScreen.Navigator>

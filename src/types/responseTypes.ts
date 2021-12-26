@@ -64,7 +64,8 @@ export interface MyLeagueResponse {
     weekText: string,
     isStarted: boolean,
     isEnded: boolean
-  }
+  },
+  isPlayerCreated?:boolean
 }
 
 export interface MyTeamResponse {

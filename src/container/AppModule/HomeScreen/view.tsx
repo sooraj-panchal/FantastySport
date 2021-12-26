@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, FlatList, StatusBar, ListRenderItem } from "react-native";
+import { ScrollView, FlatList, StatusBar, ListRenderItem, RefreshControl } from "react-native";
 import Btn from "../../../components/Btn";
 import Label from "../../../components/Label";
 import MainContainer from "../../../components/MainContainer";
@@ -14,6 +14,9 @@ import styles from "./styles";
 import { PrimaryColor } from "../../../assets/colors";
 import { medium } from "../../../assets/fonts/fonts";
 import AllLeague from "./AllLeague";
+import { useAllLeagueListQuery, useLeagueListQuery, useLiveMatchupRankingQuery } from "../../../features/league";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 
 interface props extends navigationProps {
 
@@ -24,6 +27,14 @@ const HomeScreen: React.FC<props> = ({
 }) => {
     // const leagueGameArray: Array<string> = ['Private game', 'Public game']
     const leagueGameArray: Array<string> = ['Public game']
+    const { isFetching, refetch } = useLeagueListQuery(null)
+    const { isFetching: fetchingForAllLeague, refetch: refetchForAllLeague } = useAllLeagueListQuery(null)
+    const { NFLCurrentWeek } = useSelector((store: RootState) => store.leaguePlayer)
+    const {data, isFetching: fetchingForLiveMatchupRanking, refetch: refetchForLivematch } = useLiveMatchupRankingQuery({
+        current_week: NFLCurrentWeek,
+        limit: 3
+    })
+    console.log('data',data)
 
     const renderLeague: ListRenderItem<string> = ({ item, index }) => {
         return <Container
@@ -96,11 +107,23 @@ const HomeScreen: React.FC<props> = ({
 
     return (
         <MainContainer style={{ backgroundColor: "#f2f2f2" }}
+
         >
             <StatusBar backgroundColor="transparent" barStyle="light-content" />
             <ScrollView
                 key={1}
                 contentContainerStyle={{ paddingBottom: 40 }}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={isFetching || fetchingForAllLeague || fetchingForLiveMatchupRanking}
+                        onRefresh={() => {
+                            refetch()
+                            refetchForAllLeague()
+                            refetchForLivematch()
+                        }}
+                        title='Updating data'
+                    />
+                }
             >
                 <News />
                 <FlatList
@@ -113,7 +136,10 @@ const HomeScreen: React.FC<props> = ({
                     contentContainerStyle={{ marginTop: 20, paddingRight: 20 }}
                     keyExtractor={(item, index) => `MyLeague ${index.toString()}`}
                 />
-                <MyLeague />
+                <MyLeague
+                    // leagueList={LeagueList}
+                    // loading={isLoading}
+                />
                 <AllLeague />
                 <LiveMatch />
             </ScrollView>

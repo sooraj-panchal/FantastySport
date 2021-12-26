@@ -1,11 +1,11 @@
 import { firebase } from '@react-native-firebase/dynamic-links';
 import React from 'react';
-import { Alert, FlatList, ListRenderItem, ScrollView } from 'react-native';
+import { Alert, FlatList, ListRenderItem, RefreshControl, ScrollView } from 'react-native';
 import { SvgUri } from 'react-native-svg';
-import { useDispatch } from 'react-redux';
-import { greenColor, OrangeColor } from '../../../assets/colors';
+import { useDispatch, useSelector } from 'react-redux';
+import { greenColor, OrangeColor, PrimaryColor } from '../../../assets/colors';
 import { medium, semiBold } from '../../../assets/fonts/fonts';
-import { AppImages } from '../../../assets/images/map';
+import { AppImages, AuthImages } from '../../../assets/images/map';
 import Btn from '../../../components/Btn';
 import Container from '../../../components/Container';
 import Img from '../../../components/Img';
@@ -19,6 +19,11 @@ import TeamList from './TeamList';
 import Share from 'react-native-share'
 import moment from 'moment';
 import { AppStack } from '../../../navigator/navActions';
+import { screenWidth } from '../../../types/sizes';
+import { addToMyPlayerWatcher, setMyTeamWatcher } from '../../../store/slices/myPlayerList';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { UserResponse } from '../../../types/responseTypes';
+import { RootState } from '../../../store';
 
 
 interface props extends LeagueDetailNav {
@@ -36,19 +41,20 @@ const LeagueDetailScreen: React.FC<props> = ({
     }
     console.log('newData', newData)
 
-    const { data: LeagueDetails, isLoading: loadingForLeagueDetail, error: leagueDetailError } = useLeagueDetailsQuery(route.params?.league_id)
+    const { data: LeagueDetails, isLoading: loadingForLeagueDetail, refetch,error:leagueDetailsError } = useLeagueDetailsQuery(route.params?.league_id)
 
-    const { data: GameDetails, isLoading, error, isFetching } = useGameDetailsQuery<any>(newData, {
+    const { data: GameDetails, isLoading, error, isFetching, refetch: refetchGameDetails } = useGameDetailsQuery<any>(newData, {
         refetchOnMountOrArgChange: true
     })
     const [joinLeagueWatcher, { data: joinLeagueRes, isLoading: joinLeagueLoading }] = useJoinPrivateLeagueMutation<any>()
+    const user: UserResponse = useSelector((store: RootState) => store.auth.user)
 
     // const { dateText, matchDate, weekText, isStarted } = useGetMatchStatus(LeagueDetails?.week, LeagueDetails?.deadline)
 
     const dispatch = useDispatch()
 
-    // console.log('leagueDetailError', leagueDetailError)
     console.log('LeagueDetails', JSON.stringify(LeagueDetails))
+    console.log('error', JSON.stringify(error))
 
     React.useLayoutEffect(() => {
         return (
@@ -122,10 +128,23 @@ const LeagueDetailScreen: React.FC<props> = ({
 
 
     const renderItem: ListRenderItem<any> = ({ item, index }) => {
-        console.log('parti', item)
+        console.log(item)
         return (
             <ParticipantUserList
                 {...item}
+                onPressTeamHandler={() => {
+                    if (item.is_game_created) {
+                        console.log(LeagueDetails)
+                        dispatch(leagueDetailsWatcher({ ...LeagueDetails }))
+                        navigation.navigate('TeamDetail', {
+                            team_id: item.team_id,
+                            fromOtherUser: true,
+                            user_id: item.user_id
+                        })
+                    } else {
+                        Alert.alert("Fantasy sniper", 'This participant user have not created match for league yet.')
+                    }
+                }}
             />
         )
     }
@@ -162,7 +181,10 @@ const LeagueDetailScreen: React.FC<props> = ({
         formData.append('league_id', route.params?.league_id)
         console.log("data", JSON.stringify(formData))
         joinLeagueWatcher(formData).unwrap().then(() => {
-            navigation.dispatch(AppStack)
+            // navigation.dispatch(AppStack)
+            navigation.navigate('tabs', {
+                screen: 'MyLeague'
+            })
         })
     }
 
@@ -171,11 +193,112 @@ const LeagueDetailScreen: React.FC<props> = ({
     return (
         <MainContainer
             loading={loadingForLeagueDetail || isLoading}
-            absoluteLoading={isFetching || joinLeagueLoading}
+            successMessage={joinLeagueRes?.message}
+            absoluteModalLoading={joinLeagueLoading}
         >
             <ScrollView
                 contentContainerStyle={{ paddingBottom: 100 }}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={isFetching}
+                        onRefresh={() => {
+                            refetch()
+                            refetchGameDetails()
+                        }}
+                    />
+                }
             >
+                {
+                    LeagueDetails?.scoring_system == 'SNIPER+' &&
+                        LeagueDetails?.isPlayerCreated == false ?
+                        <Container
+                            containerStyle={{
+                                backgroundColor: 'white',
+                                elevation: 1,
+                                borderRadius: 4
+                            }}
+                            mpContainer={{ mt: 10, mh: 15, pv: 5 }}
+                        >
+
+                            <Container
+                                containerStyle={{
+                                    flexDirection: 'row',
+                                    // alignItems: 'center',
+                                    // justifyContent: "center",
+                                    maxWidth: screenWidth * 0.70
+                                }}
+                                mpContainer={{ mt: 5, ml: 10 }}
+                            >
+                                <Label
+                                    labelSize={14}
+                                    textColor={OrangeColor}
+                                >You must need to create Lineup for SNIPER+</Label>
+                                <Btn
+                                    title="Create"
+                                    onPress={() => {
+                                        dispatch(leagueDetailsWatcher({ ...LeagueDetails }))
+                                        dispatch(addToMyPlayerWatcher([]))
+                                        dispatch(setMyTeamWatcher([]))
+                                        navigation.navigate('ShowPlayer')
+                                    }}
+                                    btnStyle={{
+                                        backgroundColor: 'white',
+                                        borderWidth: 1,
+                                        borderColor: OrangeColor,
+                                        borderRadius: 10,
+                                        // width:100,
+                                        // alignSelf:'center',
+                                        // position:"absolute",
+                                        // top:-10,
+                                        height: 25
+                                    }}
+                                    mpBtn={{ mh: 10, ph: 10, mt: 2 }}
+                                    labelSize={12}
+                                    textColor={OrangeColor}
+                                />
+                            </Container>
+
+                        </Container>
+                        : null
+                }
+                {/* {
+                    LeagueDetails?.you_join_league ? null
+                        :
+                        LeagueDetails?.scoring_system == 'SNIPER+' && !LeagueDetails?.isPlayerCreated && !LeagueDetails?.you_join_league ? null :
+                            // is_your_league && weekText != 'Completed' ?
+                            <Container
+                                containerStyle={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: "center"
+                                }}
+                                mpContainer={{ mt: 5 }}
+                            >
+                                <Label>Want to Join Your League?</Label>
+                                <Btn
+                                    title="Join"
+                                    onPress={() => {
+
+                                        // joinLeagueHandler()
+                                    }}
+                                    btnStyle={{
+                                        backgroundColor: 'white',
+                                        borderWidth: 1,
+                                        borderColor: OrangeColor,
+                                        borderRadius: 10,
+                                        // width:100,
+                                        // alignSelf:'center',
+                                        // position:"absolute",
+                                        // top:-10,
+                                        height: 25
+                                    }}
+                                    mpBtn={{ mh: 10, ph: 10, mt: 2 }}
+                                    labelSize={12}
+                                    textColor={OrangeColor}
+                                />
+                            </Container>
+                    // : null
+                } */}
                 <Container
                     containerStyle={{
                         backgroundColor: 'white',
@@ -258,14 +381,9 @@ const LeagueDetailScreen: React.FC<props> = ({
                         labelSize={15}
                     >Scope: {LeagueDetails?.week_type == 'singleWeek' ? `Week #${LeagueDetails.week[0]?.week_no}` : 'Multiple games'}</Label>
                     <Label
-                        mpLabel={{ mt: 5 }}
-                        labelSize={15}
-                    >No. of Participant: {!LeagueDetails?.participant_user ? 0 : LeagueDetails?.participant_user}/{LeagueDetails?.max_participant}</Label>
-                    {/* <Label>No. of. week: 4 Week</Label> */}
-                    {/* <Label
                         labelSize={15}
                         mpLabel={{ mt: 5 }}
-                    >Week no: {LeagueDetails?.week[0]?.week_no} Week</Label> */}
+                    >Scoring system: {LeagueDetails?.scoring_system}</Label>
                     <Label
                         labelSize={14}
                         style={{ color: 'black' }}
@@ -278,7 +396,9 @@ const LeagueDetailScreen: React.FC<props> = ({
                         labelSize={14}
                         mpLabel={{ mt: 5 }}
                     >{LeagueDetails?.league_flag?.weekText}</Label>
-                    <Btn
+                    {/* {
+                        LeagueDetails?.participant_user == LeagueDetails?.max_participant ? */}
+                    {/* <Btn
                         title='Match detail'
                         onPress={() => {
                             if (LeagueDetails?.is_game_created) {
@@ -307,18 +427,75 @@ const LeagueDetailScreen: React.FC<props> = ({
                         }}
                         textColor="white"
                         mpBtn={{ ml: 10 }}
-                    />
-                    <Img
-                        imgSrc={AppImages.team}
-                        width={40} height={40}
-                        imgStyle={{
-                            top: 10,
-                            resizeMode: 'contain',
-                            position: 'absolute',
-                            right: 10
-                        }}
-                    />
+                    /> */}
+                    {/* : null
+                    } */}
+                    <Container containerStyle={{
+                        top: 10,
+                        position: 'absolute',
+                        right: 10,
+                        justifyContent: "center",
+                        alignItems: "center"
+                    }} >
+                        <Img
+                            imgSrc={AppImages.team}
+                            width={40} height={40}
+                            imgStyle={{
+                                resizeMode: 'contain',
+                            }}
+                        />
+                        <Label
+                            labelSize={16}
+                            style={{
+                                fontFamily: medium
+                            }}
+                            mpLabel={{ mt: 4 }}
+                        >{!LeagueDetails?.participant_user ? 0 : LeagueDetails?.participant_user}/{LeagueDetails?.max_participant}</Label>
+                    </Container>
                 </Container>
+                {/* {
+                    LeagueDetails?.you_join_league ?
+
+                        LeagueDetails?.is_game_created ?
+                            <Btn
+                                title='View team'
+                                onPress={() => {
+                                    // goToTeamDetail()
+                                }}
+                                btnStyle={{
+                                    backgroundColor: 'white',
+                                    borderWidth: 1,
+                                    borderColor: PrimaryColor,
+                                    borderRadius: 10,
+                                    position: "absolute",
+                                    right: 10,
+                                    bottom: 6
+                                }}
+                                btnHeight={25}
+                                textColor={PrimaryColor}
+                                labelSize={10}
+                                mpBtn={{ ph: 10 }}
+                            /> :
+                            <Btn
+                                title='Create team'
+                                onPress={() => {
+                                    // createMatchHandler()
+                                }}
+                                btnStyle={{
+                                    backgroundColor: 'white',
+                                    borderWidth: 1,
+                                    borderColor: 'green',
+                                    borderRadius: 10,
+                                    position: "absolute",
+                                    right: 10,
+                                    bottom: 6
+                                }}
+                                btnHeight={25}
+                                textColor='green'
+                                labelSize={10}
+                                mpBtn={{ ph: 10 }}
+                            /> : null
+                } */}
                 {
                     LeagueDetails?.you_join_league ?
                         <Container containerStyle={{
@@ -351,10 +528,29 @@ const LeagueDetailScreen: React.FC<props> = ({
                                             uri={LeagueDetails?.team_logo || ''}
                                         />
                                         :
-                                        <Img
-                                            imgSrc={{ uri: LeagueDetails?.team_logo || '' }}
-                                            imgStyle={{ borderRadius: 25 }}
-                                            width={28} height={28} />
+                                        LeagueDetails?.team_logo ?
+                                            <Img
+                                                imgSrc={{ uri: LeagueDetails?.team_logo }}
+                                                imgStyle={{ borderRadius: 25 }}
+                                                width={28} height={28} />
+                                            :
+                                            <Container
+                                                containerStyle={{
+                                                    borderRadius: 100,
+                                                    justifyContent: 'center', alignItems: 'center',
+                                                    overflow: 'hidden',
+                                                    backgroundColor: 'white',
+                                                    borderWidth: 3,
+                                                    borderColor: 'white'
+                                                }}
+                                                width={40} height={40}
+                                            >
+                                                <Ionicons
+                                                    name='person'
+                                                    size={25}
+                                                    color='grey'
+                                                />
+                                            </Container>
                                 }
                                 <Label
                                     mpLabel={{ ml: 10 }}
@@ -373,7 +569,8 @@ const LeagueDetailScreen: React.FC<props> = ({
                                         onPress={() => {
                                             dispatch(leagueDetailsWatcher({ ...LeagueDetails }))
                                             navigation.navigate('TeamDetail', {
-                                                team_id: LeagueDetails?.team_id
+                                                team_id: LeagueDetails?.team_id,
+                                                user_id: user.id
                                             })
                                         }}
                                     >View</Label>
@@ -387,14 +584,25 @@ const LeagueDetailScreen: React.FC<props> = ({
                                         labelSize={14}
                                         mpLabel={{ mt: 5 }}
                                         onPress={() => {
-                                            dispatch(leagueDetailsWatcher({ ...LeagueDetails }))
-                                            navigation.navigate('CreateMatch')
+                                            dispatch(leagueDetailsWatcher({ ...LeagueDetails, isFromEdit: false }))
+                                            dispatch(addToMyPlayerWatcher([]))
+                                            dispatch(setMyTeamWatcher([]))
+                                            if (LeagueDetails.scoring_system == 'SNIPER+') {
+                                                navigation.navigate("JoinSniperPlusLeague")
+                                            } else {
+                                                navigation.navigate('CreateMatch')
+                                            }
                                         }}
                                     >Create team</Label>
                             }
                         </Container>
-                        :
-                        // weekText == 'Completed' ? null :
+                        : null
+                }
+
+                {/* // weekText == 'Completed' ? null : */}
+                {LeagueDetails?.you_join_league ? null
+                    :
+                    LeagueDetails?.scoring_system == 'SNIPER+' && !LeagueDetails?.isPlayerCreated && !LeagueDetails?.you_join_league ? null :
                         <Container
                             mpContainer={{ mt: 10 }}
                             containerStyle={{

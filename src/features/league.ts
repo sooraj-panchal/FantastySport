@@ -2,6 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import axios from 'axios'
 import { RootState } from '../store'
 import { liveMatchWatcher } from '../store/slices/myPlayerList'
+import { LeaguePlayerTypes, PlayerPositionTypes } from '../types/flatListTypes'
 import { GameDetailResponse, LeagueItemResponse, LiveMatchUpResponse, MyLeagueResponse, MyTeamResponse, teamDetailResponse, TeamListResponse, TeamMatchDetailsResponse, UserResponse } from '../types/responseTypes'
 import { fetchBaseQueryApi } from './fetchBaseQuery'
 
@@ -271,6 +272,62 @@ export const LeagueApi = createApi({
                 return response.data
             }
         }),
+        createLeaguePlayer: builder.mutation<any, any>({
+            query: (credentials) => ({
+                url: 'createLeaguePlayer',
+                method: 'POST',
+                body: credentials
+            }),
+            invalidatesTags: ['League'],
+            transformResponse: (response) => {
+                console.log("createLeaguePlayer Response==>", response)
+                return response;
+            }
+        }),
+        getLeaguePlayerList: builder.query<MyTeamResponse, any>({
+            query: ({ league_id }) => ({
+                url: `playerList?league_id=${league_id}`
+            }),
+            providesTags: ['League'],
+            transformResponse: (response: { data: MyTeamResponse | any }) => {
+                console.log("playerList Response==>", response)
+                return response.data[0];
+            }
+        }),
+        createSniperPlusGame: builder.mutation<any, any>({
+            query: (credentials) => ({
+                url: 'createSniperPlusGame',
+                method: 'POST',
+                body: credentials
+            }),
+            invalidatesTags: ['League'],
+            transformResponse: (response) => {
+                console.log("createSniperPlusGame Response==>", response)
+                return response;
+            }
+        }),
+        teamDetailForSniperPlus: builder.query({
+            query: ({ team_id, user_id }) => ({
+                url: `sniperPlusTeamDetail/${team_id}/${user_id}`
+            }),
+            providesTags: ['GetTeam', 'EditTeam', 'League'],
+            transformResponse: (response: { data: MyTeamResponse[] }) => {
+                console.log("teamDetailForSniperPlus Response==>", response)
+                return response.data[0]
+            }
+        }),
+        updateSniperPlusGame: builder.mutation<any, any>({
+            query: (credentials) => ({
+                url: 'updateSniperPlusGame',
+                method: 'POST',
+                body: credentials
+            }),
+            invalidatesTags: ['League'],
+            transformResponse: (response) => {
+                console.log("updateSniperPlusGame Response==>", response)
+                return response;
+            }
+        }),
     }),
 })
 
@@ -297,6 +354,11 @@ export const {
     useLeaguesAndGamesQuery,
     useLeagueDetailsQuery,
     useUpdateGameMutation,
-    useGetTeamDetailsQuery
+    useGetTeamDetailsQuery,
+    useCreateLeaguePlayerMutation,
+    useGetLeaguePlayerListQuery,
+    useCreateSniperPlusGameMutation,
+    useTeamDetailForSniperPlusQuery,
+    useUpdateSniperPlusGameMutation
 } = LeagueApi
 

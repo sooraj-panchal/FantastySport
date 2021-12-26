@@ -214,18 +214,15 @@ import { UserResponse } from '../../../types/responseTypes';
 import { screenWidth } from '../../../types/sizes';
 
 
-const MyLeague: React.FC = ({
-
+const MyLeague: React.FC<any> = ({
+    // leagueList,
+    // loading
 }) => {
-    const dispatch = useDispatch()
     const [page, setPage] = React.useState<Number>(0)
-    const { data, isLoading, isFetching } = useLeagueListQuery(null)
-    const user: UserResponse = useSelector((store: RootState) => store.auth.user)
-    console.log('my top league list', JSON.stringify(data))
-    const navigation = useNavigation<homeNavProps>()
+    const { data, isLoading } = useLeagueListQuery(null)
 
     return (
-        <MainContainer loading={isLoading || isFetching}  >
+        <MainContainer loading={isLoading}  >
             {
                 data?.length ?
                     <>

@@ -54,7 +54,7 @@ const RegisterScreen: React.FC<props> = ({
         data.append('fcm_token', fcmToken)
         try {
             const user = await register(data).unwrap()
-            // console.log(user)
+            console.log(user)
             navigation.navigate('Verification', {
                 email: user.email,
             })

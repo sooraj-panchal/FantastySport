@@ -43,6 +43,7 @@ const Tabs = () => {
                     // height: 80,
                     backgroundColor: PrimaryColor
                 },
+                unmountOnBlur:true
             })}
         >
             <Tab.Screen

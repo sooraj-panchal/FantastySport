@@ -221,10 +221,8 @@ import { screenWidth } from '../../../types/sizes';
 const AllLeague: React.FC = ({
 
 }) => {
-    const dispatch = useDispatch()
     const [page, setPage] = React.useState<Number>(0)
     const { data, isLoading, error } = useAllLeagueListQuery(null)
-    const user: UserResponse = useSelector((store: RootState) => store.auth.user)
 
     console.log('useAllLeagueListQuery', JSON.stringify(data))
 

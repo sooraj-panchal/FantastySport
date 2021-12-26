@@ -9,62 +9,134 @@ import { greenColor, OrangeColor, PrimaryColor } from '../../../assets/colors';
 import { ScrollView } from 'react-native-gesture-handler';
 import Img from '../../../components/Img';
 import { useDispatch, useSelector } from 'react-redux';
-import { useGetTeamDetailByLeagueQuery } from '../../../features/league';
+import { useGetTeamDetailByLeagueQuery, useTeamDetailForSniperPlusQuery } from '../../../features/league';
 import { RootState } from '../../../store';
 import { SvgUri } from 'react-native-svg';
-import { addToMyPlayerWatcher } from '../../../store/slices/myPlayerList';
+import { addToMyPlayerWatcher, setMyTeamWatcher } from '../../../store/slices/myPlayerList';
 import { medium } from '../../../assets/fonts/fonts';
+import { View } from 'react-native';
+import { leagueDetailsWatcher } from '../../../store/slices/selectedLeague';
+import { imageBaseUrl } from '../../../utils/globals';
 const TeamDetailScreen: React.FC<TeamDetailNav> = ({
     navigation,
     route
 }) => {
+
     const dispatch = useDispatch()
-    const { data: getMyTeam, isLoading, isFetching } = useGetTeamDetailByLeagueQuery(route.params?.team_id, {
-        // refetchOnMountOrArgChange: true
-    })
-    // console.log('route.params?.team_id',route.params?.team_id)
     const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
+
+    const { data: getTeamData, isLoading, isFetching } = useGetTeamDetailByLeagueQuery(route.params?.team_id, {
+        // refetchOnMountOrArgChange: true
+        skip: leagueDetails?.scoring_system == 'SNIPER+'
+    })
+
+    const { data: getMyTeamDataForSniperPlus, isLoading: isLoadingForTeamDetail, isFetching: isFetchingForTeamDetail, error } = useTeamDetailForSniperPlusQuery({
+        team_id: route.params?.team_id,
+        user_id: route.params?.user_id
+    }, {
+        // refetchOnMountOrArgChange: true
+        skip: leagueDetails?.scoring_system == 'SNIPER'
+    })
+    console.log('route.params', {
+        team_id: route.params?.team_id,
+        user_id: route.params?.user_id
+    })
+
+    const getMyTeam = useMemo(() => {
+        if (leagueDetails?.scoring_system == 'SNIPER+') {
+            return getMyTeamDataForSniperPlus;
+        } else {
+            return getTeamData
+        }
+    }, [leagueDetails, getMyTeamDataForSniperPlus, getTeamData])
+
+    console.log('leagueDetails?.scoring_system', leagueDetails)
 
     const imageType = useMemo(() => {
         return getMyTeam?.team_logo?.split('.').pop() == 'svg';
     }, [getMyTeam])
+
+    // console.log('error', error)
 
     React.useLayoutEffect(() => {
         return (
             navigation.setOptions({
                 headerTitle: leagueDetails?.name || '',
                 headerRight: () => {
-                    return (
-                        <Btn
-                            title="Edit Lineup"
-                            labelSize={12}
-                            labelStyle={{
-                                color: 'white'
-                            }}
-                            radius={8}
-                            mpBtn={{ mr: 10 }}
-                            btnStyle={{
-                                backgroundColor: OrangeColor,
-                                width: 85,
-                            }}
-                            onPress={() => {
-                                let data = getMyTeam?.players?.map((item, index) => {
-                                    if (item.Position == 'DEF') {
+                    if (!route.params?.fromOtherUser) {
+                        if (leagueDetails?.scoring_system == 'SNIPER+') {
+                            return (
+                                <Btn
+                                    title="Edit Points"
+                                    labelSize={12}
+                                    labelStyle={{
+                                        color: 'white'
+                                    }}
+                                    radius={8}
+                                    mpBtn={{ mr: 10 }}
+                                    btnStyle={{
+                                        backgroundColor: OrangeColor,
+                                        width: 85,
+                                    }}
+                                    onPress={() => {
+                                        let data = getMyTeam?.players?.map((item, index) => {
+                                            if (item.Position == 'DEF') {
 
-                                    }
-                                    return {
-                                        ...item,
-                                        isSelected: true,
-                                        FantasyPointsDraftKings: item.ProjectionPoints
-                                    }
-                                })
-                                dispatch(addToMyPlayerWatcher(data))
-                                navigation.navigate('updateTeam', {
-                                    team_id: route.params?.team_id
-                                })
-                            }}
-                        />
-                    )
+                                            }
+                                            return {
+                                                ...item,
+                                                isSelected: true,
+                                                FantasyPointsDraftKings: item.ProjectionPoints
+                                            }
+                                        })
+                                        // dispatch(addToMyPlayerWatcher(data))
+                                        // navigation.navigate('updateTeam', {
+                                        //     team_id: route.params?.team_id
+                                        // })
+                                        dispatch(leagueDetailsWatcher({
+                                            ...leagueDetails,
+                                            team_name: getMyTeam?.team_name,
+                                            team_logo: getMyTeam?.team_logo,
+                                            isFromEdit:true
+                                        }))
+                                        dispatch(setMyTeamWatcher({ data: data, isFromEdit: true }))
+                                        navigation.navigate('AddPlayerPoint')
+                                    }}
+                                />
+                            )
+                        } else
+                            return (
+                                <Btn
+                                    title="Edit Lineup"
+                                    labelSize={12}
+                                    labelStyle={{
+                                        color: 'white'
+                                    }}
+                                    radius={8}
+                                    mpBtn={{ mr: 10 }}
+                                    btnStyle={{
+                                        backgroundColor: OrangeColor,
+                                        width: 85,
+                                    }}
+                                    onPress={() => {
+                                        let data = getMyTeam?.players?.map((item, index) => {
+                                            if (item.Position == 'DEF') {
+
+                                            }
+                                            return {
+                                                ...item,
+                                                isSelected: true,
+                                                FantasyPointsDraftKings: item.ProjectionPoints
+                                            }
+                                        })
+                                        dispatch(addToMyPlayerWatcher(data))
+                                        navigation.navigate('updateTeam', {
+                                            team_id: route.params?.team_id
+                                        })
+                                    }}
+                                />
+                            )
+                    }
                 }
             })
         )
@@ -74,8 +146,8 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
 
     return <MainContainer
         style={{ backgroundColor: 'white' }}
-        loading={isLoading}
-        absoluteLoading={isFetching}
+        loading={isLoading || isLoadingForTeamDetail}
+        absoluteLoading={isFetching || isFetchingForTeamDetail}
     >
         {
             getMyTeam?.players?.length ?
@@ -162,22 +234,41 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                                 uri={`https://chessmafia.com/php/fantasy/public/uploads/${getMyTeam?.team_logo}` || 'dummy'}
                             />
                             :
-                            <Container
+                            getMyTeam?.team_logo ?
+
+                                <Container
+                                    containerStyle={{
+                                        borderWidth: 1,
+                                        borderColor: '#f2f2f2',
+                                        justifyContent: 'center',
+                                        alignItems: "center",
+                                        borderRadius: 45,
+                                        overflow: "hidden"
+                                    }}
+                                    width={45} height={45}
+                                >
+                                    <Img
+                                        imgStyle={{ borderRadius: 40 }}
+                                        width={45} height={45}
+                                        imgSrc={{ uri: `${imageBaseUrl}${getMyTeam?.team_logo}` }} />
+                                </Container>
+                                :
+                                <Container
                                 containerStyle={{
                                     borderWidth: 1,
                                     borderColor: '#f2f2f2',
+                                    borderRadius: 40,
                                     justifyContent: 'center',
-                                    alignItems: "center",
-                                    borderRadius: 45,
-                                    overflow: "hidden"
+                                    alignItems: 'center',
+                                    overflow: 'hidden'
                                 }}
                                 width={45} height={45}
                             >
-                                <Img
-                                    imgStyle={{ borderRadius: 40 }}
-                                    width={45} height={45}
-                                    imgSrc={{ uri: `https://chessmafia.com/php/fantasy/public/uploads/${getMyTeam?.team_logo}` || 'dummy' }} />
-
+                                <Ionicons
+                                    name='person'
+                                    size={45}
+                                    color='grey'
+                                />
                             </Container>
                         }
                         <Container
@@ -232,7 +323,7 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                         {getMyTeam?.players.map((item, index) => {
                             let { photoUrl, Name, Position, SniperPoints, PredictionPoints, Accuracy, ProjectionPoints, ActualPoints, Team, HomeOrAway } = item
                             let imageType = photoUrl?.split('.').pop() == 'svg';
-                            return <>
+                            return <View key={index.toString()} >
                                 <Container
                                     containerStyle={{ flexDirection: "row", alignItems: "center" }}
                                     mpContainer={{ mr: 20, ml: 15 }}
@@ -281,7 +372,7 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                                     </Container>
                                 </Container>
                                 <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />
-                            </>
+                            </View>
                         })}
                     </ScrollView>
                     {/* </ScrollView> */}

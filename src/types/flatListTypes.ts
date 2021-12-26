@@ -77,7 +77,8 @@ export interface LeaguePlayerTypes {
     PredictionPoints?: string | any;
     Accuracy?: string;
     SniperPoints?: string | any,
-    isWRTPosition?: boolean
+    isWRTPosition?: boolean,
+    ProjectionPoints?:number
 }
 
 export interface PlayerPositionTypes {
