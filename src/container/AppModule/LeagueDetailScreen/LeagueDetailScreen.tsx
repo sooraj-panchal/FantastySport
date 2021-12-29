@@ -41,7 +41,7 @@ const LeagueDetailScreen: React.FC<props> = ({
     }
     console.log('newData', newData)
 
-    const { data: LeagueDetails, isLoading: loadingForLeagueDetail, refetch,error:leagueDetailsError } = useLeagueDetailsQuery(route.params?.league_id)
+    const { data: LeagueDetails, isLoading: loadingForLeagueDetail, refetch, error: leagueDetailsError } = useLeagueDetailsQuery(route.params?.league_id)
 
     const { data: GameDetails, isLoading, error, isFetching, refetch: refetchGameDetails } = useGameDetailsQuery<any>(newData, {
         refetchOnMountOrArgChange: true
@@ -188,7 +188,22 @@ const LeagueDetailScreen: React.FC<props> = ({
         })
     }
 
-
+    const matchDetailHandler = ()=>{
+        if (LeagueDetails?.is_game_created) {
+            if (LeagueDetails.participant_user <= 2) {
+                Alert.alert('Fantasy sniper', 'Wait for join other players!')
+            } else {
+                navigation.navigate('GameDetail', {
+                    league_id: LeagueDetails?.league_id,
+                    week_id: LeagueDetails?.week[0].week_id,
+                    league_name: LeagueDetails?.name,
+                    my_team_id: LeagueDetails?.team_id
+                })
+            }
+        } else {
+            Alert.alert('Fantasy sniper', 'You should join the league to see Match detail!')
+        }
+    }
     // const { dateText, matchDate, weekText } = LeagueDetails?.league_flag
     return (
         <MainContainer
@@ -261,44 +276,6 @@ const LeagueDetailScreen: React.FC<props> = ({
                         </Container>
                         : null
                 }
-                {/* {
-                    LeagueDetails?.you_join_league ? null
-                        :
-                        LeagueDetails?.scoring_system == 'SNIPER+' && !LeagueDetails?.isPlayerCreated && !LeagueDetails?.you_join_league ? null :
-                            // is_your_league && weekText != 'Completed' ?
-                            <Container
-                                containerStyle={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    justifyContent: "center"
-                                }}
-                                mpContainer={{ mt: 5 }}
-                            >
-                                <Label>Want to Join Your League?</Label>
-                                <Btn
-                                    title="Join"
-                                    onPress={() => {
-
-                                        // joinLeagueHandler()
-                                    }}
-                                    btnStyle={{
-                                        backgroundColor: 'white',
-                                        borderWidth: 1,
-                                        borderColor: OrangeColor,
-                                        borderRadius: 10,
-                                        // width:100,
-                                        // alignSelf:'center',
-                                        // position:"absolute",
-                                        // top:-10,
-                                        height: 25
-                                    }}
-                                    mpBtn={{ mh: 10, ph: 10, mt: 2 }}
-                                    labelSize={12}
-                                    textColor={OrangeColor}
-                                />
-                            </Container>
-                    // : null
-                } */}
                 <Container
                     containerStyle={{
                         backgroundColor: 'white',
@@ -398,36 +375,26 @@ const LeagueDetailScreen: React.FC<props> = ({
                     >{LeagueDetails?.league_flag?.weekText}</Label>
                     {/* {
                         LeagueDetails?.participant_user == LeagueDetails?.max_participant ? */}
-                    {/* <Btn
-                        title='Match detail'
-                        onPress={() => {
-                            if (LeagueDetails?.is_game_created) {
-                                if (LeagueDetails.participant_user <= 2) {
-                                    Alert.alert('Fantasy sniper', 'Wait for join other players!')
-                                } else {
-                                    navigation.navigate('GameDetail', {
-                                        league_id: LeagueDetails?.league_id,
-                                        week_id: LeagueDetails?.week[0].week_id,
-                                        league_name: LeagueDetails?.name,
-                                        my_team_id: LeagueDetails?.team_id
-                                    })
-                                }
-                            } else {
-                                Alert.alert('Fantasy sniper', 'You should join the league to see Match detail!')
-                            }
-                        }}
-                        btnStyle={{
-                            backgroundColor: OrangeColor,
-                            width: 85, height: 30,
-                            borderRadius: 5,
-                            elevation: 1,
-                            position: 'absolute',
-                            right: 10,
-                            bottom: 10,
-                        }}
-                        textColor="white"
-                        mpBtn={{ ml: 10 }}
-                    /> */}
+                    {
+                        LeagueDetails?.scoring_system == 'SNIPER' ?
+                            <Btn
+                                title='Match detail'
+                                onPress={() => {
+                                    matchDetailHandler()
+                                }}
+                                btnStyle={{
+                                    backgroundColor: OrangeColor,
+                                    width: 85, height: 30,
+                                    borderRadius: 5,
+                                    elevation: 1,
+                                    position: 'absolute',
+                                    right: 10,
+                                    bottom: 10,
+                                }}
+                                textColor="white"
+                                mpBtn={{ ml: 10 }}
+                            /> : null
+                    }
                     {/* : null
                     } */}
                     <Container containerStyle={{
@@ -452,6 +419,49 @@ const LeagueDetailScreen: React.FC<props> = ({
                             mpLabel={{ mt: 4 }}
                         >{!LeagueDetails?.participant_user ? 0 : LeagueDetails?.participant_user}/{LeagueDetails?.max_participant}</Label>
                     </Container>
+                    {
+                        LeagueDetails?.scoring_system == 'SNIPER+' ?
+                            <Container containerStyle={{
+                                flexDirection:'row',
+                                alignItems:'center',
+                                justifyContent:'space-between'
+                            }} >
+                                <Btn
+                                    title='View Lineup'
+                                    onPress={() => {
+                                        dispatch(leagueDetailsWatcher({ ...LeagueDetails }))
+                                        navigation.navigate('ShowLeagueLineup')
+                                    }}
+                                    btnStyle={{
+                                        borderWidth: 1,
+                                        backgroundColor: 'white',
+                                        borderRadius: 4,
+                                        borderColor: PrimaryColor,
+                                        width:screenWidth*0.50
+                                    }}
+                                    mpBtn={{ mt: 10 }}
+                                    labelSize={14}
+                                />
+                                <Btn
+                                    title='Match detail'
+                                    onPress={() => {
+                                        matchDetailHandler()
+                                    }}
+                                    btnStyle={{
+                                        // borderWidth: 1,
+                                        backgroundColor:OrangeColor,
+                                        // borderRadius: 4,
+                                        // borderColor: PrimaryColor,
+                                        width:screenWidth*0.30,
+                                        borderRadius:4
+                                    }}
+                                    mpBtn={{ mt: 10 }}
+                                    labelSize={14}
+                                   textColor='white'
+                                />
+                            </Container>
+                            : null
+                    }
                 </Container>
                 {/* {
                     LeagueDetails?.you_join_league ?
@@ -621,17 +631,12 @@ const LeagueDetailScreen: React.FC<props> = ({
                             <Btn
                                 title='Join'
                                 onPress={() => {
-                                    // console.log({
-                                    //     week_id: route.params?.week_id,
-                                    //     type: 'public',
-                                    //     league_id: route.params?.league_id
-                                    // })
-                                    JoinLeagueHandler()
-                                    // navigation.navigate('CreateTeam', {
-                                    //     week_id: route.params?.week_id,
-                                    //     type: 'public',
-                                    //     league_id: route.params?.league_id
-                                    // })
+                                    if (LeagueDetails?.scoring_system == 'SNIPER+') {
+                                        dispatch(leagueDetailsWatcher({ ...LeagueDetails }))
+                                        navigation.navigate('ShowLeagueLineup')
+                                    } else {
+                                        JoinLeagueHandler()
+                                    }
                                 }}
                                 btnStyle={{
                                     backgroundColor: greenColor,

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { navigationProps } from '../../../types/nav';
 import MainContainer from '../../../components/MainContainer'
 import Btn from '../../../components/Btn';
@@ -21,6 +21,7 @@ import { useLoginMutation } from '../../../features/auth';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../../../store/slices/auth';
 import { fcmToken } from '../../../utils/globals';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 interface props extends navigationProps {
     loginLoading: boolean,
@@ -39,11 +40,19 @@ const LoginScreen: React.FC<props> = ({
     const dispatch = useDispatch()
     // const getStore = useStore()
     // console.log("getState",getStore.getState())
-    
+
     const [login, { isLoading, error }] = useLoginMutation()
     const initialState: formValues = { email: '', password: '' }
 
     console.log('globals.fcmToken', fcmToken)
+
+    useEffect(() => {
+        GoogleSignin.configure({
+            // scopes: [ 'https://www.googleapis.com/auth/drive.readonly' ], // [Android] what API you want to access on behalf of the user, default is email and profile
+            webClientId: '470440487634-lfs834utcft3oqeov5hc4mtetdhdb7bn.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+        });
+    }, []);
+
 
     const onLoginHandle = async (values: formValues) => {
         const data = new FormData();
@@ -65,6 +74,55 @@ const LoginScreen: React.FC<props> = ({
             console.log('err', err)
         }
     }
+
+    const signInWithGoogle = async () => {
+        try {
+            await GoogleSignin.hasPlayServices();
+            const userInfo = await GoogleSignin.signIn();
+            console.log('userInfo', JSON.stringify(userInfo));
+            // let data = new FormData();
+            // data.append( "phone_number", '' );
+            // data.append( "full_name", userInfo.user.name );
+            // // data.append( "arabic_name", userInfo.user.name );
+            // data.append( "email", userInfo.user.email );
+            // data.append( "country_code", "+965" );
+            // data.append( 'profile', '' );
+            // data.append( "address", "" );
+            // data.append( "city", "Kuwait city" );
+            // data.append( "latitude", "" );
+            // data.append( "longitude", "" );
+            // data.append( "device_type", "1" );
+            // data.append( 'login_type', 'G' );
+            // data.append( "device_token", globals.fcmToken );
+            // auth().signInWithEmailAndPassword( userInfo.user.email, '786786' ).then( ( res ) => {
+            //     new Promise( ( resolve, reject ) => {
+            //         loginWatcher( { data, resolve, reject } );
+            //     } ).then( loginResponse => {
+            //         globals.user_id = loginResponse.data.id;
+            //         asyncUserDataWatcher( { ...loginResponse?.data, fbUser: res.user } );
+            //         updateFirebaseUser( res.user?.uid );
+            //         navigation.dispatch( AppStack );
+            //     } ).catch( err => {
+            //         console.log( 'login err', err );
+            //     } ).finally( () => {
+            //         setLoading( false );
+            //     } );
+            // } ).catch( ( error ) => {
+            //     setLoading( false );
+            //     if ( error.code === 'auth/user-not-found' ) {
+            //         navigation.navigate( 'Register', {
+            //             email: userInfo.user.email,
+            //             user_name: userInfo.user.name,
+            //             flag: 'G',
+            //         } );
+            //     }
+            // } );
+            // loginWatcher( data );
+        } catch (error) {
+            // alert( JSON.stringify( error ) );
+            console.log('error', error);
+        }
+    };
 
     return (
         <MainContainer
@@ -92,7 +150,7 @@ const LoginScreen: React.FC<props> = ({
                             <Fragment>
                                 <Label
                                     labelSize={28}
-                                    mpLabel={{ ml: 20, }}
+                                    mpLabel={{ ml: 20, mt: 20 }}
                                     style={{
                                         fontFamily: semiBold,
                                         color: "white"
@@ -222,7 +280,7 @@ const LoginScreen: React.FC<props> = ({
                                     btnHeight={45}
                                     labelSize={13}
                                     labelStyle={{ fontFamily: medium, color: "black", marginLeft: 15 }}
-                                    onPress={handleSubmit}
+                                    onPress={signInWithGoogle}
                                     leftIcon={() => {
                                         return (
                                             <Img

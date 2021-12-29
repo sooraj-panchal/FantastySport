@@ -19,6 +19,8 @@ import com.reactnativecommunity.checkbox.ReactCheckBoxPackage;
 import io.invertase.firebase.app.ReactNativeFirebaseAppPackage;
 // @react-native-firebase/dynamic-links
 import io.invertase.firebase.dynamiclinks.ReactNativeFirebaseDynamicLinksPackage;
+// @react-native-google-signin/google-signin
+import com.reactnativegooglesignin.RNGoogleSigninPackage;
 // @react-native-masked-view/masked-view
 import org.reactnative.maskedview.RNCMaskedViewPackage;
 // @react-native-picker/picker
@@ -92,6 +94,7 @@ public class PackageList {
       new ReactCheckBoxPackage(),
       new ReactNativeFirebaseAppPackage(),
       new ReactNativeFirebaseDynamicLinksPackage(),
+      new RNGoogleSigninPackage(),
       new RNCMaskedViewPackage(),
       new RNCPickerPackage(),
       new RNGestureHandlerPackage(),

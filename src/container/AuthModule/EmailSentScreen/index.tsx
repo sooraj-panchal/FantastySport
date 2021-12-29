@@ -72,7 +72,9 @@ const EmailSentScreen: React.FC<props> = ({
                     labelSize={16}
                     labelStyle={{ fontFamily: medium, color: "white" }}
                     onPress={() => {
-                        navigation.navigate("ResetPassword")
+                        navigation.navigate("ResetPassword",{
+                            
+                        })
                         // navigation.navigate("Verification", {
                         //     email: route.params.email,
                         // })

@@ -587,22 +587,25 @@ import { TeamMatchDetailsResponse } from '../../../types/responseTypes';
 import { SvgUri } from 'react-native-svg';
 import moment from 'moment'
 import { useTime } from '../../../utils/timeZone';
+import { imageBaseUrl } from '../../../utils/globals';
 
 const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
     navigation,
     route,
 
 }) => {
-
-    const { data, isLoading, isFetching, error } = useTeamMatchDetailsQuery({
+    const teamDetailParams = {
         team_id: route.params?.team_id,
         op_team_id: route.params?.op_team_id,
-    }, {
+    }
+    const { data, isLoading, isFetching, error } = useTeamMatchDetailsQuery(teamDetailParams, {
         pollingInterval: 3000
     })
 
-    // console.log(route.params)
-    // console.log('data', data)
+    console.log('teamDetailParams', teamDetailParams)
+    console.log('error from teammatch compare', error)
+    console.log('data from teammatch compare', JSON.stringify(data))
+
     // console.log('error', error)
 
     const { imageType, imageType1 } = useMemo(() => {
@@ -661,11 +664,11 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                                         <SvgUri
                                             width={40}
                                             height={40}
-                                            uri={`https://chessmafia.com/php/fantasy/public/uploads/${data?.[0].team_logo}` || ''}
+                                            uri={`${imageBaseUrl}${data?.[0].team_logo}` || ''}
                                         />
                                         :
                                         <Img
-                                            imgSrc={{ uri: `https://chessmafia.com/php/fantasy/public/uploads/${data?.[0].team_logo}` || 'dummy' }}
+                                            imgSrc={{ uri: `${imageBaseUrl}${data?.[0].team_logo}` || 'dummy' }}
                                             width={40} height={45} />
                                 }
                             </Container>
@@ -913,19 +916,19 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                                                     <Label labelSize={15} style={{ color: 'green', fontFamily: medium }} >{item.PredictionPoints}</Label>
                                                     <Label labelSize={12} style={{ color: 'grey', fontFamily: regular }} > ({item.ActualPoints})</Label>
                                                 </Container>
-                                                <Container 
+                                                <Container
                                                     containerStyle={{ flexDirection: 'row' }}
                                                 >
                                                     <Label labelSize={12} style={{ color: 'black' }} mpLabel={{ ml: 5 }} >{item.Position}</Label>
                                                     {/* <Label labelSize={12} style={{ color: 'grey' }} mpLabel={{ ml: 5 }} >({item.Team})</Label> */}
                                                 </Container>
                                             </Container>
-                                            <Container 
-                                                    containerStyle={{ flexDirection: 'row' }}
-                                                >
-                                                    <Label labelSize={12} style={{ color: 'black' }} >{item.Team}</Label>
-                                                    <Label labelSize={12} style={{ color: 'grey' }} > ({item.HomeOrAway})</Label>
-                                                </Container>
+                                            <Container
+                                                containerStyle={{ flexDirection: 'row' }}
+                                            >
+                                                <Label labelSize={12} style={{ color: 'black' }} >{item.Team}</Label>
+                                                <Label labelSize={12} style={{ color: 'grey' }} > ({item.HomeOrAway})</Label>
+                                            </Container>
                                             <Label labelSize={12} style={{ color: "grey" }} >{moment(item.GameDate).format('ddd')} {useTime(item.GameDate)} v {item.Opponent}</Label>
                                         </Container>
                                         <Label labelSize={12} style={{ color: 'black', fontFamily: bold, position: 'absolute', right: 10 }}  >{item.SniperPoints}</Label>
@@ -993,12 +996,12 @@ const LiveMatchDetailScreen: React.FC<LiveMatchDetailNav> = ({
                                                     <Label labelSize={12} style={{ color: 'grey', fontFamily: regular }} > ({item.ActualPoints})</Label>
                                                 </Container>
                                             </Container>
-                                            <Container 
-                                                    containerStyle={{ flexDirection: 'row' }}
-                                                >
-                                                    <Label labelSize={12} style={{ color: 'black' }} >{item.Team}</Label>
-                                                    <Label labelSize={12} style={{ color: 'grey' }} > ({item.HomeOrAway})</Label>
-                                                </Container>
+                                            <Container
+                                                containerStyle={{ flexDirection: 'row' }}
+                                            >
+                                                <Label labelSize={12} style={{ color: 'black' }} >{item.Team}</Label>
+                                                <Label labelSize={12} style={{ color: 'grey' }} > ({item.HomeOrAway})</Label>
+                                            </Container>
                                             <Label labelSize={12} style={{ color: "grey" }} >{moment(item.GameDate).format('ddd')} {useTime(item.GameDate)} v {item.Opponent}</Label>
                                         </Container>
                                     </Container>

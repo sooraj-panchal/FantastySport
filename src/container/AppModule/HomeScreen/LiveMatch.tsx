@@ -21,6 +21,7 @@ import { leagueDetailsWatcher } from '../../../store/slices/selectedLeague';
 import { homeNavProps, navigationProps } from '../../../types/nav';
 import { LiveMatchUpResponse, MyLeagueResponse } from '../../../types/responseTypes';
 import { screenWidth } from '../../../types/sizes';
+import { cardShadow } from '../../../utils/styleUtils';
 
 
 const LiveMatch: React.FC = ({
@@ -93,7 +94,8 @@ const LiveMatch: React.FC = ({
                                 elevation: 2,
                                 alignSelf: 'center',
                                 borderRadius: 10,
-                                overflow: "hidden"
+                                overflow: "hidden",
+                                ...cardShadow
                             }}
                             mpContainer={{ mt: 10, pb: 10 }}
                         >
@@ -113,13 +115,13 @@ const LiveMatch: React.FC = ({
                                     flex: 0.70
                                 }} >
                                     <Label
-                                        labelSize={15}
+                                        labelSize={10}
                                         style={{ color: 'white', fontFamily: medium }}
                                     >League name</Label>
-                                    {/* <Label
-                                        labelSize={14}
+                                    <Label
+                                        labelSize={15}
                                         style={{ color: 'white', fontFamily: medium }}
-                                    >Team name</Label> */}
+                                    >Team name</Label>
                                 </Container>
                                 <Label
                                     labelSize={12}

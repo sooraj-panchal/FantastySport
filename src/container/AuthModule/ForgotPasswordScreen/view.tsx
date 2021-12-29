@@ -67,7 +67,7 @@ const ForgotPasswordScreen: React.FC<props> = ({
                             <>
                                 <Label
                                     labelSize={30}
-                                    mpLabel={{ ml: 20 }}
+                                    mpLabel={{ ml: 20,mt:20 }}
                                     style={{
                                         fontFamily: semiBold,
                                         color: "white"

@@ -243,7 +243,7 @@ const MyLeague: React.FC<any> = ({
                         <PagerView
                             initialPage={0}
                             style={{
-                                height: 150,
+                                height: 140,
                                 marginTop: 10,
                             }}
                             onPageSelected={(event) => {
@@ -269,7 +269,7 @@ const MyLeague: React.FC<any> = ({
                                 flexDirection: "row",
                                 alignSelf: "center"
                             }}
-                            mpContainer={{ mt: 5 }}
+                            // mpContainer={{ mt: 5 }}
                         >
                             {data?.map((item, index) => {
                                 return (

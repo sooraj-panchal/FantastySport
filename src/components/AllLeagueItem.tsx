@@ -12,6 +12,7 @@ import { leagueDetailsWatcher } from '../store/slices/selectedLeague';
 import { homeNavProps } from '../types/nav';
 import { MyLeagueResponse, UserResponse } from '../types/responseTypes';
 import { screenWidth } from '../types/sizes';
+import { cardShadow } from '../utils/styleUtils';
 import Btn from './Btn';
 import Container from './Container';
 import Img from './Img';
@@ -43,16 +44,11 @@ const MyLeagueItem: React.FC<MyLeagueResponse> = ({
                 backgroundColor: "white",
                 elevation: 2,
                 alignSelf: 'center',
-                borderRadius: 10
+                borderRadius: 10,
+                ...cardShadow
             }}
             mpContainer={{ ph: 10, pt: 5, pb: 15 }}
             onPress={() => {
-                // console.log(item)
-                // let parsedWeek = JSON.parse(item.week)
-                // dispatch(leagueDetailsWatcher({ ...item }))
-                // navigation.navigate('MyTeamTab', {
-                //     screen: 'MyTeam'
-                // })
                 navigation.navigate('LeagueDetail', {
                     league_id: league_id,
                     week_id: week?.[0]?.week_id,

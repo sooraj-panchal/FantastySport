@@ -23,7 +23,8 @@ interface Props {
         },
         status: string
     } | any,
-    successMessage?: string
+    successMessage?: string,
+    topEdge?: boolean
 }
 
 const MainContainer: React.FC<Props> = ({
@@ -37,7 +38,8 @@ const MainContainer: React.FC<Props> = ({
     loadingLabel,
     statusBarHeight,
     errorMessage,
-    successMessage
+    successMessage,
+    topEdge
 }) => {
 
     const insets = useSafeAreaInsets()
@@ -70,7 +72,12 @@ const MainContainer: React.FC<Props> = ({
                 flex: 1,
                 backgroundColor: "#f2f2f2",
             }, style]}
-            edges={['bottom', 'left', 'right']}
+            edges={
+                topEdge ? 
+                ['bottom', 'left', 'right','top']
+                :
+                ['bottom', 'left', 'right']
+            }
         >
             {loadingContainer()}
             {absoluteLoadingContainer()}

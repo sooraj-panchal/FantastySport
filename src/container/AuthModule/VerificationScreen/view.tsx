@@ -78,7 +78,7 @@ const VerificationScreen: React.FC<props> = ({
                 <ScrollView contentContainerStyle={{ paddingBottom: 100 }} >
                     <Label
                         labelSize={30}
-                        mpLabel={{ ml: 20, mt: 10 }}
+                        mpLabel={{ ml: 20, mt: 20 }}
                         style={{
                             fontFamily: semiBold,
                             color: 'white'

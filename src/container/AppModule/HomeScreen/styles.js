@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 import { DarkBlueColor, OrangeColor } from "../../../assets/colors";
 import { medium, semiBold } from "../../../assets/fonts/fonts";
 import { screenWidth } from "../../../types/sizes";
+import { cardShadow } from "../../../utils/styleUtils";
 
 const styles = StyleSheet.create({
     container:{
@@ -11,7 +12,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: "white",
         elevation: 2,
-        overflow: "hidden"
+        overflow: "hidden",
+        ...cardShadow
     },
     leagueText:{
         fontWeight: "bold"

@@ -129,7 +129,8 @@ const UpdateTeamScreen: React.FC<navigationProps> = ({
                 data.append('team_id', leagueDetails.team_id)
                 console.log(JSON.stringify(data))
                 updateGameWatcher(data).unwrap().then(() => {
-                    navigation.dispatch(AppStack)
+                    // navigation.dispatch(AppStack)
+                    navigation.goBack()
                     dispatch(addToMyPlayerWatcher([]))
                     dispatch(setMyTeamWatcher([]))
                 })

@@ -28,13 +28,14 @@ const AppIntroScreen: React.FC<props> = ({
 
     return (
         <MainContainer
-            statusBarHeight
+            // statusBarHeight
             style={{ backgroundColor: 'white' }}
+            topEdge
         >
             <StatusBar backgroundColor="transparent" translucent barStyle="dark-content" />
             <PagerView style={{
                 flex: 0.95,
-                marginTop: 20
+                // marginTop: 20
             }} initialPage={0}
                 onPageSelected={(event) => {
                     console.log(event.nativeEvent.position)

@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "470440487634-3rq36q7so397vrm0boss6q9ehonf5mfp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fantastysport",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "470440487634-q210qbf6ca4lte2u9861ut3leq2fjgso.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fantastysport",
+            "certificate_hash": "7ea64a7e58ac3a2ee641a95302acd0b9882acdcd"
+          }
+        },
+        {
           "client_id": "470440487634-lfs834utcft3oqeov5hc4mtetdhdb7bn.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +45,13 @@
             {
               "client_id": "470440487634-lfs834utcft3oqeov5hc4mtetdhdb7bn.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "470440487634-umlf29auhgecolbufm3q31ba7rkk7jsn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fantasysniper"
+              }
             }
           ]
         }

@@ -307,7 +307,7 @@ export const LeagueApi = createApi({
             }
         }),
         teamDetailForSniperPlus: builder.query({
-            query: ({ team_id, user_id }) => ({
+            query: ({team_id,user_id}) => ({
                 url: `sniperPlusTeamDetail/${team_id}/${user_id}`
             }),
             providesTags: ['GetTeam', 'EditTeam', 'League'],

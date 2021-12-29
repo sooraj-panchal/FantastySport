@@ -25,32 +25,32 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
     const dispatch = useDispatch()
     const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
 
-    const { data: getTeamData, isLoading, isFetching } = useGetTeamDetailByLeagueQuery(route.params?.team_id, {
+    const { data: getMyTeam, isLoading, isFetching, error } = useGetTeamDetailByLeagueQuery(route.params?.team_id, {
+        // pollingInterval:5000
         // refetchOnMountOrArgChange: true
-        skip: leagueDetails?.scoring_system == 'SNIPER+'
+        // skip: leagueDetails?.scoring_system == 'SNIPER+'
     })
 
-    const { data: getMyTeamDataForSniperPlus, isLoading: isLoadingForTeamDetail, isFetching: isFetchingForTeamDetail, error } = useTeamDetailForSniperPlusQuery({
-        team_id: route.params?.team_id,
-        user_id: route.params?.user_id
-    }, {
-        // refetchOnMountOrArgChange: true
-        skip: leagueDetails?.scoring_system == 'SNIPER'
-    })
+    // const { data: getMyTeamDataForSniperPlus, isLoading: isLoadingForTeamDetail, isFetching: isFetchingForTeamDetail, error } = useTeamDetailForSniperPlusQuery({
+    //     team_id: route.params?.team_id,
+    //     user_id: route.params?.user_id
+    // }, {
+    //     // refetchOnMountOrArgChange: true
+    //     skip: leagueDetails?.scoring_system == 'SNIPER'
+    // })
     console.log('route.params', {
         team_id: route.params?.team_id,
-        user_id: route.params?.user_id
     })
 
-    const getMyTeam = useMemo(() => {
-        if (leagueDetails?.scoring_system == 'SNIPER+') {
-            return getMyTeamDataForSniperPlus;
-        } else {
-            return getTeamData
-        }
-    }, [leagueDetails, getMyTeamDataForSniperPlus, getTeamData])
+    // const getMyTeam = useMemo(() => {
+    //     if (leagueDetails?.scoring_system == 'SNIPER+') {
+    //         return getMyTeamDataForSniperPlus;
+    //     } else {
+    //         return getTeamData
+    //     }
+    // }, [leagueDetails, getMyTeamDataForSniperPlus, getTeamData])
 
-    console.log('leagueDetails?.scoring_system', leagueDetails)
+    console.log('error', JSON.stringify(error))
 
     const imageType = useMemo(() => {
         return getMyTeam?.team_logo?.split('.').pop() == 'svg';
@@ -63,79 +63,83 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
             navigation.setOptions({
                 headerTitle: leagueDetails?.name || '',
                 headerRight: () => {
-                    if (!route.params?.fromOtherUser) {
-                        if (leagueDetails?.scoring_system == 'SNIPER+') {
-                            return (
-                                <Btn
-                                    title="Edit Points"
-                                    labelSize={12}
-                                    labelStyle={{
-                                        color: 'white'
-                                    }}
-                                    radius={8}
-                                    mpBtn={{ mr: 10 }}
-                                    btnStyle={{
-                                        backgroundColor: OrangeColor,
-                                        width: 85,
-                                    }}
-                                    onPress={() => {
-                                        let data = getMyTeam?.players?.map((item, index) => {
-                                            if (item.Position == 'DEF') {
+                    if (getMyTeam?.players?.length) {
+                        if (!route.params?.fromOtherUser) {
+                            if (leagueDetails?.scoring_system == 'SNIPER+') {
+                                return (
+                                    <Btn
+                                        title="Edit Points"
+                                        labelSize={12}
+                                        labelStyle={{
+                                            color: 'white'
+                                        }}
+                                        radius={8}
+                                        mpBtn={{ mr: 10 }}
+                                        btnStyle={{
+                                            backgroundColor: OrangeColor,
+                                            width: 85,
+                                        }}
+                                        onPress={() => {
+                                            let data = getMyTeam?.players?.map((item, index) => {
+                                                if (item.Position == 'DEF') {
 
-                                            }
-                                            return {
-                                                ...item,
-                                                isSelected: true,
-                                                FantasyPointsDraftKings: item.ProjectionPoints
-                                            }
-                                        })
-                                        // dispatch(addToMyPlayerWatcher(data))
-                                        // navigation.navigate('updateTeam', {
-                                        //     team_id: route.params?.team_id
-                                        // })
-                                        dispatch(leagueDetailsWatcher({
-                                            ...leagueDetails,
-                                            team_name: getMyTeam?.team_name,
-                                            team_logo: getMyTeam?.team_logo,
-                                            isFromEdit:true
-                                        }))
-                                        dispatch(setMyTeamWatcher({ data: data, isFromEdit: true }))
-                                        navigation.navigate('AddPlayerPoint')
-                                    }}
-                                />
-                            )
-                        } else
-                            return (
-                                <Btn
-                                    title="Edit Lineup"
-                                    labelSize={12}
-                                    labelStyle={{
-                                        color: 'white'
-                                    }}
-                                    radius={8}
-                                    mpBtn={{ mr: 10 }}
-                                    btnStyle={{
-                                        backgroundColor: OrangeColor,
-                                        width: 85,
-                                    }}
-                                    onPress={() => {
-                                        let data = getMyTeam?.players?.map((item, index) => {
-                                            if (item.Position == 'DEF') {
+                                                }
+                                                return {
+                                                    ...item,
+                                                    isSelected: true,
+                                                    FantasyPointsDraftKings: item.ProjectionPoints
+                                                }
+                                            })
+                                            // dispatch(addToMyPlayerWatcher(data))
+                                            // navigation.navigate('updateTeam', {
+                                            //     team_id: route.params?.team_id
+                                            // })
+                                            dispatch(leagueDetailsWatcher({
+                                                ...leagueDetails,
+                                                team_name: getMyTeam?.team_name,
+                                                team_logo: getMyTeam?.team_logo,
+                                                isFromEdit: true
+                                            }))
+                                            dispatch(setMyTeamWatcher({ data: data, isFromEdit: true }))
+                                            navigation.navigate('AddPlayerPoint')
+                                        }}
+                                    />
+                                )
+                            } else
+                                return (
+                                    <Btn
+                                        title="Edit Lineup"
+                                        labelSize={12}
+                                        labelStyle={{
+                                            color: 'white'
+                                        }}
+                                        radius={8}
+                                        mpBtn={{ mr: 10 }}
+                                        btnStyle={{
+                                            backgroundColor: OrangeColor,
+                                            width: 85,
+                                        }}
+                                        onPress={() => {
+                                            let data = getMyTeam?.players?.map((item, index) => {
+                                                if (item.Position == 'DEF') {
 
-                                            }
-                                            return {
-                                                ...item,
-                                                isSelected: true,
-                                                FantasyPointsDraftKings: item.ProjectionPoints
-                                            }
-                                        })
-                                        dispatch(addToMyPlayerWatcher(data))
-                                        navigation.navigate('updateTeam', {
-                                            team_id: route.params?.team_id
-                                        })
-                                    }}
-                                />
-                            )
+                                                }
+                                                return {
+                                                    ...item,
+                                                    isSelected: true,
+                                                    FantasyPointsDraftKings: item.ProjectionPoints
+                                                }
+                                            })
+                                            dispatch(addToMyPlayerWatcher(data))
+                                            navigation.navigate('updateTeam', {
+                                                team_id: route.params?.team_id
+                                            })
+                                        }}
+                                    />
+                                )
+                        }
+                    } else {
+                        return null;
                     }
                 }
             })
@@ -146,8 +150,8 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
 
     return <MainContainer
         style={{ backgroundColor: 'white' }}
-        loading={isLoading || isLoadingForTeamDetail}
-        absoluteLoading={isFetching || isFetchingForTeamDetail}
+        loading={isLoading}
+        absoluteLoading={isFetching}
     >
         {
             getMyTeam?.players?.length ?
@@ -254,22 +258,22 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                                 </Container>
                                 :
                                 <Container
-                                containerStyle={{
-                                    borderWidth: 1,
-                                    borderColor: '#f2f2f2',
-                                    borderRadius: 40,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    overflow: 'hidden'
-                                }}
-                                width={45} height={45}
-                            >
-                                <Ionicons
-                                    name='person'
-                                    size={45}
-                                    color='grey'
-                                />
-                            </Container>
+                                    containerStyle={{
+                                        borderWidth: 1,
+                                        borderColor: '#f2f2f2',
+                                        borderRadius: 40,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        overflow: 'hidden'
+                                    }}
+                                    width={45} height={45}
+                                >
+                                    <Ionicons
+                                        name='person'
+                                        size={45}
+                                        color='grey'
+                                    />
+                                </Container>
                         }
                         <Container
                             mpContainer={{ ml: 10 }}

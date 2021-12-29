@@ -55,7 +55,8 @@ export type unAuthParamList = {
   LeagueDetail: { league_id?: any, week_id?: any } | undefined,
   updateTeam: { team_id: number | any } | undefined;
   ShowPlayer:undefined,
-  JoinSniperPlusLeague:undefined
+  JoinSniperPlusLeague:undefined,
+  ShowLeagueLineup:undefined
 };
 
 

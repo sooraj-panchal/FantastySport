@@ -182,7 +182,7 @@ const JoinSniperPlusLeague: React.FC<navigationProps> = ({
     })
     const myPlayerListArray: PlayerPositionTypes[] = useSelector((state: RootState) => state.myPlayer.data)
 
-    console.log('myPlayerListArray', JSON.stringify(myPlayerListArray))
+    console.log('leagueDetails', JSON.stringify(leagueDetails))
 
     useEffect(() => {
 
@@ -262,21 +262,63 @@ const JoinSniperPlusLeague: React.FC<navigationProps> = ({
                 headerTitle: leagueDetails.name,
                 headerRight: () => {
                     // if (myPlayerListArray?.length == 10) {
-                    return <Btn
-                        title="Save"
-                        labelSize={14}
-                        labelStyle={{
-                            color: 'white'
-                        }}
-                        radius={8}
-                        mpBtn={{ mt: 5 }}
-                        btnStyle={{
-                            backgroundColor: OrangeColor,
-                            width: 85,
-                            opacity: 1
-                        }}
-                        onPress={saveTeamHandler}
-                    />
+                    const isAllPredictionPointsAdded = myPlayerListData?.every((item, index) => { return item.PredictionPoints })
+                    console.log(isAllPredictionPointsAdded)
+                    if (!isAllPredictionPointsAdded) {
+                        return <Btn
+                            title="Predict points"
+                            labelSize={14}
+                            labelStyle={{
+                                color: 'white'
+                            }}
+                            radius={8}
+                            mpBtn={{ mt: 5 }}
+                            btnStyle={{
+                                backgroundColor: OrangeColor,
+                                width: 120,
+                                opacity: 1
+                            }}
+                            onPress={() => {
+                                dispatch(setMyTeamWatcher({ data: myPlayerListData, isFromEdit: true }))
+                                navigation.navigate('AddPlayerPoint')
+                            }}
+                        />
+                    } else {
+                        return <Btn
+                            title="Save"
+                            labelSize={14}
+                            labelStyle={{
+                                color: 'white'
+                            }}
+                            radius={8}
+                            mpBtn={{ mt: 5 }}
+                            btnStyle={{
+                                backgroundColor: OrangeColor,
+                                width: 85,
+                                opacity: 1
+                            }}
+                            onPress={() => {
+                                const saveLeaguePlayers = myPlayerListData.map((item, index) => {
+                                    return {
+                                        PlayerID: item.PlayerID,
+                                        PredictionPoints: item.PredictionPoints,
+                                    }
+                                })
+                                let data = new FormData()
+                                data.append('players', JSON.stringify(saveLeaguePlayers))
+                                data.append('team_id', leagueDetails.team_id)
+                                data.append('league_id', leagueDetails.league_id)
+                                console.log('data', JSON.stringify(data))
+                                useCreateSniperPlusGame(data).unwrap().then(() => {
+                                    // navigation.dispatch(AppStack)
+                                    navigation.navigate('tabs',{screen:'MyLeague'})
+                                    dispatch(addToMyPlayerWatcher([]))
+                                    dispatch(setMyTeamWatcher([]))
+                                    refetch()
+                                })
+                            }}
+                        />
+                    }
                     // } else {
                     //     return null
                     // }

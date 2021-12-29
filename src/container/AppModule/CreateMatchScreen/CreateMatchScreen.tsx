@@ -278,10 +278,10 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                     <Label labelSize={14} style={{ color: 'grey' }} >Projection Pts. {totalProjectedPoints}</Label>
                 </Container>
             </Container>
-            {
+            {/* {
                 myPlayerListArray?.length == 10 ?
                     <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} mpContainer={{ mv: 10, mh: 15 }} /> : null
-            }
+            } */}
         </>
     }
 
@@ -414,7 +414,10 @@ const MyTeamScreen: React.FC<navigationProps> = ({
                 data.append('players', JSON.stringify(saveLeaguePlayers))
                 data.append('team_id', leagueDetails.team_id)
                 createGameWatcher(data).unwrap().then(() => {
-                    navigation.dispatch(AppStack)
+                    // navigation.dispatch(AppStack)
+                    navigation.navigate('tabs',{
+                        screen:'MyLeague'
+                    })
                     dispatch(addToMyPlayerWatcher([]))
                     dispatch(setMyTeamWatcher([]))
                     refetch()

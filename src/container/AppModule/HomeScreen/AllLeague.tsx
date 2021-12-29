@@ -224,12 +224,14 @@ const AllLeague: React.FC = ({
     const [page, setPage] = React.useState<Number>(0)
     const { data, isLoading, error } = useAllLeagueListQuery(null)
 
-    console.log('useAllLeagueListQuery', JSON.stringify(data))
+    console.log('useAllLeagueListQuery', JSON.stringify(error))
 
     const navigation = useNavigation<homeNavProps>()
 
     return (
-        <MainContainer loading={isLoading} >
+        <MainContainer 
+        loading={isLoading} 
+        >
             {
                 data?.length ?
                     <>
@@ -238,7 +240,7 @@ const AllLeague: React.FC = ({
                             alignItems: "center",
                             justifyContent: "space-between"
                         }}
-                            mpContainer={{ pt: 20, ph: 20 }}
+                            mpContainer={{ph: 20 }}
                         >
                             <Label
                                 labelSize={16}
@@ -259,7 +261,7 @@ const AllLeague: React.FC = ({
                         <PagerView
                             initialPage={0}
                             style={{
-                                height: 150,
+                                height: 140,
                                 marginTop: 10,
                             }}
                             onPageSelected={(event) => {

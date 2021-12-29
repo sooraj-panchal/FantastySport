@@ -187,7 +187,6 @@ const ShowPlayerScreen: React.FC<navigationProps> = ({
         return getMyTeam?.team_logo?.split('.').pop() == 'svg';
     }, [getMyTeam])
 
-
     // console.log(leagueDetails?.week[0]?.week)
     const renderListHeader = () => {
         return <>

@@ -77,13 +77,13 @@ const LiveMatchupRankings: React.FC<navigationProps> = ({
                         flex: 0.70
                     }} >
                         <Label
-                            labelSize={14}
+                            labelSize={10}
                             style={{ color: 'white', fontFamily: medium }}
                         >League name</Label>
-                        {/* <Label
+                        <Label
                             labelSize={14}
                             style={{ color: 'white', fontFamily: medium }}
-                        >Team name</Label> */}
+                        >Team name</Label>
                     </Container>
                     <Label
                         labelSize={12}

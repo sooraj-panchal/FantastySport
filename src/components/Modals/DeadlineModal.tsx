@@ -333,8 +333,8 @@ const DeadlineModal: React.FC<props> = ({
                     // backgroundColor: '#f2f2f2'
                 }}
                 childrenStyle={{
-                    marginBottom: 15
-                    // paddingBottom: 60
+                    marginBottom: 15,
+                    paddingBottom: 20
                 }}
                 adjustToContentHeight={true}
                 // modalHeight={screenHeight * 0.60}

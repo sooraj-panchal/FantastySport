@@ -48,7 +48,7 @@ const SecondPage: React.FC = ({
                 }}
                 mpLabel={{
                     pl: 20,
-                    mt:15
+                    // mt:15
                 }}
             >Instructions</Label>
             <FlatList

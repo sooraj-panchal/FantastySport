@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, FlatList, StatusBar, ListRenderItem, RefreshControl } from "react-native";
+import { ScrollView, FlatList, StatusBar, ListRenderItem, RefreshControl, View } from "react-native";
 import Btn from "../../../components/Btn";
 import Label from "../../../components/Label";
 import MainContainer from "../../../components/MainContainer";
@@ -106,16 +106,14 @@ const HomeScreen: React.FC<props> = ({
     }
 
     return (
-        <MainContainer style={{ backgroundColor: "#f2f2f2" }}
-
-        >
+        <View style={{flex:1,backgroundColor:'#f2f2f2'}} >
             <StatusBar backgroundColor="transparent" barStyle="light-content" />
             <ScrollView
                 key={1}
                 contentContainerStyle={{ paddingBottom: 40 }}
                 refreshControl={
                     <RefreshControl
-                        refreshing={isFetching || fetchingForAllLeague || fetchingForLiveMatchupRanking}
+                        refreshing={isFetching || fetchingForAllLeague}
                         onRefresh={() => {
                             refetch()
                             refetchForAllLeague()
@@ -143,7 +141,7 @@ const HomeScreen: React.FC<props> = ({
                 <AllLeague />
                 <LiveMatch />
             </ScrollView>
-        </MainContainer>
+        </View>
     )
 }
 

@@ -13,7 +13,7 @@ target 'FantastySport' do
   )
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-
+  pod 'GoogleSignIn', '~> 6.0.2'
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
   pod 'Firebase/Analytics'
   target 'FantastySportTests' do

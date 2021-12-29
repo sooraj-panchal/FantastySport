@@ -54,7 +54,7 @@ const GamePlayerList: React.FC<GameDetailResponse & props> = ({
             <Container
                 containerStyle={{
                     position: 'absolute',
-                    right: 40,
+                    right: 35,
                 }}
             >
                 <Label

@@ -26,7 +26,7 @@ const GameDetailScreen: React.FC<GameDetailNav> = ({
         })
     })
 
-    console.log('data', JSON.stringify(data))
+    console.log('error', JSON.stringify(error))
 
     const renderItem: ListRenderItem<any> = ({ item, index }) => {
         console.log(item)
@@ -96,7 +96,7 @@ const GameDetailScreen: React.FC<GameDetailNav> = ({
                     right: 15,
                     fontWeight: 'bold'
                 }}
-            >SNIPER pts</Label>
+            >FanPts</Label>
         </Container>
         <FlatList
             data={data}

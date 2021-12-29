@@ -104,8 +104,7 @@ const LeaderBoardScreen: React.FC<props> = ({
                         dispatch(leagueDetailsWatcher({ ...LeagueDetails }))
                         navigation.navigate('TeamDetail', {
                             team_id: item.team_id,
-                            fromOtherUser: true,
-                            user_id: item.user_id
+                            fromOtherUser: true
                         })
                     } else {
                         Alert.alert("Fantasy sniper", 'This participant user have not created match for league yet.')
@@ -246,7 +245,7 @@ const LeaderBoardScreen: React.FC<props> = ({
                             flexDirection: 'row',
                             alignItems: 'center',
                         }}
-                        mpContainer={{ mh: 10, mt: 5, mb: 5 }}
+                        mpContainer={{ mh: 10, mt: 20, mb: 5 }}
                     >
                         <Label
                             labelSize={16}
@@ -267,7 +266,7 @@ const LeaderBoardScreen: React.FC<props> = ({
                             labelSize={15}
                             style={{
                                 position: 'absolute',
-                                right: 5,
+                                right: 20,
                                 fontWeight: 'bold'
                             }}
                         >FanPts</Label>

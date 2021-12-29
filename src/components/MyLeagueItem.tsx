@@ -146,6 +146,7 @@ import { leagueDetailsWatcher } from '../store/slices/selectedLeague';
 import { homeNavProps } from '../types/nav';
 import { MyLeagueResponse, UserResponse } from '../types/responseTypes';
 import { screenWidth } from '../types/sizes';
+import { cardShadow } from '../utils/styleUtils';
 import Btn from './Btn';
 import Container from './Container';
 import Img from './Img';
@@ -185,7 +186,8 @@ const MyLeagueItem: React.FC<MyLeagueResponse & props> = ({
                 backgroundColor: "white",
                 elevation: 2,
                 alignSelf: 'center',
-                borderRadius: 10
+                borderRadius: 10,
+               ...cardShadow
             }}
             mpContainer={{ ph: 10, pt: 10, pb: 15 }}
             onPress={() => {

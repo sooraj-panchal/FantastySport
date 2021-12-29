@@ -72,7 +72,7 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
                 })
                 // console.log("players data",response.data)
                 let data = await getPlayerImage(response.data?.filter((item)=>item.Activated == 1))
-                let myPlayers = getMyPlayerList(data)
+                let myPlayers:LeaguePlayerTypes[] = getMyPlayerList(data)
                 // console.log('myPlayers',myPlayers)
                 let getDataByFilterPosition = myPlayers.filter((item, index) => {
                     if (route.params.Position == "W/R/T" && !item.isSelected) {
