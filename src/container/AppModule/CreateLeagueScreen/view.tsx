@@ -36,7 +36,7 @@ const CreateLeagueScreen: React.FC<props> = ({
     const selectedWeek: Array<{ week: string }> = useSelector((state: RootState) => state.selectedLeague.selectedWeek)
     const weekModalRef = useRef<Modalize>(null)
 
-    const [createLeague, { isLoading, data, error }] = useCreateLeagueMutation<any>()
+    const [createLeague, { isLoading, data, error: leagueCreateError }] = useCreateLeagueMutation<any>()
 
     const onChangeScope = (value: boolean) => {
         setIsSingleWeek(value)
@@ -92,12 +92,12 @@ const CreateLeagueScreen: React.FC<props> = ({
                 // if (selectPointSystem == PointSystemList[1]) {
                 //     navigation.navigate('ShowPlayer')
                 // } else {
-                    // navigation.navigate(''
-                    
-                    // dispatch(leagueDetailsWatcher({ ...item }))
-                    // dispatch(addToMyPlayerWatcher([]))
-                    // dispatch(setMyTeamWatcher([]))
-                    // navigation.navigate('ShowPlayer'))
+                // navigation.navigate(''
+
+                // dispatch(leagueDetailsWatcher({ ...item }))
+                // dispatch(addToMyPlayerWatcher([]))
+                // dispatch(setMyTeamWatcher([]))
+                // navigation.navigate('ShowPlayer'))
                 navigation.navigate("MyLeague")
                 // }
             })
@@ -105,7 +105,7 @@ const CreateLeagueScreen: React.FC<props> = ({
     }
 
     console.log('data', data)
-    console.log('error', error)
+    console.log('leagueCreateError', leagueCreateError)
 
     const leagueScope = () => {
         return <>
@@ -482,6 +482,7 @@ const CreateLeagueScreen: React.FC<props> = ({
         <MainContainer
             absoluteModalLoading={isLoading}
             successMessage={data?.message}
+            errorMessage={leagueCreateError}
         >
             <Container containerStyle={{
                 width: "90%",

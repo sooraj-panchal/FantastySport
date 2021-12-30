@@ -165,6 +165,7 @@
     <orderEntry type="module" module-name="FantastySport.react-native-push-notification" />
     <orderEntry type="module" module-name="FantastySport.react-native-async-storage_async-storage" />
     <orderEntry type="module" module-name="FantastySport.react-native-community_checkbox" />
+    <orderEntry type="module" module-name="FantastySport.react-native-google-signin_google-signin" />
     <orderEntry type="module" module-name="FantastySport.react-native-masked-view_masked-view" />
     <orderEntry type="module" module-name="FantastySport.react-native-gesture-handler" />
     <orderEntry type="module" module-name="FantastySport.react-native-image-crop-picker" />
