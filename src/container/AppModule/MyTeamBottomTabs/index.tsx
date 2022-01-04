@@ -64,7 +64,7 @@ const MyTeamBottomTabs = () => {
                                 style={{ left: 2 }}
                                 onPress={() => navigation.goBack()}
                             />
-                        }
+                        },
                     })
                 }}
             />

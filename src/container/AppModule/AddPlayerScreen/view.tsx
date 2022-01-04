@@ -20,6 +20,7 @@ import { addToMyPlayerWatcher } from '../../../store/slices/myPlayerList';
 import { LeaguePlayerTypes, PlayerDetailTypes, PlayerPositionTypes, scheduleListTypes } from '../../../types/flatListTypes';
 import { navigationProps, PlayersNav } from '../../../types/nav';
 import { RootState } from '../../../types/reduxTypes';
+import { SniperPlayerList, SniperPlusPlayerList } from '../../../utils/jsonArray';
 import PlayerList from './PlayerList';
 
 const AddPlayerScreen: React.FC<PlayersNav> = ({
@@ -35,7 +36,7 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
     const leagueTeamNameList: Array<scheduleListTypes> = useSelector((state: RootState) => state.selectedLeague.leagueTeamNameList)
     const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
 
-    console.log("myPlayerListArray",myPlayerListArray)
+    console.log("myPlayerListArray", myPlayerListArray)
 
     const dispatch = useDispatch()
     React.useLayoutEffect(() => {
@@ -48,7 +49,6 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
                         }}
                         onPress={() => {
                             addPlayerToTeam()
-
                         }}
                     >ADD</Label>
                 }
@@ -71,8 +71,8 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
                     }
                 })
                 // console.log("players data",response.data)
-                let data = await getPlayerImage(response.data?.filter((item)=>item.Activated == 1))
-                let myPlayers:LeaguePlayerTypes[] = getMyPlayerList(data)
+                let data = await getPlayerImage(response.data?.filter((item) => item.Activated == 1))
+                let myPlayers: LeaguePlayerTypes[] = getMyPlayerList(data)
                 // console.log('myPlayers',myPlayers)
                 let getDataByFilterPosition = myPlayers.filter((item, index) => {
                     if (route.params.Position == "W/R/T" && !item.isSelected) {
@@ -170,16 +170,12 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
 
     const addPlayerToTeam = () => {
         const data = playerByPositionList.filter((item) => item.isSelected)
-        // console.log(data)
-        // console.log(data)
         let newArray: any = [...data]
         myPlayerListArray.forEach((item, index) => {
             if (item.Position == 'DEF') {
                 newArray.push(item)
             }
         })
-        // console.log('newArray', newArray)
-        // console.log('playerByPositionList', playerByPositionList)
         dispatch(addToMyPlayerWatcher(newArray))
         navigation.goBack()
     }
@@ -197,39 +193,22 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
         setPlayerList(array);
     }
 
-    let newArray = [
-        {
-            "Position": 'QB',
-            "length": 1
-        },
-        {
-            "Position": 'WR',
-            "length": 3
-        },
-        {
-            "Position": 'RB',
-            "length": 2
-        },
-        {
-            "Position": 'TE',
-            "length": 1
-        },
-        {
-            "Position": 'W/R/T',
-            "length": 1
-        },
-        {
-            "Position": 'K',
-            "length": 1
-        },
-        {
-            "Position": 'DEF',
-            "length": 1
-        }
-    ]
+    // useEffect(()=>{
+    //     const data = sniperPlustPlayers.
+    // },[ ])
+
+
 
     const selectPlayerHandler = (item: LeaguePlayerTypes, index: number) => {
-        newArray.map((i) => {
+        console.log('leagueDetails?.scoring_system', leagueDetails?.scoring_system)
+        let newArray: any = []
+        if (leagueDetails?.scoring_system == 'SNIPER+') {
+            newArray = SniperPlusPlayerList
+        } else {
+            newArray = SniperPlayerList
+        }
+        // console.log(newArray)
+        newArray.map((i: any) => {
             playerSelectedPosition(item, index, i.Position, i.length)
         })
     };
@@ -238,12 +217,10 @@ const AddPlayerScreen: React.FC<PlayersNav> = ({
         return <PlayerList
             onPress={(): void => {
                 selectPlayerHandler(item, index)
-                // setOpenModal(true)
             }}
             {...item}
         />
     }
-
 
     return <MainContainer
         style={{ backgroundColor: 'white' }}

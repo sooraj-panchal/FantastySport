@@ -14,6 +14,8 @@ interface players {
 
 type arr = Array<players | any>
 export const positionsLength: Record<string, number> = { "QB": 1, "WR": 3, "RB": 2, "TE": 1, "W/R/T": 1, "K": 1, "DEF": 1 }
+export const sniperPlusPositionLength: Record<string, number> = { "QB": 2, "WR": 4, "RB": 2, "TE": 2, "W/R/T": 1, "K": 1, "DEF": 2 }
+
 export const positions: Array<string> = ["QB", "WR", "RB", "TE", "W/R/T", "K", "DEF"]
 export const myPlayers: Record<string, arr> = {
     "QB": [null],
@@ -24,6 +26,78 @@ export const myPlayers: Record<string, arr> = {
     "K": [null],
     "DEF": [null]
 }
+export const sniperPlusPlayers: Record<string, arr> = {
+    "QB": [null, null],
+    "WR": [null, null, null, null],
+    "RB": [null, null],
+    "TE": [null, null],
+    "W/R/T": [null],
+    "K": [null],
+    "DEF": [null, null]
+}
+
+export const SniperPlayerList = [
+    {
+        "Position": 'QB',
+        "length": 1
+    },
+    {
+        "Position": 'WR',
+        "length": 3
+    },
+    {
+        "Position": 'RB',
+        "length": 2
+    },
+    {
+        "Position": 'TE',
+        "length": 1
+    },
+    {
+        "Position": 'W/R/T',
+        "length": 1
+    },
+    {
+        "Position": 'K',
+        "length": 1
+    },
+    {
+        "Position": 'DEF',
+        "length": 1
+    }
+]
+
+export const SniperPlusPlayerList = [
+    {
+        "Position": 'QB',
+        "length": 2
+    },
+    {
+        "Position": 'WR',
+        "length": 4
+    },
+    {
+        "Position": 'RB',
+        "length": 2
+    },
+    {
+        "Position": 'TE',
+        "length": 2
+    },
+    {
+        "Position": 'W/R/T',
+        "length": 1
+    },
+    {
+        "Position": 'K',
+        "length": 1
+    },
+    {
+        "Position": 'DEF',
+        "length": 2
+    }
+]
+
 
 export type IWeek = {
     week: string | number,
@@ -52,64 +126,3 @@ export const WeekArray: Array<IWeek> = [
     { week: 18 },
 ]
 
-const leagueData = {
-    weekType: 'singleWeek' || 'multipleWeek',
-    selectedWeek: [{ week: 1 }] || [{ week: 1 }, { week: 2 }],
-    leagueTeam: [
-        {
-            team_id: '',
-            op_team_id: '',
-            start_time: '',
-            team_key: '',
-            op_team_key: '',
-            team_logo: '',
-            op_team_logo: ''
-        },
-        {
-            team_id: '',
-            op_team_id: '',
-            start_time: '',
-        },
-        {
-            team_id: '',
-            op_team_id: '',
-            start_time: '',
-        },
-    ],
-    league_type: 'private' || 'public',
-    league_name: '',
-    max_participant: '',
-    scoring_system: 'Standard' || 'SNIPER' || 'SNIPER+'
-}
-
-
-const data = [
-    {
-        week: 1,
-        league_id: '',
-        players: [
-            {
-                "Accuracy": "1",
-                "GameDate": "2021-09-12T13:00:00",
-                "Opponent": "PIT",
-                "PlayerID": 19801,
-                "Position": "QB",
-                "PredictionPoints": "20",
-                "SniperPoints": "20",
-                "Team": "BUF",
-                "photoUrl": "https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nfl/low-res/19801.png"
-            },
-            {
-                "Accuracy": "1",
-                "GameDate": "2021-09-09T20:20:00",
-                "Opponent": "DAL",
-                "PlayerID": 11056,
-                "Position": "WR",
-                "PredictionPoints": "12",
-                "SniperPoints": "12",
-                "Team": "TB",
-                "photoUrl": "https://s3-us-west-2.amazonaws.com/static.fantasydata.com/headshots/nfl/low-res/11056.png"
-            }
-        ]
-    }
-]

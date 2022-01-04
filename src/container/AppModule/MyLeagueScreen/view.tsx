@@ -26,7 +26,22 @@ const MyLeagueScreen: React.FC<props> = ({
 
     const dispatch = useDispatch()
 
-    console.log("error", error)
+    console.log("publicLeagueList", JSON.stringify(publicLeagueList))
+
+    const joinLeagueHandler = (item: MyLeagueResponse) => {
+        let formData = new FormData()
+        formData.append('unique_code', '')
+        formData.append('week_id', item.week[0]?.week_id)
+        formData.append('type', 'public')
+        formData.append('league_id', item.league_id)
+        console.log("data", JSON.stringify(formData))
+        joinLeagueWatcher(formData).unwrap().then(() => {
+            // navigation.dispatch(AppStack)
+            navigation.navigate('tabs', {
+                screen: 'MyLeague'
+            })
+        })
+    }
 
     const renderPublicGame: ListRenderItem<MyLeagueResponse> = ({ item, index }) => {
         return <PublicGameList
@@ -38,7 +53,6 @@ const MyLeagueScreen: React.FC<props> = ({
                     dispatch(setMyTeamWatcher([]))
                     navigation.navigate("JoinSniperPlusLeague")
                 } else {
-                    // console.log('item',item)
                     dispatch(leagueDetailsWatcher({ ...item }))
                     dispatch(addToMyPlayerWatcher([]))
                     dispatch(setMyTeamWatcher([]))
@@ -53,36 +67,12 @@ const MyLeagueScreen: React.FC<props> = ({
                 })
             }}
             joinLeagueHandler={() => {
-                // if (item.scoring_system == 'SNIPER+') {
-                //     navigation.navigate("JoinSniperPlusLeague")
-                //     // Alert.alert(
-                //     //     "Alert Title",
-                //     //     "My Alert Msg",
-                //     //     [
-                //     //         {
-                //     //             text: "Ask me later",
-                //     //             onPress: () => console.log("Ask me later pressed")
-                //     //         },
-                //     //         {
-                //     //             text: "Cancel",
-                //     //             onPress: () => console.log("Cancel Pressed"),
-                //     //             style: "cancel"
-                //     //         },
-                //     //         { text: "OK", onPress: () => console.log("OK Pressed") }
-                //     //     ]
-                //     // );
-                // } else {
-                let formData = new FormData()
-                formData.append('unique_code', '')
-                formData.append('week_id', item.week[0]?.week_id)
-                formData.append('type', 'public')
-                formData.append('league_id', item.league_id)
-                console.log("data", JSON.stringify(formData))
-                joinLeagueWatcher(formData).unwrap().then(() => {
-                    // navigation.dispatch(AppStack)
-                    refetch()
-                })
-                // }
+                if (item.scoring_system == 'SNIPER+') {
+                    dispatch(leagueDetailsWatcher({ ...item }))
+                    navigation.navigate('ShowLeagueLineup')
+                } else {
+                    joinLeagueHandler(item)
+                }
             }}
             createPlayersHandler={() => {
                 dispatch(leagueDetailsWatcher({ ...item }))

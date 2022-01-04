@@ -59,42 +59,43 @@ const LeagueDetailScreen: React.FC<props> = ({
     React.useLayoutEffect(() => {
         return (
             navigation.setOptions({
-                headerRight: () => {
-                    return <Container
-                        containerStyle={{
-                            flexDirection: "row",
-                            alignItems: "center"
-                        }}
-                        mpContainer={{ mt: 5 }}
-                    >
-                        <Btn
-                            title="Share League"
-                            labelSize={12}
-                            labelStyle={{
-                                color: 'white'
+                ...LeagueDetails != undefined ? {
+                    headerRight: () => {
+                        return <Container
+                            containerStyle={{
+                                flexDirection: "row",
+                                alignItems: "center"
                             }}
-                            radius={8}
-                            mpBtn={{ ph: 10 }}
-                            btnStyle={{
-                                backgroundColor: OrangeColor
-                            }}
-                            onPress={() => {
-                                joinTeamCode()
-                                // navigation.navigate('InviteFriend',{
-                                //     week_id:LeagueDetails?.week[0]?.week_id,
-                                //     league_id:LeagueDetails?.league_id
-                                // })
-                            }}
-                        />
-                    </Container>
-                }
+                            mpContainer={{ mt: 5 }}
+                        >
+                            <Btn
+                                title="Share League"
+                                labelSize={12}
+                                labelStyle={{
+                                    color: 'white'
+                                }}
+                                radius={8}
+                                mpBtn={{ ph: 10 }}
+                                btnStyle={{
+                                    backgroundColor: OrangeColor
+                                }}
+                                onPress={() => {
+                                    joinTeamCode()
+                                    // navigation.navigate('InviteFriend',{
+                                    //     week_id:LeagueDetails?.week[0]?.week_id,
+                                    //     league_id:LeagueDetails?.league_id
+                                    // })
+                                }}
+                            />
+                        </Container>
+                    }
+                } : null
             })
         )
-    }, [])
+    }, [LeagueDetails])
 
 
     const createLink = async () => {
-        // let code = leagueDetails.unique_code
         const link = await firebase.dynamicLinks().buildShortLink({
             link: `https://fantasysniper?league_id=${LeagueDetails?.league_id}&week_id=${LeagueDetails?.week[0]?.week_id}`,
             android: {
@@ -188,7 +189,7 @@ const LeagueDetailScreen: React.FC<props> = ({
         })
     }
 
-    const matchDetailHandler = ()=>{
+    const matchDetailHandler = () => {
         if (LeagueDetails?.is_game_created) {
             if (LeagueDetails.participant_user <= 2) {
                 Alert.alert('Fantasy sniper', 'Wait for join other players!')
@@ -420,11 +421,12 @@ const LeagueDetailScreen: React.FC<props> = ({
                         >{!LeagueDetails?.participant_user ? 0 : LeagueDetails?.participant_user}/{LeagueDetails?.max_participant}</Label>
                     </Container>
                     {
-                        LeagueDetails?.scoring_system == 'SNIPER+' ?
+                        LeagueDetails?.scoring_system == 'SNIPER+' &&
+                            LeagueDetails?.isPlayerCreated == true ?
                             <Container containerStyle={{
-                                flexDirection:'row',
-                                alignItems:'center',
-                                justifyContent:'space-between'
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'space-between'
                             }} >
                                 <Btn
                                     title='View Lineup'
@@ -437,7 +439,7 @@ const LeagueDetailScreen: React.FC<props> = ({
                                         backgroundColor: 'white',
                                         borderRadius: 4,
                                         borderColor: PrimaryColor,
-                                        width:screenWidth*0.50
+                                        width: screenWidth * 0.50
                                     }}
                                     mpBtn={{ mt: 10 }}
                                     labelSize={14}
@@ -449,15 +451,15 @@ const LeagueDetailScreen: React.FC<props> = ({
                                     }}
                                     btnStyle={{
                                         // borderWidth: 1,
-                                        backgroundColor:OrangeColor,
+                                        backgroundColor: OrangeColor,
                                         // borderRadius: 4,
                                         // borderColor: PrimaryColor,
-                                        width:screenWidth*0.30,
-                                        borderRadius:4
+                                        width: screenWidth * 0.30,
+                                        borderRadius: 4
                                     }}
                                     mpBtn={{ mt: 10 }}
                                     labelSize={14}
-                                   textColor='white'
+                                    textColor='white'
                                 />
                             </Container>
                             : null

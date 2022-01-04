@@ -27,7 +27,7 @@ let PointSystemList: Array<string> = ['SNIPER', 'SNIPER+']
 const CreateLeagueScreen: React.FC<props> = ({
     navigation, route
 }) => {
-    const [selectPointSystem, setSelectPointSystem] = React.useState<string>('')
+    const [selectPointSystem, setSelectPointSystem] = React.useState<string>(PointSystemList[0])
     const [leagueName, setLeagueName] = React.useState<string>('')
     const [numOfParticipent, setNumOfParticipent] = React.useState<string>('')
     const [isPrivate, setIsPrivate] = React.useState<boolean>(false)

@@ -48,8 +48,6 @@
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.arch.core:core-common:2.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.annotation:annotation:1.1.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.4.10" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.soloader:annotation:0.9.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.soloader:nativeloader:0.9.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.4.10" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.appcompat:appcompat:1.0.2@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.gms:play-services-tasks:17.0.0@aar" level="project" />
@@ -58,8 +56,6 @@
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.vectordrawable:vectordrawable-animated:1.0.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.legacy:legacy-support-core-ui:1.0.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.swiperefreshlayout:swiperefreshlayout:1.0.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.fresco:fresco:2.0.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.soloader:soloader:0.9.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.vectordrawable:vectordrawable:1.0.1@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.coordinatorlayout:coordinatorlayout:1.0.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.slidingpanelayout:slidingpanelayout:1.0.0@aar" level="project" />
@@ -70,15 +66,9 @@
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.lifecycle:lifecycle-viewmodel:2.0.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.lifecycle:lifecycle-livedata-core:2.0.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.arch.core:core-runtime:2.0.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.fresco:fbcore:2.0.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.fresco:drawee:2.0.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.fresco:imagepipeline:2.0.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.fresco:nativeimagefilters:2.0.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.fresco:nativeimagetranscoder:2.0.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.fresco:imagepipeline-base:2.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.soloader:annotation:0.10.1" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.soloader:nativeloader:0.10.1" level="project" />
-    <orderEntry type="library" name="Gradle: com.facebook.infer.annotation:infer-annotation:0.11.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.infer.annotation:infer-annotation:0.18.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />
     <orderEntry type="library" name="Gradle: androidx.collection:collection:1.1.0" level="project" />
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-common:2.2.0" level="project" />
@@ -86,19 +76,22 @@
     <orderEntry type="library" name="Gradle: androidx.annotation:annotation:1.2.0" level="project" />
     <orderEntry type="library" name="Gradle: com.parse.bolts:bolts-applinks:1.4.0" level="project" />
     <orderEntry type="library" name="Gradle: com.parse.bolts:bolts-tasks:1.4.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.facebook.yoga:proguard-annotations:1.14.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-annotations-jvm:1.3.72" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.yoga:proguard-annotations:1.19.0" level="project" />
     <orderEntry type="library" name="Gradle: javax.inject:javax.inject:1" level="project" />
-    <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp-urlconnection:3.12.12" level="project" />
-    <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.12.12" level="project" />
-    <orderEntry type="library" name="Gradle: com.squareup.okio:okio:1.17.5" level="project" />
-    <orderEntry type="library" name="Gradle: com.facebook.fbjni:fbjni-java-only:0.0.3" level="project" />
-    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-annotations:16.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp-urlconnection:4.9.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:4.9.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.okio:okio:2.9.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.5.30" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.5.30" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.fbjni:fbjni-java-only:0.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-annotations:16.0.0" level="project" />
     <orderEntry type="library" name="Gradle: ./../node_modules/hermes-engine/android/hermes-debug.aar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.flipper:flipper:0.75.1@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.facebook.react:react-native:0.64.2@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.react:react-native:0.66.4@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.soloader:soloader:0.10.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat:1.1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.swiperefreshlayout:swiperefreshlayout:1.1.0@aar" level="project" />
@@ -144,18 +137,20 @@
     <orderEntry type="library" name="Gradle: androidx.print:print:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.flipper:flipper-network-plugin:0.75.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.flipper:flipper-fresco-plugin:0.75.1@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.facebook.fresco:fresco:2.2.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.facebook.fresco:fbcore:2.2.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.facebook.fresco:drawee:2.2.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.facebook.fresco:imagepipeline:2.2.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.facebook.fresco:imagepipeline-base:2.2.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.facebook.fresco:imagepipeline-native:2.2.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.facebook.fresco:memory-type-ashmem:2.2.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.facebook.fresco:memory-type-native:2.2.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.facebook.fresco:memory-type-java:2.2.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.facebook.fresco:nativeimagefilters:2.2.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.facebook.fresco:nativeimagetranscoder:2.2.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.facebook.fresco:imagepipeline-okhttp3:2.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.fresco:fresco:2.5.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.fresco:fbcore:2.5.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.fresco:ui-common:2.5.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.fresco:drawee:2.5.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.fresco:imagepipeline:2.5.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.fresco:imagepipeline-base:2.5.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.fresco:imagepipeline-native:2.5.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.fresco:memory-type-ashmem:2.5.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.fresco:memory-type-native:2.5.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.fresco:memory-type-java:2.5.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.fresco:nativeimagefilters:2.5.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.fresco:nativeimagetranscoder:2.5.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.autofill:autofill:1.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.fresco:imagepipeline-okhttp3:2.5.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: artifacts:react-native-reanimated:unspecified" level="project" />
     <orderEntry type="module" module-name="FantastySport.react-native-firebase_dynamic-links" />
     <orderEntry type="module" module-name="FantastySport.react-native-firebase_app" />

@@ -37,6 +37,8 @@ const ShowLeagueLineup: React.FC<navigationProps> = ({
     })
     const [joinLeagueWatcher, { data: joinLeagueRes, isLoading: joinLeagueLoading }] = useJoinPrivateLeagueMutation<any>()
 
+    console.log('getMyTeam',JSON.stringify(getMyTeam))
+
     const JoinLeagueHandler = () => {
         let formData = new FormData()
         formData.append('unique_code', '')

@@ -39,6 +39,7 @@ const EditTeamInfoScreen: React.FC<CreateTeamNav> = ({
 
     }, [getTeamDetails])
 
+    
     const saveDataHandler = () => {
         if (teamName.length) {
             let formData = new FormData()

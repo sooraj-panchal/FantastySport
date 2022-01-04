@@ -117,10 +117,18 @@ const defPositionSlice = createSlice( {
     extraReducers: builder => {
         builder.addCase( getDefPositionList.pending, ( state, action ) => {
             state.loading = true;
-            state.data = [];
+            state.data = state.data?.length ? state.data : [];
         } ).addCase( getDefPositionList.fulfilled, ( state, action ) => {
-            // console.log( "getDefPositionList res", action.payload );
-            state.data = action.payload;
+            let data = action.payload?.map( ( item, index ) => {
+                let newData = state.data?.find( ( i, index ) => i.PlayerID == item.PlayerID );
+                console.log( 'newData', newData );
+                return {
+                    ...item,
+                    isSelected: newData?.isSelected || false
+                };
+            } );
+            console.log( "getDefPositionList res", data );
+            state.data = data;
             state.loading = false;
         } ).addCase( getDefPositionList.rejected, ( state, action ) => {
             // console.log( "getDefPositionList res err", action.payload );

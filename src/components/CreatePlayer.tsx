@@ -13,9 +13,11 @@ import { useTime } from '../utils/timeZone';
 import { Modalize } from 'react-native-modalize';
 import DEFPositionModal from './Modals/DEFPostionModal';
 import { SvgUri } from 'react-native-svg';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getDefPositionList } from '../store/slices/defPosition';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { RootState } from '../store';
+import DEFSniperPlus from './Modals/DEFSniperPlus';
 
 const CreatePlayer: React.FC<PlayerPositionTypes> = ({
     Position,
@@ -28,9 +30,13 @@ const CreatePlayer: React.FC<PlayerPositionTypes> = ({
     PredictionPoints,
     SniperPoints
 }) => {
+    const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
+    console.log('leagueDetails?.scoring_system', leagueDetails?.scoring_system)
     const navigation = useNavigation<homeNavProps>();
     const defModalRef = useRef<Modalize>(null)
     const dispatch = useDispatch()
+
+
     const renderEmptyPlayers = () => {
         return <>
             <Container
@@ -86,12 +92,6 @@ const CreatePlayer: React.FC<PlayerPositionTypes> = ({
                 </Container>
             </Container>
             <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} mpContainer={{ mh: 15 }} />
-            <DEFPositionModal
-                modalizeRef={defModalRef}
-                closeModal={() => {
-                    defModalRef.current?.close()
-                }}
-            />
         </>
     }
 
@@ -139,9 +139,6 @@ const CreatePlayer: React.FC<PlayerPositionTypes> = ({
                     onPress={() => {
                         console.log(Position)
                         if (Position == 'DEF') {
-                            // const data = {
-                            //     league_week = 
-                            // }
                             dispatch(getDefPositionList())
                             defModalRef.current?.open()
                         } else {
@@ -157,21 +154,34 @@ const CreatePlayer: React.FC<PlayerPositionTypes> = ({
                         right: 10
                     }}
                 />
-                {/* <Label labelSize={10} style={{ color: "red",fontFamily:medium }}>Change</Label> */}
             </Container>
             <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />
-            <DEFPositionModal
-                modalizeRef={defModalRef}
-                closeModal={() => {
-                    defModalRef.current?.close()
-                }}
-            />
         </>
     }
-    if (photoUrl) {
-        return renderMyPlayers()
-    } else {
-        return renderEmptyPlayers()
+    const renderPlayers = () => {
+        if (photoUrl) {
+            return renderMyPlayers()
+        } else {
+            return renderEmptyPlayers()
+        }
     }
+    return <>
+        {renderPlayers()}
+        {
+            leagueDetails?.scoring_system == 'SNIPER+' ?
+                <DEFSniperPlus
+                    modalizeRef={defModalRef}
+                    closeModal={() => {
+                        defModalRef.current?.close()
+                    }}
+                /> :
+                <DEFPositionModal
+                    modalizeRef={defModalRef}
+                    closeModal={() => {
+                        defModalRef.current?.close()
+                    }}
+                />
+        }
+    </>
 }
 export default CreatePlayer;

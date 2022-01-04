@@ -56,7 +56,7 @@ const AppStackScreen: React.ReactNode = () => {
                 presentation: Platform.OS === 'ios' ? 'card' : 'transparentModal',
                 animation: Platform.OS === 'ios' ? 'slide_from_right' : "fade",
                 headerTintColor: "white",
-                headerBackTitleVisible: false
+                headerBackTitleVisible: false,
             }}
         >
             <StackScreen.Screen
@@ -65,7 +65,6 @@ const AppStackScreen: React.ReactNode = () => {
                 options={({ navigation, route }) => {
                     return ({
                         headerShown: false,
-
                     })
                 }}
             />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Alert, View } from 'react-native';
 import Container from '../Container';
 import Label from '../Label';
@@ -27,6 +27,7 @@ import useGetMatchStatus from '../../hooks/matchStatus';
 import { useDispatch } from 'react-redux';
 import { leagueDetailsWatcher } from '../../store/slices/selectedLeague';
 import { SvgUri } from 'react-native-svg';
+import PushNotification from 'react-native-push-notification'
 
 interface props {
     // closeModal?: (league_id: any, week_id: any) => void,
@@ -35,19 +36,32 @@ interface props {
 
 
 const DeadlineModal: React.FC<props> = ({
-    modalizeRef,
+    // modalizeRef,
 }) => {
+    const modalizeRef = useRef<Modalize>(null);
+
     const navigation = useNavigation<homeNavProps>()
     const { data: LeagueDetails, isLoading: loadingForLeagueDetail, error: leagueDetailError } = useLeagueDetailsQuery(1)
     const { dateText, matchDate, weekText, isStarted } = useGetMatchStatus(LeagueDetails?.week, LeagueDetails?.deadline)
     const dispatch = useDispatch()
     let imageType = LeagueDetails?.team_logo?.split('.').pop() == 'svg';
 
+
     console.log('LeagueDetails', LeagueDetails)
-    
-    const closeModal = ()=>{
+
+    const closeModal = () => {
         modalizeRef.current?.close()
     }
+
+
+    PushNotification.configure({
+        onNotification: function (notification) {
+            console.log("NOTIFICATION:", notification);
+            // const { userInteraction, foreground } = notification;
+            modalizeRef.current?.open()
+        }
+    });
+    
 
     const renderChildren = () => {
         return (

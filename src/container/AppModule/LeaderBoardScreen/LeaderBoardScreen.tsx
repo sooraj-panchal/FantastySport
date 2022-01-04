@@ -40,7 +40,7 @@ const LeaderBoardScreen: React.FC<props> = ({
 
     const { leagueData } = useSelector((store: RootState) => store.selectedLeague)
 
-    console.log('leagueData',leagueData)
+    console.log('leagueData', leagueData)
     // console.log("leagueData", leagueData ? leagueData : { league_id: leagueList?.[0]?.league_id, week_id: leagueList?.[0]?.week[0]?.week_id })
 
     // console.log('leagueData', leagueData)
@@ -53,18 +53,14 @@ const LeaderBoardScreen: React.FC<props> = ({
 
     const { data, isLoading, error, isFetching, refetch } = useGameDetailsQuery<any>({
         league_id: leagueData?.league_id,
-        week_id: leagueData?.week_id
+        week_id: leagueData?.week_id,
+        skip: leagueData.league_id ? false : true
     }, {
         refetchOnMountOrArgChange: true,
-        refetchOnFocus:true
+        refetchOnFocus: true
     })
 
-    console.log('error',error)
-
-    // const { data, isLoading } = useWinnerTeamListQuery({
-    //     current_week: NFLCurrentWeek
-    // })
-
+    console.log('error', error)
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -134,7 +130,7 @@ const LeaderBoardScreen: React.FC<props> = ({
             }
         >
             {
-                leagueList?.length ?
+                LeagueDetails != undefined ?
                     <Container
                         containerStyle={{
                             backgroundColor: 'white',
