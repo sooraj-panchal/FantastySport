@@ -2,12 +2,17 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../../types/reduxTypes'
 import { UserResponse } from '../../types/responseTypes'
 
+interface initialState {
+  user: UserResponse,
+  token: string | any
+}
+
 const slice = createSlice({
   name: 'auth',
   initialState: {
-    user: {},
+    user: '',
     token: ''
-  },
+  } as initialState,
   reducers: {
     setCredentials: (
       state,

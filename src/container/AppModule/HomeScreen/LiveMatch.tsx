@@ -33,7 +33,7 @@ const LiveMatch: React.FC = ({
         limit: 3
     })
     const dispatch = useDispatch()
-    console.log('LiveMatchupRanking===>', JSON.stringify(error))
+    console.log('LiveMatchupRanking===>', JSON.stringify(data))
 
     const navigation = useNavigation<homeNavProps>()
 
@@ -126,7 +126,7 @@ const LiveMatch: React.FC = ({
                                 <Label
                                     labelSize={12}
                                     style={{ color: 'white', fontFamily: medium, flex: 0.3 }}
-                                >FanPts</Label>
+                                >SnPts</Label>
                                 <Label
                                     labelSize={14}
                                     style={{ color: 'white', fontFamily: medium, flex: 0.2 }}

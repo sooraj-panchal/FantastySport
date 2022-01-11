@@ -1,15 +1,16 @@
-import { createApi } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import axios from 'axios'
 import { RootState } from '../store'
 import { liveMatchWatcher } from '../store/slices/myPlayerList'
 import { LeaguePlayerTypes, PlayerPositionTypes } from '../types/flatListTypes'
 import { GameDetailResponse, LeagueItemResponse, LiveMatchUpResponse, MyLeagueResponse, MyTeamResponse, teamDetailResponse, TeamListResponse, TeamMatchDetailsResponse, UserResponse } from '../types/responseTypes'
+import { baseUrl } from '../utils/globals'
 import { fetchBaseQueryApi } from './fetchBaseQuery'
 
 export const LeagueApi = createApi({
     reducerPath: 'LeagueApi',
     baseQuery: fetchBaseQueryApi,
-    tagTypes: ['League', 'EditTeam', 'GetTeam'],
+    tagTypes: ['League', 'GetTeam'],
     endpoints: (builder) => ({
         createLeague: builder.mutation<any, any>({
             query: (credentials) => ({
@@ -48,7 +49,7 @@ export const LeagueApi = createApi({
             query: ({ league_id, week_id }) => ({
                 url: `teamList/${league_id}/${week_id}`
             }),
-            providesTags: ['EditTeam', 'League'],
+            providesTags: ['GetTeam', 'League'],
             transformResponse: (response: { data: MyTeamResponse[] }) => {
                 console.log("teamList Response==>", response)
                 return response.data[0];
@@ -60,7 +61,7 @@ export const LeagueApi = createApi({
                 method: 'POST',
                 body: credentials
             }),
-            invalidatesTags: ['EditTeam', 'League'],
+            invalidatesTags: ['GetTeam', 'League'],
             transformResponse: (response) => {
                 console.log("response Response==>", response)
                 return response;
@@ -110,9 +111,29 @@ export const LeagueApi = createApi({
                 url: `matchDetail/${team_id}/${op_team_id}`
             }),
             providesTags: ['League'],
-            transformResponse: (response: { data: TeamMatchDetailsResponse[] }) => {
-                console.log("matchDetail===>", JSON.stringify(response))
-                return response.data
+            async onQueryStarted(id, { getState, queryFulfilled }) {
+                try {
+                    const { data }: any = await queryFulfilled
+                    // console.log('data queryFulfilled',data?.data)
+                    // dispatch(setCredentials({ user: data?.data }))
+                } catch (err) {
+                    console.log('err queryFulfilled', err)
+                }
+            },
+            transformResponse: (response: { data: TeamMatchDetailsResponse[] }, meta) => {
+                console.log('meta===>', JSON.stringify(meta))
+                // console.log("matchDetail===>", JSON.stringify(response))
+
+                const modifyArray = response.data.map((item, index) => {
+                    item.image_type = item.team_logo?.split('.').pop() == 'svg'
+                    return item;
+                })
+                if (response.data?.[0]?.user_id == meta?.user_id) {
+                    modifyArray;
+                } else {
+                    modifyArray?.reverse()
+                }
+                return modifyArray
             }
         }),
         getTeamsByLeague: builder.query({
@@ -244,7 +265,7 @@ export const LeagueApi = createApi({
             query: (team_id) => ({
                 url: `teamDetail/${team_id}`
             }),
-            providesTags: ['GetTeam', 'EditTeam', 'League'],
+            providesTags: ['GetTeam', 'League'],
             transformResponse: (response: { data: MyTeamResponse[] }) => {
                 console.log("getTeamDetailByLeague Response==>", response)
                 return response.data[0]
@@ -266,7 +287,7 @@ export const LeagueApi = createApi({
             query: (team_id) => ({
                 url: `getTeamDetail`
             }),
-            providesTags: ['GetTeam', 'EditTeam', 'League'],
+            providesTags: ['GetTeam', 'League'],
             transformResponse: (response: { data: teamDetailResponse }) => {
                 console.log("getTeamDetail Response==>", response)
                 return response.data
@@ -307,10 +328,10 @@ export const LeagueApi = createApi({
             }
         }),
         teamDetailForSniperPlus: builder.query({
-            query: ({team_id,user_id}) => ({
+            query: ({ team_id, user_id }) => ({
                 url: `sniperPlusTeamDetail/${team_id}/${user_id}`
             }),
-            providesTags: ['GetTeam', 'EditTeam', 'League'],
+            providesTags: ['GetTeam', 'League'],
             transformResponse: (response: { data: MyTeamResponse[] }) => {
                 console.log("teamDetailForSniperPlus Response==>", response)
                 return response.data[0]

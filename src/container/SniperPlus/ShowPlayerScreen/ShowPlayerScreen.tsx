@@ -3,27 +3,22 @@ import Btn from '../../../components/Btn';
 import Container from '../../../components/Container';
 import MainContainer from '../../../components/MainContainer';
 import { navigationProps } from '../../../types/nav';
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import Label from '../../../components/Label';
-import { greenColor, OrangeColor, PrimaryColor } from '../../../assets/colors';
+import { OrangeColor } from '../../../assets/colors';
 import { ScrollView } from 'react-native-gesture-handler';
-import { ListRenderItem, View, Alert } from 'react-native';
-import MyPlayersList from '../../../components/MyPlayersList';
 import Img from '../../../components/Img';
 import { LeaguePlayerTypes, PlayerPositionTypes } from '../../../types/flatListTypes';
-import { IWeek, myPlayers, positions, positionsLength, sniperPlusPlayers, sniperPlusPositionLength } from '../../../utils/jsonArray'
+import { positions, positionsLength, sniperPlusPlayers, sniperPlusPositionLength } from '../../../utils/jsonArray'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../types/reduxTypes';
 import { screenWidth } from '../../../types/sizes';
-import { useCreateGameMutation, useCreateLeaguePlayerMutation, useCreateTeamMutation, useGetMyTeamsQuery } from '../../../features/league';
+import { useCreateLeaguePlayerMutation, useGetMyTeamsQuery } from '../../../features/league';
 import { addToMyPlayerWatcher, setMyTeamWatcher } from '../../../store/slices/myPlayerList';
-import { UserResponse } from '../../../types/responseTypes';
-import { SvgUri } from 'react-native-svg';
-import { AppStack } from '../../../navigator/navActions';
-import { medium } from '../../../assets/fonts/fonts';
 import CreatePlayer from '../../../components/CreatePlayer';
 import { AppImages } from '../../../assets/images/map';
 import moment from 'moment';
+import { medium } from '../../../assets/fonts/fonts';
+import { Alert, View } from 'react-native';
 
 const ShowPlayerScreen: React.FC<navigationProps> = ({
     navigation
@@ -108,10 +103,10 @@ const ShowPlayerScreen: React.FC<navigationProps> = ({
                         btnStyle={{
                             backgroundColor: OrangeColor,
                             width: 85,
-                            opacity: myPlayerListArray?.length == 14 ? 1 : 0.4
+                            opacity: myPlayerListArray?.length == 12 ? 1 : 0.4
                         }}
                         onPress={saveTeamHandler}
-                        disabled={myPlayerListArray?.length == 14 ? false : true}
+                        disabled={myPlayerListArray?.length == 12 ? false : true}
                     />
                 }
             })
@@ -210,10 +205,6 @@ const ShowPlayerScreen: React.FC<navigationProps> = ({
                     mpLabel={{ mt: 5 }}
                     labelSize={15}
                 >Mode: {leagueDetails.scoring_system}</Label>
-                {/* <Label
-                    mpLabel={{ mt: 5 }}
-                    labelSize={15}
-                >No. of Participant: {!leagueDetails?.participant_user ? 0 : leagueDetails?.participant_user}/{leagueDetails?.max_participant}</Label> */}
                 <Label
                     labelSize={14}
                     style={{ color: 'black' }}
@@ -241,7 +232,7 @@ const ShowPlayerScreen: React.FC<navigationProps> = ({
     }
 
     const saveTeamHandler = () => {
-        if (myPlayerListArray.length == 14) {
+        if (myPlayerListArray.length == 12) {
             let playerListByPosition: PlayerPositionTypes[] = []
             Object.keys(myPlayerListData).map((item, index) => {
                 myPlayerListData[item].map((item: LeaguePlayerTypes) => {

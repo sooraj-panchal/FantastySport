@@ -64,14 +64,14 @@
 //             {loadingContainer()}
 //             {absoluteLoadingContainer()}
 //             {/* {children} */}
-//             {/* {
-//                 successMessage || errorMessage ?
-//                     <AnimatedToast
-//                         message={successMessage || errorMessage.data.message}
-//                         isSuccessMessage={successMessage ? true : false}
-//                     />
-//                     : null
-//             } */}
+            {/* {
+                successMessage || errorMessage ?
+                    <AnimatedToast
+                        message={successMessage || errorMessage.data.message}
+                        isSuccessMessage={successMessage ? true : false}
+                    />
+                    : null
+            } */}
 //         </SafeAreaView>
 //     );
 // };

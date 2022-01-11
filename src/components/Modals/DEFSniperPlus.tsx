@@ -70,6 +70,7 @@ const DEFSniperPlus: React.FC<props> = ({
         playerSelectedPosition(item, index, 'DEF', 2)
     };
 
+
     const renderItem: ListRenderItem<LeaguePlayerTypes> = ({ item, index }) => {
         const { photoUrl, Name, Position, Accuracy, FantasyPointsDraftKings, isSelected, GameDate, Team, Opponent } = item
         let imageType = photoUrl?.split('.').pop() == 'svg';

@@ -9,7 +9,7 @@ const getSchedules = async ( week ) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             "Ocp-Apim-Subscription-Key": api_token
-        }
+        },
     } );
     let data = response.data.filter( ( item, index ) => item.Week == week );
     return data;
@@ -77,12 +77,12 @@ const scheduleSlice = createSlice( {
             state.currentWeek = action.payload;
         },
         selecteSchedule: ( state, action ) => {
-            let data = state.data.map((item, placeIndex) => {
+            let data = state.data.map( ( item, placeIndex ) => {
                 return {
                     ...item,
                     isSelected: action.payload == placeIndex ? true : false
-                }
-            })
+                };
+            } );
             // state.data[ action.payload ][ 'isSelected' ] = !state.data[ action.payload ][ 'isSelected' ];
             state.data = data;
         },
@@ -92,6 +92,9 @@ const scheduleSlice = createSlice( {
         deleteScheduleWatcher: ( state, action ) => {
             state.selectedScheduleData = state.selectedScheduleData.filter( ( item ) => item.game_key != action.payload );
         },
+        removeAllScheduleListWatcher: (state) => {
+            state.selectedScheduleData = [];
+        }
     },
     extraReducers: builder => {
         builder.addCase( getScheduleListWatcher.pending, ( state, action ) => {
@@ -111,5 +114,5 @@ const scheduleSlice = createSlice( {
         } );
     }
 } );
-export const { updateWeek, getCurrentWeek, selecteSchedule, selectedScheduleList, deleteScheduleWatcher } = scheduleSlice.actions;
+export const { updateWeek, getCurrentWeek, selecteSchedule, selectedScheduleList, deleteScheduleWatcher, removeAllScheduleListWatcher } = scheduleSlice.actions;
 export default scheduleSlice.reducer;

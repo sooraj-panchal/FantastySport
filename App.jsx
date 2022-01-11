@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import {
-    StatusBar, Platform, LogBox, Button
+    StatusBar, Platform, LogBox
 } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { DarkBlueColor } from './src/assets/colors';
@@ -15,8 +15,8 @@ import dynamicLinks from '@react-native-firebase/dynamic-links';
 import { URL, URLSearchParams } from 'react-native-url-polyfill';
 import { navigate, navigationRef } from './src/utils/NavigationHandler';
 import DeadlineModal from './src/components/Modals/DeadlineModal';
-import PushNotification, { Importance } from "react-native-push-notification";
 import { NofificationService } from './src/utils/NotificationService';
+
 const App = () => {
     useEffect( () => {
         NofificationService();
@@ -37,6 +37,7 @@ const App = () => {
             </>;
         }
     };
+
     const handleDynamicLink = link => {
         if ( link ) {
             console.log( 'get link from foreground==>', link );

@@ -10,17 +10,19 @@ import { greenColor, OrangeColor, PrimaryColor } from '../../../assets/colors';
 import { ListRenderItem, FlatList, ScrollView, Alert } from 'react-native';
 import TeamList from './TeamList';
 import PickerModal from '../../../components/Picker';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../types/reduxTypes';
 import { scheduleItemTypes, scheduleListTypes } from '../../../types/flatListTypes';
 import WeekModal from '../../../components/Modals/WeekModal';
 import { Modalize } from 'react-native-modalize';
 import { useCreateLeagueMutation, useLeagueListQuery } from '../../../features/league';
 import { AppStack } from '../../../navigator/navActions';
+import { removeAllScheduleListWatcher } from '../../../store/slices/schedule';
 
 interface props extends navigationProps {
 
 }
+
 
 let PointSystemList: Array<string> = ['SNIPER', 'SNIPER+']
 
@@ -42,6 +44,7 @@ const CreateLeagueScreen: React.FC<props> = ({
         setIsSingleWeek(value)
     }
 
+    const dispatch = useDispatch()
     // useEffect(()=>{
     //     if(data?.success)
     // },[data])
@@ -98,6 +101,7 @@ const CreateLeagueScreen: React.FC<props> = ({
                 // dispatch(addToMyPlayerWatcher([]))
                 // dispatch(setMyTeamWatcher([]))
                 // navigation.navigate('ShowPlayer'))
+                dispatch(removeAllScheduleListWatcher())
                 navigation.navigate("MyLeague")
                 // }
             })

@@ -19,6 +19,7 @@ const Loader: React.FC<Props> = ({ absoluteLoading, loaderTop }) => {
         }
         style = styles.loadingContainer
     }
+    
     return (
         <View style={style}>
             <ActivityIndicator size="large" color={PrimaryColor} />

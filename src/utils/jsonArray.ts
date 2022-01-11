@@ -14,9 +14,10 @@ interface players {
 
 type arr = Array<players | any>
 export const positionsLength: Record<string, number> = { "QB": 1, "WR": 3, "RB": 2, "TE": 1, "W/R/T": 1, "K": 1, "DEF": 1 }
-export const sniperPlusPositionLength: Record<string, number> = { "QB": 2, "WR": 4, "RB": 2, "TE": 2, "W/R/T": 1, "K": 1, "DEF": 2 }
+export const sniperPlusPositionLength: Record<string, number> = { "QB": 2, "WR": 4, "RB": 2, "TE": 2, "DEF": 2 }
 
 export const positions: Array<string> = ["QB", "WR", "RB", "TE", "W/R/T", "K", "DEF"]
+
 export const myPlayers: Record<string, arr> = {
     "QB": [null],
     "WR": [null, null, null],
@@ -31,8 +32,6 @@ export const sniperPlusPlayers: Record<string, arr> = {
     "WR": [null, null, null, null],
     "RB": [null, null],
     "TE": [null, null],
-    "W/R/T": [null],
-    "K": [null],
     "DEF": [null, null]
 }
 
@@ -83,14 +82,6 @@ export const SniperPlusPlayerList = [
     {
         "Position": 'TE',
         "length": 2
-    },
-    {
-        "Position": 'W/R/T',
-        "length": 1
-    },
-    {
-        "Position": 'K',
-        "length": 1
     },
     {
         "Position": 'DEF',

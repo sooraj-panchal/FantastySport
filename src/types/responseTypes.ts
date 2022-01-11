@@ -65,7 +65,8 @@ export interface MyLeagueResponse {
     isStarted: boolean,
     isEnded: boolean
   },
-  isPlayerCreated?:boolean
+  isPlayerCreated?: boolean,
+  canEditLineUp?: boolean
 }
 
 export interface MyTeamResponse {
@@ -88,8 +89,10 @@ export interface MyTeamLogoResponse {
 }
 
 export interface TeamMatchDetailsResponse {
+  user_id: number;
   team_name: string,
   team_logo: string,
+  image_type?: boolean,
   accuracy: number,
   prediction_points: number,
   sniper_points: number,

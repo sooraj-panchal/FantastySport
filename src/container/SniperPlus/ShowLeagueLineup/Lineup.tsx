@@ -23,7 +23,6 @@ const Lineup: React.FC<PlayerPositionTypes> = ({
     Opponent,
     HomeOrAway
 }) => {
-
     const renderMyPlayers = () => {
         let imageType = photoUrl?.split('.').pop() == 'svg';
         return <>

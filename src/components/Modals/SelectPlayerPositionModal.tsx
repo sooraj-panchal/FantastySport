@@ -20,6 +20,8 @@ import { Modalize } from 'react-native-modalize';
 import { FlatList } from 'react-native-gesture-handler';
 import { ListRenderItem } from 'react-native';
 import { Host, Portal } from 'react-native-portalize';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 interface props {
     closeModal: () => void,
@@ -36,8 +38,14 @@ const SelectPlayerPositionModal: React.FC<props> = ({
     Position
 }) => {
     const [position, setPosition] = React.useState<string>(Position || 'all')
+    const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
+    let playerPosition: any = []
+    if (leagueDetails?.scoring_system != 'SNIPER+') {
+        playerPosition = ["All", "QB", "WR", "RB", "TE"]
+    } else {
+        playerPosition = ["All", "QB", "WR", "RB", "TE", "W/R/T", "K"]
+    }
 
-    // console.log(openModal)
     const renderItem: ListRenderItem<any> = ({ item, index }) => {
         return (
             <Container
@@ -92,7 +100,8 @@ const SelectPlayerPositionModal: React.FC<props> = ({
                     borderTopLeftRadius: 20,
                     borderTopRightRadius: 20,
                 }}
-                modalHeight={screenHeight * 0.60}
+                adjustToContentHeight={true}
+                // modalHeight={screenHeight * 0.40}
                 withHandle={false}
                 HeaderComponent={() => {
                     return <Container
@@ -120,7 +129,7 @@ const SelectPlayerPositionModal: React.FC<props> = ({
                     </Container>
                 }}
                 flatListProps={{
-                    data: ["All", "QB", "RB", "WR", "TE", "W/R/T", "DEF", "K"],
+                    data: playerPosition,
                     renderItem: renderItem,
                     keyExtractor: (item, index) => `renderPosition${index.toString()}`,
                     showsVerticalScrollIndicator: false,

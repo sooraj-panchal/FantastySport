@@ -5,7 +5,7 @@ import { SvgUri } from 'react-native-svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { greenColor, OrangeColor, PrimaryColor } from '../../../assets/colors';
 import { medium, semiBold } from '../../../assets/fonts/fonts';
-import { AppImages, AuthImages } from '../../../assets/images/map';
+import { AppImages } from '../../../assets/images/map';
 import Btn from '../../../components/Btn';
 import Container from '../../../components/Container';
 import Img from '../../../components/Img';
@@ -18,7 +18,6 @@ import ParticipantUserList from './ParticiapantList';
 import TeamList from './TeamList';
 import Share from 'react-native-share'
 import moment from 'moment';
-import { AppStack } from '../../../navigator/navActions';
 import { screenWidth } from '../../../types/sizes';
 import { addToMyPlayerWatcher, setMyTeamWatcher } from '../../../store/slices/myPlayerList';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -34,22 +33,19 @@ const LeagueDetailScreen: React.FC<props> = ({
     navigation,
     route
 }) => {
-
     let newData = {
         league_id: route.params?.league_id,
         week_id: route.params?.week_id,
     }
-    console.log('newData', newData)
 
     const { data: LeagueDetails, isLoading: loadingForLeagueDetail, refetch, error: leagueDetailsError } = useLeagueDetailsQuery(route.params?.league_id)
 
     const { data: GameDetails, isLoading, error, isFetching, refetch: refetchGameDetails } = useGameDetailsQuery<any>(newData, {
         refetchOnMountOrArgChange: true
     })
-    const [joinLeagueWatcher, { data: joinLeagueRes, isLoading: joinLeagueLoading }] = useJoinPrivateLeagueMutation<any>()
+    const [joinLeagueWatcher, { data: joinLeagueRes, isLoading: joinLeagueLoading, error: joinLeagueError }] = useJoinPrivateLeagueMutation<any>()
     const user: UserResponse = useSelector((store: RootState) => store.auth.user)
 
-    // const { dateText, matchDate, weekText, isStarted } = useGetMatchStatus(LeagueDetails?.week, LeagueDetails?.deadline)
 
     const dispatch = useDispatch()
 
@@ -127,7 +123,6 @@ const LeagueDetailScreen: React.FC<props> = ({
             });
     }
 
-
     const renderItem: ListRenderItem<any> = ({ item, index }) => {
         console.log(item)
         return (
@@ -139,7 +134,7 @@ const LeagueDetailScreen: React.FC<props> = ({
                         dispatch(leagueDetailsWatcher({ ...LeagueDetails }))
                         navigation.navigate('TeamDetail', {
                             team_id: item.team_id,
-                            fromOtherUser: true,
+                            // fromOtherUser: true,
                             user_id: item.user_id
                         })
                     } else {
@@ -177,9 +172,9 @@ const LeagueDetailScreen: React.FC<props> = ({
     const JoinLeagueHandler = () => {
         let formData = new FormData()
         formData.append('unique_code', '')
-        formData.append('week_id', route.params?.week_id)
+        formData.append('week_id', LeagueDetails?.week[0]?.week_id)
         formData.append('type', 'public')
-        formData.append('league_id', route.params?.league_id)
+        formData.append('league_id', LeagueDetails?.league_id)
         console.log("data", JSON.stringify(formData))
         joinLeagueWatcher(formData).unwrap().then(() => {
             // navigation.dispatch(AppStack)
@@ -191,9 +186,10 @@ const LeagueDetailScreen: React.FC<props> = ({
 
     const matchDetailHandler = () => {
         if (LeagueDetails?.is_game_created) {
-            if (LeagueDetails.participant_user <= 2) {
+            if (LeagueDetails.participant_user < 2) {
                 Alert.alert('Fantasy sniper', 'Wait for join other players!')
             } else {
+                dispatch(leagueDetailsWatcher({ ...LeagueDetails }))
                 navigation.navigate('GameDetail', {
                     league_id: LeagueDetails?.league_id,
                     week_id: LeagueDetails?.week[0].week_id,
@@ -202,7 +198,7 @@ const LeagueDetailScreen: React.FC<props> = ({
                 })
             }
         } else {
-            Alert.alert('Fantasy sniper', 'You should join the league to see Match detail!')
+            Alert.alert('Fantasy sniper', 'You should join & create the team to see Match detail!')
         }
     }
     // const { dateText, matchDate, weekText } = LeagueDetails?.league_flag
@@ -210,6 +206,7 @@ const LeagueDetailScreen: React.FC<props> = ({
         <MainContainer
             loading={loadingForLeagueDetail || isLoading}
             successMessage={joinLeagueRes?.message}
+            errorMessage={joinLeagueError}
             absoluteModalLoading={joinLeagueLoading}
         >
             <ScrollView
@@ -379,13 +376,13 @@ const LeagueDetailScreen: React.FC<props> = ({
                     {
                         LeagueDetails?.scoring_system == 'SNIPER' ?
                             <Btn
-                                title='Match detail'
+                                title='Sniper Rankings'
                                 onPress={() => {
                                     matchDetailHandler()
                                 }}
                                 btnStyle={{
                                     backgroundColor: OrangeColor,
-                                    width: 85, height: 30,
+                                    height: 30,
                                     borderRadius: 5,
                                     elevation: 1,
                                     position: 'absolute',
@@ -393,7 +390,7 @@ const LeagueDetailScreen: React.FC<props> = ({
                                     bottom: 10,
                                 }}
                                 textColor="white"
-                                mpBtn={{ ml: 10 }}
+                                mpBtn={{ ml: 10,ph:10 }}
                             /> : null
                     }
                     {/* : null
@@ -439,13 +436,13 @@ const LeagueDetailScreen: React.FC<props> = ({
                                         backgroundColor: 'white',
                                         borderRadius: 4,
                                         borderColor: PrimaryColor,
-                                        width: screenWidth * 0.50
+                                        width: screenWidth * 0.45
                                     }}
                                     mpBtn={{ mt: 10 }}
                                     labelSize={14}
                                 />
                                 <Btn
-                                    title='Match detail'
+                                    title='Sniper Rankings'
                                     onPress={() => {
                                         matchDetailHandler()
                                     }}
@@ -454,7 +451,7 @@ const LeagueDetailScreen: React.FC<props> = ({
                                         backgroundColor: OrangeColor,
                                         // borderRadius: 4,
                                         // borderColor: PrimaryColor,
-                                        width: screenWidth * 0.30,
+                                        width: screenWidth * 0.35,
                                         borderRadius: 4
                                     }}
                                     mpBtn={{ mt: 10 }}
@@ -465,49 +462,6 @@ const LeagueDetailScreen: React.FC<props> = ({
                             : null
                     }
                 </Container>
-                {/* {
-                    LeagueDetails?.you_join_league ?
-
-                        LeagueDetails?.is_game_created ?
-                            <Btn
-                                title='View team'
-                                onPress={() => {
-                                    // goToTeamDetail()
-                                }}
-                                btnStyle={{
-                                    backgroundColor: 'white',
-                                    borderWidth: 1,
-                                    borderColor: PrimaryColor,
-                                    borderRadius: 10,
-                                    position: "absolute",
-                                    right: 10,
-                                    bottom: 6
-                                }}
-                                btnHeight={25}
-                                textColor={PrimaryColor}
-                                labelSize={10}
-                                mpBtn={{ ph: 10 }}
-                            /> :
-                            <Btn
-                                title='Create team'
-                                onPress={() => {
-                                    // createMatchHandler()
-                                }}
-                                btnStyle={{
-                                    backgroundColor: 'white',
-                                    borderWidth: 1,
-                                    borderColor: 'green',
-                                    borderRadius: 10,
-                                    position: "absolute",
-                                    right: 10,
-                                    bottom: 6
-                                }}
-                                btnHeight={25}
-                                textColor='green'
-                                labelSize={10}
-                                mpBtn={{ ph: 10 }}
-                            /> : null
-                } */}
                 {
                     LeagueDetails?.you_join_league ?
                         <Container containerStyle={{
@@ -520,11 +474,6 @@ const LeagueDetailScreen: React.FC<props> = ({
                         }}
                             height={45}
                             mpContainer={{ ph: 10, mt: 10, mh: 15 }}
-                        // onPress={() => {
-                        //     navigation.navigate('TeamDetail', {
-                        //         team_id: LeagueDetails?.team_id
-                        //     })
-                        // }}
                         >
                             <Container
                                 containerStyle={{
@@ -579,7 +528,9 @@ const LeagueDetailScreen: React.FC<props> = ({
                                         }}
                                         labelSize={14}
                                         onPress={() => {
-                                            dispatch(leagueDetailsWatcher({ ...LeagueDetails }))
+                                            const canEditLineUp: any = !LeagueDetails?.league_flag?.isStarted && !LeagueDetails?.league_flag?.isEnded
+                                            console.log(canEditLineUp)
+                                            dispatch(leagueDetailsWatcher({ ...LeagueDetails, canEditLineUp }))
                                             navigation.navigate('TeamDetail', {
                                                 team_id: LeagueDetails?.team_id,
                                                 user_id: user.id

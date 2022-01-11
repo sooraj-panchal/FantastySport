@@ -88,7 +88,7 @@ const LiveMatchupRankings: React.FC<navigationProps> = ({
                     <Label
                         labelSize={12}
                         style={{ color: 'white', fontFamily: medium, flex: 0.3 }}
-                    >FanPts</Label>
+                    >SnPts</Label>
                     <Label
                         labelSize={14}
                         style={{ color: 'white', fontFamily: medium, flex: 0.2 }}

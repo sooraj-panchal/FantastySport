@@ -7,14 +7,18 @@ import { Alert, ListRenderItem } from 'react-native';
 import { GameDetailNav } from '../../../types/nav';
 import GamePlayerList from '../../../components/GamePlayerList';
 import { useGameDetailsQuery } from '../../../features/league';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 
 const GameDetailScreen: React.FC<GameDetailNav> = ({
     route,
     navigation
 }) => {
+    const { leagueDetails: { name, league_id, week, team_id, team_name } } = useSelector((state: RootState) => state.selectedLeague)
+
     let newData = {
-        league_id: route.params?.league_id,
-        week_id: route.params?.week_id,
+        league_id: league_id,
+        week_id: week[0].week_id,
     }
     const { data, isLoading, error } = useGameDetailsQuery<any>(newData, {
         refetchOnMountOrArgChange: true
@@ -22,9 +26,9 @@ const GameDetailScreen: React.FC<GameDetailNav> = ({
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerTitle: route.params?.league_name
+            headerTitle: name
         })
-    })
+    }, [])
 
     console.log('error', JSON.stringify(error))
 
@@ -40,15 +44,15 @@ const GameDetailScreen: React.FC<GameDetailNav> = ({
                     //         team_id: item.id
                     //     })
                     // } else {
-                    console.log('route.params?.my_team_id', route.params?.my_team_id)
-                    if (route.params?.my_team_id) {
+                    // console.log('route.params?.my_team_id', route.params?.my_team_id)
+                    if (team_id) {
                         const WithoutMyTeam = data.filter((item: any) => {
-                            return item.team_id != route.params?.my_team_id
+                            return item.team_id != team_id
                         })
                         if (item.is_game_created) {
                             navigation.navigate('LiveMatchDetail', {
-                                team_id: route.params?.my_team_id,
-                                op_team_id: item.team_id == route.params?.my_team_id ? WithoutMyTeam[0]?.team_id : item.team_id
+                                team_id: team_id,
+                                op_team_id: item.team_id == team_id ? WithoutMyTeam[0]?.team_id : item.team_id
                             })
                         } else {
                             Alert.alert("Fantasy sniper", 'This participant user have not created match for league yet.')
@@ -93,10 +97,10 @@ const GameDetailScreen: React.FC<GameDetailNav> = ({
                 labelSize={15}
                 style={{
                     position: 'absolute',
-                    right: 15,
+                    right: 20,
                     fontWeight: 'bold'
                 }}
-            >FanPts</Label>
+            >SNiPER PTS</Label>
         </Container>
         <FlatList
             data={data}

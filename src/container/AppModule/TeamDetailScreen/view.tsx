@@ -24,120 +24,94 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
 
     const dispatch = useDispatch()
     const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
-
     const { data: getMyTeam, isLoading, isFetching, error } = useGetTeamDetailByLeagueQuery(route.params?.team_id, {
         // pollingInterval:5000
         // refetchOnMountOrArgChange: true
         // skip: leagueDetails?.scoring_system == 'SNIPER+'
     })
 
-    // const { data: getMyTeamDataForSniperPlus, isLoading: isLoadingForTeamDetail, isFetching: isFetchingForTeamDetail, error } = useTeamDetailForSniperPlusQuery({
-    //     team_id: route.params?.team_id,
-    //     user_id: route.params?.user_id
-    // }, {
-    //     // refetchOnMountOrArgChange: true
-    //     skip: leagueDetails?.scoring_system == 'SNIPER'
-    // })
-    console.log('route.params', {
-        team_id: route.params?.team_id,
-    })
-
-    // const getMyTeam = useMemo(() => {
-    //     if (leagueDetails?.scoring_system == 'SNIPER+') {
-    //         return getMyTeamDataForSniperPlus;
-    //     } else {
-    //         return getTeamData
-    //     }
-    // }, [leagueDetails, getMyTeamDataForSniperPlus, getTeamData])
-
+    console.log('leagueDetails', leagueDetails)
     console.log('error', JSON.stringify(error))
 
     const imageType = useMemo(() => {
         return getMyTeam?.team_logo?.split('.').pop() == 'svg';
     }, [getMyTeam])
 
-    // console.log('error', error)
 
     React.useLayoutEffect(() => {
         return (
             navigation.setOptions({
                 headerTitle: leagueDetails?.name || '',
                 headerRight: () => {
-                    if (getMyTeam?.players?.length) {
-                        if (!route.params?.fromOtherUser) {
-                            if (leagueDetails?.scoring_system == 'SNIPER+') {
-                                return (
-                                    <Btn
-                                        title="Edit Points"
-                                        labelSize={12}
-                                        labelStyle={{
-                                            color: 'white'
-                                        }}
-                                        radius={8}
-                                        mpBtn={{ mr: 10 }}
-                                        btnStyle={{
-                                            backgroundColor: OrangeColor,
-                                            width: 85,
-                                        }}
-                                        onPress={() => {
-                                            let data = getMyTeam?.players?.map((item, index) => {
-                                                if (item.Position == 'DEF') {
+                    if (getMyTeam?.players?.length && leagueDetails?.canEditLineUp) {
+                        if (leagueDetails?.scoring_system == 'SNIPER+') {
+                            return (
+                                <Btn
+                                    title="Edit Points"
+                                    labelSize={12}
+                                    labelStyle={{
+                                        color: 'white'
+                                    }}
+                                    radius={8}
+                                    mpBtn={{ mr: 10 }}
+                                    btnStyle={{
+                                        backgroundColor: OrangeColor,
+                                        width: 85,
+                                    }}
+                                    onPress={() => {
+                                        let data = getMyTeam?.players?.map((item, index) => {
+                                            if (item.Position == 'DEF') {
 
-                                                }
-                                                return {
-                                                    ...item,
-                                                    isSelected: true,
-                                                    FantasyPointsDraftKings: item.ProjectionPoints
-                                                }
-                                            })
-                                            // dispatch(addToMyPlayerWatcher(data))
-                                            // navigation.navigate('updateTeam', {
-                                            //     team_id: route.params?.team_id
-                                            // })
-                                            dispatch(leagueDetailsWatcher({
-                                                ...leagueDetails,
-                                                team_name: getMyTeam?.team_name,
-                                                team_logo: getMyTeam?.team_logo,
-                                                isFromEdit: true
-                                            }))
-                                            dispatch(setMyTeamWatcher({ data: data, isFromEdit: true }))
-                                            navigation.navigate('AddPlayerPoint')
-                                        }}
-                                    />
-                                )
-                            } else
-                                return (
-                                    <Btn
-                                        title="Edit Lineup"
-                                        labelSize={12}
-                                        labelStyle={{
-                                            color: 'white'
-                                        }}
-                                        radius={8}
-                                        mpBtn={{ mr: 10 }}
-                                        btnStyle={{
-                                            backgroundColor: OrangeColor,
-                                            width: 85,
-                                        }}
-                                        onPress={() => {
-                                            let data = getMyTeam?.players?.map((item, index) => {
-                                                if (item.Position == 'DEF') {
+                                            }
+                                            return {
+                                                ...item,
+                                                isSelected: true,
+                                                FantasyPointsDraftKings: item.ProjectionPoints
+                                            }
+                                        })
+                                        dispatch(leagueDetailsWatcher({
+                                            ...leagueDetails,
+                                            team_name: getMyTeam?.team_name,
+                                            team_logo: getMyTeam?.team_logo,
+                                            isFromEdit: true
+                                        }))
+                                        dispatch(setMyTeamWatcher({ data: data, isFromEdit: true }))
+                                        navigation.navigate('AddPlayerPoint')
+                                    }}
+                                />
+                            )
+                        } else
+                            return (
+                                <Btn
+                                    title="Edit Lineup"
+                                    labelSize={12}
+                                    labelStyle={{
+                                        color: 'white'
+                                    }}
+                                    radius={8}
+                                    mpBtn={{ mr: 10 }}
+                                    btnStyle={{
+                                        backgroundColor: OrangeColor,
+                                        width: 85,
+                                    }}
+                                    onPress={() => {
+                                        let data = getMyTeam?.players?.map((item, index) => {
+                                            if (item.Position == 'DEF') {
 
-                                                }
-                                                return {
-                                                    ...item,
-                                                    isSelected: true,
-                                                    FantasyPointsDraftKings: item.ProjectionPoints
-                                                }
-                                            })
-                                            dispatch(addToMyPlayerWatcher(data))
-                                            navigation.navigate('updateTeam', {
-                                                team_id: route.params?.team_id
-                                            })
-                                        }}
-                                    />
-                                )
-                        }
+                                            }
+                                            return {
+                                                ...item,
+                                                isSelected: true,
+                                                FantasyPointsDraftKings: item.ProjectionPoints
+                                            }
+                                        })
+                                        dispatch(addToMyPlayerWatcher(data))
+                                        navigation.navigate('updateTeam', {
+                                            team_id: route.params?.team_id
+                                        })
+                                    }}
+                                />
+                            )
                     } else {
                         return null;
                     }
@@ -157,72 +131,22 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
             getMyTeam?.players?.length ?
                 <ScrollView>
                     {
-                        route.params?.fromOtherUser ? null :
-                            <>
+                        leagueDetails?.canEditLineUp ?
+                            leagueDetails?.scoring_system == 'SNIPER+' ?
+                                <Label
+                                    labelSize={12}
+                                    textColor={OrangeColor}
+                                    mpLabel={{ mv: 4, mb: 10, ml: 15, mr: 10 }}
+                                    style={{ fontFamily: medium, textAlign: 'center', }}
+                                >You have chance to edit your prediction points before the match start. </Label> :
                                 <Label
                                     labelSize={14}
                                     textColor={OrangeColor}
                                     mpLabel={{ mv: 4, ml: 15, mr: 10 }}
                                     style={{ fontFamily: medium, textAlign: 'center', }}
                                 >You have chance to edit your lineup before match start. </Label>
-                                <Container containerStyle={{ flexDirection: "row", alignItems: "center", justifyContent: 'space-between' }}
-                                    mpContainer={{ ml: 15, mt: 10 }}
-                                >
-
-                                    <Container containerStyle={{ flexDirection: 'row', alignItems: 'center' }} mpContainer={{ mr: 10 }} >
-                                        {/* <Btn
-                                            title="Edit team"
-                                            labelSize={12}
-                                            labelStyle={{
-                                                color: 'white'
-                                            }}
-                                            radius={8}
-                                            mpBtn={{ mr: 10 }}
-                                            btnStyle={{
-                                                backgroundColor: OrangeColor,
-                                                width: 85,
-                                            }}
-                                            onPress={() => {
-                                                console.log(leagueDetails)
-                                                navigation.navigate('EditTeamInfo', {
-                                                    team_id: leagueDetails?.team_id,
-                                                    team_name: leagueDetails?.team_name,
-                                                    team_logo: leagueDetails?.team_logo,
-                                                })
-                                            }}
-                                        /> */}
-                                        {/* <Btn
-                                            title="Edit Lineup"
-                                            labelSize={12}
-                                            labelStyle={{
-                                                color: 'white'
-                                            }}
-                                            radius={8}
-                                            mpBtn={{ mr: 10 }}
-                                            btnStyle={{
-                                                backgroundColor: PrimaryColor,
-                                                width: 85,
-                                            }}
-                                            onPress={() => {
-                                                let data = getMyTeam?.players?.map((item, index) => {
-                                                    if (item.Position == 'DEF') {
-
-                                                    }
-                                                    return {
-                                                        ...item,
-                                                        isSelected: true,
-                                                        FantasyPointsDraftKings: item.ProjectionPoints
-                                                    }
-                                                })
-                                                dispatch(addToMyPlayerWatcher(data))
-                                                navigation.navigate('updateTeam', {
-                                                    team_id: route.params?.team_id
-                                                })
-                                            }}
-                                        /> */}
-                                    </Container>
-                                </Container>
-                            </>
+                            :
+                            null
                     }
                     <Container
                         containerStyle={{
@@ -313,66 +237,103 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                                 borderTopWidth: 1,
                                 borderColor: 'lightgrey',
                                 flexDirection: "row",
-                                alignItems: 'center'
+                                alignItems: 'center',
+                                width: '100%',
+                                flex: 1
                             }}
                             mpContainer={{ pv: 10, mt: 20 }}
                         >
-                            <Label labelSize={14} style={{ width: 160 }} >{ }</Label>
-                            <Label labelSize={12} style={{ width: 55 }}  >SnPts</Label>
-                            <Label labelSize={12} style={{ width: 55 }} >FanPts</Label>
-                            <Label labelSize={12} style={{ width: 50 }} >Pred</Label>
-                            <Label labelSize={12} style={{ width: 60 }} >Proj</Label>
+                            <Container containerStyle={{
+                                width: '46%'
+                            }} />
+                            <Label labelSize={12} style={{ width: '12%' }}  >Proj</Label>
+                            <Label labelSize={12} style={{ width: '12%' }} >Pred</Label>
+                            <Label labelSize={12} style={{ width: '15%' }} >FanPts</Label>
+                            <Label labelSize={12} style={{ width: '20%' }} >SnPts</Label>
                             {/* <Label labelSize={15} style={{ letterSpacing: 0.5, width: 90, textAlign: 'center' }} >Accuracy</Label> */}
                         </Container>
                         {getMyTeam?.players.map((item, index) => {
                             let { photoUrl, Name, Position, SniperPoints, PredictionPoints, Accuracy, ProjectionPoints, ActualPoints, Team, HomeOrAway } = item
                             let imageType = photoUrl?.split('.').pop() == 'svg';
-                            return <View key={index.toString()} >
-                                <Container
-                                    containerStyle={{ flexDirection: "row", alignItems: "center" }}
-                                    mpContainer={{ mr: 20, ml: 15 }}
-                                    height={60}
+                            return <View key={index.toString()}
+
+                            >
+                                <Container containerStyle={{
+                                    width: '100%',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                }}
+                                    // height={80}
+                                    key={index.toString()}
+                                    mpContainer={{ mh: 15 }}
                                 >
-                                    <Container height={35} width={45} >
-                                        {
-                                            imageType ?
-                                                <SvgUri
-                                                    width={30}
-                                                    height={30}
-                                                    uri={photoUrl || ''}
-                                                />
-                                                :
-                                                <Img
-                                                    imgSrc={{ uri: photoUrl || '' }}
-                                                    width={30} height={45}
-                                                />
-                                        }
+                                    <Container
+                                        containerStyle={{
+                                            flexDirection: "row",
+                                            alignItems: "center",
+                                            width: '42%',
+                                        }}
+                                        height={60}
+                                    >
+                                        <Container height={35} width={45} >
+                                            {
+                                                imageType ?
+                                                    <SvgUri
+                                                        width={30}
+                                                        height={30}
+                                                        uri={photoUrl || ''}
+                                                    />
+                                                    :
+                                                    <Img
+                                                        imgSrc={{ uri: photoUrl || '' }}
+                                                        width={30} height={45}
+                                                    />
+                                            }
+                                        </Container>
+                                        <Container
+                                            containerStyle={{
+                                                width: '62%',
+                                                // backgroundColor:'red'
+                                            }}
+                                        >
+                                            <Label labelSize={12} style={{ color: "black" }} >{Name}</Label>
+                                            <Container containerStyle={{ flexDirection: 'row', alignItems: "center" }} >
+                                                <Label labelSize={10} style={{ color: "grey" }} >{Position}</Label>
+                                                <Label labelSize={10} style={{ color: "grey" }} mpLabel={{ ml: 4 }}  >{`(${Team})`}</Label>
+                                                <Label labelSize={10} style={{ color: 'grey' }} mpLabel={{ ml: 4 }}  >({HomeOrAway})</Label>
+                                            </Container>
+                                        </Container>
                                     </Container>
                                     <Container
-                                        containerStyle={{ width: 90 }}
+                                        containerStyle={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            // flex:0.4
+                                            width: '58%',
+                                        }}
                                     >
-                                        <Label labelSize={12} style={{ color: "black" }} >{Name}</Label>
-                                        <Container containerStyle={{ flexDirection: 'row', alignItems: "center", top: 2 }} >
-                                            <Label labelSize={11} style={{ color: "grey" }} >{Position}</Label>
-                                            <Label labelSize={11} style={{ color: "grey" }} mpLabel={{ ml: 4 }}  >{`(${Team})`}</Label>
+                                        <Label
+                                            labelSize={10}
+                                            style={{ color: "grey", width: '25%' }}
+                                        >{ProjectionPoints}</Label>
+                                        <Label
+                                            labelSize={10}
+                                            style={{ color: "black", width: '20%' }}
+                                        >{PredictionPoints}</Label>
+                                        <Label
+                                            labelSize={10}
+                                            style={{ color: OrangeColor, width: '20%' }}
+                                        >{ActualPoints}</Label>
+                                        <Container
+                                            containerStyle={{
+                                                justifyContent: 'center',
+                                                alignItems: 'center', flexDirection: 'row',
+                                                width: '20%'
+                                            }}
+                                        >
+                                            <Label labelSize={10} style={{ color: "green" }}>{SniperPoints}</Label>
+                                            <Label labelSize={10} style={{ color: "green" }}>{`(${Accuracy}%)`}</Label>
                                         </Container>
-                                        {/* <Container containerStyle={{ flexDirection: 'row', alignItems: "center", top: 2 }} >
-                                        <Label labelSize={11} style={{ color: "grey" }} >{Team}</Label>
-                                        <Label labelSize={11} style={{ color: "grey" }} mpLabel={{ ml: 4 }}  >{`(${HomeOrAway})`}</Label>
-                                    </Container> */}
-                                    </Container>
-                                    <Container containerStyle={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }} width={60} >
-                                        <Label labelSize={12} style={{ color: "green", textAlign: 'center' }}>{SniperPoints}</Label>
-                                        <Label labelSize={12} style={{ color: "green", textAlign: 'center' }}>{`(${Accuracy}%)`}</Label>
-                                    </Container>
-                                    <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={50} >
-                                        <Label labelSize={12} style={{ color: 'black', textAlign: 'center' }}>{ActualPoints}</Label>
-                                    </Container>
-                                    <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={45} >
-                                        <Label labelSize={12} style={{ color: OrangeColor, textAlign: 'center' }}>{PredictionPoints}</Label>
-                                    </Container>
-                                    <Container containerStyle={{ justifyContent: 'center', alignItems: 'center' }} width={50} >
-                                        <Label labelSize={12} style={{ color: "grey", textAlign: 'center' }}>{ProjectionPoints}</Label>
                                     </Container>
                                 </Container>
                                 <Container containerStyle={{ backgroundColor: "lightgrey" }} height={1} />
@@ -390,6 +351,6 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
                     }}
                 >This user have not created game yet.</Label>
         }
-    </MainContainer>
+    </MainContainer >
 }
 export default TeamDetailScreen;
