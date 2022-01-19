@@ -17,6 +17,7 @@ import { medium } from '../../../assets/fonts/fonts';
 import { View } from 'react-native';
 import { leagueDetailsWatcher } from '../../../store/slices/selectedLeague';
 import { imageBaseUrl } from '../../../utils/globals';
+import axios from 'axios';
 const TeamDetailScreen: React.FC<TeamDetailNav> = ({
     navigation,
     route
@@ -25,9 +26,9 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
     const dispatch = useDispatch()
     const { leagueDetails } = useSelector((state: RootState) => state.selectedLeague)
     const { data: getMyTeam, isLoading, isFetching, error } = useGetTeamDetailByLeagueQuery(route.params?.team_id, {
-        // pollingInterval:5000
-        // refetchOnMountOrArgChange: true
-        // skip: leagueDetails?.scoring_system == 'SNIPER+'
+        // pollingInterval: 300000,
+        refetchOnFocus: true,
+        refetchOnMountOrArgChange: true
     })
 
     console.log('leagueDetails', leagueDetails)
@@ -36,7 +37,6 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
     const imageType = useMemo(() => {
         return getMyTeam?.team_logo?.split('.').pop() == 'svg';
     }, [getMyTeam])
-
 
     React.useLayoutEffect(() => {
         return (
@@ -120,7 +120,7 @@ const TeamDetailScreen: React.FC<TeamDetailNav> = ({
         )
     }, [getMyTeam])
 
-    console.log('getMyTeam', getMyTeam)
+    // console.log('getMyTeam', getMyTeam)
 
     return <MainContainer
         style={{ backgroundColor: 'white' }}

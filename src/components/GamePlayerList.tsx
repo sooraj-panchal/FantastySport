@@ -43,7 +43,7 @@ const GamePlayerList: React.FC<GameDetailResponse & props> = ({
                 numberOfLines={1}
             >{rank}</Label>
             <Container
-                mpContainer={{ ml: 50 }}
+                mpContainer={{ ml: 35 }}
             >
                 <Label
                     labelSize={16}

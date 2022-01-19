@@ -7,7 +7,6 @@ import App from './App';
 import { name as appName } from './app.json';
 import PushNotification, { Importance } from "react-native-push-notification";
 import * as globals from './src/utils/globals';
-import { navigate } from './src/utils/NavigationHandler';
 
 PushNotification.configure( {
   onRegister: function ( token ) {

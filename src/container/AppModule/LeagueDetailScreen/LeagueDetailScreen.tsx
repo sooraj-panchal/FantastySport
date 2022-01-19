@@ -11,7 +11,7 @@ import Container from '../../../components/Container';
 import Img from '../../../components/Img';
 import Label from '../../../components/Label';
 import MainContainer from '../../../components/MainContainer';
-import { useGameDetailsQuery, useJoinPrivateLeagueMutation, useLeagueDetailsQuery } from '../../../features/league';
+import { useGameDetailsQuery, useJoinPrivateLeagueMutation, useLeagueDetailsQuery, useParticipantUserQuery } from '../../../features/league';
 import { leagueDetailsWatcher } from '../../../store/slices/selectedLeague';
 import { LeagueDetailNav } from '../../../types/nav';
 import ParticipantUserList from './ParticiapantList';
@@ -38,14 +38,14 @@ const LeagueDetailScreen: React.FC<props> = ({
         week_id: route.params?.week_id,
     }
 
-    const { data: LeagueDetails, isLoading: loadingForLeagueDetail, refetch, error: leagueDetailsError } = useLeagueDetailsQuery(route.params?.league_id)
+    const { data: LeagueDetails, isLoading: loadingForLeagueDetail, refetch } = useLeagueDetailsQuery(route.params?.league_id)
 
-    const { data: GameDetails, isLoading, error, isFetching, refetch: refetchGameDetails } = useGameDetailsQuery<any>(newData, {
+    const { data: participantUserList, isLoading, error, isFetching, refetch: refetchParticipanUser } = useParticipantUserQuery<any>(newData, {
         refetchOnMountOrArgChange: true
     })
+
     const [joinLeagueWatcher, { data: joinLeagueRes, isLoading: joinLeagueLoading, error: joinLeagueError }] = useJoinPrivateLeagueMutation<any>()
     const user: UserResponse = useSelector((store: RootState) => store.auth.user)
-
 
     const dispatch = useDispatch()
 
@@ -128,6 +128,7 @@ const LeagueDetailScreen: React.FC<props> = ({
         return (
             <ParticipantUserList
                 {...item}
+                index={index}
                 onPressTeamHandler={() => {
                     if (item.is_game_created) {
                         console.log(LeagueDetails)
@@ -156,9 +157,9 @@ const LeagueDetailScreen: React.FC<props> = ({
                 mpContainer={{ mt: 4, mh: 20 }}
             >
                 <FlatList
-                    data={GameDetails}
+                    data={participantUserList}
                     renderItem={renderItem}
-                    keyExtractor={(item, index) => `Winners${index.toString()}`}
+                    keyExtractor={(item, index) => `Participant${index.toString()}`}
                 />
             </Container>
         )
@@ -167,7 +168,7 @@ const LeagueDetailScreen: React.FC<props> = ({
     let imageType = LeagueDetails?.team_logo?.split('.').pop() == 'svg';
 
 
-    console.log('GameDetails', JSON.stringify(GameDetails))
+    console.log('participantUserList', JSON.stringify(participantUserList))
 
     const JoinLeagueHandler = () => {
         let formData = new FormData()
@@ -185,10 +186,10 @@ const LeagueDetailScreen: React.FC<props> = ({
     }
 
     const matchDetailHandler = () => {
-        if (LeagueDetails?.is_game_created) {
-            if (LeagueDetails.participant_user < 2) {
-                Alert.alert('Fantasy sniper', 'Wait for join other players!')
-            } else {
+        // if (LeagueDetails?.is_game_created) {
+        //     if (LeagueDetails.participant_user < 2) {
+        //         Alert.alert('Fantasy sniper', 'Wait for join other players!')
+        //     } else {
                 dispatch(leagueDetailsWatcher({ ...LeagueDetails }))
                 navigation.navigate('GameDetail', {
                     league_id: LeagueDetails?.league_id,
@@ -196,31 +197,15 @@ const LeagueDetailScreen: React.FC<props> = ({
                     league_name: LeagueDetails?.name,
                     my_team_id: LeagueDetails?.team_id
                 })
-            }
-        } else {
-            Alert.alert('Fantasy sniper', 'You should join & create the team to see Match detail!')
-        }
+            // }
+        // } else {
+        //     Alert.alert('Fantasy sniper', 'You should join & create the team to see Match detail!')
+        // }
     }
-    // const { dateText, matchDate, weekText } = LeagueDetails?.league_flag
-    return (
-        <MainContainer
-            loading={loadingForLeagueDetail || isLoading}
-            successMessage={joinLeagueRes?.message}
-            errorMessage={joinLeagueError}
-            absoluteModalLoading={joinLeagueLoading}
-        >
-            <ScrollView
-                contentContainerStyle={{ paddingBottom: 100 }}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={isFetching}
-                        onRefresh={() => {
-                            refetch()
-                            refetchGameDetails()
-                        }}
-                    />
-                }
-            >
+
+    const renderHeaderData = () => {
+        return (
+            <>
                 {
                     LeagueDetails?.scoring_system == 'SNIPER+' &&
                         LeagueDetails?.isPlayerCreated == false ?
@@ -259,10 +244,6 @@ const LeagueDetailScreen: React.FC<props> = ({
                                         borderWidth: 1,
                                         borderColor: OrangeColor,
                                         borderRadius: 10,
-                                        // width:100,
-                                        // alignSelf:'center',
-                                        // position:"absolute",
-                                        // top:-10,
                                         height: 25
                                     }}
                                     mpBtn={{ mh: 10, ph: 10, mt: 2 }}
@@ -270,7 +251,6 @@ const LeagueDetailScreen: React.FC<props> = ({
                                     textColor={OrangeColor}
                                 />
                             </Container>
-
                         </Container>
                         : null
                 }
@@ -294,7 +274,7 @@ const LeagueDetailScreen: React.FC<props> = ({
                                     imgStyle={{
                                         width: 40,
                                         height: 40,
-                                        resizeMode: 'contain',
+                                        // resizeMode: 'contain',
                                     }}
                                 />
                                 <Container
@@ -326,7 +306,7 @@ const LeagueDetailScreen: React.FC<props> = ({
                                     imgStyle={{
                                         width: 40,
                                         height: 40,
-                                        resizeMode: 'contain',
+                                        // resizeMode: 'contain',
                                     }}
                                 />
                                 <Container
@@ -390,7 +370,7 @@ const LeagueDetailScreen: React.FC<props> = ({
                                     bottom: 10,
                                 }}
                                 textColor="white"
-                                mpBtn={{ ml: 10,ph:10 }}
+                                mpBtn={{ ml: 10, ph: 10 }}
                             /> : null
                     }
                     {/* : null
@@ -404,9 +384,9 @@ const LeagueDetailScreen: React.FC<props> = ({
                     }} >
                         <Img
                             imgSrc={AppImages.team}
-                            width={40} height={40}
+                            width={45} height={42}
                             imgStyle={{
-                                resizeMode: 'contain',
+                                // resizeMode: 'contain',
                             }}
                         />
                         <Label
@@ -606,27 +586,48 @@ const LeagueDetailScreen: React.FC<props> = ({
                     labelSize={20}
                     mpLabel={{ mt: 10, ml: 15, mb: 10 }}
                 >Games: </Label>
-                <FlatList
-                    data={LeagueDetails?.week[0]?.schedule}
-                    renderItem={({ item }) => {
-                        return <TeamList
-                            {...item}
-                        // onPress={() => {
-                        //     dispatch(selecteSchedule(index))
-                        // }}
-                        />
-                    }}
-                    keyExtractor={(item, index) => `${index.toString()}`}
-                    ListFooterComponent={() => <Container mpContainer={{ mb: 10 }} />}
-                    ItemSeparatorComponent={() => <Container mpContainer={{ mv: 5 }} />}
-                    style={{ marginTop: 10 }}
-                />
-                <Label
-                    labelSize={20}
-                    mpLabel={{ mt: 10, ml: 15, mb: 10 }}
-                >Participants: </Label>
-                {renderTeamList()}
-            </ScrollView>
+            </>
+        )
+    }
+
+    // const { dateText, matchDate, weekText } = LeagueDetails?.league_flag
+    return (
+        <MainContainer
+            loading={loadingForLeagueDetail || isLoading}
+            successMessage={joinLeagueRes?.message}
+            errorMessage={joinLeagueError}
+            absoluteModalLoading={joinLeagueLoading}
+        >
+            <FlatList
+                data={LeagueDetails?.week[0]?.schedule}
+                refreshing={isFetching}
+                onRefresh={() => {
+                    refetch()
+                    refetchParticipanUser()
+                }}
+                keyExtractor={(item, index) => `${index.toString()}`}
+                renderItem={({ item }) => {
+                    return <TeamList
+                        {...item}
+                    />
+                }}
+                ListHeaderComponent={renderHeaderData}
+                ItemSeparatorComponent={() => <Container mpContainer={{ mv: 5 }} />}
+                style={{ marginTop: 10 }}
+                ListFooterComponent={() => {
+                    return <>
+                        <Label
+                            labelSize={20}
+                            mpLabel={{ mt: 10, ml: 15, mb: 10 }}
+                        >Participants: </Label>
+                        {renderTeamList()}
+                    </>
+                }}
+                ListFooterComponentStyle={{
+                    paddingBottom:100
+                }}
+                showsVerticalScrollIndicator={false}
+            />
         </MainContainer>
     )
 }

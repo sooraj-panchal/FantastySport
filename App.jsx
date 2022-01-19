@@ -32,7 +32,7 @@ const App = () => {
             </>;
         } else {
             return <>
-                <StatusBar backgroundColor={ DarkBlueColor } barStyle="light-content" translucent />
+                <StatusBar backgroundColor={ 'transparent' } barStyle="light-content" translucent />
                 <AppContainer />
             </>;
         }

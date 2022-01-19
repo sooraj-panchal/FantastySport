@@ -50,29 +50,6 @@ const HeadToHeadTab: React.FC<props> = ({
         })
     }, [scheduleListData])
 
-    // useEffect(() => {
-    //     // const newData = setAllSelectedList((prev) => [...scheduleListData, ...prev])
-    //     const data = allSelectedList.filter((item, index) => {
-    //         return item.isSelected
-    //     })
-    //     data.sort((a, b) => Number(b.isSelected) - Number(a.isSelected))
-    //     console.log("allSelectedList", data)
-    // }, [allSelectedList])
-
-    // useEffect(() => {
-    //     console.log('scheduleListData', scheduleListData)
-    //     // const data = scheduleListData.map((item, index) => {
-    //     //     const isSelected = selectedLeagueData.find((i) => i.game_key == item.game_key)?.isSelected
-    //     //     return {
-    //     //         ...item,
-    //     //         isSelected: isSelected || false
-    //     //     }
-    //     // })
-    //     // data.sort((a, b) => Number(b.isSelected) - Number(a.isSelected))
-    //     // setScheduleList(data)
-    // }, [scheduleListData, selectedLeagueData])
-
-
     const renderItem: ListRenderItem<scheduleItemTypes> = ({ item, index }) => {
         return <ScheduleTeamItem
             {...item}
@@ -164,10 +141,10 @@ const HeadToHeadTab: React.FC<props> = ({
                 showsVerticalScrollIndicator={false}
                 getItemLayout={getItemLayout}
                 removeClippedSubviews={true} // Unmount components when outside of window 
-                initialNumToRender={2} // Reduce initial render amount
-                maxToRenderPerBatch={1} // Reduce number in each render batch
-                updateCellsBatchingPeriod={100} // Increase time between renders
-                windowSize={7}
+                initialNumToRender={5} // Reduce initial render amount
+                maxToRenderPerBatch={5} // Reduce number in each render batch
+                // updateCellsBatchingPeriod={100} // Increase time between renders
+                // windowSize={7}
                 style={{ marginTop: 10 }}
             />
         </MainContainer >

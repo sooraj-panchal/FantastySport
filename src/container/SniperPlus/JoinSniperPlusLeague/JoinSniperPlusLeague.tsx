@@ -207,7 +207,7 @@ const JoinSniperPlusLeague: React.FC<navigationProps> = ({
                 const sniperPoints = playerList.reduce(function (a, b) {
                     return a + Number(b.SniperPoints);
                 }, 0);
-                setTotalPredictionPoints(Math.abs(PredictionPoints / 10).toFixed(2))
+                setTotalPredictionPoints(PredictionPoints ? Math.abs(PredictionPoints / 10).toFixed(2) : '0.00')
                 setTotalProjectedPoints(Math.abs(FantasyPointsDraftKings / 10).toFixed(2))
                 setTotalSniperPoints(Math.abs(sniperPoints / 10).toFixed(2))
                 setTotalActualPoints(Math.abs(FantasyPointsDraftKings / 10).toFixed(2))
@@ -311,7 +311,7 @@ const JoinSniperPlusLeague: React.FC<navigationProps> = ({
                                 console.log('data', JSON.stringify(data))
                                 useCreateSniperPlusGame(data).unwrap().then(() => {
                                     // navigation.dispatch(AppStack)
-                                    navigation.navigate('tabs',{screen:'MyLeague'})
+                                    navigation.navigate('tabs', { screen: 'MyLeague' })
                                     dispatch(addToMyPlayerWatcher([]))
                                     dispatch(setMyTeamWatcher([]))
                                     refetch()

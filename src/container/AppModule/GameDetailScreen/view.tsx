@@ -9,6 +9,7 @@ import GamePlayerList from '../../../components/GamePlayerList';
 import { useGameDetailsQuery } from '../../../features/league';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
+import SniperRankingPlayer from '../../../components/SniperRankingPlayer';
 
 const GameDetailScreen: React.FC<GameDetailNav> = ({
     route,
@@ -33,34 +34,19 @@ const GameDetailScreen: React.FC<GameDetailNav> = ({
     console.log('error', JSON.stringify(error))
 
     const renderItem: ListRenderItem<any> = ({ item, index }) => {
-        console.log(item)
+        // console.log(item)
         return (
-            <GamePlayerList
+            <SniperRankingPlayer
                 {...item}
                 index={index}
                 onPress={() => {
-                    // if (route.params?.fromMyLeague) {
-                    //     navigation.navigate('TeamDetail', {
-                    //         team_id: item.id
-                    //     })
-                    // } else {
-                    // console.log('route.params?.my_team_id', route.params?.my_team_id)
-                    if (team_id) {
-                        const WithoutMyTeam = data.filter((item: any) => {
-                            return item.team_id != team_id
+                    if (item.is_game_created) {
+                        navigation.navigate('TeamDetail', {
+                            team_id: item.team_id,
                         })
-                        if (item.is_game_created) {
-                            navigation.navigate('LiveMatchDetail', {
-                                team_id: team_id,
-                                op_team_id: item.team_id == team_id ? WithoutMyTeam[0]?.team_id : item.team_id
-                            })
-                        } else {
-                            Alert.alert("Fantasy sniper", 'This participant user have not created match for league yet.')
-                        }
                     } else {
-                        Alert.alert('Fantasy sniper', 'You should Join the league to compare match with others.')
+                        Alert.alert("Fantasy sniper", 'This participant user have not created match for league yet.')
                     }
-                    // }
                 }}
             />
         )
@@ -88,7 +74,7 @@ const GameDetailScreen: React.FC<GameDetailNav> = ({
             >Rank</Label>
             <Label
                 labelSize={15}
-                mpLabel={{ ml: 35 }}
+                mpLabel={{ ml: 25 }}
                 style={{
                     fontWeight: 'bold'
                 }}

@@ -349,6 +349,16 @@ export const LeagueApi = createApi({
                 return response;
             }
         }),
+        participantUser: builder.query({
+            query: ({ league_id, week_id }) => ({
+                url: `participantUser?league_id=${league_id}&week_id=${week_id}`
+            }),
+            providesTags: ['League'],
+            transformResponse: (response: { data: GameDetailResponse[] }) => {
+                console.log("participantUser Response==>", response)
+                return response.data
+            }
+        }),
     }),
 })
 
@@ -380,6 +390,7 @@ export const {
     useGetLeaguePlayerListQuery,
     useCreateSniperPlusGameMutation,
     useTeamDetailForSniperPlusQuery,
-    useUpdateSniperPlusGameMutation
+    useUpdateSniperPlusGameMutation,
+    useParticipantUserQuery
 } = LeagueApi
 

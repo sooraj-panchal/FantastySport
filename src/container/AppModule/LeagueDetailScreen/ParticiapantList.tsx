@@ -13,12 +13,12 @@ import { imageBaseUrl } from '../../../utils/globals';
 const ParticipantUserList: React.FC<MYLeagueTeam | any> = ({
     team_name, team_logo, rank, id, team_id,
     is_game_created,
-    onPressTeamHandler
+    onPressTeamHandler,
+    index
 }) => {
     let imageUrl = team_logo ? `${imageBaseUrl}${team_logo}` : ''
     let imageType = imageUrl?.split('.').pop() == 'svg';
-    // console.log('imageType',imageType)
-    const navigation = useNavigation<homeNavProps>()
+    
     return (
         <Container
             containerStyle={{
@@ -35,7 +35,7 @@ const ParticipantUserList: React.FC<MYLeagueTeam | any> = ({
                 labelSize={20}
                 mpLabel={{ ml: 10 }}
                 style={{ width: 40 }}
-            >{rank}.</Label>
+            >{index + 1}.</Label>
             <Container containerStyle={{
                 backgroundColor: 'lightgrey',
                 borderRadius: 30,

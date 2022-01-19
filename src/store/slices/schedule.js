@@ -15,11 +15,11 @@ const getSchedules = async ( week ) => {
     return data;
 };
 
-
 export const getScheduleListWatcher = createAsyncThunk(
     'teams/schedule',
     async ( payload, { getState } ) => {
         const state = getState();
+        console.log('state.schedule.currentWeek',state.schedule.currentWeek)
         const scheduleArray = await getSchedules( state.schedule.currentWeek );
         const response = await axios.get( 'https://api.sportsdata.io/v3/nfl/scores/json/Teams', {
             headers: {
